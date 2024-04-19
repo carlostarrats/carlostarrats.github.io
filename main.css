@@ -87,11 +87,13 @@ video {
   border-radius: 8px;
   background-color: rgb(194, 224, 255);
   padding: 6px;
-}.highlight4 {
+}
+.highlight4 {
   border-radius: 8px;
   background-color: rgb(227, 194, 255);
   padding: 6px;
-}.highlight5 {
+}
+.highlight5 {
   border-radius: 8px;
   background-color: rgb(204, 255, 194);
   padding: 6px;
