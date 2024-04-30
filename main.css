@@ -71,11 +71,16 @@ video {
   height: 100%;
 }
 
+.pd-title {
+  max-width: 900px;
+  margin: 0px 20px 0px 20px;
+}
+
 .highlight {
   border-radius: 8px;
   background-color: rgb(243, 243, 243);
   padding: 6px;
-  margin-left: 8px;
+  line-height: 38px;
 }
 
 .highlight2 {
@@ -441,7 +446,7 @@ p.about-medium-txt {
   padding: 0;
 }
 
-@media only screen and (max-width: 724px) {
+@media only screen and (max-width: 720px) {
   body {
     margin-left: 8px;
     margin-right: 8px;
@@ -461,8 +466,9 @@ p.about-medium-txt {
     margin-left: 20px;
     margin-right: 12px;
     margin-top: 0;
-    margin-bottom: 55px;
+    margin-bottom: 0px;
   }
+  
   .read {
     font-size: 18px;
     letter-spacing: 0.01em;
@@ -547,6 +553,14 @@ p.about-medium-txt {
 
   .img_space {
     margin-bottom: 70px;
+  }
+
+  .highlight {
+    line-height: 32px;
+  }
+
+  .column {
+    display: block;
   }
 
   .wrapper {
