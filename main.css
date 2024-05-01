@@ -40,6 +40,14 @@ img.insta:hover {
   border-radius: 0.8%;
 }
 
+.weird-brand{
+  margin-top: 37px;
+}
+
+.weird-index{
+  margin-top: 35px;
+}
+
 video {
   display: block;
   width: 100%;
@@ -630,5 +638,13 @@ p.about-medium-txt {
   .outside {
     margin-top: 60px;
     margin-bottom: 30px;
+  }
+
+  .weird-brand{
+    margin-top: 0px;
+  }
+  
+  .weird-index{
+    margin-top: 0px;
   }
 }
