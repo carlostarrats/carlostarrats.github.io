@@ -40,13 +40,12 @@ img.insta:hover {
   border-radius: 0.8%;
 }
 
-.weird-brand{
-  margin-top: 37px;
+.weird-brand-space {
+  margin-top: 31px;
 }
 
-.weird-index{
-  margin-top: 35px;
-}
+
+
 
 video {
   display: block;
@@ -183,6 +182,7 @@ a.read {
   -ms-transition: color 0.25s ease-out;
   transition: color 0.25s ease-out;
 }
+
 a.read:hover {
   color: #d2d2d2;
 }
@@ -388,6 +388,16 @@ ul li:before {
   line-height: 1.4;
   margin-left: 38px;
   margin-right: 25px;
+  margin-top: 32px;
+}
+
+.txt-2 {
+  font-size: 22px;
+  letter-spacing: 0.015em;
+  text-align: left;
+  line-height: 1.4;
+  margin-left: 38px;
+  margin-right: 25px;
   margin-top: 38px;
 }
 p.about-medium-txt {
@@ -476,6 +486,16 @@ p.about-medium-txt {
     margin-top: 0;
     margin-bottom: 0px;
   }
+
+  .txt-2 {
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    line-height: 1.5;
+    margin-left: 20px;
+    margin-right: 12px;
+    margin-bottom: 0px;
+  }
   
   .read {
     font-size: 18px;
@@ -507,9 +527,7 @@ p.about-medium-txt {
     border: 2px solid #1a1a1a;
   }
 
-  .location {
-    margin-top: -16px;
-  }
+
 
   .img_space_main {
     margin-top: 70px;
@@ -640,11 +658,12 @@ p.about-medium-txt {
     margin-bottom: 30px;
   }
 
-  .weird-brand{
-    margin-top: 0px;
+  .weird-brand-space {
+    margin-top: -26px;
+  }
+  .weird-about-space {
+    margin-top: 59px;
   }
   
-  .weird-index{
-    margin-top: 0px;
-  }
+
 }
