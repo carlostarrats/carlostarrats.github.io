@@ -472,6 +472,11 @@ p.about-medium-txt {
     padding: 0;
   }
 
+  div.sticky {
+    padding-top: 0px;
+  }
+
+
   hr {
     margin: 1em 0 -1.8em 0;
   }
@@ -483,7 +488,7 @@ p.about-medium-txt {
     line-height: 1.5;
     margin-left: 20px;
     margin-right: 12px;
-    margin-top: 0;
+    margin-top: 0px;
     margin-bottom: 0px;
   }
 
@@ -495,6 +500,7 @@ p.about-medium-txt {
     margin-left: 20px;
     margin-right: 12px;
     margin-bottom: 0px;
+    margin-top: 0px;
   }
   
   .read {
@@ -659,7 +665,7 @@ p.about-medium-txt {
   }
 
   .weird-brand-space {
-    margin-top: -26px;
+    margin-top: 67px;
   }
   .weird-about-space {
     margin-top: 59px;
