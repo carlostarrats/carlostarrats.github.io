@@ -51,7 +51,13 @@ img.insta:hover {
 }
 
 
+.txt-color {
+  color: #595959;
+}
 
+.txt-color-2 {
+  color: #8c8c8c;
+}
 
 video {
   display: block;
