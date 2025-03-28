@@ -3,15 +3,17 @@ html {
   min-height: 100%;
   position: relative;
 }
+
 a,
 body,
 p {
   text-rendering: geometricPrecision;
 }
+
 body {
   font-family: "Inter", Sans-Serif;
   font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
+  font-variation-settings: "slnt" 0;
   font-style: normal;
   font-weight: 500;
   background: #fff;
@@ -21,18 +23,22 @@ body {
   margin: 0 auto;
   max-width: 1080px;
 }
+
 img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 0.8%;
 }
+
 img.insta {
   opacity: 1;
 }
+
 img.insta:hover {
   opacity: 0.5;
 }
+
 .img_main {
   display: block;
   width: 100%;
@@ -95,16 +101,19 @@ video {
   background-color: rgb(255, 194, 194);
   padding: 6px;
 }
+
 .highlight3 {
   border-radius: 8px;
   background-color: rgb(194, 224, 255);
   padding: 6px;
 }
+
 .highlight4 {
   border-radius: 8px;
   background-color: rgb(227, 194, 255);
   padding: 6px;
 }
+
 .highlight5 {
   border-radius: 8px;
   background-color: rgb(204, 255, 194);
@@ -114,7 +123,7 @@ video {
 .text-big {
   font-family: "Inter", Sans-Serif;
   font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
+  font-variation-settings: "slnt" 0;
   font-style: normal;
   font-weight: 400;
   font-size: 90px;
@@ -127,7 +136,7 @@ video {
 .text-med {
   font-family: "Inter", Sans-Serif;
   font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
+  font-variation-settings: "slnt" 0;
   font-style: normal;
   font-weight: 400;
   font-size: 34px;
@@ -162,11 +171,13 @@ a:hover {
   color: #d2d2d2;
   border-bottom: 2px solid #d2d2d2;
 }
+
 a.small {
   font-style: normal;
   font-size: 13px;
   letter-spacing: 0.03em;
 }
+
 a.read {
   margin: 0 10px 0 10px;
   font-style: normal;
@@ -221,7 +232,7 @@ a.read:hover {
 .sm_btn-oval {
   font-family: "Inter", Sans-Serif;
   font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
+  font-variation-settings: "slnt" 0;
   font-style: normal;
   font-size: 90px;
   letter-spacing: -5.3px;
@@ -242,9 +253,11 @@ a.read:hover {
   -ms-transition: border 0.25s ease-out;
   transition: border 0.25s ease-out;
 }
+
 .btn-margin {
   margin: 0 30px 0 30px;
 }
+
 a.btn-oval:hover {
   color: #d2d2d2;
   border: 3px solid #d2d2d2;
@@ -260,21 +273,6 @@ a.sm_btn-oval:hover {
   color: #d2d2d2;
   border: 3px solid #d2d2d2;
 }
-hr {
-  color: #1a1a1a;
-  background-color: #1a1a1a;
-  height: 3px;
-  border: 0;
-  margin: 1em 0 2em 0;
-  border-style: dashed;
-}
-
-/* Dashed red border */
-hr.dash {
-  border: 0;
-  background-color: #fff;
-  border-top: 1px dashed #8c8c8c;
-}
 
 .post-image {
   width: 100%;
@@ -283,20 +281,24 @@ hr.dash {
   margin-top: 22px;
   border-radius: 0.8%;
 }
+
 .spacer-small-about {
   margin-top: 0;
   margin-bottom: 16px;
 }
+
 .medium-spacer {
   padding-top: 0;
   margin-top: 10px;
   margin-bottom: 0;
 }
+
 .large-spacer {
   padding-top: 0;
   margin-top: 0;
   margin-bottom: 60px;
 }
+
 .read {
   padding-top: 0;
   font-size: 22px;
@@ -306,6 +308,7 @@ hr.dash {
   margin-top: 30px;
   margin-bottom: 25px;
 }
+
 .readbox {
   margin-left: 25px;
   margin-right: 25px;
@@ -325,6 +328,7 @@ hr.dash {
   margin-left: 0;
   margin-right: 0;
 }
+
 div.sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -343,44 +347,53 @@ div.sticky {
   margin-top: 10px;
   margin-bottom: 0;
 }
+
 .indent {
   margin-left: 32px;
   font-style: italic;
   color: grey;
 }
+
 .indent2 {
   margin-left: 32px;
 }
+
 .top-page {
   padding-top: 0;
   margin-top: 0;
   margin-bottom: 120px;
 }
+
 .bold {
   font-weight: 700;
 }
+
 b {
   font-family: "Inter", Sans-Serif;
   font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
+  font-variation-settings: "slnt" 0;
   font-style: normal;
   font-weight: 700;
 }
+
 ul {
   list-style: none;
   padding: 0;
   display: block;
 }
+
 li {
   display: flex;
   margin: 0;
   padding: 0;
 }
+
 ul li:before {
   content: "\2192";
   display: inline-block;
   margin: 0 20px 0 0;
 }
+
 .about-txt-2 {
   font-size: 22px;
   letter-spacing: 0.015em;
@@ -400,15 +413,18 @@ ul li:before {
   margin-right: 25px;
   margin-top: 38px;
 }
+
 p.about-medium-txt {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 .arrow-down {
   padding-top: 0;
   margin-top: 30px;
   margin-bottom: 0;
 }
+
 .backtop {
   margin-top: 90px;
   margin-bottom: 80px;
@@ -459,6 +475,7 @@ p.about-medium-txt {
   vertical-align: top;
   column-width: 500px;
 }
+
 .clear {
   clear: both;
   padding: 0;
@@ -474,11 +491,6 @@ p.about-medium-txt {
 
   div.sticky {
     padding-top: 20px;
-  }
-
-
-  hr {
-    margin: 1em 0 -1.8em 0;
   }
 
   .about-txt-2 {
@@ -502,7 +514,7 @@ p.about-medium-txt {
     margin-bottom: 0px;
     margin-top: 0px;
   }
-  
+
   .read {
     font-size: 18px;
     letter-spacing: 0.01em;
@@ -510,10 +522,12 @@ p.about-medium-txt {
     margin-top: 0;
     margin-bottom: 55px;
   }
+
   .readbox {
     margin-left: 10px;
     margin-right: 10px;
   }
+
   a.read {
     letter-spacing: 0.01em;
     line-height: 1.5;
@@ -541,9 +555,9 @@ p.about-medium-txt {
 
   .text-big {
     font-family: "Inter", Sans-Serif;
-  font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
-  font-style: normal;
+    font-optical-sizing: auto;
+    font-variation-settings: "slnt" 0;
+    font-style: normal;
     font-weight: 400;
     font-size: 40px;
     letter-spacing: -1.8px;
@@ -556,7 +570,7 @@ p.about-medium-txt {
   .text-med {
     font-family: "Inter", Sans-Serif;
     font-optical-sizing: auto;
-    font-variation-settings:"slnt" 0;
+    font-variation-settings: "slnt" 0;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -568,9 +582,9 @@ p.about-medium-txt {
 
   .sm_btn-oval {
     font-family: "Inter", Sans-Serif;
-  font-optical-sizing: auto;
-  font-variation-settings:"slnt" 0;
-  font-style: normal;
+    font-optical-sizing: auto;
+    font-variation-settings: "slnt" 0;
+    font-style: normal;
     font-weight: 400;
     font-size: 40px;
     letter-spacing: -1.8px;
@@ -594,7 +608,7 @@ p.about-medium-txt {
   .column {
     display: block;
   }
-
+  
   .wrapper {
     margin-bottom: 0px;
     -webkit-column-count: 1;
@@ -632,18 +646,23 @@ p.about-medium-txt {
   .btn-margin {
     margin: 0 5px 0 5px;
   }
+
   a.btn-oval:hover {
     border: 2px solid #d2d2d2;
   }
+
   a.sm_btn-oval:hover {
     border: 2px solid #d2d2d2;
   }
+
   .large-spacer {
     margin-bottom: 26px;
   }
+
   .arrow-down {
     display: none;
   }
+
   .backtop {
     margin-top: 50px;
     margin-bottom: 80px;
@@ -667,9 +686,10 @@ p.about-medium-txt {
   .weird-brand-space {
     margin-top: 67px;
   }
+
   .weird-about-space {
     margin-top: 59px;
   }
-  
+
 
 }
