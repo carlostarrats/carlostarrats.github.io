@@ -46,6 +46,10 @@ img.insta:hover {
   border-radius: 0.8%;
 }
 
+.img_main:hover {
+  opacity: 0.88;
+}
+
 .weird-brand-space {
   margin-top: 31px;
 }
