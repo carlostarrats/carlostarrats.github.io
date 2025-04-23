@@ -914,3 +914,13 @@ body {
     width: 100%;
   }
 }
+
+.index-capabilities .capability-tag {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 800px) {
+  .index-capabilities .capability-tag {
+    font-size: 0.875rem;
+  }
+}
