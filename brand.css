@@ -1,0 +1,256 @@
+/* ==========================================================================
+   1. BRAND PAGE STYLES
+   ========================================================================== */
+
+/* ==========================================================================
+   2. BRAND PAGE LAYOUT
+   ========================================================================== */
+.main-content {
+  padding: 0 4rem;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.header {
+  padding: 2rem 4rem;
+  position: relative;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.nav-brand {
+  font-size: 2rem;
+  font-weight: 450;
+  text-decoration: none;
+  color: #000;
+  letter-spacing: 0em;
+  display: block;
+  margin-bottom: 4rem;
+}
+
+/* ==========================================================================
+   3. HERO SECTION OVERRIDES
+   ========================================================================== */
+.hero {
+  padding: 0;
+  margin-bottom: 4rem;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 2rem;
+  letter-spacing: -0.03em;
+}
+
+/* ==========================================================================
+   4. BRAND WORK SECTIONS
+   ========================================================================== */
+.brand-work-section {
+  margin-top: 0;
+  margin-bottom: 6rem;
+}
+
+.brand-work-section h3 {
+  font-size: 2rem;
+  font-weight: 450;
+  margin: 3.125rem 0 1rem 0;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0em;
+  line-height: 1.4;
+}
+
+.brand-work-grid {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 2rem;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brand-work-left h2 {
+  font-size: 2.5rem;
+  font-weight: 450;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #000;
+}
+
+.brand-work-right .about-text {
+  font-size: 2rem;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 450;
+  margin: 0;
+}
+
+/* ==========================================================================
+   5. BRAND CAPABILITY TAGS
+   ========================================================================== */
+.capability-tag {
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  font-weight: 450;
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.brand-work-left .work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.brand-work-left .work-tags .capability-tag {
+  font-size: 0.875rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  margin-bottom: 0.35rem;
+}
+
+/* ==========================================================================
+   6. BRAND IMAGES AND VIDEOS
+   ========================================================================== */
+.post-image {
+  width: 100%;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.post-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: 28px;
+}
+
+.embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.post-image + .post-image,
+.post-image + .embed-container,
+.embed-container + .post-image,
+.embed-container + .embed-container {
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE STYLES
+   ========================================================================== */
+@media (max-width: 800px) {
+  .main-content {
+    padding: 0 1.5rem;
+  }
+
+  .header {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .nav-brand {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero {
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .brand-work-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .brand-work-left .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .capability-tag {
+    font-size: 0.875rem !important;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+  }
+
+  .brand-work-right .about-text {
+    font-size: 1.25rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .brand-work-section {
+    margin-bottom: 3.75rem !important;
+  }
+
+  .brand-work-section h3 {
+    font-size: 1.25rem !important;
+    margin-top: 3.125rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .brand-work-left h2 {
+    font-size: 1.75rem !important;
+    margin-bottom: 1.5rem !important;
+    margin-top: 3.125rem !important;
+  }
+
+  .brand-work-left:first-child h2 {
+    margin-top: 3.125rem !important;
+  }
+
+  .brand-work-right h3 {
+    font-size: 1rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .post-image,
+  .embed-container {
+    margin-bottom: 1rem;
+  }
+
+  .post-image + .post-image,
+  .post-image + .embed-container,
+  .embed-container + .post-image,
+  .embed-container + .embed-container {
+    margin-top: 1rem;
+  }
+
+  /* Ensure all h2s have the same top margin */
+  .brand-work-section .brand-work-left h2 {
+    margin-top: 3.125rem !important;
+  }
+} 

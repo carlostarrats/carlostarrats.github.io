@@ -1,4 +1,6 @@
-/* Reset and Base Styles */
+/* ==========================================================================
+   1. RESET AND BASE STYLES
+   ========================================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -8,9 +10,16 @@
 html {
   scroll-behavior: smooth;
   --scroll-behavior: smooth;
+  position: relative;
 }
 
-/* Typography and Base Styles */
+html::after {
+  content: none;
+}
+
+/* ==========================================================================
+   2. TYPOGRAPHY AND GLOBAL STYLES
+   ========================================================================== */
 body {
   font-family: 'Inter var', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.2;
@@ -33,7 +42,22 @@ body {
   }
 }
 
-/* Layout */
+/* Links */
+.link {
+  color: #000;
+  text-decoration: none;
+  font-weight: 450;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   3. LAYOUT CONTAINERS
+   ========================================================================== */
 .content-wrapper {
   max-width: 1700px;
   padding: 0;
@@ -42,13 +66,28 @@ body {
   position: relative;
 }
 
+.content-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 160px;
+  background: linear-gradient(to top, rgba(204, 204, 255, 1) 0%, rgba(204, 204, 255, 0) 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
 .main-content {
   padding: 0 4rem;
   max-width: 1700px;
   margin: 0 auto;
 }
 
-/* Header and Navigation */
+/* ==========================================================================
+   4. HEADER AND NAVIGATION
+   ========================================================================== */
 .header {
   padding: 2rem 4rem;
   position: relative;
@@ -104,7 +143,9 @@ body {
   color: #fff;
 }
 
-/* Hero Section */
+/* ==========================================================================
+   5. HERO SECTION
+   ========================================================================== */
 .hero {
   padding: 0;
   margin-bottom: 4rem;
@@ -118,12 +159,17 @@ body {
   letter-spacing: -0.03em;
 }
 
-/* Work Section */
+/* ==========================================================================
+   6. WORK SECTION
+   ========================================================================== */
 .work {
   padding: 2rem 0;
   position: relative;
 }
 
+/* ==========================================================================
+   7. PROJECT GRID AND CARDS
+   ========================================================================== */
 /* Horizontal Scroll */
 .horizontal-scroll-wrapper {
   position: relative;
@@ -606,6 +652,11 @@ body {
   .index-page .capabilities:has(.external-link) {
     margin-top: -20px;
   }
+
+  /* Adjust gradient height for mobile */
+  .content-wrapper::after {
+    height: 80px;
+  }
 }
 
 /* Capabilities Section */
@@ -651,276 +702,6 @@ body {
 .capability-tag.external-link:hover {
   background-color: #000;
   color: #fff;
-}
-
-/* Brand Page Specific Styles */
-.brand-page .main-content {
-  padding: 0 4rem;
-  max-width: 1700px;
-  margin: 0 auto;
-}
-
-.brand-page .header {
-  padding: 2rem 4rem;
-  position: relative;
-  max-width: 1700px;
-  margin: 0 auto;
-}
-
-.brand-page .nav-brand {
-  font-size: 2rem;
-  font-weight: 450;
-  text-decoration: none;
-  color: #000;
-  letter-spacing: 0em;
-  display: block;
-  margin-bottom: 4rem;
-}
-
-.brand-page .hero {
-  padding: 0;
-  margin-bottom: 4rem;
-}
-
-.brand-page .hero-title {
-  font-size: 4.5rem;
-  font-weight: 400;
-  line-height: 1;
-  margin-bottom: 2rem;
-  letter-spacing: -0.03em;
-}
-
-/* Brand Work Section */
-.brand-work-section {
-  margin-top: 0;
-  margin-bottom: 6rem;
-}
-
-.brand-work-section h3 {
-  font-size: 2rem;
-  font-weight: 450;
-  margin: 3.125rem 0 1rem 0;
-  color: rgba(0, 0, 0, 0.6);
-  letter-spacing: 0em;
-  line-height: 1.4;
-}
-
-.brand-work-grid {
-  display: grid;
-  grid-template-columns: 40% 60%;
-  gap: 2rem;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-}
-
-.brand-work-left h2 {
-  font-size: 2.5rem;
-  font-weight: 450;
-  margin: 0 0 1rem 0;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  color: #000;
-}
-
-.brand-work-right .about-text {
-  font-size: 2rem;
-  line-height: 1.4;
-  color: rgba(0, 0, 0, 0.7);
-  font-weight: 450;
-  margin: 0;
-}
-
-/* Brand Page Capability Tags */
-.brand-page .capability-tag {
-  font-size: 1.25rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid rgba(0, 0, 0, 0.6);
-  font-weight: 450;
-  color: rgba(0, 0, 0, 0.7);
-  border-radius: 9999px;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.brand-work-left .work-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.brand-work-left .work-tags .capability-tag {
-  font-size: 0.875rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  margin-bottom: 0.35rem;
-}
-
-/* Brand Page Images and Videos */
-.brand-page .post-image {
-  width: 100%;
-  margin-bottom: 2rem;
-  position: relative;
-  overflow: hidden;
-  border-radius: 28px;
-}
-
-.brand-page .post-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.brand-page .embed-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
-  width: 100%;
-  margin-bottom: 2rem;
-  border-radius: 28px;
-}
-
-.brand-page .embed-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.brand-page .post-image + .post-image,
-.brand-page .post-image + .embed-container,
-.brand-page .embed-container + .post-image,
-.brand-page .embed-container + .embed-container {
-  margin-top: 2rem;
-}
-
-@media (max-width: 800px) {
-  .brand-page .post-image,
-  .brand-page .embed-container {
-    margin-bottom: 1rem;
-  }
-
-  .brand-page .post-image + .post-image,
-  .brand-page .post-image + .embed-container,
-  .brand-page .embed-container + .post-image,
-  .brand-page .embed-container + .embed-container {
-    margin-top: 1rem;
-  }
-
-  .brand-work-left h2 {
-    margin-top: 3.125rem !important;
-  }
-
-  .brand-work-section h3 {
-    font-size: 1.25rem !important;
-    margin-top: 3.125rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .brand-work-left .work-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-}
-
-/* Brand Page Mobile Styles */
-@media (max-width: 800px) {
-  .brand-page .main-content {
-    padding: 0 1.5rem;
-  }
-
-  .brand-page .header {
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .brand-page .nav-brand {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-
-  .brand-page .hero {
-    padding: 0;
-    margin-bottom: 1rem;
-  }
-
-  .brand-page .hero-title {
-    font-size: 2.5rem;
-    padding: 0;
-    margin-bottom: 2rem;
-  }
-
-  .brand-page .brand-work-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .brand-work-left .work-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .brand-page .capability-tag {
-    font-size: 0.875rem !important;
-    padding: 0.3rem 0.6rem;
-    border: 1px solid rgba(0, 0, 0, 0.6);
-  }
-
-  .brand-work-right .about-text {
-    font-size: 1.25rem !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .brand-work-section {
-    margin-bottom: 3.75rem !important;
-  }
-
-  .brand-work-section h3 {
-    font-size: 1.25rem !important;
-    margin-top: 3.125rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .brand-work-left h2 {
-    font-size: 1.75rem !important;
-    margin-bottom: 1.5rem !important;
-    margin-top: 3.125rem !important;
-  }
-
-  .brand-work-left:first-child h2 {
-    margin-top: 3.125rem !important;
-  }
-
-  .brand-work-right h3 {
-    font-size: 1rem !important;
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .brand-page .post-image,
-  .brand-page .embed-container {
-    margin-bottom: 1rem;
-  }
-
-  .brand-page .post-image + .post-image,
-  .brand-page .post-image + .embed-container,
-  .brand-page .embed-container + .post-image,
-  .brand-page .embed-container + .embed-container {
-    margin-top: 1rem;
-  }
-
-  /* Ensure all h2s have the same top margin */
-  .brand-work-section .brand-work-left h2 {
-    margin-top: 3.125rem !important;
-  }
 }
 
 /* Media query for small screens */

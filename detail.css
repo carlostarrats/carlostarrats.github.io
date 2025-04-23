@@ -1,8 +1,17 @@
-/* Detail Page Styles */
+/* ==========================================================================
+   1. DETAIL PAGE STYLES
+   ========================================================================== */
 .detail-content {
   margin-bottom: 6rem;
+  -webkit-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
+  -moz-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
+  -ms-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
+  font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
 }
 
+/* ==========================================================================
+   2. DETAIL CONTENT TYPOGRAPHY
+   ========================================================================== */
 .detail-content h2 {
   font-size: 2.5rem;
   margin: 3rem 0 2.5rem 0;
@@ -33,6 +42,9 @@
   margin: 0;
 }
 
+/* ==========================================================================
+   3. DETAIL IMAGES
+   ========================================================================== */
 .detail-content .detail-image {
   width: 100%;
   margin: 30px 0 5rem 0;
@@ -58,6 +70,9 @@
   margin-top: 0;
 }
 
+/* ==========================================================================
+   4. DETAIL LISTS
+   ========================================================================== */
 .detail-content .detail-text ul {
   margin: 1rem 0;
   padding-left: 1.5rem;
@@ -75,7 +90,9 @@
   quotes: auto;
 }
 
-/* Header Image Specific Style */
+/* ==========================================================================
+   5. HEADER IMAGE
+   ========================================================================== */
 .detail-header-image {
   width: 100%;
   height: 400px;
@@ -92,8 +109,10 @@
   display: block;
 }
 
-/* Hero Section for Detail Page */
-.brand-page .hero {
+/* ==========================================================================
+   6. HERO SECTION OVERRIDES
+   ========================================================================== */
+.hero {
   padding: 0;
   margin: 0;
   position: relative;
@@ -106,7 +125,7 @@
   margin: 0 0 95px 0;
 }
 
-.brand-page .hero-title {
+.hero-title {
   font-size: 4.5rem;
   font-weight: 400;
   line-height: 1;
@@ -123,14 +142,18 @@
   margin-top: -0.1rem;
 }
 
-/* Work Section - Detail Page specific */
-.brand-page .work {
+/* ==========================================================================
+   7. WORK SECTION OVERRIDES
+   ========================================================================== */
+.work {
   padding: 0;
   position: relative;
   margin: 0;
 }
 
-/* External Links for Detail Page */
+/* ==========================================================================
+   8. EXTERNAL LINKS
+   ========================================================================== */
 .detail-external-links {
   margin-top: 5rem;
 }
@@ -159,6 +182,9 @@
   line-height: 1;
 }
 
+/* ==========================================================================
+   9. PROJECT INFO SECTION
+   ========================================================================== */
 .project-info-section {
   margin: 6rem 0;
 }
@@ -193,6 +219,9 @@
   line-height: 1;
 }
 
+/* ==========================================================================
+   10. RESPONSIVE STYLES
+   ========================================================================== */
 @media (max-width: 800px) {
   .detail-content {
     margin-bottom: 3.75rem;
@@ -231,7 +260,7 @@
     margin: 0 0 80px 0;
   }
 
-  .brand-page .hero-title {
+  .hero-title {
     font-size: 2.5rem;
   }
   
@@ -270,12 +299,4 @@
   .project-info-tag {
     margin-bottom: 1rem;
   }
-}
-
-/* Set global font feature settings for the detail page */
-.brand-page .detail-content {
-  -webkit-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  -moz-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  -ms-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
 } 
