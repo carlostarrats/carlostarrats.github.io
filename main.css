@@ -35,7 +35,7 @@ body {
 
 /* Layout */
 .content-wrapper {
-  max-width: 2000px;
+  max-width: 1700px;
   padding: 0;
   margin: 0 auto;
   width: 100%;
@@ -44,7 +44,7 @@ body {
 
 .main-content {
   padding: 0 4rem;
-  max-width: 2000px;
+  max-width: 1700px;
   margin: 0 auto;
 }
 
@@ -52,7 +52,7 @@ body {
 .header {
   padding: 2rem 4rem;
   position: relative;
-  max-width: 2000px;
+  max-width: 1700px;
   margin: 0 auto;
 }
 
@@ -67,7 +67,7 @@ body {
   transform: translateX(-50%);
   padding: 2rem 4rem;
   z-index: 1000;
-  max-width: 2000px;
+  max-width: 1700px;
   width: 100%;
 }
 
@@ -84,7 +84,7 @@ body {
 .fixed-nav {
   position: fixed;
   top: 2rem;
-  right: max(4rem, calc(50% - 1000px + 4rem));
+  right: max(4rem, calc(50% - 850px + 4rem));
   z-index: 1000;
 }
 
@@ -128,7 +128,7 @@ body {
 .horizontal-scroll-wrapper {
   position: relative;
   width: 100%;
-  max-width: 2000px;
+  max-width: 1700px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -411,7 +411,7 @@ body {
   color: #000;
   font-size: 2rem;
   font-weight: 450;
-  max-width: 2000px;
+  max-width: 1700px;
   margin: 0 auto;
 }
 
@@ -636,11 +636,15 @@ body {
 /* Brand Page Specific Styles */
 .brand-page .main-content {
   padding: 0 4rem;
+  max-width: 1700px;
+  margin: 0 auto;
 }
 
 .brand-page .header {
   padding: 2rem 4rem;
   position: relative;
+  max-width: 1700px;
+  margin: 0 auto;
 }
 
 .brand-page .nav-brand {
