@@ -174,8 +174,9 @@ body {
 .horizontal-scroll-wrapper {
   position: relative;
   width: 100%;
-  max-width: 1700px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -485,20 +486,22 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 2rem;
-    -webkit-overflow-scrolling: touch;
+    padding: 1rem 1.5rem 20px 1.5rem;
+    gap: 1rem;
+    margin: 0;
+    width: 100%;
   }
 
   .index-projects-scroll {
-    padding-bottom: 3rem;
+    padding-left: 0;
   }
 
   .horizontal-scroll-wrapper {
-    overflow-x: hidden;
-    padding-left: 0;
-    padding-right: 0;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
   }
 
   .main-content {
@@ -540,7 +543,7 @@ body {
   }
 
   .project-info {
-    padding: 1rem 0;
+    padding: 1.5rem;
   }
 
   .project-info h3 {
