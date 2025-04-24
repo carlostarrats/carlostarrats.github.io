@@ -43,6 +43,7 @@
   color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0em;
   line-height: 1.4;
+  white-space: normal;
 }
 
 .brand-work-grid {
@@ -61,6 +62,7 @@
   letter-spacing: -0.02em;
   line-height: 1;
   color: #000;
+  white-space: normal;
 }
 
 .brand-work-right .about-text {
@@ -69,6 +71,7 @@
   color: rgba(0, 0, 0, 0.7);
   font-weight: 450;
   margin: 0;
+  white-space: normal;
 }
 
 /* ==========================================================================
