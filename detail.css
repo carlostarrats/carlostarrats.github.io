@@ -3,10 +3,6 @@
    ========================================================================== */
 .detail-content {
   margin-bottom: 6rem;
-  -webkit-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  -moz-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  -ms-font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
-  font-feature-settings: "tnum" 1, "cv10" 1, "cv06" 1, "cv11" 1, "ss02" 1, "cv08" 1, "cv05" 1, "zero" 1, "ss03" 1, "cv12" 1;
 }
 
 /* ==========================================================================
@@ -14,8 +10,8 @@
    ========================================================================== */
 .detail-content h2 {
   font-size: 2.5rem;
-  margin: 3rem 0 2.5rem 0;
   font-weight: 450;
+  margin: 3.125rem 0 1rem 0;
   letter-spacing: -0.02em;
   line-height: 1;
   color: #000;
@@ -28,7 +24,17 @@
 .detail-content h3 {
   font-size: 2rem;
   font-weight: 450;
-  margin: 5rem 0 1rem 0;
+  margin: 3.125rem 0 1rem 0;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0em;
+  line-height: 1.4;
+}
+
+/* Style for h3 elements with the arrow symbol to match brand page */
+.detail-content h3.with-arrow {
+  font-size: 2rem;
+  font-weight: 450;
+  margin: 3.125rem 0 1rem 0;
   color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0em;
   line-height: 1.4;
@@ -37,7 +43,7 @@
 .detail-content .detail-text {
   font-size: 2rem;
   line-height: 1.4;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.7);
   font-weight: 450;
   margin: 0;
 }
@@ -47,11 +53,10 @@
    ========================================================================== */
 .detail-content .detail-image {
   width: 100%;
-  margin: 30px 0 5rem 0;
+  margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
   border-radius: 28px;
-  background-color: transparent;
 }
 
 .detail-content .detail-image img {
@@ -60,14 +65,13 @@
   display: block;
 }
 
-.detail-content .detail-image + h2 {
-  margin-top: 0;
-  color: #000;
+/* Match brand page spacing for consecutive images */
+.detail-content .detail-image + .detail-image {
+  margin-top: 2rem;
 }
 
-.detail-content .detail-image + .detail-text {
-  padding-top: 0;
-  margin-top: 0;
+.detail-content .detail-image + h2 {
+  margin-top: 3.125rem;
 }
 
 /* ==========================================================================
@@ -81,13 +85,6 @@
 
 .detail-content .detail-text li {
   margin-bottom: 0.5rem;
-}
-
-/* No longer need this since we're using HTML entities */
-.detail-content .detail-text li:first-child,
-.detail-content .detail-text li:nth-child(2),
-.detail-content .detail-text li:nth-child(3) {
-  quotes: auto;
 }
 
 /* ==========================================================================
@@ -112,7 +109,7 @@
 /* ==========================================================================
    6. HERO SECTION OVERRIDES
    ========================================================================== */
-.hero {
+.detail-page .hero {
   padding: 0;
   margin: 0;
   position: relative;
@@ -122,10 +119,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 0 95px 0;
+  margin: 0 0 55px 0;
 }
 
-.hero-title {
+.detail-page .hero-title {
   font-size: 4.5rem;
   font-weight: 400;
   line-height: 1;
@@ -140,15 +137,6 @@
   line-height: 1;
   color: rgba(0, 0, 0, 0.6);
   margin-top: -0.1rem;
-}
-
-/* ==========================================================================
-   7. WORK SECTION OVERRIDES
-   ========================================================================== */
-.work {
-  padding: 0;
-  position: relative;
-  margin: 0;
 }
 
 /* ==========================================================================
@@ -227,18 +215,20 @@
     margin-bottom: 3.75rem;
   }
 
-  .detail-content h2,
-  .detail-external-links h2 {
-    font-size: 1.75rem !important;
-    margin: 3.125rem 0 1.5rem 0 !important;
-    font-weight: 450;
-    letter-spacing: -0.02em;
-    line-height: 1;
+  .detail-content h2 {
+    font-size: 1.75rem;
+    margin: 3.125rem 0 1.5rem 0;
   }
 
   .detail-content h3 {
-    font-size: 1.25rem !important;
-    margin: 3.125rem 0 1rem 0 !important;
+    font-size: 1.25rem;
+    margin: 3.125rem 0 1rem 0;
+  }
+
+  /* Mobile style for h3 elements with arrow to match brand page */
+  .detail-content h3.with-arrow {
+    font-size: 1.25rem;
+    margin: 3.125rem 0 1rem 0;
     color: rgba(0, 0, 0, 0.6);
     line-height: 1.4;
     font-weight: 450;
@@ -250,7 +240,20 @@
   }
 
   .detail-content .detail-image {
-    margin: 1rem 0 1rem 0;
+    margin-bottom: 1rem;
+  }
+  
+  /* Match brand page mobile spacing for consecutive images */
+  .detail-content .detail-image + .detail-image {
+    margin-top: 1rem;
+  }
+
+  .detail-content .detail-image + h2 {
+    margin-top: 3.125rem;
+  }
+
+  .detail-content h2:first-child {
+    margin-top: 0;
   }
 
   .detail-header-image {
@@ -259,10 +262,10 @@
   }
 
   .hero-title-container {
-    margin: 0 0 80px 0;
+    margin: 0 0 55px 0;
   }
 
-  .hero-title {
+  .detail-page .hero-title {
     font-size: 2.5rem;
   }
   
@@ -275,15 +278,11 @@
   }
   
   .detail-external-links .capability-tag.external-link {
-    font-size: 1.25rem !important;
+    font-size: 1.25rem;
     padding: 0.5rem 1rem;
     line-height: 1.4;
   }
   
-  .detail-content h2:first-child {
-    margin-top: 0 !important;
-  }
-
   .project-info-section {
     margin: 4rem 0;
   }
@@ -296,9 +295,5 @@
   
   .project-info-label {
     margin-bottom: 0.5rem;
-  }
-  
-  .project-info-tag {
-    margin-bottom: 0.75rem;
   }
 } 

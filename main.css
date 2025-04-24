@@ -116,7 +116,7 @@ body {
 }
 
 .nav-brand {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 450;
   text-decoration: none;
   color: #000;
@@ -136,7 +136,7 @@ body {
 }
 
 .nav-link.pill-link {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 450;
   text-decoration: none;
   color: #000;
@@ -145,7 +145,8 @@ body {
   border-radius: 9999px;
   transition: all 0.2s ease;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: baseline;
+  margin-top: -0.3rem; /* Adjust to align baseline */
 }
 
 .nav-link.pill-link:hover {
@@ -160,6 +161,10 @@ body {
   padding: 0;
   margin-top: 1.5rem;
   margin-bottom: 3rem;
+}
+
+.index-page .hero {
+  margin-top: calc(1.5rem + 60px);  /* Add 100px only for index page */
 }
 
 .hero-title {
@@ -362,7 +367,8 @@ body {
   display: none;
 }
 
-.project-info h3 {
+.project-info h3,
+.unique-title {
   font-size: 1.1rem;
   margin-bottom: 0.1rem;
   font-weight: 450;
@@ -393,7 +399,7 @@ body {
 /* About Section */
 .about {
   padding: 5rem 0 0;
-  margin-bottom: 6rem;
+  margin-bottom: 3.375rem;  /* Increased from 4rem to 5.25rem to add 20px (1.25rem) */
 }
 
 .about h2 {
@@ -428,7 +434,8 @@ body {
 /* Experience Section */
 .experience {
   padding: 0;
-  margin-bottom: 6rem;
+  margin-top: 0;  /* Add space above experience section on desktop */
+  margin-bottom: 4rem;
 }
 
 .experience h3 {
@@ -571,9 +578,11 @@ body {
 
   .nav-link.pill-link {
     font-size: 1.5rem;
+    margin-top: -0.3rem; /* Keep the same baseline alignment on mobile */
   }
 
-  .hero {
+  .hero,
+  .index-page .hero {  /* Reset the extra spacing on mobile */
     margin-top: 1.5rem;
     margin-bottom: 3rem;
   }
@@ -611,7 +620,7 @@ body {
   }
 
   .about {
-    margin-bottom: 4rem;
+    margin-bottom: 3.7rem;
   }
 
   h2, h3 {
@@ -663,6 +672,7 @@ body {
   }
 
   .experience {
+    margin-top: 0;  /* Reset margin for mobile */
     margin-bottom: 4rem;
   }
 
@@ -687,7 +697,7 @@ body {
 
   .footer {
     padding: 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.25rem;  /* Match experience item text size */
   }
 
   .scroll-nav-button {
@@ -722,7 +732,7 @@ body {
   }
   
   .index-page .capabilities:has(.external-link) {
-    margin-top: -20px;
+    margin-top: -10px;  /* Keep mobile spacing as is */
   }
 
   .content-wrapper::after {
@@ -753,9 +763,12 @@ body {
     line-height: 1.1;
   }
 
-  .project-info h3 {
-    margin-bottom: 0 !important;
-    font-size: 1.5rem !important;
+  .project-info h3,
+  .unique-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.1rem !important;
+    padding: 0 !important;
+    line-height: 1 !important;
   }
   
   .project-info p {
@@ -763,29 +776,67 @@ body {
     font-size: 1.25rem !important;
   }
 
-  .unique-title {
-    font-size: 1.1rem !important;
-    margin-bottom: 0.1rem !important;
-  }
-  
   .unique-desc {
-    font-size: 0.9rem !important;
-    margin: 0 !important;
+    font-size: 0.9rem;
+    font-weight: 450;
+    color: rgba(0, 0, 0, 0.6);
+    display: inline;
+  }
+
+  .unique-desc::after {
+    content: "↗";
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #000;
+    margin-left: 8px;
+    display: inline;
+  }
+
+  .unique-card:hover .unique-desc::after {
+    opacity: 1;
   }
 
   /* Reduce space between projects and About section */
   .work + .about {
-    margin-top: -52px; /* Move the About section up by 33px */
+    margin-top: -52px;
+  }
+
+  .unique-card {
+    margin-right: 0.5rem;
+    width: 280px;
+  }
+
+  .unique-info {
+    padding: 1rem;
+  }
+
+  /* Remove any conflicting mobile styles */
+  .project-card .unique-info .unique-title,
+  body .unique-info .unique-title,
+  html .unique-info .unique-title,
+  .index-page .unique-info .unique-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.1rem !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+  }
+  
+  .project-card .unique-info .unique-desc,
+  body .unique-info .unique-desc,
+  html .unique-info .unique-desc,
+  .index-page .unique-info .unique-desc {
+    font-size: 0.9rem !important;
+    margin: 0 !important;
   }
 }
 
 /* Capabilities Section */
-.capabilities {
+.capabilities-section {
   padding: 0;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
 }
 
-.capabilities h2 {
+.capabilities-section-title {
   font-size: 2.5rem;
   margin-bottom: 2.5rem;
   font-weight: 450;
@@ -799,7 +850,7 @@ body {
   gap: 1rem;
 }
 
-.capability-tag {
+.capabilities-tag {
   font-size: 2rem;
   font-weight: 450;
   color: rgba(0, 0, 0, 0.7);
@@ -811,31 +862,149 @@ body {
   white-space: nowrap;
 }
 
-/* External Links */
-.capability-tag.external-link {
+/* External Links Section */
+.external-links-section {
+  padding: 0;
+  margin-bottom: 4rem;
+  margin-top: 20px;
+}
+
+.external-links-section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.external-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.external-link-tag {
+  font-size: 2rem;
+  font-weight: 450;
+  color: rgba(0, 0, 0, 0.7);
+  padding: 0.75rem 1.5rem;
   background-color: #f5f5f5;
   border: none;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.capability-tag.external-link:hover {
+.external-link-tag:hover {
   background-color: #000;
   color: #fff;
 }
 
-/* Media query for small screens */
+/* Experience Section */
+.experience-section {
+  margin-top: 20px;
+  margin-bottom: 4rem;
+}
+
+.experience-section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.experience-grid {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+}
+
+.experience-column {
+  flex: 1;
+}
+
+.experience-item {
+  margin-bottom: 2rem;
+}
+
+.experience-item-title {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+  font-weight: 450;
+  color: rgba(0, 0, 0, 0.9);
+  letter-spacing: 0em;
+  line-height: 1.2;
+}
+
+.experience-item-desc {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 450;
+  letter-spacing: 0em;
+  line-height: 1.2;
+}
+
+@media (max-width: 800px) {
+  .capabilities-section {
+    margin-bottom: 4rem;
+  }
+
+  .external-links-section {
+    margin-top: 0px;
+    margin-bottom: 4rem;
+  }
+
+  .experience-section {
+    margin-top: 0;
+    margin-bottom: 4rem;
+  }
+
+  .capabilities-tag {
+    font-size: 0.875rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+  }
+
+  .capabilities-grid {
+    gap: 0.75rem 0.35rem;
+  }
+
+  .experience-section-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .experience-grid {
+    max-height: 1000px;
+    gap: 1rem;
+  }
+
+  .experience-item-title {
+    font-size: 1.25rem;
+  }
+
+  .experience-item-desc {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+}
+
 @media (max-width: 600px) {
   .experience-grid {
     flex-direction: column;
     gap: 0;
   }
-  
+
   .experience-column {
     width: 100%;
   }
-  
-  .capability-tag.external-link {
+
+  .external-link-tag {
     white-space: normal;
     text-align: left;
     height: auto;
@@ -846,86 +1015,6 @@ body {
     display: inline-flex;
     justify-content: flex-start;
     font-size: 1.25rem;
-  }
-}
-
-/* Unique Project Card Styling */
-.unique-card {
-  flex: 0 0 auto;
-  width: 400px;
-  text-decoration: none;
-  color: inherit;
-  background: #f5f5f5;
-  border-radius: 28px;
-  overflow: hidden;
-}
-
-.unique-card:hover .project-image img {
-  transform: scale(1.07);
-}
-
-.unique-info {
-  padding: 1.5rem;
-  background: #f5f5f5;
-}
-
-.unique-title {
-  font-size: 1.35rem !important;
-  margin-bottom: 0.1rem;
-  font-weight: 450;
-  color: rgba(0, 0, 0, 0.9);
-  letter-spacing: 0em;
-}
-
-.unique-desc {
-  font-size: 0.9rem;
-  font-weight: 450;
-  color: rgba(0, 0, 0, 0.6);
-  display: inline;
-}
-
-.unique-desc::after {
-  content: "↗";
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #000;
-  margin-left: 8px;
-  display: inline;
-}
-
-.unique-card:hover .unique-desc::after {
-  opacity: 1;
-}
-
-/* Mobile adjustments for unique cards */
-@media (max-width: 800px) {
-  .unique-card {
-    margin-right: 0.5rem;
-    width: 280px;
-  }
-
-  .unique-info {
-    padding: 1rem;
-  }
-
-  .project-card .unique-info .unique-title,
-  body .unique-info .unique-title,
-  html .unique-info .unique-title,
-  .index-page .unique-info .unique-title,
-  .unique-title {
-    font-size: 1.1rem !important;
-    margin-bottom: 0.1rem !important;
-    padding-bottom: 0 !important;
-  }
-  
-  .project-card .unique-info .unique-desc,
-  body .unique-info .unique-desc,
-  html .unique-info .unique-desc,
-  .index-page .unique-info .unique-desc,
-  .unique-desc {
-    font-size: 0.9rem !important;
-    margin: 0 !important;
-    padding-top: 0 !important;
   }
 }
 
