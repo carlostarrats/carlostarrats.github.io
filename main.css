@@ -536,6 +536,7 @@ body {
 
   .project-card {
     margin-right: 1.5rem;
+    width: 280px;
   }
 
   .project-info {
