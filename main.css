@@ -511,29 +511,16 @@ body {
     gap: 0.5rem;
     margin: 0;
     width: 100%;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    -ms-overflow-style: auto;
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+    -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
+    scrollbar-width: none; /* Hide scrollbar on Firefox */
+    overflow-y: hidden;
+    overflow-x: auto; /* Use auto instead of scroll */
   }
 
-  /* Mobile scrollbar styles */
+  /* Hide WebKit scrollbar to use system default on iOS */
   .projects-scroll::-webkit-scrollbar {
-    height: 6px;
-    background: transparent;
-    display: block;
-  }
-
-  .projects-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
-  }
-
-  /* Firefox */
-  .projects-scroll {
-    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
-    scrollbar-width: thin;
-    margin-bottom: 10px; /* Add space for the scrollbar */
-    padding-bottom: 20px; /* Increased space between cards and scrollbar */
+    display: none;
   }
 
   .index-projects-scroll {
