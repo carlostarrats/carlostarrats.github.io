@@ -93,10 +93,15 @@ body {
   position: relative;
   max-width: 1700px;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-content {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .fixed-brand {
@@ -117,7 +122,7 @@ body {
   color: #000;
   letter-spacing: 0em;
   display: block;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .fixed-nav {
@@ -125,6 +130,8 @@ body {
   top: 2rem;
   right: max(4rem, calc(50% - 850px + 4rem));
   z-index: 1000;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link.pill-link {
@@ -136,6 +143,8 @@ body {
   padding: 0.3rem 0.6rem;
   border-radius: 9999px;
   transition: all 0.2s ease;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .nav-link.pill-link:hover {
@@ -148,7 +157,8 @@ body {
    ========================================================================== */
 .hero {
   padding: 0;
-  margin-bottom: 4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .hero-title {
@@ -275,7 +285,7 @@ body {
   margin: 0;
   padding: 0 4rem 20px 4rem;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   overflow-x: scroll;
   overflow-y: hidden;
   position: relative;
@@ -487,7 +497,7 @@ body {
 @media (max-width: 800px) {
   .projects-scroll {
     padding: 1rem 1.5rem 20px 1.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
     margin: 0;
     width: 100%;
   }
@@ -514,11 +524,12 @@ body {
 
   .fixed-nav {
     right: 1.5rem;
+    top: 1.5rem;
   }
 
   .nav-brand {
     font-size: 1.75rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   .nav-link.pill-link {
@@ -526,6 +537,7 @@ body {
   }
 
   .hero {
+    margin-top: 1.5rem;
     margin-bottom: 3rem;
   }
 
@@ -538,7 +550,7 @@ body {
   }
 
   .project-card {
-    margin-right: 1.5rem;
+    margin-right: 0.5rem;
     width: 280px;
   }
 
@@ -558,11 +570,10 @@ body {
     margin-bottom: 4rem;
   }
 
-  .about h2,
-  .capabilities h2,
-  .experience h3 {
-    font-size: 1.75rem;
-    margin-bottom: 1.5rem;
+  /* Section headings on mobile - all at same size */
+  h2, h3 {
+    font-size: 1.75rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
   .about-text {
@@ -661,6 +672,17 @@ body {
   /* Adjust gradient height for mobile */
   .content-wrapper::after {
     height: 80px;
+  }
+
+  /* Section headings on mobile */
+  h2, h3 {
+    font-size: 1.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .about-text {
+    font-size: 1.25rem;
+    line-height: 1.4;
   }
 }
 
