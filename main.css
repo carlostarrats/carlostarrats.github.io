@@ -283,6 +283,7 @@ body {
 /* Projects Grid */
 .projects-scroll {
   margin: 0;
+  margin-top: 20px; /* Increased space above projects */
   padding: 0 4rem 20px 4rem;
   display: flex;
   gap: 1rem;
@@ -304,16 +305,24 @@ body {
   height: 2px;
   background: transparent;
   display: block;
+  margin-top: 15px; /* Space between cards and scrollbar */
+}
+
+.projects-scroll::-webkit-scrollbar-track {
+  margin-top: 15px; /* Space between cards and scrollbar track */
 }
 
 .projects-scroll::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 2px;
+  margin-top: 15px; /* Space between cards and scrollbar thumb */
 }
 
 /* Firefox */
 .projects-scroll {
-  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  scrollbar-width: thin;
+  padding-bottom: 10px; /* Space for the scrollbar */
 }
 
 .project-card {
@@ -324,6 +333,7 @@ body {
   background: #f5f5f5;
   border-radius: 28px;
   overflow: hidden;
+  margin-bottom: 15px; /* Added space below cards, which appears above scrollbar */
 }
 
 .project-image {
@@ -383,7 +393,7 @@ body {
 
 /* About Section */
 .about {
-  padding: 6rem 0 0;
+  padding: 5rem 0 0;
   margin-bottom: 6rem;
 }
 
@@ -497,7 +507,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    padding: 1rem 1.5rem 20px 1.5rem;
+    padding: 1rem 1.5rem 30px 1.5rem; /* Increased bottom padding */
     gap: 0.5rem;
     margin: 0;
     width: 100%;
@@ -508,19 +518,22 @@ body {
 
   /* Mobile scrollbar styles */
   .projects-scroll::-webkit-scrollbar {
-    height: 2px;
+    height: 6px;
     background: transparent;
     display: block;
   }
 
   .projects-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
   }
 
   /* Firefox */
   .projects-scroll {
-    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    scrollbar-width: thin;
+    margin-bottom: 10px; /* Add space for the scrollbar */
+    padding-bottom: 20px; /* Increased space between cards and scrollbar */
   }
 
   .index-projects-scroll {
@@ -529,7 +542,7 @@ body {
 
   /* Reduce space between projects and About section */
   .work + .about {
-    margin-top: -20px;
+    margin-top: -30px; /* Increased from -20px to -30px to move it up more */
   }
 
   .horizontal-scroll-wrapper {
