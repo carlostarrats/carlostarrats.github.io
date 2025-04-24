@@ -268,8 +268,8 @@
           const viewportWidth = scrollContainer.clientWidth;
           const scrollableWidth = totalWidth - viewportWidth;
           
-          // Calculate the thumb scale (minimum 0.2 or 20% of track width)
-          const thumbScale = Math.max(0.2, viewportWidth / totalWidth);
+          // Calculate the thumb scale (minimum 0.33 or 33% of track width)
+          const thumbScale = Math.max(0.4, viewportWidth / totalWidth);
           
           // Calculate scroll progress (0 to 1)
           const scrollProgress = scrollContainer.scrollLeft / scrollableWidth;

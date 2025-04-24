@@ -505,7 +505,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    padding: 1rem 1.5rem 30px 1.5rem;
+    padding: 1rem 1.5rem 24px 1.5rem;
     gap: 0.5rem;
     margin: 0;
     width: 100%;
@@ -530,7 +530,7 @@ body {
     bottom: 15px;
     left: 1.5rem;
     right: 1.5rem;
-    height: 4px;
+    height: 2px;
     pointer-events: none;
     overflow: hidden;
   }
