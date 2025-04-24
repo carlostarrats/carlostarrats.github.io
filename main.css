@@ -595,14 +595,15 @@ body {
   }
 
   .projects-scroll .project-card .project-info h3 {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin: 0;
+    margin-bottom: 0.1rem;
     padding: 0;
     line-height: 1;
   }
 
   .projects-scroll .project-card .project-info p {
-    font-size: 1.35rem;
+    font-size: 0.9rem;
     margin: 0;
     padding: 0;
     line-height: 1.1;
@@ -623,14 +624,15 @@ body {
   }
 
   body.index-page .main-content .projects-scroll .project-card .project-info h3 {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin: 0;
+    margin-bottom: 0.1rem;
     padding: 0;
     line-height: 1;
   }
 
   body.index-page .main-content .projects-scroll .project-card .project-info p {
-    font-size: 1.35rem;
+    font-size: 0.9rem;
     margin: 0;
     padding: 0;
     line-height: 1.1;
@@ -761,12 +763,13 @@ body {
   }
 
   .unique-title {
-    font-size: 1.5rem !important;
-    margin-bottom: 20px !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.1rem !important;
   }
   
   .unique-desc {
-    margin-top: 20px !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
   }
 
   /* Reduce space between projects and About section */
@@ -909,8 +912,8 @@ body {
   html .unique-info .unique-title,
   .index-page .unique-info .unique-title,
   .unique-title {
-    font-size: 1.5rem !important;
-    margin-bottom: 10px !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.1rem !important;
     padding-bottom: 0 !important;
   }
   
@@ -919,7 +922,8 @@ body {
   html .unique-info .unique-desc,
   .index-page .unique-info .unique-desc,
   .unique-desc {
-    margin-top: 10px !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
     padding-top: 0 !important;
   }
 }
