@@ -509,40 +509,26 @@ body {
     gap: 0.5rem;
     margin: 0;
     width: 100%;
-    overflow-x: auto; /* Changed from scroll to auto */
+    overflow-x: auto;
     overflow-y: hidden;
-    scrollbar-width: auto; /* Standard scrollbar width */
-    -ms-overflow-style: auto; /* Standard IE scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  /* Scrollbar styles for WebKit browsers on mobile */
   .projects-scroll::-webkit-scrollbar {
-    height: 6px; /* Taller scrollbar for visibility */
-    background: transparent;
-    display: block; /* Ensure scrollbar is visible */
+    display: none;
   }
 
   .projects-scroll::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
+    display: none;
   }
 
   .projects-scroll::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.4); /* Darker for visibility */
-    border-radius: 3px;
-  }
-
-  /* Remove duplicated ::after content that might cause issues */
-  .projects-scroll::after {
     display: none;
   }
 
   .index-projects-scroll {
     padding-left: 0;
-  }
-
-  /* Reduce space between projects and About section */
-  .work + .about {
-    margin-top: -30px; /* Increased from -20px to -30px to move it up more */
   }
 
   .horizontal-scroll-wrapper {
@@ -597,7 +583,6 @@ body {
     padding: 1rem;
   }
 
-  /* Project card specific styling for mobile */
   .projects-scroll .project-card .project-info h3 {
     font-size: 1.5rem;
     margin: 0;
@@ -616,7 +601,6 @@ body {
     margin-bottom: 4rem;
   }
 
-  /* Section headings on mobile */
   h2, h3 {
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
@@ -627,7 +611,6 @@ body {
     line-height: 1.4;
   }
 
-  /* Final mobile-specific project card styling */
   body.index-page .main-content .projects-scroll .project-card .project-info h3 {
     font-size: 1.5rem;
     margin: 0;
@@ -652,7 +635,6 @@ body {
     line-height: 1.4;
   }
   
-  /* Allow external links to wrap on mobile/tablet */
   .capability-tag.external-link {
     white-space: normal;
     text-align: left;
@@ -711,7 +693,6 @@ body {
     height: 24px;
   }
 
-  /* Index page specific mobile capability tags - ONLY for regular capabilities, not external links */
   .index-page .capabilities:not(:has(.external-link)) .capability-tag {
     font-size: 0.875rem;
     padding: 0.3rem 0.6rem;
@@ -722,7 +703,6 @@ body {
     gap: 0.75rem 0.35rem;
   }
 
-  /* Reduced spacing for Experience and External Links sections on mobile for index page */
   .index-page .experience {
     margin-top: -20px;
   }
@@ -731,12 +711,10 @@ body {
     margin-top: -20px;
   }
 
-  /* Adjust gradient height for mobile */
   .content-wrapper::after {
     height: 80px;
   }
 
-  /* Apply to all h2, h3 EXCEPT those in project cards */
   h2:not(.project-info > h2), h3:not(.project-info > h3) {
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
@@ -747,7 +725,6 @@ body {
     line-height: 1.4;
   }
 
-  /* Project card styles with highly specific selector */
   .index-page .projects-scroll .project-card .project-info.mobile-card-info h3 {
     font-size: 1.5rem;
     margin: 0;
@@ -762,14 +739,13 @@ body {
     line-height: 1.1;
   }
 
-  /* Fix for project card spacing */
   .project-info h3 {
     margin-bottom: 0 !important;
     font-size: 1.5rem !important;
   }
   
   .project-info p {
-    margin-top: 0 !important; /* Reset margin */
+    margin-top: 0 !important;
     font-size: 1.25rem !important;
   }
 
@@ -780,6 +756,11 @@ body {
   
   .unique-desc {
     margin-top: 20px !important;
+  }
+
+  /* Reduce space between projects and About section */
+  .work + .about {
+    margin-top: -52px; /* Move the About section up by 33px */
   }
 }
 
@@ -839,7 +820,6 @@ body {
     width: 100%;
   }
   
-  /* Allow external links to wrap on mobile */
   .capability-tag.external-link {
     white-space: normal;
     text-align: left;
@@ -933,15 +913,9 @@ body {
   }
 }
 
-/* Scroll indicator for mobile - REMOVE THIS SECTION */
-.scroll-indicator {
-  display: none; /* Hide the custom indicator */
-}
-
-.scroll-indicator.visible {
-  display: none; /* Hide the custom indicator when visible class is applied */
-}
-
+/* Scroll indicator section - completely remove */
+.scroll-indicator,
+.scroll-indicator.visible,
 .scroll-indicator .dot {
-  display: none; /* Hide the dots */
+  display: none;
 }
