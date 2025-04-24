@@ -1,14 +1,19 @@
-# Block all robots from indexing or crawling this website
+# Allow favicon and metadata but block crawling of other content
 User-agent: *
 Disallow: /
+Allow: /favicon.ico
+Allow: /
 
-# Explicitly block Google
+# Explicitly block Google but allow favicon and metadata
 User-agent: Googlebot
 Disallow: /
+Allow: /favicon.ico
+Allow: /
 
-# Explicitly block Google Image crawler
+# Explicitly block Google Image crawler but allow favicon
 User-agent: Googlebot-Image
 Disallow: /
+Allow: /favicon.ico
 
 # Explicitly block AI crawlers
 User-agent: GPTBot
@@ -36,4 +41,8 @@ User-agent: PerplexityBot
 Disallow: /
 
 User-agent: cohere-ai
-Disallow: / 
+Disallow: /
+
+# Control indexing with noindex directive for search results
+# Note: For full control, also add <meta name="robots" content="noindex,nofollow"> 
+# in your HTML head except on your homepage 
