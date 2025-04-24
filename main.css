@@ -511,32 +511,43 @@ body {
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    -ms-overflow-style: none;
+    position: relative;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .projects-scroll::-webkit-scrollbar {
     display: none;
   }
 
-  .projects-scroll::-webkit-scrollbar-track {
-    display: none;
+  .horizontal-scroll-wrapper {
+    position: relative;
+    overflow: hidden;
   }
 
-  .projects-scroll::-webkit-scrollbar-thumb {
-    display: none;
+  .scroll-track {
+    position: absolute;
+    bottom: 15px;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 4px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .scroll-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    transform-origin: left;
   }
 
   .index-projects-scroll {
     padding-left: 0;
-  }
-
-  .horizontal-scroll-wrapper {
-    width: 100%;
-    max-width: 100%;
-    position: relative;
-    margin: 0;
-    padding: 0;
   }
 
   .main-content {

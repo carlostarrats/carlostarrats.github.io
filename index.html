@@ -62,6 +62,7 @@
             </svg>
           </button>
           <div class="projects-scroll index-projects-scroll">
+            <div class="scroll-progress"></div>
             <a href="https://www.dds.mil" target="_blank" class="project-card unique-card" data-aos="fade-up">
               <div class="project-image">
                 <img src="images/main-dds.jpg" alt="Defense Digital Service homepage with military cyber security interface">
@@ -127,10 +128,13 @@
                 <img src="images/main-brand.jpg" alt="Collection of brand identity and creative design projects">
               </div>
               <div class="project-info unique-info">
-                <h3 class="unique-title">Various Brand Work</h3>
+                <h3 class="unique-title">Brand Work</h3>
                 <p class="unique-desc">Multidisciplinary Design</p>
               </div>
             </a>
+          </div>
+          <div class="scroll-track">
+            <div class="scroll-thumb"></div>
           </div>
         </div>
       </section>
@@ -252,13 +256,33 @@
       offset: 50
     });
 
-    // Scroll navigation
     document.addEventListener('DOMContentLoaded', function () {
       const scrollContainer = document.querySelector('.projects-scroll');
+      const scrollThumb = document.querySelector('.scroll-thumb');
       const prevButton = document.querySelector('.scroll-nav-button.prev');
       const nextButton = document.querySelector('.scroll-nav-button.next');
 
-      // Update button visibility
+      function updateScroll() {
+        if (scrollContainer && scrollThumb) {
+          const totalWidth = scrollContainer.scrollWidth;
+          const viewportWidth = scrollContainer.clientWidth;
+          const scrollableWidth = totalWidth - viewportWidth;
+          
+          // Calculate the thumb scale (minimum 0.2 or 20% of track width)
+          const thumbScale = Math.max(0.2, viewportWidth / totalWidth);
+          
+          // Calculate scroll progress (0 to 1)
+          const scrollProgress = scrollContainer.scrollLeft / scrollableWidth;
+          
+          // Calculate maximum translation to keep thumb visible
+          const maxTranslate = (1 - thumbScale) * 100;
+          const translateX = scrollProgress * maxTranslate;
+          
+          // Apply transform with both translation and scale
+          scrollThumb.style.transform = `translateX(${translateX}%) scaleX(${thumbScale})`;
+        }
+      }
+
       function updateButtonVisibility() {
         const isScrollable = scrollContainer.scrollWidth > scrollContainer.clientWidth;
         const isAtStart = scrollContainer.scrollLeft <= 0;
@@ -268,7 +292,6 @@
         nextButton.classList.toggle('visible', isScrollable && !isAtEnd);
       }
 
-      // Scroll to next/previous item
       function scrollToNext() {
         const itemWidth = scrollContainer.querySelector('.project-card').offsetWidth;
         scrollContainer.scrollBy({ left: itemWidth + 24, behavior: 'smooth' });
@@ -280,12 +303,21 @@
       }
 
       // Event listeners
+      scrollContainer.addEventListener('scroll', () => {
+        requestAnimationFrame(updateScroll);
+        updateButtonVisibility();
+      });
+      
+      window.addEventListener('resize', () => {
+        requestAnimationFrame(updateScroll);
+        updateButtonVisibility();
+      });
+      
       nextButton.addEventListener('click', scrollToNext);
       prevButton.addEventListener('click', scrollToPrev);
-      scrollContainer.addEventListener('scroll', updateButtonVisibility);
-      window.addEventListener('resize', updateButtonVisibility);
 
-      // Initial check
+      // Initial updates
+      updateScroll();
       updateButtonVisibility();
     });
   </script>
