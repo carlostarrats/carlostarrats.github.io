@@ -305,24 +305,22 @@ body {
   height: 2px;
   background: transparent;
   display: block;
-  margin-top: 15px; /* Space between cards and scrollbar */
 }
 
 .projects-scroll::-webkit-scrollbar-track {
-  margin-top: 15px; /* Space between cards and scrollbar track */
+  margin-top: 0;
 }
 
 .projects-scroll::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 2px;
-  margin-top: 15px; /* Space between cards and scrollbar thumb */
 }
 
 /* Firefox */
 .projects-scroll {
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
   scrollbar-width: thin;
-  padding-bottom: 10px; /* Space for the scrollbar */
+  padding-bottom: 10px;
 }
 
 .project-card {
@@ -507,19 +505,17 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    padding: 1rem 1.5rem 30px 1.5rem; /* Increased bottom padding */
+    padding: 1rem 1.5rem 30px 1.5rem;
     gap: 0.5rem;
     margin: 0;
     width: 100%;
     -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
-    -ms-overflow-style: none; /* Hide scrollbar on IE/Edge */
-    scrollbar-width: none; /* Hide scrollbar on Firefox */
     overflow-y: hidden;
-    overflow-x: auto; /* Use auto instead of scroll */
+    overflow-x: scroll; /* Force scrollbar to be visible */
   }
 
-  /* Hide WebKit scrollbar to use system default on iOS */
-  .projects-scroll::-webkit-scrollbar {
+  /* Remove duplicated ::after content that might cause issues */
+  .projects-scroll::after {
     display: none;
   }
 
