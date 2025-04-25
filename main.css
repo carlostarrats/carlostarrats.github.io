@@ -460,7 +460,7 @@ body {
 
 .experience-column {
   flex: 1;
-  min-width: 350px; /* Add a minimum width to encourage wrapping */
+  min-width: 334px; /* Adjust min-width to wrap at ~732px viewport */
 }
 
 .experience-item {
