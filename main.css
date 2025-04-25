@@ -726,7 +726,7 @@ body {
   }
 
   .content-wrapper::after {
-    height: 80px;
+    height: 125px;
   }
 
   h2:not(.project-info > h2), h3:not(.project-info > h3) {
