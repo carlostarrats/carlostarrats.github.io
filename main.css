@@ -669,8 +669,8 @@ body {
     height: auto;
     min-height: 2.5rem;
     box-sizing: border-box;
-    display: inline-flex;
-    justify-content: flex-start;
+    display: inline-block;
+    vertical-align: top;
     max-width: 100%;
     width: auto;
     font-size: 1.25rem;
@@ -698,11 +698,6 @@ body {
   .experience-item p {
     font-size: 1.25rem;
     line-height: 1.4;
-  }
-
-  .footer {
-    padding: 1.5rem;
-    font-size: 1.25rem;  /* Match experience item text size */
   }
 
   .scroll-nav-button {
@@ -832,6 +827,22 @@ body {
   .index-page .unique-info .unique-desc {
     font-size: 0.9rem !important;
     margin: 0 !important;
+  }
+
+  /* Add specific rule for index.html external links at this breakpoint */
+  .external-links-section .external-link-tag {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .footer {
+    padding: 1.5rem;
+    font-size: 1.25rem;  /* Match experience item text size */
   }
 }
 
@@ -996,30 +1007,6 @@ body {
   .experience-item-desc {
     font-size: 1.25rem;
     line-height: 1.4;
-  }
-}
-
-@media (max-width: 600px) {
-  .experience-grid {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .experience-column {
-    width: 100%;
-  }
-
-  .external-link-tag {
-    white-space: normal;
-    text-align: left;
-    height: auto;
-    min-height: 2.5rem;
-    width: auto;
-    max-width: 100%;
-    box-sizing: border-box;
-    display: inline-flex;
-    justify-content: flex-start;
-    font-size: 1.25rem;
   }
 }
 
