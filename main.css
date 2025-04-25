@@ -451,13 +451,16 @@ body {
 
 .experience-grid {
   display: flex;
-  gap: 2rem;
+  column-gap: 2rem;
+  row-gap: 0;
   margin-top: 2rem;
   max-width: 1200px;
+  flex-wrap: wrap;
 }
 
 .experience-column {
   flex: 1;
+  min-width: 350px; /* Add a minimum width to encourage wrapping */
 }
 
 .experience-item {
@@ -688,7 +691,8 @@ body {
 
   .experience-grid {
     max-height: 1000px;
-    gap: 1rem;
+    column-gap: 1rem;
+    row-gap: 0;
   }
 
   .experience-item h4 {
@@ -938,6 +942,7 @@ body {
   gap: 2rem;
   margin-top: 2rem;
   max-width: 1200px;
+  flex-wrap: wrap;
 }
 
 .experience-column {
@@ -997,7 +1002,8 @@ body {
 
   .experience-grid {
     max-height: 1000px;
-    gap: 1rem;
+    column-gap: 1rem;
+    row-gap: 0;
   }
 
   .experience-item-title {
