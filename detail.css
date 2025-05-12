@@ -277,15 +277,27 @@
   }
 
   .detail-external-links {
-    margin-top: 3rem;
+    margin-top: 3.75rem;
   }
-  
+
   .detail-external-links .capability-tag.external-link {
-    font-size: 1.25rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    padding: 0.3rem 0.6rem;
     line-height: 1.4;
+    white-space: normal;
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #f5f5f5;
+    border: none;
+    height: auto;
+    min-height: unset;
   }
-  
+
+  .detail-external-links .capabilities-grid {
+    gap: 0.75rem 0.35rem;
+  }
+
   .project-info-section {
     margin: 4rem 0;
   }

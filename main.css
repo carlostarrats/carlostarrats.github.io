@@ -75,7 +75,6 @@ body {
   transform: translateX(-50%);
   width: 100vw;
   height: 160px;
-  background: linear-gradient(to top, rgba(204, 204, 255, 1) 0%, rgba(204, 204, 255, 0) 100%);
   pointer-events: none;
   z-index: -1;
 }
@@ -816,13 +815,21 @@ body {
 
   /* Add specific rule for index.html external links at this breakpoint */
   .external-links-section .external-link-tag {
-    font-size: 1.25rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    padding: 0.3rem 0.6rem;
     line-height: 1.4;
     white-space: normal;
     text-align: left;
     display: inline-block;
     vertical-align: top;
+    background-color: #f5f5f5;
+    border: none;
+    height: auto;
+    min-height: unset;
+  }
+
+  .external-links-grid {
+    gap: 0.75rem 0.35rem;
   }
 
   .footer {
