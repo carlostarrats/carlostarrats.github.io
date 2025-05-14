@@ -173,6 +173,7 @@ body {
   line-height: 1;
   margin-bottom: 2rem;
   letter-spacing: -0.03em;
+  max-width: 1050px;
 }
 
 /* ==========================================================================
