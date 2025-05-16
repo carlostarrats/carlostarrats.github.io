@@ -32,12 +32,12 @@
 
 /* Style for h3 elements with the arrow symbol to match brand page */
 .detail-content h3.with-arrow {
-  font-size: 2rem;
-  font-weight: 450;
+  font-size: 1.4rem;
+  font-weight: 500;
   margin: 3.125rem 0 1rem 0;
   color: rgba(0, 0, 0, 0.6);
   letter-spacing: 0em;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .detail-content .detail-text {
