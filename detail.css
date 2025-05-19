@@ -312,4 +312,137 @@
   .project-info-label {
     margin-bottom: 0.5rem;
   }
+}
+
+/* ==========================================================================
+   11. TWO COLUMN SECTION (CUSTOM)
+   ========================================================================== */
+.detail-two-col-section {
+  display: flex;
+  gap: 1.35rem;
+  margin: 6rem 0 2rem 0;
+}
+
+.detail-two-col-col {
+  border: 1px dashed #9b9b9b;
+  border-radius: 28px;
+  padding: 1.25rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  background: none;
+}
+
+.detail-two-col-heading {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(0, 0, 0,);
+  margin-bottom: 0;
+  letter-spacing: 0em;
+  white-space: nowrap;
+}
+
+.detail-two-col-text {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 450;
+  margin-top: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.detail-two-col-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 450;
+  color: rgba(0, 0, 0, 0.7);
+  background: #f5f5f5;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.3rem 0.6rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+.detail-two-col-link:hover {
+  background: #000;
+  color: #fff;
+}
+
+.detail-two-col-col > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.detail-two-col-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.detail-two-col-pill {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 450;
+  color: rgba(0, 0, 0, 0.7);
+  background: none;
+  border: 1px solid #000;
+  border-radius: 9999px;
+  padding: 0.3rem 0.6rem;
+  line-height: 1;
+  vertical-align: middle;
+  box-sizing: border-box;
+  margin-top: 0;
+}
+
+.detail-two-col-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0px 8px;
+  margin-top: 8px;
+}
+
+.detail-two-col-heading + .detail-two-col-links {
+  margin-top: 0;
+}
+
+.detail-two-col-heading {
+  margin-bottom: 0;
 } 
+
+.detail-two-col-row {
+  display: flex;
+  gap: 36px;
+  width: 100%;
+}
+
+
+@media (max-width: 800px) {
+  .detail-two-col-section {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .detail-two-col-col {
+    padding: 1.25rem;
+  }
+  .detail-two-col-heading {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+  }
+  .detail-two-col-link {
+    font-size: 0.875rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .detail-two-col-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .detail-two-col-row {
+    gap: 0px;
+  }
+}
+
