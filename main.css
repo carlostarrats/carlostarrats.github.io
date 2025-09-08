@@ -20,6 +20,17 @@ html::after {
 /* ==========================================================================
    2. TYPOGRAPHY AND GLOBAL STYLES
    ========================================================================== */
+
+/* Custom Font - Ortica Linear Regular */
+@font-face {
+  font-family: 'Ortica Linear';
+  src: url('Font/OrticaLinear-Regular.woff2') format('woff2'),
+       url('Font/OrticaLinear-Regular.woff') format('woff'),
+       url('Font/OrticaLinear-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 body {
   font-family: 'Inter var', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.2;
