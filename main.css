@@ -358,6 +358,7 @@ body {
   overflow: hidden;
   background: #fff;
   margin-bottom: 0;
+  border-radius: 4px;
 }
 
 .project-image img {
