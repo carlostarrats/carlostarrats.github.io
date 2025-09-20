@@ -164,8 +164,10 @@ body {
 
 /* Remove left padding for first project card on index page */
 .index-page .projects-scroll {
-  padding-left: 0;
-  margin-left: -0.5rem; /* Offset the main-content padding */
+  padding-left: 3rem;
+  padding-right: 0;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 
 .index-page .projects-scroll .project-card:first-child {
@@ -522,7 +524,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    padding: 1rem 1.5rem 24px 1.5rem;
+    padding: 1rem 0 24px 1.5rem;
     gap: 0.5rem;
     margin: 0;
     width: 100%;
@@ -567,9 +569,12 @@ body {
     padding-left: 0;
   }
 
-  /* Fix clipping on mobile for index page projects */
+  /* Mobile: same full-width approach as desktop */
   .index-page .projects-scroll {
-    margin-left: -0.5rem; /* Use same offset as desktop */
+    padding-left: 1rem;
+    padding-right: 0;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
 
   .main-content {
