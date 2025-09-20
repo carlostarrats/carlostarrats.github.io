@@ -21,11 +21,20 @@
 }
 
 .hero-title {
-  font-size: 4.5rem;
+  font-size: 6.75rem;
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.9;
   margin-bottom: 1rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.05em;
+}
+
+/* Desktop hero font weight and size for brand page */
+@media (min-width: 801px) {
+  .hero-title {
+    font-weight: 300;
+    font-size: 7.25rem;
+    margin-left: -0.35rem;
+  }
 }
 
 /* ==========================================================================
