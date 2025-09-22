@@ -572,7 +572,7 @@ body {
   /* Mobile: same full-width approach as desktop */
   .index-page .projects-scroll {
     padding-left: 1rem;
-    padding-right: 1.5rem;
+    padding-right: 1rem;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
