@@ -140,48 +140,7 @@ body.detail-page footer {
   opacity: 0.7 !important;
 }
 
-/* Random squares styling */
-.random-squares {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  pointer-events: none !important;
-  z-index: 5 !important;
-  overflow: hidden !important;
-}
 
-.random-square {
-  position: absolute !important;
-  width: 30px !important;
-  height: 30px !important;
-  opacity: 0 !important;
-  -webkit-transform: scale(0) !important;
-  transform: scale(0) !important;
-  -webkit-transition: opacity 0.2s ease, -webkit-transform 0.2s ease !important;
-  transition: opacity 0.2s ease, transform 0.2s ease !important;
-  border: 2px solid #ffffff !important;
-  z-index: 100 !important;
-  display: block !important;
-  visibility: visible !important;
-}
-
-.random-square.color-1 {
-  background-color: #ff6b6b !important;
-}
-
-.random-square.color-2 {
-  background-color: #4ecdc4 !important;
-}
-
-.random-square.color-3 {
-  background-color: #45b7d1 !important;
-}
-
-.random-square.color-4 {
-  background-color: #96ceb4 !important;
-}
 
 /* Responsive scaling for project description - same as h3 */
 @media (max-width: 800px) {
@@ -198,6 +157,39 @@ body.detail-page footer {
   }
   
   .app-store-download {
-    top: calc(50% + 17.5vw + 15px) !important;
+    top: calc(50% + 15vw + 15px) !important;
+  }
+  
+  /* Hide footer on mobile for control detail page */
+  body.detail-page footer {
+    display: none !important;
+  }
+  
+  /* Make background image smaller on mobile */
+  body.detail-page {
+    background-size: 150% !important;
+    background-position: center bottom !important;
+    position: relative !important;
+  }
+  
+  /* Add overlay for background image opacity on mobile */
+  body.detail-page::before {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-image: url('images/detail-control-1.jpg') !important;
+    background-size: 150% !important;
+    background-position: center bottom !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.6 !important;
+    z-index: -1 !important;
+  }
+  
+  /* Hide original background image on mobile */
+  body.detail-page {
+    background-image: none !important;
   }
 }
