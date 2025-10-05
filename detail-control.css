@@ -110,7 +110,7 @@ body.detail-page footer {
 
 @media (max-width: 600px) {
   body.detail-page .hero-title {
-    font-size: 35vw !important;
+    font-size: 30vw !important;
   }
 }
 
