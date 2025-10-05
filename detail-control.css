@@ -167,7 +167,7 @@ body.detail-page footer {
   
   /* Make background image smaller on mobile */
   body.detail-page {
-    background-size: 150% !important;
+    background-size: 100% !important;
     background-position: center bottom !important;
     position: relative !important;
   }
@@ -181,7 +181,7 @@ body.detail-page footer {
     width: 100% !important;
     height: 100% !important;
     background-image: url('images/detail-control-1.jpg') !important;
-    background-size: 150% !important;
+    background-size: 100% !important;
     background-position: center bottom !important;
     background-repeat: no-repeat !important;
     opacity: 0.6 !important;
