@@ -2,6 +2,7 @@
 
 /* Full-screen background image for control page */
 body.detail-page {
+  background-color: #D96461;
   background-image: url('images/detail-control-1.jpg');
   background-size: cover;
   background-position: center center;
@@ -116,7 +117,7 @@ body.detail-page footer {
 /* App Store download button */
 .app-store-download {
   position: absolute !important;
-  bottom: 8rem !important;
+  top: calc(50% + 15rem + 30px) !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 15 !important;
@@ -197,6 +198,6 @@ body.detail-page footer {
   }
   
   .app-store-download {
-    bottom: 6rem !important;
+    top: calc(50% + 17.5vw + 30px) !important;
   }
 }
