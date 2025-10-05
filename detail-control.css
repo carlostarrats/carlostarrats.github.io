@@ -198,6 +198,6 @@ body.detail-page footer {
   }
   
   .app-store-download {
-    top: calc(50% + 17.5vw + 30px) !important;
+    top: calc(50% + 17.5vw + 15px) !important;
   }
 }
