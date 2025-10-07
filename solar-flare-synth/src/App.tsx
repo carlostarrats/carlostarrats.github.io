@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState, Suspense, useCallback } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useRef, useState, Suspense, useCallback } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom, DepthOfField, Noise, Vignette } from "@react-three/postprocessing";
-import * as anime from "animejs";
 import * as Tone from "tone";
 import * as THREE from "three";
 import "./App.css";
@@ -18,14 +17,14 @@ type DONKIFlare = {
   activeRegionNum?: string;
 };
 
-type Asteroid = {
-  id: string;
-  name: string;
-  estimatedDiameter: number;
-  velocity: number;
-  closeApproachDate: string;
-  missDistance: number;
-};
+// type Asteroid = { // Removed - unused
+//   id: string;
+//   name: string;
+//   estimatedDiameter: number;
+//   velocity: number;
+//   closeApproachDate: string;
+//   missDistance: number;
+// };
 
 type Satellite = {
   id: string;
@@ -80,15 +79,16 @@ const CLASS_COLOR: Record<string, string> = {
 const NASA_KEY = import.meta.env.VITE_NASA_API_KEY || "DEMO_KEY";
 
 // ---- Concentric Circle Layout Constants
-const CONCENTRIC_RINGS = {
-  SOLAR_FLARES: { min: 0, max: 2, color: "#ff6b3a" },
-  SATELLITES: { min: 2, max: 4, color: "#00ff88" },
-  ASTEROIDS: { min: 4, max: 8, color: "#8b4513" },
-  SOLAR_WIND: { min: 8, max: 12, color: "#4169e1" },
-  CME: { min: 12, max: 16, color: "#ff1493" },
-  SUNSPOTS: { min: 16, max: 20, color: "#2f2f2f" },
-  AURORA: { min: 20, max: 25, color: "#00ff7f" }
-};
+// Concentric rings configuration (commented out unused)
+// const CONCENTRIC_RINGS = {
+//   SOLAR_FLARES: { min: 0, max: 2, color: "#ff6b3a" },
+//   SATELLITES: { min: 2, max: 4, color: "#00ff88" },
+//   ASTEROIDS: { min: 4, max: 8, color: "#8b4513" },
+//   SOLAR_WIND: { min: 8, max: 12, color: "#4169e1" },
+//   CME: { min: 12, max: 16, color: "#ff1493" },
+//   SUNSPOTS: { min: 16, max: 20, color: "#2f2f2f" },
+//   AURORA: { min: 20, max: 25, color: "#00ff7f" }
+// };
 
 // ---- Flare Group Component (stable positions)
 function FlareGroup({ flares, onBurstClick }: { 
@@ -194,40 +194,7 @@ function SatelliteGroup({ satellites, onSatelliteClick }: {
 }
 
 // ---- Asteroid Component (Triangular Meshes)
-function AsteroidMesh({ position, size, velocity, id, onClick }: {
-  position: [number, number, number];
-  size: number;
-  velocity: number;
-  id: string;
-  onClick: (id: string, event: any) => void;
-}) {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * velocity * 0.1;
-      meshRef.current.rotation.y += delta * velocity * 0.15;
-    }
-  });
-
-  return (
-    <mesh 
-      ref={meshRef} 
-      position={position}
-      onClick={(event) => onClick(id, event)}
-    >
-      <octahedronGeometry args={[size * 0.3, 0]} />
-      <meshStandardMaterial
-        color="#8b4513"
-        emissive="#4a2c17"
-        emissiveIntensity={0.2}
-        roughness={0.8}
-        metalness={0.1}
-        wireframe={false}
-      />
-    </mesh>
-  );
-}
+// AsteroidMesh function removed (unused)
 
 // ---- Satellite Component (Glowing Cubes with Flare Colors)
 function SatelliteMesh({ position, velocity, id, onClick }: {
@@ -286,7 +253,7 @@ function SatelliteMesh({ position, velocity, id, onClick }: {
 }
 
 // ---- Simple Solar Wind Particles (With Safe Animation)
-function SolarWindParticles({ solarWindData, onWindClick }: { solarWindData: SolarWindData[], onWindClick: (id: string, type: string, event: any) => void }) {
+function SolarWindParticles({ onWindClick }: { onWindClick: (id: string, type: string, event: any) => void }) {
   const particleCount = 50;
   
   const windColors = [
@@ -633,8 +600,7 @@ function useSolarSynth() {
     console.log('Triggering sun sound');
     
     // Deep bass/drum sound for the sun - more like a kick drum
-    const bassFreq = 60; // Low frequency
-    const kickFreq = 90; // Kick drum frequency
+    // Deep bass/drum sound for the sun (frequencies removed - unused)
     
     // Create a deep, punchy bass sound with envelope
     const kickSynth = new Tone.MembraneSynth({
@@ -689,7 +655,7 @@ function useSolarSynth() {
       gainNode.gain.setValueAtTime(0, time);
       gainNode.gain.linearRampToValueAtTime(1, time + 0.01);
       gainNode.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
-    }, ["beat", null, "beat", null], "8n");
+    }, ["beat", null, "beat", null], "8n" as any);
     
     beatPattern.start(0);
     sunBeatRef.current = { kickSynth, beatPattern };
@@ -712,7 +678,7 @@ function useSolarSynth() {
 // ---- Main App
 function App() {
   const [flares, setFlares] = useState<DONKIFlare[]>([]);
-  const [asteroids, setAsteroids] = useState<Asteroid[]>([]);
+  // const [asteroids, setAsteroids] = useState<Asteroid[]>([]); // Removed - unused
   const [satellites, setSatellites] = useState<Satellite[]>([]);
   const [solarWind, setSolarWind] = useState<SolarWindData[]>([]);
   const [cmeData, setCmeData] = useState<CMEData[]>([]);
@@ -721,7 +687,7 @@ function App() {
   
   const [selectedObject, setSelectedObject] = useState<any>(null);
   const [audioStarted, setAudioStarted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false); // Removed - unused
   const [soundEnabled, setSoundEnabled] = useState(false);
   const synth = useSolarSynth();
   
@@ -731,7 +697,7 @@ function App() {
 
   // Load solar flare data - accumulate over time instead of refreshing
   const loadFlares = async (days: number = 7) => {
-    setIsLoading(true);
+    // setIsLoading(true); // Removed - unused
     try {
       const end = new Date();
       const start = new Date();
@@ -792,7 +758,7 @@ function App() {
         ]);
       }
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false); // Removed - unused
     }
   };
 
@@ -811,32 +777,7 @@ function App() {
   const loadAsteroids = async () => {
     try {
       // Demo asteroid data
-      setAsteroids([
-        {
-          id: "asteroid-1",
-          name: "2024 AB",
-          estimatedDiameter: 150,
-          velocity: 15.2,
-          closeApproachDate: new Date(Date.now() + 86400000).toISOString(),
-          missDistance: 0.05
-        },
-        {
-          id: "asteroid-2", 
-          name: "2024 CD",
-          estimatedDiameter: 85,
-          velocity: 12.8,
-          closeApproachDate: new Date(Date.now() + 172800000).toISOString(),
-          missDistance: 0.12
-        },
-        {
-          id: "asteroid-3",
-          name: "2024 EF", 
-          estimatedDiameter: 200,
-          velocity: 18.5,
-          closeApproachDate: new Date(Date.now() + 259200000).toISOString(),
-          missDistance: 0.08
-        }
-      ]);
+      // setAsteroids removed - unused
     } catch (error) {
       console.log("Error loading asteroids:", error);
     }
@@ -1176,7 +1117,6 @@ function App() {
             
             {/* Solar Wind Particles (slowly animated) */}
             <SolarWindParticles 
-              solarWindData={solarWind} 
               onWindClick={handleObjectClick}
             />
           </Suspense>
