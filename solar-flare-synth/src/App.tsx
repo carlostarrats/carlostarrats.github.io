@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef, useState, Suspense, useCallback } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom, DepthOfField, Noise, Vignette } from "@react-three/postprocessing";
 import * as anime from "animejs";
@@ -18,6 +18,55 @@ type DONKIFlare = {
   activeRegionNum?: string;
 };
 
+type Asteroid = {
+  id: string;
+  name: string;
+  estimatedDiameter: number;
+  velocity: number;
+  closeApproachDate: string;
+  missDistance: number;
+};
+
+type Satellite = {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  altitude: number;
+  velocity: number;
+};
+
+type SolarWindData = {
+  speed: number;
+  density: number;
+  temperature: number;
+  timestamp: string;
+};
+
+type CMEData = {
+  id: string;
+  startTime: string;
+  sourceLocation: string;
+  activityID: string;
+  linkedEvents?: string[];
+};
+
+type SunspotData = {
+  id: string;
+  latitude: number;
+  longitude: number;
+  area: number;
+  magneticField: number;
+  timestamp: string;
+};
+
+type AuroraData = {
+  latitude: number;
+  longitude: number;
+  intensity: number;
+  timestamp: string;
+};
+
 // ---- Constants
 const CLASS_INTENSITY: Record<string, number> = { A: 0.1, B: 0.5, C: 1, M: 3.5, X: 8 };
 const CLASS_COLOR: Record<string, string> = {
@@ -30,14 +79,28 @@ const CLASS_COLOR: Record<string, string> = {
 
 const NASA_KEY = import.meta.env.VITE_NASA_API_KEY || "DEMO_KEY";
 
+// ---- Concentric Circle Layout Constants
+const CONCENTRIC_RINGS = {
+  SOLAR_FLARES: { min: 0, max: 2, color: "#ff6b3a" },
+  SATELLITES: { min: 2, max: 4, color: "#00ff88" },
+  ASTEROIDS: { min: 4, max: 8, color: "#8b4513" },
+  SOLAR_WIND: { min: 8, max: 12, color: "#4169e1" },
+  CME: { min: 12, max: 16, color: "#ff1493" },
+  SUNSPOTS: { min: 16, max: 20, color: "#2f2f2f" },
+  AURORA: { min: 20, max: 25, color: "#00ff7f" }
+};
+
 // ---- Flare Group Component (stable positions)
 function FlareGroup({ flares, onBurstClick }: { 
   flares: DONKIFlare[], 
   onBurstClick: (id: string, event: any) => void 
 }) {
-  // Create stable positions that don't change on re-renders
-  const flarePositions = useMemo(() => {
-    return flares.map((flare, index) => {
+  // Use ref to store positions that never change
+  const positionsRef = useRef<Map<string, [number, number, number]>>(new Map());
+  
+  // Generate positions once and store them permanently
+  if (positionsRef.current.size === 0) {
+    flares.forEach((flare, index) => {
       // Use a seeded random based on the flare ID for consistent positioning
       const seed = flare.flrID.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
       const seededRandom = (seed: number) => {
@@ -45,24 +108,25 @@ function FlareGroup({ flares, onBurstClick }: {
         return x - Math.floor(x);
       };
       
+      // Keep original nice spread-out positioning
       const angle = (index / flares.length) * Math.PI * 2;
       const radius = 8 + seededRandom(seed + 1) * 4;
       const height = (seededRandom(seed + 2) - 0.5) * 6;
       
-      return [
+      positionsRef.current.set(flare.flrID, [
         Math.cos(angle) * radius,
         height,
         Math.sin(angle) * radius
-      ] as [number, number, number];
+      ]);
     });
-  }, [flares.length]); // Only recalculate if number of flares changes
+  }
 
   return (
-    <>
-      {flares.map((flare, index) => {
+    <group frustumCulled={false}>
+      {flares.map((flare) => {
         const intensity = CLASS_INTENSITY[flare.classType] || 1;
         const color = CLASS_COLOR[flare.classType] || "#ffffff";
-        const position = flarePositions[index];
+        const position = positionsRef.current.get(flare.flrID) || [0, 0, 0];
         
         return (
           <FlareBurst
@@ -75,7 +139,253 @@ function FlareGroup({ flares, onBurstClick }: {
           />
         );
       })}
+    </group>
+  );
+}
+
+// ---- Satellite Group Component (stable positions)
+function SatelliteGroup({ satellites, onSatelliteClick }: { 
+  satellites: Satellite[], 
+  onSatelliteClick: (id: string, event: any) => void 
+}) {
+  // Use ref to store positions that never change
+  const positionsRef = useRef<Map<string, [number, number, number]>>(new Map());
+  
+  // Generate positions once and store them permanently
+  if (positionsRef.current.size === 0) {
+    satellites.forEach((sat, index) => {
+      // Use a seeded random based on the satellite ID for consistent positioning
+      const seed = sat.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      const seededRandom = (seed: number) => {
+        const x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+      };
+      
+      // Keep original nice spread-out positioning
+      const angle = (index / satellites.length) * Math.PI * 2;
+      const radius = 4; // Fixed radius for satellite ring
+      const height = (seededRandom(seed + 1) - 0.5) * 2;
+      
+      positionsRef.current.set(sat.id, [
+        Math.cos(angle) * radius,
+        height,
+        Math.sin(angle) * radius
+      ]);
+    });
+  }
+
+  return (
+    <>
+      {satellites.map((sat) => {
+        const position = positionsRef.current.get(sat.id) || [4, 0, 0];
+        
+        return (
+          <SatelliteMesh
+            key={sat.id}
+            position={position}
+            velocity={sat.velocity}
+            id={sat.id}
+            onClick={onSatelliteClick}
+          />
+        );
+      })}
     </>
+  );
+}
+
+// ---- Asteroid Component (Triangular Meshes)
+function AsteroidMesh({ position, size, velocity, id, onClick }: {
+  position: [number, number, number];
+  size: number;
+  velocity: number;
+  id: string;
+  onClick: (id: string, event: any) => void;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += delta * velocity * 0.1;
+      meshRef.current.rotation.y += delta * velocity * 0.15;
+    }
+  });
+
+  return (
+    <mesh 
+      ref={meshRef} 
+      position={position}
+      onClick={(event) => onClick(id, event)}
+    >
+      <octahedronGeometry args={[size * 0.3, 0]} />
+      <meshStandardMaterial
+        color="#8b4513"
+        emissive="#4a2c17"
+        emissiveIntensity={0.2}
+        roughness={0.8}
+        metalness={0.1}
+        wireframe={false}
+      />
+    </mesh>
+  );
+}
+
+// ---- Satellite Component (Glowing Cubes with Flare Colors)
+function SatelliteMesh({ position, velocity, id, onClick }: {
+  position: [number, number, number];
+  velocity: number;
+  id: string;
+  onClick: (id: string, event: any) => void;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  // Use same colors as solar flares
+  const flareColors = ["#cfefff", "#9ad8ff", "#ffdca8", "#ffb36b", "#ff6b3a"];
+  const color = flareColors[Math.floor(Math.random() * flareColors.length)];
+
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x += delta * velocity * 0.2;
+      meshRef.current.rotation.y += delta * velocity * 0.1;
+    }
+  });
+
+  return (
+    <group position={position}>
+      <mesh 
+        ref={meshRef} 
+        onClick={(event) => {
+          event.stopPropagation();
+          onClick(id, event);
+        }}
+        frustumCulled={false}
+      >
+        <boxGeometry args={[0.3, 0.3, 0.3]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={0.6}
+          transparent
+          opacity={0.9}
+          roughness={0.1}
+          metalness={0.2}
+        />
+      </mesh>
+      {/* Larger invisible clickable area */}
+      <mesh
+        onClick={(event) => {
+          event.stopPropagation();
+          onClick(id, event);
+        }}
+        frustumCulled={false}
+      >
+        <boxGeometry args={[2, 2, 2]} />
+        <meshBasicMaterial transparent opacity={0} />
+      </mesh>
+    </group>
+  );
+}
+
+// ---- Simple Solar Wind Particles (With Safe Animation)
+function SolarWindParticles({ solarWindData, onWindClick }: { solarWindData: SolarWindData[], onWindClick: (id: string, type: string, event: any) => void }) {
+  const particleCount = 50;
+  
+  const windColors = [
+    "#00ffff", "#40e0d0", "#87ceeb", "#b0e0e6", 
+    "#e0ffff", "#f0f8ff", "#ffffff", "#e6f3ff"
+  ];
+
+  // Store particle data in ref to avoid re-creation
+  const particlesRef = useRef<any[]>([]);
+  
+  if (particlesRef.current.length === 0) {
+    particlesRef.current = Array.from({ length: particleCount }, (_, i) => {
+      const angle = (i / particleCount) * Math.PI * 2;
+      const baseRadius = 15 + Math.random() * 3;
+      
+      return {
+        id: `wind-particle-${i}`,
+        baseAngle: angle,
+        baseRadius: baseRadius,
+        baseHeight: (Math.random() - 0.5) * 4,
+        color: windColors[Math.floor(Math.random() * windColors.length)],
+        speed: 0.1 + Math.random() * 0.2,
+        time: Math.random() * Math.PI * 2, // Random start time
+      };
+    });
+  }
+
+  return (
+    <>
+      {particlesRef.current.map((particle) => (
+        <AnimatedWindParticle
+          key={particle.id}
+          particle={particle}
+          onWindClick={onWindClick}
+        />
+      ))}
+    </>
+  );
+}
+
+// Individual animated particle component
+function AnimatedWindParticle({ particle, onWindClick }: { 
+  particle: any, 
+  onWindClick: (id: string, type: string, event: any) => void 
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      // Simple outward movement with wave
+      particle.time += delta * particle.speed;
+      
+      const radius = particle.baseRadius + particle.time * 5; // Faster outward movement
+      const height = particle.baseHeight + Math.sin(particle.time * 3) * 1; // More visible wave motion
+      
+      meshRef.current.position.x = Math.cos(particle.baseAngle) * radius;
+      meshRef.current.position.y = height;
+      meshRef.current.position.z = Math.sin(particle.baseAngle) * radius;
+      
+      // Gentle rotation
+      meshRef.current.rotation.z += delta * 0.5;
+      
+      // Fade out as it gets further
+      const maxDistance = 25;
+      const fadeStart = 20;
+      if (radius > fadeStart) {
+        const opacity = Math.max(0, 0.4 - (radius - fadeStart) / (maxDistance - fadeStart) * 0.4);
+        if (meshRef.current.material && 'opacity' in meshRef.current.material) {
+          (meshRef.current.material as any).opacity = opacity;
+        }
+      }
+      
+      // Reset when too far
+      if (radius > maxDistance) {
+        particle.time = 0; // Reset time, keep other properties
+      }
+    }
+  });
+
+  return (
+    <mesh
+      ref={meshRef}
+      onClick={(event) => {
+        event.stopPropagation();
+        onWindClick(particle.id, 'solarwind', event);
+      }}
+      frustumCulled={false}
+    >
+      <sphereGeometry args={[0.12, 8, 8]} />
+      <meshStandardMaterial
+        color={particle.color}
+        emissive={particle.color}
+        emissiveIntensity={0.4}
+        transparent
+        opacity={0.7}
+        roughness={0.1}
+        metalness={0.0}
+      />
+    </mesh>
   );
 }
 
@@ -96,22 +406,32 @@ function FlareBurst({ position, intensity, color, id, onClick }: {
   });
 
   return (
-    <mesh 
-      ref={meshRef} 
-      position={position}
-      onClick={(event) => onClick(id, event)}
-    >
-      <sphereGeometry args={[0.8 + intensity * 0.4, 32, 32]} />
-      <meshStandardMaterial
-        color={color}
-        emissive={color}
-        emissiveIntensity={Math.min(4, intensity * 1.2)}
-        transparent
-        opacity={0.8}
-        roughness={0.1}
-        metalness={0.0}
-      />
-    </mesh>
+    <group position={position}>
+      <mesh
+        ref={meshRef}
+        onClick={(event) => onClick(id, event)}
+        frustumCulled={false}
+      >
+        <sphereGeometry args={[0.8 + intensity * 0.4, 32, 32]} />
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={Math.min(4, intensity * 1.2)}
+          transparent
+          opacity={0.8}
+          roughness={0.1}
+          metalness={0.0}
+        />
+      </mesh>
+      {/* Larger invisible clickable area */}
+      <mesh
+        onClick={(event) => onClick(id, event)}
+        frustumCulled={false}
+      >
+        <sphereGeometry args={[4, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} />
+      </mesh>
+    </group>
   );
 }
 
@@ -121,41 +441,48 @@ function useSolarSynth() {
   const synthRef = useRef<any>(null);
   
   useEffect(() => {
-    try {
-      const reverb = new Tone.Reverb({ decay: 8, wet: 0.6 }).toDestination();
-      const filter = new Tone.Filter(600, "lowpass").connect(reverb);
-      const synth = new Tone.PolySynth({
-        voice: Tone.Synth,
-        options: { 
-          oscillator: { type: "sine" }, 
-          envelope: { attack: 2, release: 6 } 
-        }
-      }).connect(filter);
-      
-      synthRef.current = { synth, filter, reverb };
-      
-      return () => {
-        synth.dispose();
-        filter.dispose();
-        reverb.dispose();
-      };
-    } catch (error) {
-      console.log("Audio not available:", error);
-    }
+    // Auto-start audio immediately
+    const initializeAudio = async () => {
+      try {
+        await Tone.start();
+        setStarted(true);
+        
+        const reverb = new Tone.Reverb({ decay: 8, wet: 0.6 }).toDestination();
+        const filter = new Tone.Filter(600, "lowpass").connect(reverb);
+        const synth = new Tone.PolySynth({
+          voice: Tone.Synth,
+          options: { 
+            oscillator: { type: "sine" }, 
+            envelope: { attack: 2, release: 6 } 
+          }
+        }).connect(filter);
+        
+        synthRef.current = { synth, filter, reverb };
+        
+        // Start gentle ambient drone immediately
+        Tone.Transport.start();
+        synth.triggerAttackRelease(["C2", "G2", "E3"], "8n");
+        
+        console.log('Audio auto-started successfully');
+      } catch (error) {
+        console.log("Audio not available:", error);
+      }
+    };
+
+    initializeAudio();
+    
+    return () => {
+      if (synthRef.current) {
+        synthRef.current.synth.dispose();
+        synthRef.current.filter.dispose();
+        synthRef.current.reverb.dispose();
+      }
+    };
   }, []);
 
   const start = async () => {
-    if (!started) {
-      await Tone.start();
-      setStarted(true);
-      Tone.Transport.start();
-      
-      // Gentle ambient drone
-      const synth = synthRef.current?.synth;
-      if (synth) {
-        synth.triggerAttackRelease(["C2", "G2", "E3"], "8n");
-      }
-    }
+    // Audio is already auto-started, no action needed
+    return;
   };
 
   const triggerFlare = (intensity: number) => {
@@ -170,13 +497,46 @@ function useSolarSynth() {
     s.synth.triggerAttackRelease(note, `${0.2 + intensity * 0.3}s`);
   };
 
-  return { start, triggerFlare, started };
+  const triggerSatellite = (velocity: number) => {
+    const s = synthRef.current;
+    if (!s) return;
+    
+    // Higher frequency range for satellites (electronic/space sounds)
+    const baseFreq = 440 + velocity * 50; // 440Hz to 880Hz range
+    const note = baseFreq * Math.pow(2, (Math.random() * 8 - 4) / 12); // Smaller range
+    
+    // Electronic beep sound
+    s.filter.frequency.rampTo(800 + velocity * 200, 0.5);
+    s.synth.triggerAttackRelease(note, `${0.1 + velocity * 0.05}s`);
+  };
+
+  const triggerSolarWind = (speed: number, density: number) => {
+    const s = synthRef.current;
+    if (!s) return;
+    
+    // Wind-like whooshing sound
+    const baseFreq = 110 + speed * 0.5; // Lower frequency for wind
+    const note = baseFreq * Math.pow(2, (Math.random() * 6 - 3) / 12);
+    
+    // Atmospheric filter sweep
+    s.filter.frequency.rampTo(200 + density * 100, 2.0);
+    s.synth.triggerAttackRelease(note, `${0.5 + density * 0.3}s`);
+  };
+
+  return { start, triggerFlare, triggerSatellite, triggerSolarWind, started };
 }
 
 // ---- Main App
 function App() {
   const [flares, setFlares] = useState<DONKIFlare[]>([]);
-  const [selectedFlare, setSelectedFlare] = useState<DONKIFlare | null>(null);
+  const [asteroids, setAsteroids] = useState<Asteroid[]>([]);
+  const [satellites, setSatellites] = useState<Satellite[]>([]);
+  const [solarWind, setSolarWind] = useState<SolarWindData[]>([]);
+  const [cmeData, setCmeData] = useState<CMEData[]>([]);
+  const [sunspots, setSunspots] = useState<SunspotData[]>([]);
+  const [auroraData, setAuroraData] = useState<AuroraData[]>([]);
+  
+  const [selectedObject, setSelectedObject] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const synth = useSolarSynth();
@@ -227,23 +587,232 @@ function App() {
     }
   };
 
+  // Load all space data
+  const loadAllData = async () => {
+    await loadFlares();
+    await loadAsteroids();
+    await loadSatellites();
+    await loadSolarWind();
+    await loadCMEData();
+    await loadSunspots();
+    await loadAuroraData();
+  };
+
+  // Load asteroid data (demo for now)
+  const loadAsteroids = async () => {
+    try {
+      // Demo asteroid data
+      setAsteroids([
+        {
+          id: "asteroid-1",
+          name: "2024 AB",
+          estimatedDiameter: 150,
+          velocity: 15.2,
+          closeApproachDate: new Date(Date.now() + 86400000).toISOString(),
+          missDistance: 0.05
+        },
+        {
+          id: "asteroid-2", 
+          name: "2024 CD",
+          estimatedDiameter: 85,
+          velocity: 12.8,
+          closeApproachDate: new Date(Date.now() + 172800000).toISOString(),
+          missDistance: 0.12
+        },
+        {
+          id: "asteroid-3",
+          name: "2024 EF", 
+          estimatedDiameter: 200,
+          velocity: 18.5,
+          closeApproachDate: new Date(Date.now() + 259200000).toISOString(),
+          missDistance: 0.08
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading asteroids:", error);
+    }
+  };
+
+  // Load satellite data (demo for now)
+  const loadSatellites = async () => {
+    try {
+      // Demo satellite data
+      setSatellites([
+        {
+          id: "sat-1",
+          name: "ISS",
+          latitude: 51.5074,
+          longitude: -0.1278,
+          altitude: 408,
+          velocity: 7.66
+        },
+        {
+          id: "sat-2",
+          name: "Hubble",
+          latitude: 28.5,
+          longitude: -80.6,
+          altitude: 547,
+          velocity: 7.5
+        },
+        {
+          id: "sat-3",
+          name: "GPS",
+          latitude: 0,
+          longitude: 0,
+          altitude: 20200,
+          velocity: 3.87
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading satellites:", error);
+    }
+  };
+
+  // Load solar wind data (demo for now)
+  const loadSolarWind = async () => {
+    try {
+      // Demo solar wind data
+      setSolarWind([
+        {
+          speed: 450,
+          density: 5.2,
+          temperature: 100000,
+          timestamp: new Date().toISOString()
+        },
+        {
+          speed: 380,
+          density: 3.8,
+          temperature: 95000,
+          timestamp: new Date(Date.now() - 3600000).toISOString()
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading solar wind:", error);
+    }
+  };
+
+  // Load CME data (demo for now)
+  const loadCMEData = async () => {
+    try {
+      // Demo CME data
+      setCmeData([
+        {
+          id: "cme-1",
+          startTime: new Date(Date.now() - 86400000).toISOString(),
+          sourceLocation: "Active Region 1234",
+          activityID: "CME-2024-001"
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading CME data:", error);
+    }
+  };
+
+  // Load sunspot data (demo for now)
+  const loadSunspots = async () => {
+    try {
+      // Demo sunspot data
+      setSunspots([
+        {
+          id: "sunspot-1",
+          latitude: 15.2,
+          longitude: 45.8,
+          area: 1250,
+          magneticField: 2800,
+          timestamp: new Date().toISOString()
+        },
+        {
+          id: "sunspot-2",
+          latitude: -8.5,
+          longitude: 120.3,
+          area: 890,
+          magneticField: 2100,
+          timestamp: new Date(Date.now() - 3600000).toISOString()
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading sunspots:", error);
+    }
+  };
+
+  // Load aurora data (demo for now)
+  const loadAuroraData = async () => {
+    try {
+      // Demo aurora data
+      setAuroraData([
+        {
+          latitude: 65.5,
+          longitude: -147.5,
+          intensity: 0.8,
+          timestamp: new Date().toISOString()
+        },
+        {
+          latitude: 68.2,
+          longitude: 16.0,
+          intensity: 0.6,
+          timestamp: new Date(Date.now() - 1800000).toISOString()
+        }
+      ]);
+    } catch (error) {
+      console.log("Error loading aurora data:", error);
+    }
+  };
+
   useEffect(() => {
-    loadFlares();
+    loadAllData();
   }, []);
 
-  const handleBurstClick = (id: string, event: any) => {
+  const handleObjectClick = useCallback((id: string, type: string, event: any) => {
+    console.log('Object clicked:', { id, type, event });
     // Stop the event from bubbling to OrbitControls
     event.stopPropagation();
     
-    const flare = flares.find(f => f.flrID === id);
-    if (flare) {
-      setSelectedFlare(flare);
+    let selectedObj = null;
+    
+    switch (type) {
+      case 'flare':
+        selectedObj = flares.find(f => f.flrID === id);
+        break;
+      case 'satellite':
+        selectedObj = satellites.find(s => s.id === id);
+        break;
+      case 'solarwind':
+        selectedObj = solarWind.find(sw => sw.timestamp === id);
+        break;
+      case 'cme':
+        selectedObj = cmeData.find(c => c.id === id);
+        break;
+      case 'sunspot':
+        selectedObj = sunspots.find(ss => ss.id === id);
+        break;
+      case 'aurora':
+        selectedObj = auroraData.find(a => a.timestamp === id);
+        break;
+    }
+    
+    if (selectedObj) {
+      setSelectedObject({ ...selectedObj, type });
       if (soundEnabled) {
-        const intensity = CLASS_INTENSITY[flare.classType] || 1;
-        synth.triggerFlare(intensity);
+        switch (type) {
+          case 'flare':
+            const flareObj = selectedObj as DONKIFlare;
+            const intensity = CLASS_INTENSITY[flareObj.classType] || 1;
+            synth.triggerFlare(intensity);
+            break;
+          case 'satellite':
+            const satObj = selectedObj as Satellite;
+            synth.triggerSatellite(satObj.velocity);
+            break;
+          case 'solarwind':
+            const windObj = selectedObj as SolarWindData;
+            synth.triggerSolarWind(windObj.speed, windObj.density);
+            break;
+          default:
+            synth.triggerFlare(1);
+        }
       }
     }
-  };
+  }, [flares, satellites, solarWind, cmeData, sunspots, auroraData, soundEnabled, synth]);
 
   const toggleSound = async () => {
     if (!soundEnabled) {
@@ -289,7 +858,11 @@ function App() {
       
       {/* Main Content */}
       <div style={{ paddingTop: '80px', height: '100vh' }}>
-        <Canvas camera={{ position: [0, 3, 12], fov: 50 }}>
+        <Canvas 
+          camera={{ position: [0, 3, 12], fov: 50, near: 0.1, far: 1000 }}
+          gl={{ antialias: true, alpha: false }}
+          onPointerMissed={() => setSelectedObject(null)}
+        >
           <color attach="background" args={["#000000"]} />
           
           {/* Lighting */}
@@ -310,17 +883,31 @@ function App() {
           {/* Orbit Controls */}
           <OrbitControls 
             enablePan={true} 
-            maxDistance={60} 
-            minDistance={4}
+            maxDistance={1000} 
+            minDistance={1}
             enableDamping
             dampingFactor={0.05}
           />
           
-          {/* Solar Flares */}
+          {/* Concentric Space Data Layers */}
           <Suspense fallback={null}>
+            {/* Solar Flares - Center (0-2 units) */}
             <FlareGroup 
               flares={flares} 
-              onBurstClick={handleBurstClick}
+              onBurstClick={(id, event) => handleObjectClick(id, 'flare', event)}
+            />
+            
+            {/* Satellites - Inner Ring (3-5 units) */}
+            <SatelliteGroup 
+              satellites={satellites} 
+              onSatelliteClick={(id, event) => handleObjectClick(id, 'satellite', event)}
+            />
+            
+            
+            {/* Solar Wind Particles (slowly animated) */}
+            <SolarWindParticles 
+              solarWindData={solarWind} 
+              onWindClick={handleObjectClick}
             />
           </Suspense>
           
@@ -383,7 +970,7 @@ function App() {
         }}>
           <span>Flares: {flares.length}</span>
           <button
-            onClick={() => loadFlares()}
+            onClick={() => loadAllData()}
             disabled={isLoading}
             style={{
               padding: '4px 12px',
@@ -396,8 +983,12 @@ function App() {
               opacity: isLoading ? 0.5 : 1
             }}
           >
-            {isLoading ? "..." : "Sync"}
+            {isLoading ? "..." : "Sync All"}
           </button>
+        </div>
+        
+        <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '8px' }}>
+          Satellites: {satellites.length} | Wind: 200 particles
         </div>
         
         <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
@@ -405,8 +996,8 @@ function App() {
         </div>
       </div>
       
-      {/* Detail Panel */}
-      {selectedFlare && (
+        {/* Detail Panel */}
+        {selectedObject && (
         <div style={{ 
           position: 'absolute', 
           top: '100px', 
@@ -426,10 +1017,12 @@ function App() {
             marginBottom: '12px'
           }}>
             <div style={{ fontSize: '0.875rem', fontWeight: 'bold' }}>
-              Class {selectedFlare.classType}
+              {selectedObject.type === 'flare' && `Class ${selectedObject.classType}`}
+              {selectedObject.type === 'satellite' && selectedObject.name}
+              {selectedObject.type === 'solarwind' && `Solar Wind Stream`}
             </div>
             <button
-              onClick={() => setSelectedFlare(null)}
+              onClick={() => setSelectedObject(null)}
               style={{
                 padding: '4px',
                 backgroundColor: 'transparent',
@@ -443,23 +1036,50 @@ function App() {
         </button>
           </div>
           <div style={{ fontSize: '0.75rem' }}>
-            <div style={{ marginBottom: '8px' }}>
-              <span style={{ color: '#9ca3af' }}>ID:</span> {selectedFlare.flrID}
-            </div>
-            <div style={{ marginBottom: '8px' }}>
-              <span style={{ color: '#9ca3af' }}>Begin:</span>{" "}
-              {new Date(selectedFlare.beginTime).toLocaleString()}
-            </div>
-            {selectedFlare.peakTime && (
-              <div style={{ marginBottom: '8px' }}>
-                <span style={{ color: '#9ca3af' }}>Peak:</span>{" "}
-                {new Date(selectedFlare.peakTime).toLocaleString()}
-              </div>
+            {selectedObject.type === 'flare' && (
+              <>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>ID:</span> {selectedObject.flrID}
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Begin:</span>{" "}
+                  {new Date(selectedObject.beginTime).toLocaleString()}
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Intensity:</span>{" "}
+                  {CLASS_INTENSITY[selectedObject.classType] || 1}x
+                </div>
+              </>
             )}
-            <div style={{ marginBottom: '8px' }}>
-              <span style={{ color: '#9ca3af' }}>Intensity:</span>{" "}
-              {CLASS_INTENSITY[selectedFlare.classType] || 1}x
-            </div>
+            
+            
+            {selectedObject.type === 'satellite' && (
+              <>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Altitude:</span> {selectedObject.altitude} km
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Velocity:</span> {selectedObject.velocity} km/s
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Position:</span> {selectedObject.latitude.toFixed(2)}°, {selectedObject.longitude.toFixed(2)}°
+                </div>
+              </>
+            )}
+            
+            {selectedObject.type === 'solarwind' && (
+              <>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Speed:</span> {selectedObject.speed} km/s
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Density:</span> {selectedObject.density} particles/cm³
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Temperature:</span> {selectedObject.temperature.toLocaleString()}K
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
