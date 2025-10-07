@@ -1,0 +1,21 @@
+/* Experiments Page Styles */
+
+/* View Web App Button */
+.capability-tag {
+  background: #000 !important;
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+  border: 2px solid #000 !important;
+  cursor: pointer;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.capability-tag:hover {
+  background: #fff !important;
+  color: #000 !important;
+}
