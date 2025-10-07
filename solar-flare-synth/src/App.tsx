@@ -253,7 +253,7 @@ function SatelliteMesh({ position, velocity, id, onClick }: {
     <group position={position}>
       <mesh 
         ref={meshRef} 
-        onClick={(event) => {
+        onPointerEnter={(event) => {
           event.stopPropagation();
           onClick(id, event);
         }}
@@ -272,7 +272,7 @@ function SatelliteMesh({ position, velocity, id, onClick }: {
       </mesh>
       {/* Larger invisible clickable area */}
       <mesh
-        onClick={(event) => {
+        onPointerEnter={(event) => {
           event.stopPropagation();
           onClick(id, event);
         }}
@@ -327,6 +327,48 @@ function SolarWindParticles({ solarWindData, onWindClick }: { solarWindData: Sol
   );
 }
 
+// ---- Sun Component (Spinning Polygonal Center)
+function Sun({ onSunClick, onSunLeave }: { 
+  onSunClick: (id: string, type: string, event: any) => void;
+  onSunLeave: () => void;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((_, delta) => {
+    if (meshRef.current) {
+      // Slow rotation
+      meshRef.current.rotation.y += delta * 0.3;
+    }
+  });
+
+  return (
+    <mesh
+      ref={meshRef}
+      position={[0, 0, 0]}
+      onPointerEnter={(event) => {
+        event.stopPropagation();
+        console.log('Sun hover detected');
+        onSunClick('sun-center', 'sun', event);
+      }}
+      onPointerLeave={(event) => {
+        event.stopPropagation();
+        console.log('Sun hover ended');
+        onSunLeave();
+      }}
+      frustumCulled={false}
+    >
+      <dodecahedronGeometry args={[1.5, 0]} />
+      <meshStandardMaterial
+        color="#ffb347"
+        emissive="#ffa500"
+        emissiveIntensity={0.8}
+        roughness={0.3}
+        metalness={0.7}
+      />
+    </mesh>
+  );
+}
+
 // Individual animated particle component
 function AnimatedWindParticle({ particle, onWindClick }: { 
   particle: any, 
@@ -367,14 +409,14 @@ function AnimatedWindParticle({ particle, onWindClick }: {
   });
 
   return (
-    <mesh
-      ref={meshRef}
-      onClick={(event) => {
-        event.stopPropagation();
-        onWindClick(particle.id, 'solarwind', event);
-      }}
-      frustumCulled={false}
-    >
+      <mesh
+        ref={meshRef}
+        onPointerEnter={(event) => {
+          event.stopPropagation();
+          onWindClick(particle.id, 'solarwind', event);
+        }}
+        frustumCulled={false}
+      >
       <sphereGeometry args={[0.12, 8, 8]} />
       <meshStandardMaterial
         color={particle.color}
@@ -409,7 +451,7 @@ function FlareBurst({ position, intensity, color, id, onClick }: {
     <group position={position}>
       <mesh
         ref={meshRef}
-        onClick={(event) => onClick(id, event)}
+        onPointerEnter={(event) => onClick(id, event)}
         frustumCulled={false}
       >
         <sphereGeometry args={[0.8 + intensity * 0.4, 32, 32]} />
@@ -425,7 +467,7 @@ function FlareBurst({ position, intensity, color, id, onClick }: {
       </mesh>
       {/* Larger invisible clickable area */}
       <mesh
-        onClick={(event) => onClick(id, event)}
+        onPointerEnter={(event) => onClick(id, event)}
         frustumCulled={false}
       >
         <sphereGeometry args={[4, 16, 16]} />
@@ -439,9 +481,10 @@ function FlareBurst({ position, intensity, color, id, onClick }: {
 function useSolarSynth() {
   const [started, setStarted] = useState(false);
   const synthRef = useRef<any>(null);
+  const sunBeatRef = useRef<any>(null);
   
   useEffect(() => {
-    // Auto-start audio immediately
+    // Auto-start audio immediately with ambient background
     const initializeAudio = async () => {
       try {
         await Tone.start();
@@ -463,7 +506,7 @@ function useSolarSynth() {
         Tone.Transport.start();
         synth.triggerAttackRelease(["C2", "G2", "E3"], "8n");
         
-        console.log('Audio auto-started successfully');
+        console.log('Audio auto-started with ambient background');
       } catch (error) {
         console.log("Audio not available:", error);
       }
@@ -485,7 +528,19 @@ function useSolarSynth() {
     return;
   };
 
-  const triggerFlare = (intensity: number) => {
+  const triggerFlare = async (intensity: number) => {
+    // Start audio context on first interaction
+    if (!started) {
+      try {
+        await Tone.start();
+        setStarted(true);
+        Tone.Transport.start();
+      } catch (error) {
+        console.log('Failed to start audio:', error);
+        return;
+      }
+    }
+    
     const s = synthRef.current;
     if (!s) return;
     
@@ -497,7 +552,19 @@ function useSolarSynth() {
     s.synth.triggerAttackRelease(note, `${0.2 + intensity * 0.3}s`);
   };
 
-  const triggerSatellite = (velocity: number) => {
+  const triggerSatellite = async (velocity: number) => {
+    // Start audio context on first interaction
+    if (!started) {
+      try {
+        await Tone.start();
+        setStarted(true);
+        Tone.Transport.start();
+      } catch (error) {
+        console.log('Failed to start audio:', error);
+        return;
+      }
+    }
+    
     const s = synthRef.current;
     if (!s) return;
     
@@ -510,9 +577,28 @@ function useSolarSynth() {
     s.synth.triggerAttackRelease(note, `${0.1 + velocity * 0.05}s`);
   };
 
-  const triggerSolarWind = (speed: number, density: number) => {
+  const triggerSolarWind = async (speed: number, density: number) => {
+    console.log('triggerSolarWind called with speed:', speed, 'density:', density);
+    
+    // Start audio context on first interaction
+    if (!started) {
+      try {
+        await Tone.start();
+        setStarted(true);
+        Tone.Transport.start();
+        console.log('Audio started on first interaction');
+      } catch (error) {
+        console.log('Failed to start audio:', error);
+        return;
+      }
+    }
+    
     const s = synthRef.current;
-    if (!s) return;
+    if (!s) {
+      console.log('No synth available for solar wind');
+      return;
+    }
+    console.log('Triggering solar wind sound');
     
     // Wind-like whooshing sound
     const baseFreq = 110 + speed * 0.5; // Lower frequency for wind
@@ -523,7 +609,104 @@ function useSolarSynth() {
     s.synth.triggerAttackRelease(note, `${0.5 + density * 0.3}s`);
   };
 
-  return { start, triggerFlare, triggerSatellite, triggerSolarWind, started };
+  const triggerSun = async () => {
+    console.log('triggerSun called');
+    
+    // Start audio context on first interaction
+    if (!started) {
+      try {
+        await Tone.start();
+        setStarted(true);
+        Tone.Transport.start();
+        console.log('Audio started on first interaction');
+      } catch (error) {
+        console.log('Failed to start audio:', error);
+        return;
+      }
+    }
+    
+    const s = synthRef.current;
+    if (!s) {
+      console.log('No synth available for sun');
+      return;
+    }
+    console.log('Triggering sun sound');
+    
+    // Deep bass/drum sound for the sun - more like a kick drum
+    const bassFreq = 60; // Low frequency
+    const kickFreq = 90; // Kick drum frequency
+    
+    // Create a deep, punchy bass sound with envelope
+    const kickSynth = new Tone.MembraneSynth({
+      pitchDecay: 0.05,
+      octaves: 10,
+      oscillator: {
+        type: "triangle"
+      },
+      envelope: {
+        attack: 0.001,
+        decay: 0.4,
+        sustain: 0.01,
+        release: 1.4,
+        attackCurve: "exponential"
+      }
+    }).toDestination();
+    
+    kickSynth.triggerAttackRelease("C1", "8n");
+  };
+
+  const startSunBeat = async () => {
+    console.log('Starting sun beat');
+    
+    // Start audio context on first interaction
+    if (!started) {
+      try {
+        await Tone.start();
+        setStarted(true);
+        Tone.Transport.start();
+        console.log('Audio started on first interaction');
+      } catch (error) {
+        console.log('Failed to start audio:', error);
+        return;
+      }
+    }
+    
+    if (sunBeatRef.current) {
+      sunBeatRef.current.dispose();
+    }
+    
+    // Create a continuous drum beat with simple oscillator
+    const kickSynth = new Tone.Oscillator(32.7, "triangle").toDestination(); // C1 = 32.7Hz
+    kickSynth.start();
+    
+    // Create a repeating pattern using Transport
+    const beatPattern = new Tone.Pattern((time) => {
+      // Create a quick envelope for the beat
+      const gainNode = new Tone.Gain(1).toDestination();
+      kickSynth.connect(gainNode);
+      
+      // Quick volume envelope for beat effect
+      gainNode.gain.setValueAtTime(0, time);
+      gainNode.gain.linearRampToValueAtTime(1, time + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, time + 0.2);
+    }, ["beat", null, "beat", null], "8n");
+    
+    beatPattern.start(0);
+    sunBeatRef.current = { kickSynth, beatPattern };
+  };
+
+  const stopSunBeat = () => {
+    console.log('Stopping sun beat');
+    if (sunBeatRef.current) {
+      sunBeatRef.current.beatPattern.stop();
+      sunBeatRef.current.beatPattern.dispose();
+      sunBeatRef.current.kickSynth.stop();
+      sunBeatRef.current.kickSynth.dispose();
+      sunBeatRef.current = null;
+    }
+  };
+
+  return { start, triggerFlare, triggerSatellite, triggerSolarWind, triggerSun, startSunBeat, stopSunBeat, started };
 }
 
 // ---- Main App
@@ -537,11 +720,16 @@ function App() {
   const [auroraData, setAuroraData] = useState<AuroraData[]>([]);
   
   const [selectedObject, setSelectedObject] = useState<any>(null);
+  const [audioStarted, setAudioStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const synth = useSolarSynth();
+  
+  const handleSunLeave = useCallback(() => {
+    synth.stopSunBeat();
+  }, [synth]);
 
-  // Load solar flare data
+  // Load solar flare data - accumulate over time instead of refreshing
   const loadFlares = async (days: number = 7) => {
     setIsLoading(true);
     try {
@@ -559,29 +747,50 @@ function App() {
         throw new Error('Failed to fetch solar flare data');
       }
       
-      const data = await response.json();
-      setFlares(Array.isArray(data) ? data : []);
+      const newData = await response.json();
+      
+      // Get existing flares from localStorage
+      const existingFlares = JSON.parse(localStorage.getItem('solar-flares') || '[]');
+      
+      // Merge new data with existing, avoiding duplicates
+      const existingIds = new Set(existingFlares.map((f: any) => f.flrID));
+      const uniqueNewFlares = Array.isArray(newData) ? newData.filter(f => !existingIds.has(f.flrID)) : [];
+      
+      // Combine and save
+      const allFlares = [...existingFlares, ...uniqueNewFlares];
+      localStorage.setItem('solar-flares', JSON.stringify(allFlares));
+      setFlares(allFlares);
+      
+      console.log(`Added ${uniqueNewFlares.length} new flares, total: ${allFlares.length}`);
     } catch (error) {
       console.error('Error loading solar flares:', error);
-      // Demo data
-      setFlares([
-        {
-          flrID: "demo-1",
-          classType: "M",
-          beginTime: new Date(Date.now() - 86400000).toISOString(),
-          peakTime: new Date(Date.now() - 86350000).toISOString(),
-          sourceLocation: "Demo Region",
-          activeRegionNum: "1234"
-        },
-        {
-          flrID: "demo-2", 
-          classType: "X",
-          beginTime: new Date(Date.now() - 172800000).toISOString(),
-          peakTime: new Date(Date.now() - 172750000).toISOString(),
-          sourceLocation: "Demo Region",
-          activeRegionNum: "5678"
-        }
-      ]);
+      
+      // Load from localStorage if API fails
+      const storedFlares = JSON.parse(localStorage.getItem('solar-flares') || '[]');
+      if (storedFlares.length > 0) {
+        setFlares(storedFlares);
+        console.log(`Loaded ${storedFlares.length} flares from storage`);
+      } else {
+        // Demo data only if no stored data
+        setFlares([
+          {
+            flrID: "demo-1",
+            classType: "M",
+            beginTime: new Date(Date.now() - 86400000).toISOString(),
+            peakTime: new Date(Date.now() - 86350000).toISOString(),
+            sourceLocation: "Demo Region",
+            activeRegionNum: "1234"
+          },
+          {
+            flrID: "demo-2", 
+            classType: "X",
+            beginTime: new Date(Date.now() - 172800000).toISOString(),
+            peakTime: new Date(Date.now() - 172750000).toISOString(),
+            sourceLocation: "Demo Region",
+            activeRegionNum: "5678"
+          }
+        ]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -759,6 +968,14 @@ function App() {
   };
 
   useEffect(() => {
+    // Load existing data from localStorage first
+    const storedFlares = JSON.parse(localStorage.getItem('solar-flares') || '[]');
+    if (storedFlares.length > 0) {
+      setFlares(storedFlares);
+      console.log(`Loaded ${storedFlares.length} flares from storage on startup`);
+    }
+    
+    // Then fetch new data
     loadAllData();
   }, []);
 
@@ -766,6 +983,11 @@ function App() {
     console.log('Object clicked:', { id, type, event });
     // Stop the event from bubbling to OrbitControls
     event.stopPropagation();
+    
+    // Start audio on first click
+    if (!audioStarted) {
+      setAudioStarted(true);
+    }
     
     let selectedObj = null;
     
@@ -788,11 +1010,27 @@ function App() {
       case 'aurora':
         selectedObj = auroraData.find(a => a.timestamp === id);
         break;
+      case 'sun':
+        selectedObj = { 
+          id: 'sun-center', 
+          type: 'sun', 
+          name: 'Sun',
+          position: [0, 0, 0],
+          velocity: 0, // Sun is stationary at center
+          temperature: '5,778 K',
+          radius: '696,340 km',
+          mass: '1.989 × 10³⁰ kg'
+        };
+        break;
     }
     
     if (selectedObj) {
       setSelectedObject({ ...selectedObj, type });
-      if (soundEnabled) {
+      
+      // Sun always plays its beat regardless of sound toggle
+      if (type === 'sun') {
+        synth.startSunBeat();
+      } else if (soundEnabled) {
         switch (type) {
           case 'flare':
             const flareObj = selectedObj as DONKIFlare;
@@ -847,11 +1085,40 @@ function App() {
           alignItems: 'center', 
           justifyContent: 'space-between' 
         }}>
-          <div style={{ fontSize: '1.125rem', fontWeight: 'bold' }}>
+          <div style={{ 
+            fontSize: '0.875rem', 
+            fontWeight: 'normal',
+            fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+          }}>
             Solar Flare Synth
           </div>
-          <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>
-            NASA DONKI Data Visualization
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>
+              NASA DONKI Data Visualization
+            </div>
+            <button
+              onClick={toggleSound}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 12px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                borderRadius: '6px',
+                backgroundColor: soundEnabled ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                color: 'white',
+                cursor: 'pointer',
+                fontSize: '0.875rem',
+                fontWeight: 'normal',
+                fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              {soundEnabled ? "ON" : "OFF"}
+            </button>
           </div>
         </div>
       </div>
@@ -891,6 +1158,9 @@ function App() {
           
           {/* Concentric Space Data Layers */}
           <Suspense fallback={null}>
+            {/* Sun - Center */}
+            <Sun onSunClick={handleObjectClick} onSunLeave={handleSunLeave} />
+            
             {/* Solar Flares - Center (0-2 units) */}
             <FlareGroup 
               flares={flares} 
@@ -922,79 +1192,6 @@ function App() {
       </div>
       
       {/* Control Panel */}
-      <div style={{ 
-        position: 'absolute', 
-        top: '100px', 
-        right: '24px', 
-        zIndex: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        borderRadius: '8px',
-        padding: '16px'
-      }}>
-        <div style={{ marginBottom: '12px', fontSize: '0.875rem', fontWeight: 'bold' }}>
-          Solar Flare Synth
-        </div>
-        
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          marginBottom: '8px',
-          fontSize: '0.75rem' 
-        }}>
-          <span>Sound</span>
-          <button
-            onClick={toggleSound}
-            style={{
-              padding: '4px 12px',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '4px',
-              backgroundColor: 'transparent',
-              color: 'white',
-              cursor: 'pointer',
-              fontSize: '0.75rem'
-            }}
-          >
-            {soundEnabled ? "ON" : "OFF"}
-          </button>
-        </div>
-        
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          marginBottom: '8px',
-          fontSize: '0.75rem' 
-        }}>
-          <span>Flares: {flares.length}</span>
-          <button
-            onClick={() => loadAllData()}
-            disabled={isLoading}
-            style={{
-              padding: '4px 12px',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              borderRadius: '4px',
-              backgroundColor: 'transparent',
-              color: 'white',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              fontSize: '0.75rem',
-              opacity: isLoading ? 0.5 : 1
-            }}
-          >
-            {isLoading ? "..." : "Sync All"}
-          </button>
-        </div>
-        
-        <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '8px' }}>
-          Satellites: {satellites.length} | Wind: 200 particles
-        </div>
-        
-        <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
-          Click flares to explore
-        </div>
-      </div>
       
         {/* Detail Panel */}
         {selectedObject && (
@@ -1016,24 +1213,12 @@ function App() {
             justifyContent: 'space-between',
             marginBottom: '12px'
           }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: 'bold' }}>
+            <div style={{ fontSize: '0.875rem', fontWeight: 'normal' }}>
               {selectedObject.type === 'flare' && `Class ${selectedObject.classType}`}
               {selectedObject.type === 'satellite' && selectedObject.name}
               {selectedObject.type === 'solarwind' && `Solar Wind Stream`}
+              {selectedObject.type === 'sun' && selectedObject.name}
             </div>
-            <button
-              onClick={() => setSelectedObject(null)}
-              style={{
-                padding: '4px',
-                backgroundColor: 'transparent',
-                color: 'white',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '0.75rem'
-              }}
-            >
-              ×
-        </button>
           </div>
           <div style={{ fontSize: '0.75rem' }}>
             {selectedObject.type === 'flare' && (
@@ -1077,6 +1262,26 @@ function App() {
                 </div>
                 <div style={{ marginBottom: '8px' }}>
                   <span style={{ color: '#9ca3af' }}>Temperature:</span> {selectedObject.temperature.toLocaleString()}K
+      </div>
+              </>
+            )}
+            
+            {selectedObject.type === 'sun' && (
+              <>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Position:</span> Center (0, 0, 0)
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Velocity:</span> 0 km/s (Stationary)
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Temperature:</span> {selectedObject.temperature}
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Radius:</span> {selectedObject.radius}
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <span style={{ color: '#9ca3af' }}>Mass:</span> {selectedObject.mass}
                 </div>
               </>
             )}
@@ -1084,20 +1289,6 @@ function App() {
         </div>
       )}
       
-      {/* Footer */}
-      <div style={{ 
-        position: 'fixed', 
-        bottom: 0, 
-        left: 0, 
-        right: 0, 
-        zIndex: 50,
-        backgroundColor: 'transparent',
-        padding: '16px 24px'
-      }}>
-        <div style={{ fontSize: '0.875rem', color: '#9ca3af' }}>
-          © Carlos Tarrats {new Date().getFullYear()}
-        </div>
-      </div>
     </div>
   );
 }
