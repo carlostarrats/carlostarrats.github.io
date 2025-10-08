@@ -116,7 +116,7 @@ const LayerSurface: React.FC<{
         anchorY="middle"
         outlineWidth={0.05}
         outlineColor="#000000"
-        font="/fonts/JetBrainsMono-Regular.ttf"
+        font="/mood-atlas/fonts/JetBrainsMono-Regular.ttf"
       >
         {layer.name}
       </Text>
@@ -188,7 +188,7 @@ const SongPoint: React.FC<{
           anchorY="bottom"
           outlineWidth={0.02}
           outlineColor="#000000"
-          font="/fonts/JetBrainsMono-Regular.ttf"
+          font="/mood-atlas/fonts/JetBrainsMono-Regular.ttf"
         >
           {song.title}
           {selectedEmotion && (
