@@ -11,7 +11,8 @@ const CameraAnimator: React.FC<{
   targetPosition: THREE.Vector3 | null;
   targetLookAt: THREE.Vector3 | null;
   controlsRef: React.MutableRefObject<any>;
-}> = ({ targetPosition, targetLookAt, controlsRef }) => {
+  onComplete: () => void;
+}> = ({ targetPosition, targetLookAt, controlsRef, onComplete }) => {
   useFrame(({ camera }) => {
     if (targetPosition && targetLookAt) {
       // Smoothly interpolate camera position
@@ -21,6 +22,17 @@ const CameraAnimator: React.FC<{
       if (controlsRef.current) {
         controlsRef.current.target.lerp(targetLookAt, 0.1);
         controlsRef.current.update();
+      }
+
+      // Check if we've reached the target (within a small threshold)
+      const positionDistance = camera.position.distanceTo(targetPosition);
+      const targetDistance = controlsRef.current 
+        ? controlsRef.current.target.distanceTo(targetLookAt)
+        : Infinity;
+      
+      // If close enough, complete the animation
+      if (positionDistance < 0.1 && targetDistance < 0.1) {
+        onComplete();
       }
     }
   });
@@ -75,6 +87,11 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     setSelectedLayer(null);
   }, []);
 
+  const clearCameraTargets = useCallback(() => {
+    setTargetCameraPos(null);
+    setTargetLookAt(null);
+  }, []);
+
   // Effect to reset camera when resetTrigger changes
   useEffect(() => {
     if (resetTrigger && resetTrigger > 0) {
@@ -111,6 +128,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           targetPosition={targetCameraPos} 
           targetLookAt={targetLookAt}
           controlsRef={controlsRef}
+          onComplete={clearCameraTargets}
         />
 
         {/* Controls */}
