@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from './Header';
-import Footer from './Footer';
 import MoodAtlasScene from './MoodAtlasScene';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,7 +12,7 @@ import {
   mapAppleMusicToSong,
   defaultConfig 
 } from '@/utils/musicKit';
-import { Loader2, Wifi, WifiOff } from 'lucide-react';
+import { Loader2, WifiOff } from 'lucide-react';
 
 const MoodAtlas: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>(mockSongs);
@@ -22,6 +21,7 @@ const MoodAtlas: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [, setHoveredSong] = useState<Song | null>(null);
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   // Initialize MusicKit on component mount
   useEffect(() => {
@@ -87,11 +87,16 @@ const MoodAtlas: React.FC = () => {
     window.location.href = '/'; // Navigate back to main portfolio
   };
 
+  const handleResetView = () => {
+    setResetTrigger(prev => prev + 1);
+  };
+
   return (
     <div className="min-h-screen text-white overflow-hidden" style={{ backgroundColor: '#1a1a1a' }}>
       <Header 
         onHomeClick={handleHomeClick}
         onSyncClick={handleSyncLibrary}
+        onResetView={handleResetView}
         isAuthorized={isAuthorized}
       />
       
@@ -99,11 +104,10 @@ const MoodAtlas: React.FC = () => {
         <MoodAtlasScene 
           songs={songs}
           onSongHover={setHoveredSong}
+          resetTrigger={resetTrigger}
           musicKit={musicKit}
         />
       </main>
-
-      <Footer />
 
       {/* Loading overlay */}
       {isLoading && (
@@ -151,26 +155,6 @@ const MoodAtlas: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Connection status */}
-      <div className="fixed bottom-16 right-4 z-10">
-        <Card className="bg-black/90 border border-white/20 backdrop-blur-sm">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 text-xs font-mono">
-              {isAuthorized ? (
-                <>
-                  <Wifi className="w-4 h-4 text-green-400" />
-                  <span className="text-green-400">Apple Music Connected</span>
-                </>
-              ) : (
-                <>
-                  <WifiOff className="w-4 h-4 text-gray-400" />
-                  <span className="text-gray-400">Demo Mode</span>
-                </>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 };

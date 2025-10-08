@@ -1,31 +1,66 @@
-import React, { Suspense, useState, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
 import GridPlane from './GridPlane';
 import MoodLayers from './MoodLayers';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { RotateCcw } from 'lucide-react';
+import * as THREE from 'three';
+
+// Camera animation helper
+const CameraAnimator: React.FC<{
+  targetPosition: THREE.Vector3 | null;
+  targetLookAt: THREE.Vector3 | null;
+  controlsRef: React.MutableRefObject<any>;
+}> = ({ targetPosition, targetLookAt, controlsRef }) => {
+  useFrame(({ camera }) => {
+    if (targetPosition && targetLookAt) {
+      // Smoothly interpolate camera position
+      camera.position.lerp(targetPosition, 0.1);
+      
+      // Smoothly interpolate controls target
+      if (controlsRef.current) {
+        controlsRef.current.target.lerp(targetLookAt, 0.1);
+        controlsRef.current.update();
+      }
+    }
+  });
+  
+  return null;
+};
 
 interface MoodAtlasSceneProps {
   songs: Song[];
   onSongHover?: (song: Song | null) => void;
+  resetTrigger?: number;
   musicKit?: any;
 }
 
 const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({ 
   songs, 
-  onSongHover 
+  onSongHover,
+  resetTrigger
 }) => {
   const [hoveredLayer, setHoveredLayer] = useState<any>(null);
   const [selectedLayer, setSelectedLayer] = useState<any>(null);
+  const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
+  const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
   const controlsRef = useRef<any>(null);
+  const cameraRef = useRef<any>(null);
 
   const moodLayers = generateMoodLayers(songs);
 
   const handleLayerClick = (layer: any) => {
-    setSelectedLayer(selectedLayer?.id === layer.id ? null : layer);
+    const isDeselecting = selectedLayer?.id === layer.id;
+    setSelectedLayer(isDeselecting ? null : layer);
+    
+    // Zoom to the layer or reset view
+    if (!isDeselecting) {
+      const distance = layer.radius * 3; // Position camera relative to layer size
+      setTargetCameraPos(new THREE.Vector3(0, layer.height + 5, distance));
+      setTargetLookAt(new THREE.Vector3(0, layer.height, 0));
+    } else {
+      resetCamera();
+    }
   };
 
   const handleLayerHover = (layer: any) => {
@@ -33,20 +68,27 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     onSongHover?.(layer);
   };
 
-  const resetCamera = () => {
-    if (controlsRef.current) {
-      controlsRef.current.reset();
+  const resetCamera = useCallback(() => {
+    setTargetCameraPos(new THREE.Vector3(0, 25, 80));
+    setTargetLookAt(new THREE.Vector3(0, 15, 0));
+    setSelectedLayer(null);
+  }, []);
+
+  // Effect to reset camera when resetTrigger changes
+  useEffect(() => {
+    if (resetTrigger && resetTrigger > 0) {
+      resetCamera();
     }
-  };
+  }, [resetTrigger, resetCamera]);
 
 
   return (
     <div className="w-full h-full relative">
           <Canvas
-            camera={{ position: [0, 10, 25], fov: 60 }}
+            camera={{ position: [0, 25, 80], fov: 60 }}
             style={{ background: '#1a1a1a' }}
           >
-        <PerspectiveCamera makeDefault position={[0, 10, 25]} />
+        <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 25, 80]} />
         
         {/* Lighting setup */}
         <ambientLight intensity={0.2} />
@@ -63,9 +105,17 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         {/* Environment */}
         <Environment preset="night" />
 
+        {/* Camera animation */}
+        <CameraAnimator 
+          targetPosition={targetCameraPos} 
+          targetLookAt={targetLookAt}
+          controlsRef={controlsRef}
+        />
+
         {/* Controls */}
         <OrbitControls
           ref={controlsRef}
+          target={[0, 15, 0]}
           enablePan={true}
           enableZoom={true}
           enableRotate={true}
@@ -107,40 +157,23 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
       {/* UI Overlay */}
       <div className="absolute top-4 left-4 z-10">
-        <div className="bg-black/90 backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-sm">
-          <div className="text-white font-bold mb-2 text-xs">Mood Atlas</div>
-          <div className="text-gray-300">
-            Layers: {moodLayers.length} | Songs: {songs.length}
-          </div>
+        <div className="bg-black/90 backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300">
+          <div className="text-white font-bold mb-2">Mood Atlas</div>
+          <div>Layers: {moodLayers.length} | Songs: {songs.length}</div>
           {hoveredLayer && (
             <div className="mt-2 pt-2 border-t border-gray-600">
               <div className="text-white font-bold">{hoveredLayer.name}</div>
-              <div className="text-gray-300">{hoveredLayer.totalSongs} songs</div>
+              <div>{hoveredLayer.totalSongs} songs</div>
               <div className="text-gray-400">Energy: {Math.round(hoveredLayer.avgEnergy * 100)}%</div>
             </div>
           )}
           {selectedLayer && (
             <div className="mt-2 pt-2 border-t border-gray-600">
               <div className="text-white font-bold">Selected: {selectedLayer.name}</div>
-              <div className="text-gray-300">Click to explore songs</div>
+              <div>Click to explore songs</div>
             </div>
           )}
         </div>
-      </div>
-
-      {/* Reset Camera Button */}
-      <div className="absolute bottom-32 right-4 z-10">
-        <Card className="bg-black/90 border border-white/20 backdrop-blur-sm">
-          <CardContent className="p-3">
-            <div 
-              onClick={resetCamera}
-              className="flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-white cursor-pointer"
-            >
-              <RotateCcw className="w-4 h-4" />
-              <span>Reset View</span>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Instructions */}
