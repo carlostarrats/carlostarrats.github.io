@@ -10,9 +10,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ 
   onHomeClick, 
-  onSyncClick, 
-  onResetView,
-  isAuthorized = false 
+  onResetView
 }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">

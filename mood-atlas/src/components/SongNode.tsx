@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Mesh, Vector3 } from 'three';
 import { Html } from '@react-three/drei';
-import { Song, moodColors, getNodeSize } from '@/data/mockSongs';
+import { Song, emotionColors, getNodeSize } from '@/data/mockSongs';
 
 interface SongNodeProps {
   song: Song;
@@ -22,7 +22,7 @@ const SongNode: React.FC<SongNodeProps> = ({
   const [clicked, setClicked] = useState(false);
 
   const size = getNodeSize(song.energy);
-  const color = moodColors[song.mood] || '#ffffff';
+  const color = emotionColors[song.primaryEmotion] || '#ffffff';
   const emissiveIntensity = hovered ? 3 : 1.5;
 
   // Animate the node
@@ -125,7 +125,7 @@ const SongNode: React.FC<SongNodeProps> = ({
                 Energy: {Math.round(song.energy * 100)}%
               </span>
               <span className="font-mono text-xs">
-                Mood: {song.mood}
+                Emotion: {song.primaryEmotion}
               </span>
             </div>
           </div>

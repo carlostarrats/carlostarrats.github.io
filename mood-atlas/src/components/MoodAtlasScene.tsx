@@ -127,7 +127,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           rotateSpeed={1.0}
           mouseButtons={{
             LEFT: 0, // Rotate
-            MIDDLE: null, // Disable middle mouse
             RIGHT: 2, // Pan
           }}
           touches={{

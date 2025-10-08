@@ -1,6 +1,20 @@
 // Offline mode - download music data once, then disconnect account
 import { SecurityManager } from './security';
-import { analyzeSongMood } from '@/data/mockSongs';
+
+// Simple emotion analyzer based on audio features
+function analyzeSongEmotion(features: { energy: number; valence: number }): string {
+  const { energy, valence } = features;
+  
+  if (energy > 0.7 && valence > 0.7) return 'Happy';
+  if (energy > 0.7 && valence > 0.4) return 'Energetic';
+  if (energy > 0.7 && valence <= 0.4) return 'Angry';
+  if (energy > 0.4 && valence > 0.7) return 'Excited';
+  if (energy > 0.4 && valence > 0.4) return 'Romantic';
+  if (energy <= 0.4 && valence > 0.5) return 'Peaceful';
+  if (energy <= 0.4 && valence > 0.3) return 'Calm';
+  if (energy > 0.3 && valence <= 0.4) return 'Melancholic';
+  return 'Sad';
+}
 
 export interface OfflineSongData {
   id: string;
@@ -52,7 +66,7 @@ export class OfflineMusicManager {
           danceability: audioFeatures.danceability,
           acousticness: audioFeatures.acousticness,
           tempo: audioFeatures.tempo,
-          mood: analyzeSongMood(audioFeatures),
+          mood: analyzeSongEmotion(audioFeatures),
           previewUrl: appleSong.attributes?.previews?.[0]?.url,
           duration: appleSong.attributes?.durationInMillis ? 
             Math.round(appleSong.attributes.durationInMillis / 1000) : undefined,
@@ -177,8 +191,6 @@ export class OfflineMusicManager {
     tempo: number;
   } {
     const genre = appleSong.attributes?.genreNames?.[0]?.toLowerCase() || '';
-    const year = appleSong.attributes?.releaseDate ? 
-      new Date(appleSong.attributes.releaseDate).getFullYear() : 2020;
     
     // Genre-based audio feature estimation
     let baseEnergy = 0.5;
