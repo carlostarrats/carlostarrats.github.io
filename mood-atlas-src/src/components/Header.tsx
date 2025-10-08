@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({
               Carlos Tarrats
             </div>
             <div className="hidden md:block text-gray-400 font-mono text-sm">
-              / mood-atlas
+              / Mood Atlas
             </div>
           </div>
 

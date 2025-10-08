@@ -44,6 +44,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   const [selectedLayer, setSelectedLayer] = useState<any>(null);
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
+  const [controlsExpanded, setControlsExpanded] = useState<boolean>(true);
   const controlsRef = useRef<any>(null);
   const cameraRef = useRef<any>(null);
 
@@ -155,8 +156,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
       </Canvas>
 
       {/* UI Overlay */}
-      <div className="absolute top-4 left-4 z-10">
-        <div className="bg-black/90 backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300">
+      <div className="absolute top-4 left-4 z-10 w-80">
+        <div className="bg-transparent backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300">
           <div className="text-white font-bold mb-2">Mood Atlas</div>
           <div>Layers: {moodLayers.length} | Songs: {songs.length}</div>
           {hoveredLayer && (
@@ -175,18 +176,28 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         </div>
       </div>
 
-      {/* Instructions */}
-      <div className="absolute bottom-16 left-4 z-10">
-        <div className="bg-black/90 backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300 max-w-xs">
-          <div className="text-white font-bold mb-2">Controls</div>
-          <div>• Click layers to explore</div>
-          <div>• Hover for mood details</div>
-          <div className="mt-2 text-white font-bold">Trackpad:</div>
-          <div>• One finger drag: rotate</div>
-          <div>• Ctrl + drag: pan</div>
-          <div>• Pinch/spread: zoom</div>
-          <div className="mt-2 text-white font-bold">Reset:</div>
-          <div>• Click "Reset View" button</div>
+      {/* Instructions - positioned at bottom */}
+      <div className="absolute bottom-4 left-4 z-10 w-80">
+        <div className="bg-transparent backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300">
+          <div 
+            className="text-white font-bold mb-2 cursor-pointer hover:text-gray-300 flex items-center justify-between"
+            onClick={() => setControlsExpanded(!controlsExpanded)}
+          >
+            <span>Controls</span>
+            <span className="text-xs">{controlsExpanded ? '−' : '+'}</span>
+          </div>
+          {controlsExpanded && (
+            <>
+              <div>• Click layers to explore</div>
+              <div>• Hover for mood details</div>
+              <div className="mt-2 text-white font-bold">Trackpad:</div>
+              <div>• One finger drag: rotate</div>
+              <div>• Ctrl + drag: pan</div>
+              <div>• Pinch/spread: zoom</div>
+              <div className="mt-2 text-white font-bold">Reset:</div>
+              <div>• Click "Reset View" button</div>
+            </>
+          )}
         </div>
       </div>
     </div>
