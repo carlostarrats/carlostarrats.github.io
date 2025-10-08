@@ -3,9 +3,7 @@ import { RotateCcw } from 'lucide-react';
 
 interface HeaderProps {
   onHomeClick?: () => void;
-  onSyncClick?: () => void;
   onResetView?: () => void;
-  isAuthorized?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
