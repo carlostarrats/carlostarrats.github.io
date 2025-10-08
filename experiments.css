@@ -19,3 +19,14 @@
   background: #fff !important;
   color: #000 !important;
 }
+
+/* Clickable Images */
+.post-image a {
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.post-image a:hover {
+  opacity: 0.8;
+}
