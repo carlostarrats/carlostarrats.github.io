@@ -172,6 +172,23 @@ body.detail-page footer {
     top: calc(50% + 15vw + 15px) !important;
   }
   
+  /* Prevent scrolling on mobile */
+  html, body.detail-page {
+    overflow: hidden !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    position: fixed !important;
+    width: 100% !important;
+  }
+  
+  body.detail-page .content-wrapper {
+    overflow: hidden !important;
+  }
+  
+  body.detail-page .main-content {
+    overflow: hidden !important;
+  }
+  
   /* Hide footer on mobile for control detail page */
   body.detail-page footer {
     display: none !important;
@@ -182,10 +199,11 @@ body.detail-page footer {
     background-image: url('images/detail-control-2.jpg') !important;
     background-size: cover !important;
     background-position: center center !important;
-    background-attachment: fixed !important;
     width: 100vw !important;
     height: 100vh !important;
+    max-height: 100vh !important;
     opacity: 0.9 !important;
     filter: saturate(1) !important;
+    overflow: hidden !important;
   }
 }
