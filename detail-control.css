@@ -201,14 +201,6 @@ body.detail-page footer {
   /* Update background image settings for mobile */
   body.detail-page::before {
     background-image: url('images/detail-control-2.jpg') !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    opacity: 0.9 !important;
     filter: saturate(1) !important;
   }
 }
