@@ -167,6 +167,7 @@ body.detail-page footer {
     height: 100dvh !important;
     position: fixed !important;
     width: 100% !important;
+    background-attachment: scroll !important;
   }
   
   body.detail-page .content-wrapper {
