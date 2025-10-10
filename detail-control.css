@@ -2,7 +2,7 @@
 
 /* Full-screen background image for control page */
 body.detail-page {
-  background-color: #ED5D5D;
+  background-color: #EE6360;
   height: 100vh;
   overflow: hidden;
   position: relative;
@@ -182,7 +182,10 @@ body.detail-page footer {
     background-image: url('images/detail-control-2.jpg') !important;
     background-size: cover !important;
     background-position: center center !important;
+    background-attachment: fixed !important;
+    width: 100vw !important;
+    height: 100vh !important;
     opacity: 0.9 !important;
-    filter: saturate(1.2) !important;
+    filter: saturate(1) !important;
   }
 }
