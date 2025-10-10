@@ -161,25 +161,9 @@ body.detail-page footer {
   }
   
   /* Prevent scrolling on mobile */
-  html, body.detail-page {
+  body.detail-page {
     overflow: hidden !important;
     height: 100vh !important;
-    height: 100dvh !important;
-    position: fixed !important;
-    width: 100% !important;
-    background-attachment: scroll !important;
-  }
-  
-  body.detail-page .content-wrapper {
-    overflow: hidden !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-  }
-  
-  body.detail-page .main-content {
-    overflow: hidden !important;
-    height: 100vh !important;
-    height: 100dvh !important;
   }
   
   /* Hide footer on mobile for control detail page */
