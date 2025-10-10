@@ -162,8 +162,12 @@ body.detail-page footer {
   
   /* Prevent scrolling on mobile */
   body.detail-page {
+    position: fixed !important;
     overflow: hidden !important;
+    width: 100% !important;
     height: 100vh !important;
+    top: 0 !important;
+    left: 0 !important;
   }
   
   /* Hide footer on mobile for control detail page */
