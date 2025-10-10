@@ -3,25 +3,13 @@
 /* Full-screen background image for control page */
 body.detail-page {
   background-color: #EE6360;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-/* Background image with opacity for desktop */
-body.detail-page::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-image: url('images/detail-control-1.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.9;
-  z-index: -1;
+  background-attachment: fixed;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Remove main-content padding that constrains the hero */
