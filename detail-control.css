@@ -197,10 +197,4 @@ body.detail-page footer {
   body.detail-page footer {
     display: none !important;
   }
-  
-  /* Update background image settings for mobile */
-  body.detail-page::before {
-    background-image: url('images/detail-control-2.jpg') !important;
-    filter: saturate(1) !important;
-  }
 }
