@@ -1,5 +1,15 @@
 /* Experiments Page Styles */
 
+/* Sub-text / Description */
+.sub-text {
+  font-size: 2rem;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 450;
+  margin: 0 0 3rem 0;
+  white-space: normal;
+}
+
 /* View Web App Button */
 .capability-tag {
   background: #000 !important;
@@ -57,11 +67,16 @@
 .post-image + .embed-container,
 .embed-container + .post-image,
 .embed-container + .embed-container {
-  margin-top: 2rem;
+  margin-top: 2.25rem;
 }
 
 /* Responsive styles */
 @media (max-width: 800px) {
+  .sub-text {
+    font-size: 1.25rem;
+    margin: 3rem 0 0 0;
+  }
+  
   .post-image,
   .embed-container {
     margin-bottom: 1rem;
