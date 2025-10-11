@@ -9,7 +9,7 @@
    2. DETAIL CONTENT TYPOGRAPHY
    ========================================================================== */
 .detail-content h2 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 450;
   margin: 3.125rem 0 1rem 0;
   letter-spacing: -0.02em;
@@ -41,7 +41,7 @@
 }
 
 .detail-content .detail-text {
-  font-size: 2rem;
+  font-size: 1.4rem;
   line-height: 1.4;
   color: rgba(0, 0, 0, 0.7);
   font-weight: 450;
@@ -78,15 +78,27 @@
 /* ==========================================================================
    4. DETAIL LISTS
    ========================================================================== */
-.detail-content .detail-text ul {
+.detail-content .detail-text ul,
+.detail-content ul.detail-text {
   margin: 1rem 0;
   padding-left: 1.5rem;
-  list-style-type: disc;
+  list-style-type: none;
 }
 
-.detail-content .detail-text li {
+.detail-content .detail-text li,
+.detail-content ul.detail-text li {
   margin-bottom: 0.5rem;
   white-space: normal;
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.detail-content .detail-text li::before,
+.detail-content ul.detail-text li::before {
+  content: "▸";
+  position: absolute;
+  left: -1rem;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 /* ==========================================================================
@@ -230,7 +242,7 @@
   }
 
   .detail-content h2 {
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     margin: 3.125rem 0 1.5rem 0;
   }
 
