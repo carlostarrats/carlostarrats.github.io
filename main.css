@@ -1077,6 +1077,7 @@ body {
   .hero,
   .index-page .hero {
     margin-top: -0.4rem;
+    margin-left: -0.03rem;
   }
 }
 
