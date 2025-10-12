@@ -54,7 +54,7 @@ body {
    3. LAYOUT CONTAINERS
    ========================================================================== */
 .content-wrapper {
-  max-width: 1700px;
+  max-width: 1500px;
   padding: 0;
   margin: 0 auto;
   width: 100%;
@@ -75,7 +75,7 @@ body {
 
 .main-content {
   padding: 0 4rem;
-  max-width: 1700px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
@@ -85,7 +85,7 @@ body {
 .header {
   padding: 2rem 4rem;
   position: relative;
-  max-width: 1700px;
+  max-width: 1500px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -105,7 +105,7 @@ body {
   transform: translateX(-50%);
   padding: 2rem 4rem;
   z-index: 1000;
-  max-width: 1700px;
+  max-width: 1500px;
   width: 100%;
 }
 
@@ -510,7 +510,7 @@ body {
   color: #000 !important;
   font-size: 2rem !important;
   font-weight: 450;
-  max-width: 1700px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
@@ -538,7 +538,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 800px) {
   .projects-scroll {
-    padding: 1rem 0 24px 1.5rem;
+    padding: 0rem 0 24px 1.5rem;
     gap: 0.5rem;
     margin: 0;
     width: 100%;
@@ -629,7 +629,7 @@ body {
   .hero,
   .index-page .hero {  /* Reset the extra spacing on mobile */
     margin-top: 0.34rem;
-    margin-bottom: 1.5rem; /* Reduced from 3rem to 1.5rem */
+    margin-bottom: 0rem; /* Reduced from 3rem to 1.5rem */
   }
 
   .hero-title {
@@ -1076,7 +1076,7 @@ body {
 
   .hero,
   .index-page .hero {
-    margin-top: -0.7rem;
+    margin-top: -0.4rem;
   }
 }
 
