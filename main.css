@@ -1024,9 +1024,13 @@ body {
     margin-bottom: 4rem;
   }
 
+  .about {
+    margin-bottom: 2.4rem;
+  }
+
   .external-links-section {
     margin-top: 0px;
-    margin-bottom: 4rem;
+    margin-bottom: 2.65rem;
   }
 
   .experience-section {
