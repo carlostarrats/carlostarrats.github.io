@@ -1084,6 +1084,11 @@ body {
     margin-top: 0.48rem;
   }
 
+  .index-page .about h2 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
   .hero,
   .index-page .hero {
     margin-top: -0.4rem;
