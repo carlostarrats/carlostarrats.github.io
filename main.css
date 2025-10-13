@@ -783,6 +783,10 @@ body {
     height: 125px;
   }
 
+  .index-page .content-wrapper::after {
+    height: 0;
+  }
+
   h2:not(.project-info > h2), h3:not(.project-info > h3) {
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
@@ -975,7 +979,7 @@ body {
 /* Experience Section */
 .experience-section {
   margin-top: 20px;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
 }
 
 .experience-section-title {
@@ -1035,7 +1039,7 @@ body {
 
   .experience-section {
     margin-top: 0;
-    margin-bottom: 4rem;
+    margin-bottom: 30px;
   }
 
   .capabilities-tag {
