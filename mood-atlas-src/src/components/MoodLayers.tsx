@@ -124,7 +124,7 @@ const LayerSurface: React.FC<{
         color={layer.color}
         anchorX="left"
         anchorY="middle"
-        font="/fonts/JetBrainsMono-Regular.ttf"
+        font="./fonts/JetBrainsMono-Regular.ttf"
       >
         {layer.name}
       </Text>
@@ -134,7 +134,7 @@ const LayerSurface: React.FC<{
         color={layer.color}
         anchorX="left"
         anchorY="middle"
-        font="/fonts/JetBrainsMono-Regular.ttf"
+        font="./fonts/JetBrainsMono-Regular.ttf"
       >
         ({layer.songs.length})
       </Text>
