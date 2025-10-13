@@ -87,7 +87,7 @@ const LayerSurface: React.FC<{
   onClick: () => void;
   onSongClick?: (song: Song) => void;
   onSongHover?: (song: Song | null) => void;
-}> = ({ layer, opacity, scale, onHover, onClick, selectedEmotion, hoveredEmotion, onSongClick, onSongHover }) => {
+}> = ({ layer, opacity, scale, onHover: _onHover, onClick: _onClick, selectedEmotion, hoveredEmotion, onSongClick, onSongHover }) => {
   const meshRef = useRef<Mesh>(null);
   const groupRef = useRef<any>(null);
 

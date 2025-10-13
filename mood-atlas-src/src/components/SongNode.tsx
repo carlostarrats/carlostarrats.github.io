@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Mesh, Vector3 } from 'three';
-import { Html, Text } from '@react-three/drei';
 import { Song, emotionColors, getNodeSize } from '@/data/mockSongs';
 
 interface SongNodeProps {
@@ -24,14 +23,13 @@ const SongNode: React.FC<SongNodeProps> = ({
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const { camera } = useThree();
 
   const size = getNodeSize(song.energy);
   const color = emotionColors[song.primaryEmotion] || '#ffffff';
   const emissiveIntensity = 1.5; // Static - no change on hover
 
   // Animate the node - NO animation, just static with optional highlight
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return;
     
     // Keep position static - no floating

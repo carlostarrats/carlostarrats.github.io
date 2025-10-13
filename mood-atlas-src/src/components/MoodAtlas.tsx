@@ -7,7 +7,7 @@ const MoodAtlas: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>(mockSongs);
   const [, setHoveredSong] = useState<Song | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
-  const [dataSource, setDataSource] = useState<'mock' | 'apple'>('mock');
+  const [, setDataSource] = useState<'mock' | 'apple'>('mock');
 
   useEffect(() => {
     // Load Apple Music data if available

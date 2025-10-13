@@ -69,16 +69,6 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, musicK
     }
   };
 
-  const handleAuthorizeMusicKit = async () => {
-    if (musicKit && !musicKitAuthorized) {
-      try {
-        await musicKit.authorize();
-        setMusicKitAuthorized(true);
-      } catch (err) {
-        console.error('Failed to authorize MusicKit:', err);
-      }
-    }
-  };
 
   // Calculate emotion bar widths
   const emotionEntries = Object.entries(song.emotionScores || {}).sort((a, b) => b[1] - a[1]);

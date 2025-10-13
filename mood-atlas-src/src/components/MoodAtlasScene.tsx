@@ -50,12 +50,11 @@ interface MoodAtlasSceneProps {
 
 const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({ 
   songs, 
-  onSongHover,
   resetTrigger,
   musicKit
 }) => {
-  const [hoveredLayer, setHoveredLayer] = useState<any>(null);
-  const [selectedLayer, setSelectedLayer] = useState<any>(null);
+  const [hoveredLayer] = useState<any>(null);
+  const [, setSelectedLayer] = useState<any>(null);
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
@@ -67,11 +66,11 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
   const moodLayers = generateMoodLayers(songs);
 
-  const handleLayerClick = (layer: any) => {
+  const handleLayerClick = (_layer: any) => {
     // Disabled - layers are not clickable
   };
 
-  const handleLayerHover = (layer: any) => {
+  const handleLayerHover = (_layer: any) => {
     // Disabled - layers don't show hover info
   };
 
