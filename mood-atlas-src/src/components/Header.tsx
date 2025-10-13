@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* Reset View Button */}
           <div 
             onClick={onResetView}
-            className="bg-black/90 backdrop-blur-md border border-white/20 rounded-lg p-3 cursor-pointer hover:border-white/40 transition-colors"
+            className="bg-transparent backdrop-blur-md border border-white/20 rounded-lg p-3 cursor-pointer hover:border-white/40 transition-colors"
           >
             <div className="flex items-center gap-2 text-xs font-mono text-gray-400 hover:text-white">
               <RotateCcw className="w-4 h-4" />

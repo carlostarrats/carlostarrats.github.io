@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
 import GridPlane from './GridPlane';
 import MoodLayers from './MoodLayers';
+import SongDetailPanel from './SongDetailPanel';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
 import * as THREE from 'three';
 
@@ -50,35 +51,52 @@ interface MoodAtlasSceneProps {
 const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({ 
   songs, 
   onSongHover,
-  resetTrigger
+  resetTrigger,
+  musicKit
 }) => {
   const [hoveredLayer, setHoveredLayer] = useState<any>(null);
   const [selectedLayer, setSelectedLayer] = useState<any>(null);
+  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
   const [controlsExpanded, setControlsExpanded] = useState<boolean>(true);
   const controlsRef = useRef<any>(null);
   const cameraRef = useRef<any>(null);
+  const hoveredSongRef = useRef<Song | null>(null);
+  const hoverInfoRef = useRef<HTMLDivElement>(null);
 
   const moodLayers = generateMoodLayers(songs);
 
   const handleLayerClick = (layer: any) => {
-    const isDeselecting = selectedLayer?.id === layer.id;
-    setSelectedLayer(isDeselecting ? null : layer);
-    
-    // Zoom to the layer or reset view
-    if (!isDeselecting) {
-      const distance = layer.radius * 3; // Position camera relative to layer size
-      setTargetCameraPos(new THREE.Vector3(0, layer.height + 5, distance));
-      setTargetLookAt(new THREE.Vector3(0, layer.height, 0));
-    } else {
-      resetCamera();
-    }
+    // Disabled - layers are not clickable
   };
 
   const handleLayerHover = (layer: any) => {
-    setHoveredLayer(layer);
-    onSongHover?.(layer);
+    // Disabled - layers don't show hover info
+  };
+
+  const handleSongClick = (song: Song) => {
+    setSelectedSong(song);
+  };
+
+  const handleSongHover = (song: Song | null) => {
+    hoveredSongRef.current = song;
+    // Update DOM directly without React re-render
+    if (hoverInfoRef.current) {
+      if (song) {
+        hoverInfoRef.current.innerHTML = `
+          <div class="text-white font-bold">${song.title}</div>
+          <div class="text-gray-400">${song.artist}</div>
+          <div class="text-purple-400">Click to view details</div>
+        `;
+      } else {
+        hoverInfoRef.current.innerHTML = `<div class="text-gray-500 italic">Hover over a dot for info</div>`;
+      }
+    }
+  };
+
+  const handleCloseSongDetail = () => {
+    setSelectedSong(null);
   };
 
   const resetCamera = useCallback(() => {
@@ -138,7 +156,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           enablePan={true}
           enableZoom={true}
           enableRotate={true}
-          minDistance={5}
+          minDistance={0.1}
           maxDistance={200}
           maxPolarAngle={Math.PI}
           panSpeed={1.5}
@@ -164,6 +182,9 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           layers={moodLayers}
           onLayerClick={handleLayerClick}
           onLayerHover={handleLayerHover}
+          onSongClick={handleSongClick}
+          onSongHover={handleSongHover}
+          hoveredEmotion={hoveredLayer?.id}
         />
 
         {/* Central light source */}
@@ -173,26 +194,23 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         </mesh>
       </Canvas>
 
-      {/* UI Overlay */}
-      <div className="absolute top-4 left-4 z-10 w-80">
+      {/* UI Overlay - No React state to prevent jumping */}
+      <div className="absolute top-20 left-4 z-10 w-80 pointer-events-none">
         <div className="bg-transparent backdrop-blur-md border border-white/20 rounded-lg p-4 font-mono text-xs text-gray-300">
           <div className="text-white font-bold mb-2">Mood Atlas</div>
           <div>Layers: {moodLayers.length} | Songs: {songs.length}</div>
-          {hoveredLayer && (
-            <div className="mt-2 pt-2 border-t border-gray-600">
-              <div className="text-white font-bold">{hoveredLayer.name}</div>
-              <div>{hoveredLayer.totalSongs} songs</div>
-              <div className="text-gray-400">Energy: {Math.round(hoveredLayer.avgEnergy * 100)}%</div>
-            </div>
-          )}
-          {selectedLayer && (
-            <div className="mt-2 pt-2 border-t border-gray-600">
-              <div className="text-white font-bold">Selected: {selectedLayer.name}</div>
-              <div>Click to explore songs</div>
-            </div>
-          )}
+          <div ref={hoverInfoRef} className="mt-2 pt-2 border-t border-gray-600 h-20">
+            <div className="text-gray-500 italic">Hover over a dot for info</div>
+          </div>
         </div>
       </div>
+
+      {/* Song Detail Panel */}
+      <SongDetailPanel 
+        song={selectedSong} 
+        onClose={handleCloseSongDetail}
+        musicKit={musicKit}
+      />
 
       {/* Instructions - positioned at bottom */}
       <div className="absolute bottom-4 left-4 z-10 w-80">

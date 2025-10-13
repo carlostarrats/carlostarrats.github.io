@@ -10,6 +10,11 @@ export interface Song {
   duration?: number;
   genre?: string;
   year?: number;
+  trackId?: string; // Apple Music track identifier
+  playCount?: number; // Number of times played
+  skipCount?: number; // Number of times skipped
+  completionRate?: number; // Percentage of times played to completion
+  dataSource?: 'apple' | 'mock'; // Source of the data
 }
 
 export const mockSongs: Song[] = [
@@ -195,13 +200,20 @@ export const mockSongs: Song[] = [
   }
 ];
 
-// Apple Music emotion categories with color mapping
+// Thayer's 8 emotion categories with color mapping
 export const emotionColors: Record<string, string> = {
-  Happy: "#ffff00",      // Yellow
-  Energetic: "#ff8800",  // Orange
+  Happy: "#ffff00",         // Yellow - High energy, Low stress
+  Exuberant: "#ff8800",     // Orange - High energy, Low stress
+  Energetic: "#ff0080",     // Pink - High energy, High stress  
+  Frantic: "#ff0000",       // Red - High energy, High stress
+  'Anxious/Sad': "#448aff", // Blue - Low energy, High stress
+  Depression: "#6b46c1",    // Purple - Low energy, High stress
+  Calm: "#00ffff",          // Cyan - Low energy, Low stress
+  Contentment: "#00ff88",   // Green - Low energy, Low stress
+  
+  // Legacy mappings for backwards compatibility
   Excited: "#ff0080",    // Pink
   Romantic: "#ff00ff",   // Magenta
-  Calm: "#00ffff",       // Cyan
   Peaceful: "#00ff88",   // Green
   Sad: "#448aff",        // Blue
   Melancholic: "#6b46c1", // Purple
@@ -210,7 +222,7 @@ export const emotionColors: Record<string, string> = {
 
 // Energy to size mapping
 export const getNodeSize = (energy: number): number => {
-  return 0.2 + (energy * 0.4); // Range from 0.2 to 0.6
+  return 0.01 + (energy * 0.02); // Range from 0.01 to 0.03 (tiny!)
 };
 
 // Generate layered emotional analysis

@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Mesh } from 'three';
+import { Mesh, Vector3 } from 'three';
 import { Text } from '@react-three/drei';
 import { Song } from '@/data/mockSongs';
+import SongNode from './SongNode';
 
 interface MoodLayer {
   id: string;
@@ -19,12 +20,18 @@ interface MoodLayersProps {
   layers: MoodLayer[];
   onLayerClick?: (layer: MoodLayer) => void;
   onLayerHover?: (layer: MoodLayer | null) => void;
+  onSongClick?: (song: Song) => void;
+  onSongHover?: (song: Song | null) => void;
+  hoveredEmotion?: string | null;
 }
 
 const MoodLayers: React.FC<MoodLayersProps> = ({ 
   layers, 
   onLayerClick, 
-  onLayerHover 
+  onLayerHover,
+  onSongClick,
+  onSongHover,
+  hoveredEmotion
 }) => {
   const [hoveredLayer, setHoveredLayer] = useState<string | null>(null);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
@@ -50,6 +57,7 @@ const MoodLayers: React.FC<MoodLayersProps> = ({
             isHovered={isHovered}
             isSelected={isSelected}
             selectedEmotion={selectedEmotion}
+            hoveredEmotion={hoveredEmotion}
             opacity={opacity}
             scale={scale}
             onHover={() => {
@@ -57,6 +65,8 @@ const MoodLayers: React.FC<MoodLayersProps> = ({
               onLayerHover?.(isHovered ? null : layer);
             }}
             onClick={() => handleLayerClick(layer)}
+            onSongClick={onSongClick}
+            onSongHover={onSongHover}
           />
         );
       })}
@@ -70,11 +80,14 @@ const LayerSurface: React.FC<{
   isHovered: boolean;
   isSelected: boolean;
   selectedEmotion: string | null;
+  hoveredEmotion?: string | null;
   opacity: number;
   scale: number;
   onHover: () => void;
   onClick: () => void;
-}> = ({ layer, opacity, scale, onHover, onClick, selectedEmotion }) => {
+  onSongClick?: (song: Song) => void;
+  onSongHover?: (song: Song | null) => void;
+}> = ({ layer, opacity, scale, onHover, onClick, selectedEmotion, hoveredEmotion, onSongClick, onSongHover }) => {
   const meshRef = useRef<Mesh>(null);
   const groupRef = useRef<any>(null);
 
@@ -87,13 +100,10 @@ const LayerSurface: React.FC<{
 
   return (
     <group ref={groupRef}>
-      {/* Emotion container cylinder */}
+      {/* Emotion container cylinder - NOT INTERACTIVE */}
       <mesh
         ref={meshRef}
         scale={[scale, scale, scale]}
-        onClick={onClick}
-        onPointerOver={onHover}
-        onPointerOut={onHover}
       >
         {/* 3D Cylinder shape instead of flat plane */}
         <cylinderGeometry args={[layer.radius, layer.radius, 1.5, 32, 1, true]} />
@@ -114,11 +124,19 @@ const LayerSurface: React.FC<{
         color={layer.color}
         anchorX="left"
         anchorY="middle"
-        outlineWidth={0.05}
-        outlineColor="#000000"
-        font="/mood-atlas/fonts/JetBrainsMono-Regular.ttf"
+        font="/fonts/JetBrainsMono-Regular.ttf"
       >
         {layer.name}
+      </Text>
+      <Text
+        position={[layer.radius + 2 + layer.name.length * 0.5, 0, 0]}
+        fontSize={0.3}
+        color={layer.color}
+        anchorX="left"
+        anchorY="middle"
+        font="/fonts/JetBrainsMono-Regular.ttf"
+      >
+        ({layer.songs.length})
       </Text>
 
       {/* Song points inside container */}
@@ -130,75 +148,23 @@ const LayerSurface: React.FC<{
         const z = Math.sin(angle) * distanceFromCenter;
         const y = (Math.random() - 0.5) * 0.8; // Random height within cylinder
 
+        // Calculate if this song should be highlighted based on hovered emotion
+        const emotionToCheck = hoveredEmotion || selectedEmotion;
+        const isHighlighted = emotionToCheck ? (song.emotionScores[emotionToCheck] || 0) > 0.3 : false;
+        const highlightIntensity = emotionToCheck ? (song.emotionScores[emotionToCheck] || 0) : 0;
+
         return (
-          <SongPoint
+          <SongNode
             key={song.id}
             song={song}
-            position={[x, y, z]}
-            color={layer.color}
-            selectedEmotion={selectedEmotion}
+            position={new Vector3(x, y, z)}
+            onClick={onSongClick}
+            onHover={onSongHover}
+            isHighlighted={isHighlighted}
+            highlightIntensity={highlightIntensity}
           />
         );
       })}
-    </group>
-  );
-};
-
-// Individual song point component
-const SongPoint: React.FC<{
-  song: Song;
-  position: [number, number, number];
-  color: string;
-  selectedEmotion: string | null;
-}> = ({ song, position, color, selectedEmotion }) => {
-  const [hovered, setHovered] = useState(false);
-
-  // Check if this song aligns with the selected emotion (threshold: 0.5 or higher)
-  const alignsWithSelected = selectedEmotion 
-    ? (song.emotionScores[selectedEmotion] || 0) >= 0.5 
-    : false;
-
-  // Determine visual properties based on selection state
-  const isHighlighted = selectedEmotion ? alignsWithSelected : true;
-  const pointOpacity = hovered ? 1 : (isHighlighted ? 0.9 : 0.2);
-  const pointScale = alignsWithSelected ? 1.3 : 1;
-  const emissiveIntensity = hovered ? 1 : (alignsWithSelected ? 0.7 : 0.3);
-
-  return (
-    <group position={position} scale={pointScale}>
-      <mesh
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-      >
-        <sphereGeometry args={[0.1, 8, 8]} />
-        <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={emissiveIntensity}
-          transparent
-          opacity={pointOpacity}
-        />
-      </mesh>
-      {hovered && (
-        <Text
-          position={[0, 0.3, 0]}
-          fontSize={0.15}
-          color="#ffffff"
-          anchorX="center"
-          anchorY="bottom"
-          outlineWidth={0.02}
-          outlineColor="#000000"
-          font="/mood-atlas/fonts/JetBrainsMono-Regular.ttf"
-        >
-          {song.title}
-          {selectedEmotion && (
-            <>
-              {'\n'}
-              {selectedEmotion}: {Math.round((song.emotionScores[selectedEmotion] || 0) * 100)}%
-            </>
-          )}
-        </Text>
-      )}
     </group>
   );
 };
