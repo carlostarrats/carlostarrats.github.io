@@ -94,34 +94,30 @@
       <section class="work">
         <!-- Content -->
         <div class="detail-content">
-          <h2>The Problem</h2>
-          <p class="detail-text">Users without an account are bouncing at login after submitting a Request for Quote (RFQ) from the PDP.</p>
+          <h2>The Challenge</h2>
+          <p class="detail-text">Users without an account often bounced immediately after submitting a Request for Quote (RFQ) from the product page.</p>
 
           <h2>Background</h2>
           <p class="detail-text">RFQ's are product/price requests submitted from a product page when stock is unavailable or the price doesn't meet a users expectations. They are pretty common within the electronics sourcing industry.</p>
 
           <h2>The Goal</h2>
-          <p class="detail-text">How might we develop a RFQ submission flow that decreases the guest user bounce rate.</p>
+          <p class="detail-text">Enable RFQ submissions from guest users and logged-in users alike — so we reduce abandonment at the login barrier and preserve high-value quotes.</p>
 
-          <h2>Data From Site Analytics</h2>
-          <ul class="detail-text">
-            <li>On average there are 120 RFQ's submitted per week.</li>
-            <li>On average 80 of them are submitted by logged out users.</li>
-            <li>Of the 80 who submit, 40 bounce immediately at login.</li>
-          </ul>
-          <br>
-          <p class="detail-text">That's 40 potential RFQ's per week (RFQ's have an average value of $1,500) and up to 3 Million $ per year lost.</p>
+          <h2>The Approach</h2>
+          <p class="detail-text">We designed a revised RFQ submission flow that explicitly recognises two key user states: signed-in and guest.<br><br>
+            By mapping the journey and isolating the drop-off point at login, we uncovered opportunities to streamline the experience for guest users while preserving the return experience for account holders.</p>
 
-          <h2>Solution</h2>
-          <p class="detail-text">Develop a revised RFQ submission flow that accounts for users who have an account as well as guest users.</p>
-
+            <h2>The Solution</h2>
+            <p class="detail-text">A unified flow where:</p>
+            <ul class="detail-text">
+              <li>Signed-in users proceed as expected.</li>
+              <li>The interface clearly segments “Submit as guest” vs “Log in / Create account” without disrupting conversion.<br><br>This choice balances immediate user needs with long-term account growth.</li>
+            </ul>
+            
           <h3 class="with-arrow">User Journey Checkout Flow ↓</h3>
           <div class="detail-image" data-aos="fade-up">
             <img src="images/detail-source-2.jpg" alt="User journey map documenting RFQ submission flow from product page through login barrier, highlighting drop-off points and user frustrations">
           </div>
-
-          <h2>User Story</h2>
-          <p class="detail-text">As a guest user, I want to be able to submit an RFQ without creating an account, so that I am less likely to give up on the transaction.</p>
 
           <h3 class="with-arrow">Design Research ↓</h3>
           <div class="detail-image" data-aos="fade-up">
@@ -145,11 +141,6 @@
             <img src="images/detail-source-7.jpg" alt="Form validation screens displaying error states, required field indicators, and inline feedback for email and phone number inputs">
           </div>
 
-          <h2>Feedback</h2>
-          <p class="detail-text">We presented these ideas to the greater team in our new feature meetings with engineering and product. Looking at what is doable in scope and timing we decided #3 would be the best choice to move forward with as it seemingly solves the user problem of allowing for guest user submission but without disturbing the signed in user flow thus minimizing business impact.</p>
-          <br><br>
-          <p class="detail-text">Some slight refinement was needed though. Feedback included looking at ways to connect it with the RFQ flow and not look so form like, as well as making sure to have account creation and terms acceptance.</p>
-
           <h3 class="with-arrow">Final Refinement ↓</h3>
           <div class="detail-image" data-aos="fade-up">
             <img src="images/detail-source-8.jpg" alt="High-fidelity design refinements showing polished form layout, improved visual hierarchy, terms acceptance checkbox, and account creation prompt">
@@ -162,7 +153,8 @@
 
 
           <h2>Business Impact</h2>
-          <p class="detail-text">This project was passed off for development and I left the company shortly afterwards. The expectation was a significant and immediate business impact in regards to RFQ's.</p>
+          <p class="detail-text">With ~120 RFQs submitted weekly and ~80 coming from logged-out users, ~40 of those were dropping off at login — translating to ~$1,500 × 40 = $60K per week (~$3M/year) in potential lost value.<br><br>
+          This redesign was handed to the dev team for implementation, positioning the business to significantly improve conversion and revenue capture.</p>
 
           <!--ection class="project-info-section">
             <div class="project-info-item">
