@@ -79,7 +79,7 @@ a {
   background-color: #797979;
 }
 
-.contact-link {
+.contact-text {
   display: block;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
@@ -87,12 +87,7 @@ a {
   line-height: 48px;
   letter-spacing: -1.44px;
   color: #cbe3ff;
-  transition: opacity 0.2s ease;
   margin-bottom: 70px;
-}
-
-.contact-link:hover {
-  opacity: 0.8;
 }
 
 .portfolio-line {
@@ -190,22 +185,22 @@ a {
 }
 
 .card--control {
-  height: 390px;
+  aspect-ratio: 1.5;
   background-color: #7c4242;
 }
 
 .card--adaptiveshop {
-  height: 800px;
+  aspect-ratio: 1.5;
   background-color: #3f4676;
 }
 
 .card--dds {
-  height: 390px;
+  aspect-ratio: 1.5;
   background-color: #787c42;
 }
 
 .card--eloquii {
-  height: 390px;
+  aspect-ratio: 1.5;
   background-color: #42787c;
 }
 
@@ -294,7 +289,7 @@ a {
 .branding-image {
   width: 600px;
   max-width: 100%;
-  height: 600px;
+  aspect-ratio: 1;
   background-color: #7c4242;
   margin: 0 auto 30px;
 }
@@ -450,7 +445,91 @@ a {
 }
 
 /* ============================================
-   RESPONSIVE (800px breakpoint)
+   RESPONSIVE - TABLET (1000px breakpoint)
+   All fonts 20% smaller
+   ============================================ */
+
+@media (max-width: 1000px) and (min-width: 801px) {
+  .hero-title {
+    font-size: 98px;
+    line-height: 90px;
+    letter-spacing: -8.86px;
+  }
+
+  .contact-text {
+    font-size: 29px;
+    line-height: 38px;
+    letter-spacing: -1.15px;
+  }
+
+  .portfolio-label {
+    font-size: 29px;
+    letter-spacing: -1.15px;
+  }
+
+  .portfolio-name {
+    font-size: 44px;
+    letter-spacing: -1.76px;
+  }
+
+  .bio {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .project-text {
+    font-size: 44px;
+    line-height: 51px;
+    letter-spacing: -0.88px;
+  }
+
+  .project-text--adaptiveshop,
+  .project-text--dds,
+  .project-text--eloquii {
+    font-size: 48px;
+    letter-spacing: -0.96px;
+  }
+
+  .section-title {
+    font-size: 98px;
+    line-height: 90px;
+    letter-spacing: -8.86px;
+  }
+
+  .copyright {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .back-link {
+    font-size: 44px;
+    line-height: 51px;
+    letter-spacing: -0.88px;
+  }
+
+  .project-header__title {
+    font-size: 44px;
+    line-height: 51px;
+    letter-spacing: -0.96px;
+  }
+
+  .project-header__description {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .detail-footer__copyright {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .branding-image {
+    width: 480px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (800px breakpoint)
    ============================================ */
 
 @media (max-width: 800px) {
@@ -480,8 +559,7 @@ a {
     margin-bottom: 20px;
   }
 
-  .contact-link {
-    display: block;
+  .contact-text {
     font-size: 28px;
     margin-bottom: 20px;
   }
@@ -537,18 +615,6 @@ a {
     margin-bottom: 40px;
   }
 
-  .card--control,
-  .card--dds,
-  .card--eloquii {
-    height: auto;
-    aspect-ratio: 1.5;
-  }
-
-  .card--adaptiveshop {
-    height: auto;
-    aspect-ratio: 1.5;
-  }
-
   .project-text {
     font-size: 28px;
     line-height: 36px;
@@ -575,8 +641,6 @@ a {
   .branding-image {
     width: 100%;
     max-width: 300px;
-    height: auto;
-    aspect-ratio: 1;
     margin-bottom: 40px;
   }
 
