@@ -14,33 +14,52 @@
 </head>
 <body>
   <div class="page">
-    <h1 class="hero-title">Product Designer Simplifying Complex Systems</h1>
+    <!-- Hero Section - uses absolute positioning internally -->
+    <div class="hero">
+      <h1 class="hero-title">Product Designer Simplifying Complex Systems</h1>
+      <div class="hero-placeholder"></div>
+      <a href="https://www.linkedin.com/in/carlos-t-b869016" class="contact-link" target="_blank" rel="noopener">Contact</a>
+      <div class="portfolio-line">
+        <span class="portfolio-label">Portfolio:</span>
+        <span class="portfolio-name">CARLOS TARRATS</span>
+      </div>
+    </div>
 
-    <div class="hero-placeholder"></div>
-
-    <a href="https://www.linkedin.com/in/carlos-t-b869016" class="contact-link" target="_blank" rel="noopener">Contact</a>
-
-    <p class="portfolio-label">Portfolio:</p>
-    <p class="portfolio-name">CARLOS TARRATS</p>
-
+    <!-- Bio -->
     <p class="bio">Most recently, I spent three years with the Department of Defense's Chief Digital and AI Office (Defense Digital Service), where I led design for modernization initiatives in high-security environments. My work balanced user empathy, system complexity, and visual clarity. Earlier, I worked across startups and large corporations, driven by projects that combine technical challenge with purposeful impact.</p>
 
-    <a href="projects/control.html" class="card card--control"></a>
-    <p class="project-text project-text--control"><span class="project-name project-name--control">Control </span><span class="project-dash">—</span><span class="project-desc"> A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3)</span></p>
+    <!-- Control Project - two columns -->
+    <div class="project-row">
+      <a href="projects/control.html" class="card card--control"></a>
+      <p class="project-text project-text--control"><span class="project-name project-name--control">Control </span><span class="project-dash">—</span><span class="project-desc"> A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3)</span></p>
+    </div>
 
-    <p class="project-text project-text--adaptiveshop"><span class="project-name project-name--adaptiveshop">AdaptiveShop</span><span class="project-dash">— </span><span class="project-desc">A modern ecommerce platform with built-in AI features you can adapt to fit your business</span></p>
-    <a href="projects/adaptiveshop.html" class="card card--adaptiveshop"></a>
+    <!-- AdaptiveShop Project -->
+    <div class="project-stack">
+      <p class="project-text project-text--adaptiveshop"><span class="project-name project-name--adaptiveshop">AdaptiveShop</span><span class="project-dash">— </span><span class="project-desc">A modern ecommerce platform with built-in AI features you can adapt to fit your business</span></p>
+      <a href="projects/adaptiveshop.html" class="card card--adaptiveshop"></a>
+    </div>
 
+    <!-- DDS Text -->
     <p class="project-text project-text--dds"><span class="project-name project-name--dds">Defense Digital Service </span><span class="project-dash">—</span><span class="project-desc"> Digital transformation of the Defense Department, integrating AI, data, cyber, and IT</span></p>
-    <a href="projects/dds.html" class="card card--dds"></a>
-    <a href="projects/eloquii.html" class="card card--eloquii"></a>
+
+    <!-- DDS + Eloquii Cards Row -->
+    <div class="project-row project-row--cards">
+      <a href="projects/dds.html" class="card card--dds"></a>
+      <a href="projects/eloquii.html" class="card card--eloquii"></a>
+    </div>
+
+    <!-- Eloquii Text -->
     <p class="project-text project-text--eloquii"><span class="project-name project-name--eloquii">Eloquii </span><span class="project-dash">—</span><span class="project-desc"> Platform redesign redefining the online shopping experience for plus-size fashion customers</span></p>
 
-    <h2 class="section-title section-title--branding">Selected Branding</h2>
+    <!-- Selected Branding -->
+    <h2 class="section-title">Selected Branding</h2>
     <div class="branding-image"></div>
 
-    <h2 class="section-title section-title--projects">Projects</h2>
+    <!-- Projects -->
+    <h2 class="section-title">Projects</h2>
 
+    <!-- Copyright -->
     <p class="copyright">Copyright 2026</p>
   </div>
 </body>
