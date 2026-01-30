@@ -53,11 +53,13 @@ a {
 
 .hero {
   position: relative;
-  min-height: 452px;
   padding-top: 30px;
+  margin-bottom: 30px;
 }
 
 .hero-title {
+  position: relative;
+  z-index: 1;
   font-family: 'Cabinet Grotesk', sans-serif;
   font-weight: 200;
   font-size: 123px;
@@ -65,11 +67,12 @@ a {
   letter-spacing: -11.07px;
   text-decoration: underline;
   text-decoration-thickness: 6%;
+  margin-bottom: 30px;
 }
 
 .hero-placeholder {
   position: absolute;
-  top: 165px;
+  top: 163px;
   right: 0;
   width: 335px;
   height: 198px;
@@ -77,9 +80,7 @@ a {
 }
 
 .contact-link {
-  position: absolute;
-  top: 286px;
-  left: 0;
+  display: block;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-size: 36px;
@@ -87,6 +88,7 @@ a {
   letter-spacing: -1.44px;
   color: #cbe3ff;
   transition: opacity 0.2s ease;
+  margin-bottom: 70px;
 }
 
 .contact-link:hover {
@@ -94,10 +96,7 @@ a {
 }
 
 .portfolio-line {
-  position: absolute;
-  top: 403px;
-  right: 0;
-  text-align: right;
+  margin-left: calc(50% + 15px);
 }
 
 .portfolio-label {
@@ -125,7 +124,7 @@ a {
   font-weight: 400;
   font-size: 30px;
   line-height: 40px;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 }
 
 /* ============================================
@@ -159,6 +158,10 @@ a {
 
 .project-row--cards > .card + .card {
   float: right;
+}
+
+.project-row--cards {
+  margin-bottom: 30px;
 }
 
 /* ============================================
@@ -248,7 +251,7 @@ a {
   font-size: 60px;
   letter-spacing: -1.2px;
   width: calc(50% - 15px);
-  margin-bottom: 100px;
+  margin-bottom: 30px;
 }
 
 .project-name--dds {
@@ -274,10 +277,10 @@ a {
 
 .section-title {
   font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 300;
+  font-weight: 200;
   font-size: 123px;
   line-height: 113px;
-  letter-spacing: -9.84px;
+  letter-spacing: -11.07px;
   text-decoration: underline;
   text-decoration-thickness: 6%;
   text-align: center;
@@ -306,7 +309,8 @@ a {
   font-size: 30px;
   line-height: 40px;
   text-align: center;
-  padding-bottom: 90px;
+  margin-top: 150px;
+  padding-bottom: 50px;
 }
 
 /* ============================================
@@ -455,9 +459,8 @@ a {
   }
 
   .hero {
-    min-height: auto;
     padding-top: 20px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
   }
 
   .hero-title {
@@ -478,19 +481,13 @@ a {
   }
 
   .contact-link {
-    position: relative;
-    top: auto;
-    left: auto;
     display: block;
     font-size: 28px;
     margin-bottom: 20px;
   }
 
   .portfolio-line {
-    position: relative;
-    top: auto;
-    right: auto;
-    text-align: left;
+    margin-left: 0;
     margin-bottom: 20px;
   }
 
