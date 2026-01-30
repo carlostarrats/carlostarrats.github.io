@@ -3,6 +3,9 @@
 ## Rules
 - **Never commit unless explicitly told to do so**
 - **For all UI/frontend work, follow SKILL.md** - Contains design principles, visual hierarchy, accessibility requirements, and component patterns
+- **NEVER guess** - Do not assume, estimate, or calculate values. Use exact values from Figma MCP or ask for clarification.
+- **NEVER summarize** - Do not paraphrase or summarize instructions. Follow them exactly as given.
+- **Look at pixels and placement in detail** - Pay close attention to exact pixel values, spacing, and positioning. Do not approximate.
 
 ## About
 Personal design portfolio for Carlos Tarrats, a Product Designer focused on simplifying complex systems. Site is hosted on GitHub Pages at https://carlostarrats.github.io

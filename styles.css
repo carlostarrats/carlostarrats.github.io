@@ -1,0 +1,428 @@
+/* ============================================
+   CARLOS TARRATS PORTFOLIO
+   CSS Grid responsive layout
+   ============================================ */
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #252525;
+  color: #ffffff;
+  font-family: 'Cabinet Grotesk', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================
+   PAGE CONTAINER
+   ============================================ */
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 30px 40px;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero__title {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 200;
+  font-size: clamp(60px, 9.6vw, 123px);
+  line-height: 0.92;
+  letter-spacing: -0.09em;
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  margin-bottom: 30px;
+}
+
+.hero__contact {
+  display: block;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(28px, 2.8vw, 36px);
+  line-height: 48px;
+  letter-spacing: -1.44px;
+  color: #cbe3ff;
+  margin-bottom: 40px;
+  transition: opacity 0.2s ease;
+}
+
+.hero__contact:hover {
+  opacity: 0.8;
+}
+
+.hero__label {
+  display: inline;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(28px, 2.8vw, 36px);
+  letter-spacing: -1.44px;
+  color: #ffcbcc;
+}
+
+.hero__name {
+  display: inline;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: clamp(40px, 4.3vw, 55px);
+  letter-spacing: -2.2px;
+  margin-left: 10px;
+}
+
+/* ============================================
+   BIO
+   ============================================ */
+
+.bio {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 1.33;
+  margin-bottom: 60px;
+}
+
+/* ============================================
+   PROJECTS
+   ============================================ */
+
+.project {
+  display: grid;
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.project__card {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.5;
+  transition: opacity 0.2s ease;
+}
+
+.project__card:hover {
+  opacity: 0.9;
+}
+
+.project__text {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 4.3vw, 55px);
+  line-height: 1.16;
+  letter-spacing: -1.1px;
+}
+
+.project__name {
+  font-style: italic;
+}
+
+.project__dash {
+  font-style: normal;
+}
+
+.project__desc {
+  font-style: normal;
+}
+
+/* Project colors */
+.project--control .project__card {
+  background-color: #7c4242;
+}
+
+.project--control .project__name {
+  color: #cbfff7;
+}
+
+.project--adaptiveshop .project__card {
+  background-color: #3f4676;
+}
+
+.project--adaptiveshop .project__name {
+  color: #ffe4cb;
+}
+
+.project--dds .project__card {
+  background-color: #787c42;
+}
+
+.project--dds .project__name {
+  color: #f5ffcb;
+}
+
+.project--eloquii .project__card {
+  background-color: #42787c;
+}
+
+.project--eloquii .project__name {
+  color: #cdcbff;
+}
+
+/* ============================================
+   PROJECT LAYOUTS - TABLET & DESKTOP
+   ============================================ */
+
+@media (min-width: 700px) {
+  /* Control: card left, text right */
+  .project--control {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .project--control .project__card {
+    order: 1;
+  }
+
+  .project--control .project__text {
+    order: 2;
+  }
+
+  /* AdaptiveShop: text top, full card below */
+  .project--adaptiveshop {
+    grid-template-columns: 1fr;
+  }
+
+  /* DDS & Eloquii: side by side cards */
+  .project--dds,
+  .project--eloquii {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  /* DDS and Eloquii side by side */
+  .project--dds {
+    margin-bottom: 30px;
+  }
+
+  .project--eloquii {
+    margin-top: -90px; /* Pull up next to DDS */
+  }
+}
+
+/* ============================================
+   BRANDING
+   ============================================ */
+
+.branding {
+  text-align: center;
+  margin: 80px 0;
+}
+
+.branding__title {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 200;
+  font-size: clamp(60px, 9.6vw, 123px);
+  line-height: 0.92;
+  letter-spacing: -0.09em;
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  margin-bottom: 50px;
+}
+
+.branding__image {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1;
+  background-color: #7c4242;
+  margin: 0 auto;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.footer__title {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 200;
+  font-size: clamp(60px, 9.6vw, 123px);
+  line-height: 0.92;
+  letter-spacing: -0.09em;
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  margin-bottom: 120px;
+}
+
+.footer__copyright {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: clamp(20px, 2.3vw, 30px);
+  line-height: 40px;
+}
+
+/* ============================================
+   MOBILE (below 700px)
+   ============================================ */
+
+@media (max-width: 699px) {
+  .page {
+    padding: 20px;
+  }
+
+  .project {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   PROJECT DETAIL PAGES
+   ============================================ */
+
+.detail-page {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.detail-page--control {
+  background-color: #cbfff7;
+}
+
+.detail-page--adaptiveshop {
+  background-color: #ffe4cb;
+}
+
+.detail-page--eloquii {
+  background-color: #cdcbff;
+}
+
+.detail-page--dds {
+  background-color: #f5ffcb;
+}
+
+.back-link {
+  display: block;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(36px, 4.3vw, 55px);
+  line-height: 64px;
+  letter-spacing: -1.1px;
+  color: #1a1a1a;
+  text-align: center;
+  padding: 30px 0 50px;
+  transition: opacity 0.2s ease;
+}
+
+.back-link:hover {
+  opacity: 0.7;
+}
+
+.content-card {
+  background-color: #252525;
+  border-radius: 40px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.project-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.project-header__title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(36px, 4.3vw, 55px);
+  line-height: 1.16;
+  letter-spacing: -1.2px;
+}
+
+.project-header__title-name {
+  font-style: italic;
+}
+
+.project-header__title-name--control {
+  color: #cbfff7;
+}
+
+.project-header__title-name--adaptiveshop {
+  color: #ffe4cb;
+}
+
+.project-header__title-name--eloquii {
+  color: #cdcbff;
+}
+
+.project-header__title-name--dds {
+  color: #f5ffcb;
+}
+
+.project-header__title-dash {
+  font-style: italic;
+}
+
+.project-header__description {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: clamp(18px, 2.3vw, 30px);
+  line-height: 1.33;
+}
+
+.project-header__description p {
+  margin-bottom: 20px;
+}
+
+.project-header__description p:last-child {
+  margin-bottom: 0;
+}
+
+.project-images {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.project-images__item {
+  width: 100%;
+  aspect-ratio: 1.5;
+  background-color: #e7e7e7;
+}
+
+.detail-footer {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.detail-footer__copyright {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: clamp(18px, 2.3vw, 30px);
+  line-height: 40px;
+  color: #1a1a1a;
+}
+
+/* Detail page mobile */
+@media (max-width: 800px) {
+  .content-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .project-header {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
