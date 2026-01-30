@@ -1,6 +1,6 @@
 /* ============================================
    CARLOS TARRATS PORTFOLIO
-   CSS Grid responsive layout
+   Exact values from Figma
    ============================================ */
 
 /* Reset */
@@ -29,261 +29,321 @@ a {
 
 /* ============================================
    PAGE CONTAINER
+   width: 1280px
    ============================================ */
 
 .page {
-  max-width: 1280px;
+  position: relative;
+  width: 1280px;
   margin: 0 auto;
-  padding: 30px 40px;
+  min-height: 4440px;
 }
 
 /* ============================================
-   HERO
+   HERO TITLE
+   top: 30px, left: 40px, width: 1200px
+   font: Cabinet Grotesk Extralight 123px
+   line-height: 113px, letter-spacing: -11.07px
    ============================================ */
 
-.hero {
-  margin-bottom: 40px;
-}
-
-.hero__title {
+.hero-title {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  width: 1200px;
   font-family: 'Cabinet Grotesk', sans-serif;
   font-weight: 200;
-  font-size: clamp(60px, 9.6vw, 123px);
-  line-height: 0.92;
-  letter-spacing: -0.09em;
+  font-size: 123px;
+  line-height: 113px;
+  letter-spacing: -11.07px;
   text-decoration: underline;
   text-decoration-thickness: 6%;
-  margin-bottom: 30px;
 }
 
-.hero__contact {
-  display: block;
+/* ============================================
+   GREY PLACEHOLDER
+   top: 165px, right: 40px
+   width: 335px, height: 198px
+   ============================================ */
+
+.hero-placeholder {
+  position: absolute;
+  top: 165px;
+  right: 40px;
+  width: 335px;
+  height: 198px;
+  background-color: #797979;
+}
+
+/* ============================================
+   CONTACT
+   top: 286px, left: 40px
+   font: Instrument Serif Italic 36px
+   line-height: 48px, letter-spacing: -1.44px
+   color: #cbe3ff
+   ============================================ */
+
+.contact-link {
+  position: absolute;
+  top: 286px;
+  left: 40px;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: 36px;
   line-height: 48px;
   letter-spacing: -1.44px;
   color: #cbe3ff;
-  margin-bottom: 40px;
   transition: opacity 0.2s ease;
 }
 
-.hero__contact:hover {
+.contact-link:hover {
   opacity: 0.8;
 }
 
-.hero__label {
-  display: inline;
+/* ============================================
+   PORTFOLIO LABEL
+   top: 404px, left: 655px
+   font: Instrument Serif Italic 36px
+   letter-spacing: -1.44px, color: #ffcbcc
+   ============================================ */
+
+.portfolio-label {
+  position: absolute;
+  top: 413px;
+  left: 655px;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: clamp(28px, 2.8vw, 36px);
+  font-size: 36px;
   letter-spacing: -1.44px;
   color: #ffcbcc;
 }
 
-.hero__name {
-  display: inline;
+/* ============================================
+   CARLOS TARRATS
+   top: 403px, left: 775px
+   font: Instrument Serif Regular 55px
+   letter-spacing: -2.2px
+   ============================================ */
+
+.portfolio-name {
+  position: absolute;
+  top: 403px;
+  left: 775px;
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
-  font-size: clamp(40px, 4.3vw, 55px);
+  font-size: 55px;
   letter-spacing: -2.2px;
-  margin-left: 10px;
 }
 
 /* ============================================
    BIO
+   top: 482px, left: 40px, width: 1200px
+   font: Cabinet Grotesk Regular 30px
+   line-height: 40px
    ============================================ */
 
 .bio {
+  position: absolute;
+  top: 482px;
+  left: 40px;
+  width: 1200px;
   font-family: 'Cabinet Grotesk', sans-serif;
   font-weight: 400;
-  font-size: clamp(20px, 2.3vw, 30px);
-  line-height: 1.33;
-  margin-bottom: 60px;
-}
-
-/* ============================================
-   PROJECTS
-   ============================================ */
-
-.project {
-  display: grid;
-  gap: 30px;
-  margin-bottom: 60px;
-}
-
-.project__card {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1.5;
-  transition: opacity 0.2s ease;
-}
-
-.project__card:hover {
-  opacity: 0.9;
-}
-
-.project__text {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(32px, 4.3vw, 55px);
-  line-height: 1.16;
-  letter-spacing: -1.1px;
-}
-
-.project__name {
-  font-style: italic;
-}
-
-.project__dash {
-  font-style: normal;
-}
-
-.project__desc {
-  font-style: normal;
-}
-
-/* Project colors */
-.project--control .project__card {
-  background-color: #7c4242;
-}
-
-.project--control .project__name {
-  color: #cbfff7;
-}
-
-.project--adaptiveshop .project__card {
-  background-color: #3f4676;
-}
-
-.project--adaptiveshop .project__name {
-  color: #ffe4cb;
-}
-
-.project--dds .project__card {
-  background-color: #787c42;
-}
-
-.project--dds .project__name {
-  color: #f5ffcb;
-}
-
-.project--eloquii .project__card {
-  background-color: #42787c;
-}
-
-.project--eloquii .project__name {
-  color: #cdcbff;
-}
-
-/* ============================================
-   PROJECT LAYOUTS - TABLET & DESKTOP
-   ============================================ */
-
-@media (min-width: 700px) {
-  /* Control: card left, text right */
-  .project--control {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-
-  .project--control .project__card {
-    order: 1;
-  }
-
-  .project--control .project__text {
-    order: 2;
-  }
-
-  /* AdaptiveShop: text top, full card below */
-  .project--adaptiveshop {
-    grid-template-columns: 1fr;
-  }
-
-  /* DDS & Eloquii: side by side cards */
-  .project--dds,
-  .project--eloquii {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 900px) {
-  /* DDS and Eloquii side by side */
-  .project--dds {
-    margin-bottom: 30px;
-  }
-
-  .project--eloquii {
-    margin-top: -90px; /* Pull up next to DDS */
-  }
-}
-
-/* ============================================
-   BRANDING
-   ============================================ */
-
-.branding {
-  text-align: center;
-  margin: 80px 0;
-}
-
-.branding__title {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 200;
-  font-size: clamp(60px, 9.6vw, 123px);
-  line-height: 0.92;
-  letter-spacing: -0.09em;
-  text-decoration: underline;
-  text-decoration-thickness: 6%;
-  margin-bottom: 50px;
-}
-
-.branding__image {
-  width: 100%;
-  max-width: 600px;
-  aspect-ratio: 1;
-  background-color: #7c4242;
-  margin: 0 auto;
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-
-.footer {
-  text-align: center;
-  padding: 60px 0;
-}
-
-.footer__title {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 200;
-  font-size: clamp(60px, 9.6vw, 123px);
-  line-height: 0.92;
-  letter-spacing: -0.09em;
-  text-decoration: underline;
-  text-decoration-thickness: 6%;
-  margin-bottom: 120px;
-}
-
-.footer__copyright {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 400;
-  font-size: clamp(20px, 2.3vw, 30px);
+  font-size: 30px;
   line-height: 40px;
 }
 
 /* ============================================
-   MOBILE (below 700px)
+   CARDS
    ============================================ */
 
-@media (max-width: 699px) {
-  .page {
-    padding: 20px;
-  }
+.card {
+  position: absolute;
+  display: block;
+  transition: opacity 0.2s ease;
+}
 
-  .project {
-    grid-template-columns: 1fr;
-  }
+.card:hover {
+  opacity: 0.9;
+}
+
+/* Control: top: 742px, right: 655px, 585x390 */
+.card--control {
+  top: 742px;
+  right: 655px;
+  width: 585px;
+  height: 390px;
+  background-color: #7c4242;
+}
+
+/* AdaptiveShop: top: 1350px, right: 40px, 1200x800 */
+.card--adaptiveshop {
+  top: 1350px;
+  right: 40px;
+  width: 1200px;
+  height: 800px;
+  background-color: #3f4676;
+}
+
+/* DDS: top: 2560px, right: 655px, 585x390 */
+.card--dds {
+  top: 2560px;
+  right: 655px;
+  width: 585px;
+  height: 390px;
+  background-color: #787c42;
+}
+
+/* Eloquii: top: 2560px, right: 40px, 585x390 */
+.card--eloquii {
+  top: 2560px;
+  right: 40px;
+  width: 585px;
+  height: 390px;
+  background-color: #42787c;
+}
+
+/* ============================================
+   PROJECT TEXT
+   ============================================ */
+
+.project-text {
+  position: absolute;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+}
+
+.project-name {
+  font-style: italic;
+}
+
+.project-dash {
+  font-style: italic;
+}
+
+.project-desc {
+  font-family: 'Instrument Serif', serif;
+  font-style: normal;
+}
+
+/* Control: top: 742px, left: 655px, width: 585px, 55px, -1.1px */
+.project-text--control {
+  top: 742px;
+  left: 655px;
+  width: 585px;
+  font-size: 55px;
+  line-height: 64px;
+  letter-spacing: -1.1px;
+}
+
+.project-name--control {
+  color: #cbfff7;
+}
+
+/* AdaptiveShop: top: 1192px, left: 40px, width: 1200px, 60px, -1.2px */
+.project-text--adaptiveshop {
+  top: 1192px;
+  left: 40px;
+  width: 1200px;
+  font-size: 60px;
+  line-height: 64px;
+  letter-spacing: -1.2px;
+}
+
+.project-name--adaptiveshop {
+  color: #ffe4cb;
+}
+
+/* DDS: top: 2210px, left: 40px, width: 585px, 60px, -1.2px */
+.project-text--dds {
+  top: 2210px;
+  left: 40px;
+  width: 585px;
+  font-size: 60px;
+  line-height: 64px;
+  letter-spacing: -1.2px;
+}
+
+.project-name--dds {
+  color: #f5ffcb;
+}
+
+/* Eloquii: top: 2980px, left: 655px, width: 585px, 60px, -1.2px */
+.project-text--eloquii {
+  top: 2980px;
+  left: 655px;
+  width: 585px;
+  font-size: 60px;
+  line-height: 64px;
+  letter-spacing: -1.2px;
+}
+
+.project-name--eloquii {
+  color: #cdcbff;
+}
+
+/* ============================================
+   SECTION TITLES
+   font: Cabinet Grotesk Light 123px
+   line-height: 113px, letter-spacing: -9.84px
+   centered: left: 640px, translateX(-50%)
+   ============================================ */
+
+.section-title {
+  position: absolute;
+  left: 640px;
+  transform: translateX(-50%);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 123px;
+  line-height: 113px;
+  letter-spacing: -9.84px;
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  text-align: center;
+}
+
+/* Selected Branding: top: 3302px */
+.section-title--branding {
+  top: 3302px;
+}
+
+/* Projects: top: 4095px, width: 600px */
+.section-title--projects {
+  top: 4095px;
+  width: 600px;
+}
+
+/* ============================================
+   BRANDING IMAGE
+   top: 3499px, right: 340px, 600x600
+   ============================================ */
+
+.branding-image {
+  position: absolute;
+  top: 3465px;
+  right: 340px;
+  width: 600px;
+  height: 600px;
+  background-color: #7c4242;
+}
+
+/* ============================================
+   COPYRIGHT
+   bottom: 90px, centered
+   font: Cabinet Grotesk Regular 30px
+   line-height: 40px
+   ============================================ */
+
+.copyright {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 40px;
 }
 
 /* ============================================
@@ -315,7 +375,7 @@ a {
   display: block;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: clamp(36px, 4.3vw, 55px);
+  font-size: 55px;
   line-height: 64px;
   letter-spacing: -1.1px;
   color: #1a1a1a;
@@ -338,15 +398,15 @@ a {
 
 .project-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 545px 1fr;
   gap: 60px;
   margin-bottom: 60px;
 }
 
 .project-header__title {
   font-family: 'Instrument Serif', serif;
-  font-size: clamp(36px, 4.3vw, 55px);
-  line-height: 1.16;
+  font-size: 55px;
+  line-height: 64px;
   letter-spacing: -1.2px;
 }
 
@@ -377,8 +437,8 @@ a {
 .project-header__description {
   font-family: 'Cabinet Grotesk', sans-serif;
   font-weight: 400;
-  font-size: clamp(18px, 2.3vw, 30px);
-  line-height: 1.33;
+  font-size: 30px;
+  line-height: 40px;
 }
 
 .project-header__description p {
@@ -409,13 +469,113 @@ a {
 .detail-footer__copyright {
   font-family: 'Cabinet Grotesk', sans-serif;
   font-weight: 400;
-  font-size: clamp(18px, 2.3vw, 30px);
+  font-size: 30px;
   line-height: 40px;
   color: #1a1a1a;
 }
 
-/* Detail page mobile */
+/* ============================================
+   RESPONSIVE (800px breakpoint)
+   ============================================ */
+
 @media (max-width: 800px) {
+  .page {
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .hero-title,
+  .hero-placeholder,
+  .contact-link,
+  .portfolio-label,
+  .portfolio-name,
+  .bio,
+  .card,
+  .project-text,
+  .section-title,
+  .branding-image,
+  .copyright {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    line-height: 52px;
+    letter-spacing: -4px;
+  }
+
+  .hero-placeholder {
+    max-width: 250px;
+    height: 150px;
+  }
+
+  .contact-link {
+    font-size: 28px;
+  }
+
+  .portfolio-label {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .portfolio-name {
+    font-size: 36px;
+  }
+
+  .bio {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .card--control,
+  .card--dds,
+  .card--eloquii {
+    height: auto;
+    aspect-ratio: 1.5;
+  }
+
+  .card--adaptiveshop {
+    height: auto;
+    aspect-ratio: 1.5;
+  }
+
+  .project-text {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -1px;
+  }
+
+  .section-title {
+    font-size: 48px;
+    line-height: 52px;
+    letter-spacing: -4px;
+  }
+
+  .branding-image {
+    max-width: 300px;
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto 30px;
+  }
+
+  .copyright {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  /* Detail pages */
+  .back-link {
+    font-size: 36px;
+  }
+
   .content-card {
     padding: 20px;
     border-radius: 24px;
@@ -424,5 +584,19 @@ a {
   .project-header {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  .project-header__title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .project-header__description {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .detail-footer__copyright {
+    font-size: 18px;
   }
 }
