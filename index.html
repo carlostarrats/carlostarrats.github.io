@@ -106,5 +106,57 @@
     <!-- Copyright -->
     <p class="body center">Copyright 2026</p>
   </div>
+
+  <script>
+    (function() {
+      const wrapper = document.querySelector('.brand-carousel-wrapper');
+      const items = document.querySelectorAll('.brand-carousel__item');
+      let currentHovered = null;
+
+      wrapper.addEventListener('mousemove', function(e) {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        let found = null;
+        let closestDist = Infinity;
+
+        // Find all items containing mouse, pick closest center
+        items.forEach(function(item) {
+          const rect = item.getBoundingClientRect();
+          if (mouseX >= rect.left && mouseX <= rect.right &&
+              mouseY >= rect.top && mouseY <= rect.bottom) {
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dist = Math.abs(mouseX - centerX) + Math.abs(mouseY - centerY);
+            if (dist < closestDist) {
+              closestDist = dist;
+              found = item;
+            }
+          }
+        });
+
+        // Update hover state and cursor
+        if (found !== currentHovered) {
+          if (currentHovered) {
+            currentHovered.classList.remove('is-hovered');
+          }
+          if (found) {
+            found.classList.add('is-hovered');
+            wrapper.style.cursor = 'pointer';
+          } else {
+            wrapper.style.cursor = 'default';
+          }
+          currentHovered = found;
+        }
+      });
+
+      wrapper.addEventListener('mouseleave', function() {
+        if (currentHovered) {
+          currentHovered.classList.remove('is-hovered');
+          currentHovered = null;
+        }
+        wrapper.style.cursor = 'default';
+      });
+    })();
+  </script>
 </body>
 </html>
