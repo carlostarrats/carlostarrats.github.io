@@ -572,6 +572,8 @@ h1.section-brand {
   color: #fff;
   text-decoration: none;
   transition: opacity 0.2s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .external-link:hover {
@@ -581,6 +583,7 @@ h1.section-brand {
 .external-link svg {
   width: 28px;
   height: 28px;
+  flex-shrink: 0;
 }
 
 .content-card {
