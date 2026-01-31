@@ -329,35 +329,25 @@ h1.center {
 
 .detail-page {
   min-height: 100vh;
-  padding: 20px;
-}
-
-.detail-page--control {
-  background-color: #cbfff7;
-}
-
-.detail-page--adaptiveshop {
-  background-color: #ffe4cb;
-}
-
-.detail-page--eloquii {
-  background-color: #cdcbff;
-}
-
-.detail-page--dds {
-  background-color: #f5ffcb;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
 .back-link {
   display: block;
+  width: fit-content;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 55px;
-  line-height: 64px;
-  letter-spacing: -1.1px;
-  color: #1a1a1a;
-  text-align: center;
-  padding: 30px 0 50px;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
+  color: #ffffff;
+  background-color: #3a3a3a;
+  padding: 5px 35px;
+  border-radius: 100px;
+  margin: 30px auto 50px;
   transition: opacity 0.2s ease;
 }
 
@@ -366,11 +356,7 @@ h1.center {
 }
 
 .content-card {
-  background-color: #252525;
-  border-radius: 40px;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 40px;
+  max-width: 100%;
 }
 
 .project-header {
@@ -381,7 +367,7 @@ h1.center {
 
 .project-header__title {
   display: table-cell;
-  width: 545px;
+  width: 45%;
   vertical-align: top;
   font-family: 'Instrument Serif', serif;
   font-size: 55px;
@@ -456,7 +442,7 @@ h1.center {
   font-weight: 400;
   font-size: 30px;
   line-height: 40px;
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 /* ============================================
@@ -493,9 +479,9 @@ h1.center {
   }
 
   .back-link {
-    font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    font-size: 23px;
+    line-height: 31px;
+    letter-spacing: -0.92px;
   }
 
   .project-header__title {
@@ -557,31 +543,48 @@ h1.center {
     width: 384px;
   }
 
+  .detail-page {
+    padding: 0 20px;
+  }
+
   .back-link {
-    font-size: 35px;
-    line-height: 41px;
-    letter-spacing: -0.70px;
+    font-size: 23px;
+    line-height: 30px;
+    letter-spacing: -0.92px;
+    padding: 8px 30px;
+    margin: 20px auto 30px;
   }
 
   .content-card {
-    padding: 20px;
-    border-radius: 24px;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .project-header {
+    display: block;
+    margin-bottom: 40px;
   }
 
   .project-header__title {
-    font-size: 35px;
-    line-height: 41px;
-    letter-spacing: -0.77px;
+    display: block;
+    width: 100%;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.56px;
+    margin-bottom: 20px;
   }
 
   .project-header__description {
-    font-size: 19px;
-    line-height: 26px;
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    font-size: 15px;
+    line-height: 21px;
   }
 
   .detail-footer__copyright {
-    font-size: 19px;
-    line-height: 26px;
+    font-size: 15px;
+    line-height: 21px;
   }
 
   /* Hero reorder for mobile */
