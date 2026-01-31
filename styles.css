@@ -175,19 +175,28 @@ h2 {
 }
 
 .hero .label {
-  display: block;
   color: #cbe3ff;
-  margin-bottom: 30px;
+  margin-left: 20px;
 }
 
 .portfolio-line {
-  text-align: right;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-size: 36px;
   line-height: 48px;
   letter-spacing: -1.44px;
   color: #ffcbcc;
+  margin-bottom: 30px;
+}
+
+.location-line {
+  text-align: right;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
+  color: #ffffff;
 }
 
 /* ============================================
@@ -641,7 +650,8 @@ h1.section-brand {
   }
 
   .label,
-  .portfolio-line {
+  .portfolio-line,
+  .location-line {
     font-size: 35px;
     line-height: 38px;
     letter-spacing: -0.70px;
@@ -670,6 +680,10 @@ h1.section-brand {
 
   .portfolio-line {
     padding-top: 100px;
+  }
+
+  .location-line {
+    padding-top: 0;
   }
 }
 
@@ -701,7 +715,8 @@ h1.section-brand {
   }
 
   .label,
-  .portfolio-line {
+  .portfolio-line,
+  .location-line {
     font-size: 28px;
     line-height: 30px;
     letter-spacing: -0.56px;
@@ -783,6 +798,10 @@ h1.section-brand {
 
   .portfolio-line {
     order: 4;
+  }
+
+  .location-line {
+    order: 5;
   }
 
   /* Control: text above, card below */
