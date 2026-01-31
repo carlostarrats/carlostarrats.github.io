@@ -3,6 +3,16 @@
    Clean Type Scale
    ============================================ */
 
+/* Nyght Serif Font */
+@font-face {
+  font-family: 'Nyght Serif';
+  src: url('fonts/NyghtSerif-Light.woff2') format('woff2'),
+       url('fonts/NyghtSerif-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -36,13 +46,11 @@ a {
    ============================================ */
 
 h1 {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 200;
-  font-size: 123px;
-  line-height: 113px;
-  letter-spacing: -11.07px;
-  text-decoration: underline;
-  text-decoration-thickness: 6%;
+  font-family: 'Nyght Serif', serif;
+  font-weight: 300;
+  font-size: 110px;
+  line-height: 98px;
+  letter-spacing: -3.3px;
   margin-bottom: 30px;
 }
 
@@ -131,11 +139,12 @@ h2 {
 .hero h1 {
   position: relative;
   z-index: 1;
+  max-width: 900px;
 }
 
 .hero-placeholder {
   position: absolute;
-  top: 163px;
+  top: 50px;
   right: 0;
   width: 335px;
   height: 198px;
@@ -145,21 +154,17 @@ h2 {
 .hero .label {
   display: block;
   color: #cbe3ff;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 }
 
 .portfolio-line {
-  margin-left: calc(50% + 15px);
-}
-
-.portfolio-line .label {
-  display: inline;
+  text-align: right;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
   color: #ffcbcc;
-  margin-right: 10px;
-}
-
-.portfolio-line h2 {
-  display: inline;
 }
 
 /* ============================================
@@ -361,6 +366,10 @@ h1.center {
   text-decoration: none;
 }
 
+h1.section-brand {
+  margin-top: 110px;
+}
+
 /* ============================================
    BRANDING IMAGE
    ============================================ */
@@ -509,22 +518,30 @@ h1.center {
    All fonts 20% smaller
    ============================================ */
 
+@media (max-width: 1000px) {
+  .body,
+  .project-header__description {
+    font-size: 19px;
+    line-height: 26px;
+    letter-spacing: 0.5px;
+  }
+}
+
 @media (max-width: 1000px) and (min-width: 801px) {
   h1 {
-    font-size: 79px;
-    line-height: 72px;
-    letter-spacing: -7.09px;
+    font-size: 70px;
+    line-height: 62px;
+    letter-spacing: -2.1px;
+  }
+
+  .hero h1 {
+    max-width: 800px;
   }
 
   h2 {
     font-size: 35px;
     line-height: 38px;
     letter-spacing: -0.70px;
-  }
-
-  .body {
-    font-size: 19px;
-    line-height: 26px;
   }
 
   .label {
@@ -549,18 +566,12 @@ h1.center {
     letter-spacing: -0.70px;
   }
 
-  .project-header__description {
-    font-size: 19px;
-    line-height: 26px;
-  }
-
   .detail-footer__copyright {
     font-size: 24px;
     line-height: 32px;
   }
 
   .portfolio-line {
-    clear: both;
     padding-top: 100px;
   }
 }
@@ -577,19 +588,14 @@ h1.center {
 
   h1 {
     font-size: 44px;
-    line-height: 40px;
-    letter-spacing: -3.96px;
+    line-height: 39px;
+    letter-spacing: -1.32px;
   }
 
   h2 {
     font-size: 28px;
     line-height: 30px;
     letter-spacing: -0.56px;
-  }
-
-  .body {
-    font-size: 19px;
-    line-height: 26px;
   }
 
   .label {
@@ -637,8 +643,6 @@ h1.center {
     display: block;
     width: 100%;
     padding-left: 0;
-    font-size: 15px;
-    line-height: 21px;
   }
 
   .detail-footer__copyright {
@@ -674,8 +678,6 @@ h1.center {
 
   .portfolio-line {
     order: 4;
-    margin-left: 0;
-    text-align: right;
   }
 
   /* Control: text above, card below */
