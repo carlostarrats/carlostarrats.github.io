@@ -1,6 +1,6 @@
 /* ============================================
    CARLOS TARRATS PORTFOLIO
-   Exact values from Figma - document flow
+   Clean Type Scale
    ============================================ */
 
 /* Reset */
@@ -27,11 +27,82 @@ a {
   text-decoration: none;
 }
 
-/* Clearfix */
-.clearfix::after {
-  content: '';
-  display: table;
-  clear: both;
+/* ============================================
+   TYPE SCALE
+   h1: 123px - Hero, Section titles
+   h2: 55px - Project titles, Portfolio name
+   .body: 30px - Bio, descriptions
+   .label: 36px - Contact, Portfolio label
+   ============================================ */
+
+h1 {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 200;
+  font-size: 123px;
+  line-height: 113px;
+  letter-spacing: -11.07px;
+  text-decoration: underline;
+  text-decoration-thickness: 6%;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  font-size: 55px;
+  line-height: 60px;
+  letter-spacing: -1.1px;
+}
+
+.body {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 40px;
+}
+
+.label {
+  font-family: 'Instrument Serif', serif;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.italic {
+  font-style: italic;
+}
+
+.center {
+  text-align: center;
+}
+
+.half-width {
+  width: calc(50% - 15px);
+}
+
+.align-right {
+  margin-left: auto;
+}
+
+/* Colors */
+.color--control {
+  color: #cbfff7;
+}
+
+.color--adaptiveshop {
+  color: #ffe4cb;
+}
+
+.color--dds {
+  color: #f5ffcb;
+}
+
+.color--eloquii {
+  color: #cdcbff;
 }
 
 /* ============================================
@@ -47,8 +118,6 @@ a {
 
 /* ============================================
    HERO SECTION
-   Uses position relative with absolute children
-   to maintain exact Figma layout
    ============================================ */
 
 .hero {
@@ -57,17 +126,9 @@ a {
   margin-bottom: 30px;
 }
 
-.hero-title {
+.hero h1 {
   position: relative;
   z-index: 1;
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 200;
-  font-size: 123px;
-  line-height: 113px;
-  letter-spacing: -11.07px;
-  text-decoration: underline;
-  text-decoration-thickness: 6%;
-  margin-bottom: 30px;
 }
 
 .hero-placeholder {
@@ -79,13 +140,8 @@ a {
   background-color: #797979;
 }
 
-.contact-text {
+.hero .label {
   display: block;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
   color: #cbe3ff;
   margin-bottom: 70px;
 }
@@ -94,31 +150,21 @@ a {
   margin-left: calc(50% + 15px);
 }
 
-.portfolio-label {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 36px;
-  letter-spacing: -1.44px;
+.portfolio-line .label {
+  display: inline;
   color: #ffcbcc;
   margin-right: 10px;
 }
 
-.portfolio-name {
-  font-family: 'Instrument Serif', serif;
-  font-weight: 400;
-  font-size: 55px;
-  letter-spacing: -2.2px;
+.portfolio-line h2 {
+  display: inline;
 }
 
 /* ============================================
    BIO
    ============================================ */
 
-.bio {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 40px;
+.page > .body {
   margin-bottom: 60px;
 }
 
@@ -141,7 +187,7 @@ a {
   width: calc(50% - 15px);
 }
 
-.project-row > .project-text {
+.project-row > h2 {
   float: right;
   width: calc(50% - 15px);
 }
@@ -167,8 +213,20 @@ a {
   margin-bottom: 60px;
 }
 
-.project-stack > .project-text {
+.project-stack > h2 {
   margin-bottom: 30px;
+}
+
+/* ============================================
+   STANDALONE H2 (DDS, Eloquii text)
+   ============================================ */
+
+.page > h2.half-width {
+  margin-bottom: 30px;
+}
+
+.page > h2.align-right {
+  margin-bottom: 130px;
 }
 
 /* ============================================
@@ -205,80 +263,10 @@ a {
 }
 
 /* ============================================
-   PROJECT TEXT
+   SECTION TITLES (h1.center)
    ============================================ */
 
-.project-text {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 55px;
-  line-height: 64px;
-  letter-spacing: -1.1px;
-}
-
-.project-name {
-  font-style: italic;
-}
-
-.project-dash {
-  font-style: italic;
-}
-
-.project-desc {
-  font-family: 'Instrument Serif', serif;
-  font-style: normal;
-}
-
-.project-name--control {
-  color: #cbfff7;
-}
-
-.project-text--adaptiveshop {
-  font-size: 60px;
-  letter-spacing: -1.2px;
-}
-
-.project-name--adaptiveshop {
-  color: #ffe4cb;
-}
-
-.project-text--dds {
-  font-size: 60px;
-  letter-spacing: -1.2px;
-  width: calc(50% - 15px);
-  margin-bottom: 30px;
-}
-
-.project-name--dds {
-  color: #f5ffcb;
-}
-
-.project-text--eloquii {
-  font-size: 60px;
-  letter-spacing: -1.2px;
-  width: calc(50% - 15px);
-  margin-left: auto;
-  text-align: left;
-  margin-bottom: 130px;
-}
-
-.project-name--eloquii {
-  color: #cdcbff;
-}
-
-/* ============================================
-   SECTION TITLES
-   ============================================ */
-
-.section-title {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 200;
-  font-size: 123px;
-  line-height: 113px;
-  letter-spacing: -11.07px;
-  text-decoration: underline;
-  text-decoration-thickness: 6%;
-  text-align: center;
+h1.center {
   margin-bottom: 50px;
 }
 
@@ -298,14 +286,9 @@ a {
    COPYRIGHT
    ============================================ */
 
-.copyright {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 40px;
-  text-align: center;
+.page > .body.center {
   margin-top: 150px;
-  padding-bottom: 50px;
+  padding-bottom: 0;
 }
 
 /* ============================================
@@ -450,208 +433,97 @@ a {
    ============================================ */
 
 @media (max-width: 1000px) and (min-width: 801px) {
-  .hero-title {
-    font-size: 98px;
-    line-height: 90px;
-    letter-spacing: -8.86px;
+  h1 {
+    font-size: 79px;
+    line-height: 72px;
+    letter-spacing: -7.09px;
   }
 
-  .contact-text {
-    font-size: 29px;
+  h2 {
+    font-size: 35px;
     line-height: 38px;
-    letter-spacing: -1.15px;
+    letter-spacing: -0.70px;
   }
 
-  .portfolio-label {
-    font-size: 29px;
-    letter-spacing: -1.15px;
+  .body {
+    font-size: 19px;
+    line-height: 26px;
   }
 
-  .portfolio-name {
-    font-size: 44px;
-    letter-spacing: -1.76px;
+  .label {
+    font-size: 23px;
+    line-height: 31px;
+    letter-spacing: -0.92px;
   }
 
-  .bio {
-    font-size: 24px;
-    line-height: 32px;
-  }
-
-  .project-text {
-    font-size: 44px;
-    line-height: 51px;
-    letter-spacing: -0.88px;
-  }
-
-  .project-text--adaptiveshop,
-  .project-text--dds,
-  .project-text--eloquii {
-    font-size: 48px;
-    letter-spacing: -0.96px;
-  }
-
-  .section-title {
-    font-size: 98px;
-    line-height: 90px;
-    letter-spacing: -8.86px;
-  }
-
-  .copyright {
-    font-size: 24px;
-    line-height: 32px;
+  .branding-image {
+    width: 384px;
   }
 
   .back-link {
-    font-size: 44px;
-    line-height: 51px;
-    letter-spacing: -0.88px;
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.70px;
   }
 
   .project-header__title {
-    font-size: 44px;
-    line-height: 51px;
-    letter-spacing: -0.96px;
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.70px;
   }
 
   .project-header__description {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 19px;
+    line-height: 26px;
   }
 
   .detail-footer__copyright {
     font-size: 24px;
     line-height: 32px;
   }
-
-  .branding-image {
-    width: 480px;
-  }
 }
 
 /* ============================================
    RESPONSIVE - MOBILE (800px breakpoint)
+   All fonts 20% smaller than tablet
    ============================================ */
 
 @media (max-width: 800px) {
   .page {
-    padding: 20px;
+    padding: 0 20px;
   }
 
-  .hero {
-    padding-top: 20px;
-    margin-bottom: 20px;
+  h1 {
+    font-size: 78px;
+    line-height: 72px;
+    letter-spacing: -7.09px;
   }
 
-  .hero-title {
-    font-size: 48px;
-    line-height: 52px;
-    letter-spacing: -4px;
-    margin-bottom: 20px;
+  h2 {
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.70px;
   }
 
-  .hero-placeholder {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: 100%;
-    max-width: 250px;
-    height: 150px;
-    margin-bottom: 20px;
+  .body {
+    font-size: 19px;
+    line-height: 26px;
   }
 
-  .contact-text {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-
-  .portfolio-line {
-    margin-left: 0;
-    margin-bottom: 20px;
-  }
-
-  .portfolio-label {
-    display: block;
-    font-size: 28px;
-    margin-bottom: 8px;
-    margin-right: 0;
-  }
-
-  .portfolio-name {
-    display: block;
-    font-size: 36px;
-  }
-
-  .bio {
-    font-size: 20px;
-    line-height: 28px;
-    margin-bottom: 40px;
-  }
-
-  .project-row {
-    margin-bottom: 40px;
-  }
-
-  .project-row > .card,
-  .project-row > .project-text {
-    float: none;
-    width: 100%;
-  }
-
-  .project-row > .card {
-    margin-bottom: 20px;
-  }
-
-  .project-row--cards > .card {
-    float: none;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .project-row--cards > .card + .card {
-    float: none;
-  }
-
-  .project-stack {
-    margin-bottom: 40px;
-  }
-
-  .project-text {
-    font-size: 28px;
-    line-height: 36px;
-    letter-spacing: -1px;
-  }
-
-  .project-text--adaptiveshop,
-  .project-text--dds,
-  .project-text--eloquii {
-    font-size: 28px;
-    width: 100%;
-    margin-left: 0;
-    text-align: left;
-    margin-bottom: 40px;
-  }
-
-  .section-title {
-    font-size: 48px;
-    line-height: 52px;
-    letter-spacing: -4px;
-    margin-bottom: 40px;
+  .label {
+    font-size: 23px;
+    line-height: 30px;
+    letter-spacing: -0.92px;
   }
 
   .branding-image {
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 40px;
+    width: 384px;
   }
 
-  .copyright {
-    font-size: 20px;
-    padding-bottom: 40px;
-  }
-
-  /* Detail pages */
   .back-link {
-    font-size: 36px;
+    font-size: 35px;
+    line-height: 41px;
+    letter-spacing: -0.70px;
   }
 
   .content-card {
@@ -659,26 +531,19 @@ a {
     border-radius: 24px;
   }
 
-  .project-header {
-    display: block;
-  }
-
   .project-header__title {
-    display: block;
-    width: 100%;
-    font-size: 32px;
-    line-height: 40px;
-    margin-bottom: 20px;
+    font-size: 35px;
+    line-height: 41px;
+    letter-spacing: -0.77px;
   }
 
   .project-header__description {
-    display: block;
-    padding-left: 0;
-    font-size: 18px;
+    font-size: 19px;
     line-height: 26px;
   }
 
   .detail-footer__copyright {
-    font-size: 18px;
+    font-size: 19px;
+    line-height: 26px;
   }
 }
