@@ -63,10 +63,11 @@ h2 {
 }
 
 .body {
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 40px;
+  font-family: 'Roboto Serif', serif;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
 }
 
 .label {
@@ -471,10 +472,11 @@ h1.section-brand {
   display: table-cell;
   vertical-align: top;
   padding-left: 60px;
-  font-family: 'Cabinet Grotesk', sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 40px;
+  font-family: 'Roboto Serif', serif;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
 }
 
 .project-header__description p {
@@ -518,14 +520,6 @@ h1.section-brand {
    All fonts 20% smaller
    ============================================ */
 
-@media (max-width: 1000px) {
-  .body,
-  .project-header__description {
-    font-size: 19px;
-    line-height: 26px;
-    letter-spacing: 0.5px;
-  }
-}
 
 @media (max-width: 1000px) and (min-width: 801px) {
   h1 {
@@ -556,9 +550,9 @@ h1.section-brand {
   }
 
   .back-link {
-    font-size: 23px;
-    line-height: 31px;
-    letter-spacing: -0.92px;
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.70px;
   }
 
   .project-header__title {
@@ -585,6 +579,11 @@ h1.section-brand {
 @media (max-width: 800px) {
   .page {
     padding: 0 20px;
+  }
+
+  .body {
+    font-size: 16px;
+    line-height: 24px;
   }
 
   h1 {
@@ -615,9 +614,9 @@ h1.section-brand {
   }
 
   .back-link {
-    font-size: 23px;
+    font-size: 28px;
     line-height: 30px;
-    letter-spacing: -0.92px;
+    letter-spacing: -0.56px;
     padding: 8px 30px;
     margin: 20px auto 30px;
   }
@@ -645,6 +644,8 @@ h1.section-brand {
     display: block;
     width: 100%;
     padding-left: 0;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .detail-footer__copyright {
