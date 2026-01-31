@@ -372,15 +372,70 @@ h1.section-brand {
 }
 
 /* ============================================
-   BRANDING IMAGE
+   BRAND CAROUSEL
    ============================================ */
 
-.branding-image {
-  width: 600px;
-  max-width: 100%;
-  aspect-ratio: 1;
-  background-color: #7c4242;
-  margin: 0 auto 30px;
+.brand-carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  padding: 80px 0 100px;
+  background: transparent;
+}
+
+.brand-carousel {
+  width: 100%;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  transform: rotateX(-15deg);
+}
+
+.brand-carousel__track {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 40px 0;
+  animation: scroll-left 50s linear infinite;
+  width: max-content;
+  transform-style: preserve-3d;
+}
+
+.brand-carousel__item {
+  flex-shrink: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-40deg);
+  transition: transform 0.4s ease;
+  position: relative;
+}
+
+.brand-carousel__item:hover {
+  transform: rotateY(-40deg) translateY(-20px);
+}
+
+.brand-carousel__item img {
+  display: block;
+  height: 200px;
+  width: auto;
+  box-shadow:
+    8px 12px 24px rgba(0, 0, 0, 0.08),
+    20px 30px 60px rgba(0, 0, 0, 0.06);
+}
+
+.brand-carousel__item iframe {
+  display: block;
+  width: 356px;
+  height: 200px;
+  box-shadow:
+    8px 12px 24px rgba(0, 0, 0, 0.08),
+    20px 30px 60px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ============================================
