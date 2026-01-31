@@ -380,21 +380,43 @@ h1.section-brand {
   overflow: hidden;
   padding: 80px 0 100px;
   background: transparent;
+  position: relative;
+}
+
+.brand-carousel-wrapper::before,
+.brand-carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.brand-carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #252525 0%, transparent 100%);
+}
+
+.brand-carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #252525 0%, transparent 100%);
 }
 
 .brand-carousel {
   width: 100%;
   transform-style: preserve-3d;
-  perspective: 1200px;
+  perspective: 8000px;
   transform: rotateX(-15deg);
 }
 
 .brand-carousel__track {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 0;
   padding: 40px 0;
-  animation: scroll-left 50s linear infinite;
+  animation: scroll-left 90s linear infinite;
   width: max-content;
   transform-style: preserve-3d;
 }
@@ -402,13 +424,13 @@ h1.section-brand {
 .brand-carousel__item {
   flex-shrink: 0;
   transform-style: preserve-3d;
-  transform: rotateY(-40deg);
+  transform: rotateY(-50deg);
   transition: transform 0.4s ease;
   position: relative;
 }
 
 .brand-carousel__item:hover {
-  transform: rotateY(-40deg) translateY(-20px);
+  transform: rotateY(-50deg) translateY(-20px);
 }
 
 .brand-carousel__item img {
