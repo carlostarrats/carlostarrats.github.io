@@ -294,6 +294,63 @@ h2 {
 }
 
 /* ============================================
+   PROJECT BUTTON
+   ============================================ */
+
+.card-wrapper {
+  position: relative;
+}
+
+.project-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 65px;
+  height: 65px;
+}
+
+.project-button__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 65px;
+  height: 65px;
+  border-radius: 130px;
+  background: linear-gradient(180deg, #fcfcfc 0.982%, #cbcbcb 81.125%, #9bbcff 109%);
+  box-shadow: 0px 0px 30px 0px rgba(0, 84, 255, 0.1);
+}
+
+.project-button__border {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 65px;
+  height: 65px;
+  border-radius: 130px;
+  border: 3px solid #e7edf5;
+  box-sizing: border-box;
+}
+
+.project-button__border-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 65px;
+  height: 65px;
+  border-radius: 130px;
+  border: 3px solid rgba(172, 172, 172, 0);
+  box-sizing: border-box;
+}
+
+.project-button__arrow {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 45px;
+  height: 45px;
+}
+
+/* ============================================
    SECTION TITLES (h1.center)
    ============================================ */
 
