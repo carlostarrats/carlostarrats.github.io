@@ -33,20 +33,63 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 7. **RankBee AI** - 0-1 SaaS for AI SEO
 8. **Experiments** - Web experiments including Mood Atlas
 
-## Tech Stack (v1)
+## Tech Stack (v2 - Current)
 - Static HTML/CSS/JS
-- Inter font (https://rsms.me/inter/)
-- AOS (Animate on Scroll) library
 - GitHub Pages hosting
 - No build process (vanilla)
+
+### Fonts
+- **Nyght Serif Light** - h1 headings (local: `fonts/NyghtSerif-Light.woff2`)
+- **Instrument Serif** - h2 headings, labels, project titles
+- **Roboto Serif** - Body text (weight 200)
+- **Cabinet Grotesk** - Base/fallback font
+
+## Current Projects
+1. **Control** - Open-source on-device LLM app for iOS
+2. **AdaptiveShop** - Modern ecommerce platform with AI features
+3. **Defense Digital Service** - DoD digital transformation
+4. **Eloquii** - Plus-size fashion e-commerce redesign
 
 ## Repository Structure
 ```
 /                    # Root - main site files
-.nojekyll           # Disables Jekyll processing for GitHub Pages
-.gitignore          # Git ignore rules
-CLAUDE.md           # This file
+├── index.html       # Homepage
+├── styles.css       # Main stylesheet
+├── sitemap.xml      # SEO sitemap
+├── robots.txt       # Crawler instructions
+├── .nojekyll        # Disables Jekyll for GitHub Pages
+├── fonts/           # Custom fonts (Nyght Serif)
+├── images/          # All image assets
+└── projects/        # Project detail pages
+    ├── control.html
+    ├── adaptiveshop.html
+    ├── dds.html
+    └── eloquii.html
 ```
+
+## SEO & Accessibility
+All pages include:
+- Meta descriptions
+- Canonical URLs
+- Open Graph tags (og:type, og:title, og:description, og:url)
+- Twitter card tags
+- Skip navigation link for keyboard users
+- Aria labels on interactive elements
+- Alt text on images
+
+Homepage also has:
+- JSON-LD structured data (Person schema)
+
+**Not yet added:**
+- Favicon
+- Share image (og:image, twitter:image)
+
+## Brand Carousel
+- 3D rotating carousel with perspective effect
+- Infinite scroll animation (120s loop)
+- JavaScript-based hover detection for reliable interaction on 3D elements
+- Hover lifts item 70px, rotates flat, scales 1.1x
+- Bounce easing on return animation
 
 ## Deployment
 - Push to `main` branch auto-deploys to GitHub Pages
@@ -65,8 +108,8 @@ git show archive/v1:index.html
 git ls-tree --name-only archive/v1
 ```
 
-## Design Notes
-- Previous site used horizontal scroll for project cards
-- Minimal, clean aesthetic
-- Animation on scroll effects
-- Mobile responsive
+## Design Notes (v2)
+- Dark background (#252525)
+- 3D brand carousel with hover interactions
+- Mobile responsive with media queries
+- Smooth transitions and animations
