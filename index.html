@@ -88,7 +88,7 @@
     <div class="project-pair">
       <div class="project-pair__item project-pair__item--dds">
         <h2><span class="italic color--dds">Defense Digital Service </span>— Digital transformation of the Defense Department, integrating AI, data, cyber, and IT</h2>
-        <a href="projects/dds.html" class="card card--dds" aria-label="View Defense Digital Service project"></a>
+        <a href="https://www.dds.mil/work/" class="card card--dds js-external-link" aria-label="View Defense Digital Service project"></a>
       </div>
       <div class="project-pair__item project-pair__item--eloquii">
         <h2><span class="italic color--eloquii">Eloquii </span>— Platform redesign improving the online shopping experience for plus-size fashion customers</h2>
@@ -201,6 +201,18 @@
         wrapper.style.cursor = 'default';
       });
     })();
+
+    // External links - open in new window, fallback to same window if blocked
+    document.querySelectorAll('.js-external-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var url = this.href;
+        var newWindow = window.open(url, '_blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          window.location.href = url;
+        }
+      });
+    });
   </script>
 </body>
 </html>
