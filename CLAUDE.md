@@ -79,9 +79,7 @@ All pages include:
 
 Homepage also has:
 - JSON-LD structured data (Person schema)
-
-**Not yet added:**
-- Favicon
+- Favicon (favicon.svg)
 - Share image (og:image, twitter:image)
 
 ## Brand Carousel

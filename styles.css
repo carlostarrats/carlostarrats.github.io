@@ -162,7 +162,7 @@ h2 {
 .hero h1 {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  max-width: 1100px;
 }
 
 .hero-flicker {
@@ -247,6 +247,16 @@ h2 {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.tagline {
+  text-align: right;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
+  color: #ffcbcc;
+}
+
 .location-line {
   text-align: right;
   font-family: 'Instrument Serif', serif;
@@ -254,7 +264,7 @@ h2 {
   font-size: 36px;
   line-height: 48px;
   letter-spacing: -1.44px;
-  color: #ffffff;
+  color: #ffcbcc;
 }
 
 /* ============================================
@@ -824,6 +834,7 @@ h1.section-brand {
 
   .label,
   .portfolio-line,
+  .tagline,
   .location-line {
     font-size: 35px;
     line-height: 38px;
@@ -922,6 +933,7 @@ h1.section-brand {
 
   .label,
   .portfolio-line,
+  .tagline,
   .location-line {
     font-size: 28px;
     line-height: 30px;
@@ -1050,8 +1062,12 @@ h1.section-brand {
     order: 4;
   }
 
-  .location-line {
+  .tagline {
     order: 5;
+  }
+
+  .location-line {
+    order: 6;
   }
 
   /* Control: text above, card below */
