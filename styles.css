@@ -85,11 +85,11 @@ h2 {
 }
 
 .body {
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .label {
@@ -234,7 +234,7 @@ h2 {
   gap: 5px;
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', serif;
   font-style: normal;
   font-size: 14px;
   font-weight: 200;
@@ -700,11 +700,11 @@ h1.section-brand {
   display: table-cell;
   vertical-align: top;
   padding-left: 60px;
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .project-header__description p {
