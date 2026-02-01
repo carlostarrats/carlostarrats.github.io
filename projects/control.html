@@ -55,30 +55,33 @@
       </header>
 
       <section class="project-images">
+        <img src="../images/control/control-hero.jpg" alt="Control app screenshots showing the logo, model selection, chat interface, and customization options" class="project-images__item">
         <div class="project-images__video">
           <video autoplay muted loop playsinline>
             <source src="../images/control/control-1.mp4" type="video/mp4">
           </video>
         </div>
-        <div class="project-images__video">
-          <video autoplay muted loop playsinline>
-            <source src="../images/control/control-2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="project-images__video">
-          <video autoplay muted loop playsinline>
-            <source src="../images/control/control-3.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="project-images__video">
-          <video autoplay muted loop playsinline>
-            <source src="../images/control/control-4.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="project-images__video">
-          <video autoplay muted loop playsinline>
-            <source src="../images/control/control-5.mp4" type="video/mp4">
-          </video>
+        <div class="project-images__grid">
+          <div class="project-images__video">
+            <video autoplay muted loop playsinline>
+              <source src="../images/control/control-2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-images__video">
+            <video autoplay muted loop playsinline>
+              <source src="../images/control/control-3.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-images__video">
+            <video autoplay muted loop playsinline>
+              <source src="../images/control/control-4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="project-images__video">
+            <video autoplay muted loop playsinline>
+              <source src="../images/control/control-5.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </section>
     </article>
@@ -87,5 +90,12 @@
       <p class="body">Copyright 2026</p>
     </footer>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('video').forEach(function(video) {
+        video.play().catch(function() {});
+      });
+    });
+  </script>
 </body>
 </html>

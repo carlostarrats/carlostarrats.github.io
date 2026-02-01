@@ -65,5 +65,12 @@
       <p class="body">Copyright 2026</p>
     </footer>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('video').forEach(function(video) {
+        video.play().catch(function() {});
+      });
+    });
+  </script>
 </body>
 </html>
