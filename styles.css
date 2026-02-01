@@ -378,11 +378,6 @@ h2 {
 
 .card {
   display: block;
-  transition: opacity 0.2s ease;
-}
-
-.card:hover {
-  opacity: 0.9;
 }
 
 .card--control {
@@ -402,11 +397,13 @@ h2 {
 .card--dds {
   aspect-ratio: 1.5;
   background: #444444 url('images/dds/dds-hero.jpg') center/cover no-repeat;
+  position: relative;
 }
 
 .card--eloquii {
   aspect-ratio: 1.5;
   background: #444444 url('images/eloquii/eloquii-hero.jpg') center/cover no-repeat;
+  position: relative;
 }
 
 /* Card videos */
@@ -420,60 +417,57 @@ h2 {
 }
 
 /* ============================================
-   PROJECT BUTTON
+   COOL BUTTON (from Figma SVG export)
+   Size: 65x65px, centered in 125x125 for shadow
    ============================================ */
 
-.card-wrapper {
-  position: relative;
-}
-
-.project-button {
+.cool-button {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 16px;
+  left: 16px;
   width: 65px;
   height: 65px;
+  cursor: pointer;
+  filter: drop-shadow(0 0 15px rgba(0, 84, 255, 0.1));
 }
 
-.project-button__bg {
+.cool-button svg {
   position: absolute;
-  left: 0;
   top: 0;
-  width: 65px;
-  height: 65px;
-  border-radius: 130px;
-  background: linear-gradient(180deg, #fcfcfc 0.982%, #cbcbcb 81.125%, #9bbcff 109%);
-  box-shadow: 0px 0px 30px 0px rgba(0, 84, 255, 0.1);
-}
-
-.project-button__border {
-  position: absolute;
   left: 0;
-  top: 0;
-  width: 65px;
-  height: 65px;
-  border-radius: 130px;
-  border: 3px solid #e7edf5;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.project-button__border-inner {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 65px;
-  height: 65px;
-  border-radius: 130px;
-  border: 3px solid rgba(172, 172, 172, 0);
-  box-sizing: border-box;
+.cool-button svg * {
+  shape-rendering: geometricPrecision;
 }
 
-.project-button__arrow {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  width: 45px;
-  height: 45px;
+.cool-button__static {
+  z-index: 2;
+}
+
+.cool-button__hover {
+  z-index: 1;
+  visibility: hidden;
+}
+
+.card:hover .cool-button__static {
+  visibility: hidden;
+}
+
+.card:hover .cool-button__hover {
+  visibility: visible;
+}
+
+@media (max-width: 1000px) {
+  .cool-button {
+    width: 39px;
+    height: 39px;
+    bottom: 10px;
+    left: 10px;
+  }
 }
 
 /* ============================================
