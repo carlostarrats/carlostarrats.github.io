@@ -165,15 +165,27 @@ h2 {
   max-width: 900px;
 }
 
-.hero-placeholder {
+.hero-flicker {
   position: absolute;
   top: 50px;
   right: 0;
-  width: 335px;
+  width: 297px;
   height: 198px;
-  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
-  background-size: 400% 400%;
-  animation: skeleton-pulse 1.2s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.hero-flicker__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.hero-flicker__img.is-active {
+  opacity: 1;
 }
 
 .hero .label {
@@ -1023,13 +1035,13 @@ h1.section-brand {
     margin-bottom: 30px;
   }
 
-  .hero-placeholder {
+  .hero-flicker {
     position: relative;
     top: auto;
     right: auto;
     order: 3;
     width: 100%;
-    max-width: 335px;
+    max-width: 297px;
     height: 198px;
     margin-bottom: 30px;
   }
