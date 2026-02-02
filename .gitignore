@@ -2,3 +2,4 @@
 mood-atlas-src/node_modules/
 mood-atlas-src/dist/
 mood-atlas-deploy/
+.playwright-mcp/

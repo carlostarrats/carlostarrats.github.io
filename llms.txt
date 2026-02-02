@@ -1,0 +1,36 @@
+# Carlos Tarrats - Product & Visual Designer
+
+## About
+Carlos Tarrats is a Product & Visual Designer based in Los Angeles, CA. He specializes in simplifying complex systems, 0-1 product development, and enterprise systems design.
+
+## Experience
+Most recently spent three years with the Department of Defense's Chief Digital and AI Office (Defense Digital Service), leading design for modernization initiatives in high-security environments. Earlier work spans startups and large corporations, focused on projects combining technical challenge with purposeful impact.
+
+## Skills
+- Product Design
+- Visual Design
+- 0-1 Product Development
+- Enterprise Systems
+- Digital Transformation
+- AI-assisted Prototyping
+
+## Projects
+
+### AdaptiveShop
+A modern ecommerce platform with built-in AI and modular features. Lets independent sellers launch stores quickly with real-time editing, smart links, analytics, and print-on-demand integrations.
+URL: https://carlostarrats.github.io/projects/adaptiveshop.html
+
+### Control
+A text-only open-source on-device LLM app for iOS. Runs Gemma3, Llama3.2, SmolLM2, and Qwen3 entirely on-device with no accounts, no data collection, and no network dependency.
+URL: https://carlostarrats.github.io/projects/control.html
+
+### Defense Digital Service
+Digital transformation of the Defense Department, integrating AI, data, cyber, and IT. Work details at https://www.dds.mil/work/
+
+### Eloquii
+Platform redesign improving the online shopping experience for plus-size fashion customers. Led design of a modular, scalable system with reusable components and mobile parity.
+URL: https://carlostarrats.github.io/projects/eloquii.html
+
+## Contact
+- LinkedIn: https://www.linkedin.com/in/carlos-t-b869016
+- Website: https://carlostarrats.github.io
