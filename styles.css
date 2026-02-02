@@ -382,28 +382,56 @@ h2 {
 
 .card--control {
   aspect-ratio: 1.5;
-  background-color: #444444;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
   overflow: hidden;
   position: relative;
+}
+
+.card--control.is-loaded {
+  animation: none;
+  background: #444444;
 }
 
 .card--adaptiveshop {
   aspect-ratio: 1.5;
-  background-color: #444444;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
   overflow: hidden;
   position: relative;
 }
 
+.card--adaptiveshop.is-loaded {
+  animation: none;
+  background: #444444;
+}
+
 .card--dds {
   aspect-ratio: 1.5;
-  background: #444444 url('images/dds/dds-hero.jpg') center/cover no-repeat;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
   position: relative;
+}
+
+.card--dds.is-loaded {
+  animation: none;
+  background: #444444 url('images/dds/dds-hero.jpg') center/cover no-repeat;
 }
 
 .card--eloquii {
   aspect-ratio: 1.5;
-  background: #444444 url('images/eloquii/eloquii-hero.jpg') center/cover no-repeat;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
   position: relative;
+}
+
+.card--eloquii.is-loaded {
+  animation: none;
+  background: #444444 url('images/eloquii/eloquii-hero.jpg') center/cover no-repeat;
 }
 
 /* Card videos */
@@ -414,6 +442,12 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card.is-loaded video {
+  opacity: 1;
 }
 
 /* ============================================
@@ -539,6 +573,18 @@ h1.section-brand {
   transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
   position: relative;
   cursor: pointer;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+  min-width: 356px;
+  min-height: 200px;
+}
+
+.brand-carousel__item.is-loaded {
+  animation: none;
+  background: none;
+  min-width: auto;
+  min-height: auto;
 }
 
 .brand-carousel__item.is-hovered {
@@ -554,6 +600,12 @@ h1.section-brand {
   box-shadow:
     8px 12px 24px rgba(0, 0, 0, 0.08),
     20px 30px 60px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.brand-carousel__item.is-loaded img {
+  opacity: 1;
 }
 
 .brand-carousel__item iframe {
@@ -721,11 +773,32 @@ h1.section-brand {
   margin-bottom: 30px;
 }
 
+/* Skeleton loading animation */
+@keyframes skeleton-pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
+  }
+}
+
 .project-images__item {
   display: block;
   width: 100%;
   height: auto;
   margin-bottom: 30px;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-images__item.is-loaded {
+  opacity: 1;
+  animation: none;
+  background: none;
 }
 
 .project-images__item:last-child {
@@ -746,20 +819,19 @@ h1.section-brand {
   margin-bottom: 0;
 }
 
-@keyframes skeleton-pulse {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: -135% 0%;
-  }
-}
-
 .project-images__video {
   position: relative;
   width: 100%;
   margin-bottom: 30px;
   overflow: hidden;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+.project-images__video.is-loaded {
+  animation: none;
+  background: none;
 }
 
 .project-images__video iframe {
@@ -775,6 +847,12 @@ h1.section-brand {
   width: 100%;
   height: auto;
   display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-images__video.is-loaded video {
+  opacity: 1;
 }
 
 /* Project images grid - 2x2 layout for desktop */
@@ -939,6 +1017,11 @@ h1.section-brand {
 
   .branding-image {
     width: 384px;
+  }
+
+  .brand-carousel__item {
+    min-width: 249px;
+    min-height: 140px;
   }
 
   .brand-carousel__item img {
