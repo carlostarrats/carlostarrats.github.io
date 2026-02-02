@@ -226,6 +226,7 @@ h2 {
   margin-right: 0.65em;
   margin-bottom: 4px;
   transition: opacity 0.2s ease;
+  will-change: opacity;
 }
 
 .linkedin-link:hover {

@@ -106,6 +106,52 @@ git show archive/v1:index.html
 git ls-tree --name-only archive/v1
 ```
 
+## Hero Flicker
+- Cycles through images behind the hero text
+- 1.5 second interval between images
+- Crossfade transition with opacity
+- Images stored in `images/hero-flicker/`
+
+## Image Optimization
+Images must be resized before adding to the site:
+
+### Hero Flicker (`images/hero-flicker/`)
+- **Target size:** 700×394px (retina-ready for 350px display)
+- **Format:** JPG
+- **Command:** `sips -z 394 700 <image.jpg>`
+
+### Brand Carousel (`images/brand/`)
+- **Target size:** 700×400px (retina-ready for 200px display height)
+- **Format:** JPG
+- **Command:** `sips -z 400 700 <image.jpg>`
+
+## Video Assets
+MP4 videos used in project cards and detail pages.
+
+### Guidelines
+- **Target size:** Under 600KB per video
+- **Format:** MP4 (H.264)
+- **Attributes:** `autoplay loop muted playsinline`
+- Hero videos should be ~500KB or less
+
+### Locations
+- `images/adaptiveshop/` - AdaptiveShop project videos
+- `images/control/` - Control project videos
+- `images/eloquii/` - Eloquii project videos
+
+## Skeleton Loading
+Loading states shown before images/videos are ready:
+- Gradient pulse animation (`skeleton-pulse`)
+- Applied via `.is-loaded` class toggle
+- JavaScript detects `img.complete` or `video.readyState >= 3`
+- Skeleton removed once asset is ready
+
+## Vimeo Embeds
+Brand carousel includes Vimeo background videos:
+- **367486985** - LoCA video
+- **367487760** - American Apparel video
+- Embedded with `?background=1&muted=1&autoplay=1&loop=1&autopause=0`
+
 ## Design Notes (v2)
 - Dark background (#252525)
 - 3D brand carousel with hover interactions
