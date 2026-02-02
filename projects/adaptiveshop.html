@@ -34,6 +34,27 @@
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__spinner"></div>
+  </div>
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (sessionStorage.getItem('fontsLoaded')) {
+        preloader.style.display = 'none';
+      } else {
+        document.fonts.ready.then(function() {
+          sessionStorage.setItem('fontsLoaded', 'true');
+          preloader.classList.add('is-hidden');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        });
+      }
+    })();
+  </script>
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="detail-page detail-page--adaptiveshop">
     <nav class="detail-nav">
