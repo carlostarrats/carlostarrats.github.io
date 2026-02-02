@@ -578,6 +578,21 @@
 
     // Skeleton loading handlers
     (function() {
+      // Handle hero flicker images
+      var heroFlicker = document.querySelector('.hero-flicker');
+      if (heroFlicker) {
+        var firstImg = heroFlicker.querySelector('.hero-flicker__img');
+        if (firstImg) {
+          if (firstImg.complete) {
+            heroFlicker.classList.add('is-loaded');
+          } else {
+            firstImg.addEventListener('load', function() {
+              heroFlicker.classList.add('is-loaded');
+            });
+          }
+        }
+      }
+
       // Handle card videos (control, adaptiveshop)
       document.querySelectorAll('.card video').forEach(function(video) {
         var card = video.closest('.card');

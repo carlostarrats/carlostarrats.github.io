@@ -172,6 +172,14 @@ h2 {
   width: 297px;
   height: 198px;
   overflow: hidden;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+.hero-flicker.is-loaded {
+  animation: none;
+  background: transparent;
 }
 
 .hero-flicker__img {
