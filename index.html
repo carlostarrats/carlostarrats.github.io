@@ -67,7 +67,7 @@
     </div>
 
     <!-- Bio -->
-    <p class="body">Most recently, I spent three years with the Department of Defense's Chief Digital and AI Office (Defense Digital Service), where I led design for modernization initiatives in high-security environments. My work balanced user empathy, system complexity, and visual clarity. Earlier, I worked across startups and large corporations, driven by projects that combine technical challenge with purposeful impact.</p>
+    <p class="body">Most recently, I spent three years with the Department of Defense's Chief Digital and AI Office (Defense Digital Service), where I led design for modernization initiatives in high-security environments. I use AI tools to prototype and build, balancing user empathy, system complexity, and visual clarity. Earlier, I worked across startups and large corporations, driven by projects that combine technical challenge with purposeful impact.</p>
 
     <!-- AdaptiveShop Project -->
     <div class="project-row">
@@ -478,6 +478,78 @@
         }
         wrapper.style.cursor = 'default';
       });
+
+      // Touch handling for mobile
+      const track = document.querySelector('.brand-carousel__track');
+      let touchStartX = 0;
+      let touchStartTime = 0;
+      let currentOffset = 0;
+      let velocity = 0;
+      let animationPaused = false;
+      let inertiaFrame = null;
+
+      function getTrackOffset() {
+        const style = window.getComputedStyle(track);
+        const matrix = new DOMMatrix(style.transform);
+        return matrix.m41;
+      }
+
+      function pauseAnimation() {
+        if (!animationPaused) {
+          currentOffset = getTrackOffset();
+          track.style.animation = 'none';
+          track.style.transform = 'translateX(' + currentOffset + 'px)';
+          animationPaused = true;
+        }
+      }
+
+      function resumeAnimation() {
+        if (animationPaused) {
+          const trackWidth = track.scrollWidth / 2;
+          const progress = Math.abs(currentOffset % trackWidth) / trackWidth;
+          const duration = parseFloat(window.getComputedStyle(track).animationDuration) || 100;
+          const delay = -(progress * duration);
+          track.style.transform = '';
+          track.style.animation = 'scroll-left ' + duration + 's linear infinite';
+          track.style.animationDelay = delay + 's';
+          animationPaused = false;
+        }
+      }
+
+      track.addEventListener('touchstart', function(e) {
+        if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
+        pauseAnimation();
+        touchStartX = e.touches[0].clientX;
+        touchStartTime = Date.now();
+        velocity = 0;
+      }, { passive: true });
+
+      track.addEventListener('touchmove', function(e) {
+        const touchX = e.touches[0].clientX;
+        const deltaX = touchX - touchStartX;
+        const now = Date.now();
+        const deltaTime = now - touchStartTime;
+        if (deltaTime > 0) {
+          velocity = deltaX / deltaTime * 16;
+        }
+        track.style.transform = 'translateX(' + (currentOffset + deltaX) + 'px)';
+      }, { passive: true });
+
+      track.addEventListener('touchend', function(e) {
+        currentOffset = getTrackOffset();
+
+        function inertia() {
+          if (Math.abs(velocity) < 0.5) {
+            resumeAnimation();
+            return;
+          }
+          velocity *= 0.95;
+          currentOffset += velocity;
+          track.style.transform = 'translateX(' + currentOffset + 'px)';
+          inertiaFrame = requestAnimationFrame(inertia);
+        }
+        inertia();
+      }, { passive: true });
     })();
 
     // External links - open in new window, fallback to same window if blocked

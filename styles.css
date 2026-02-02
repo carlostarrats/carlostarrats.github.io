@@ -188,7 +188,7 @@ h2 {
   opacity: 1;
 }
 
-.hero .label {
+.hero .label:not(.contact-link) {
   color: #cbe3ff;
   margin-left: 20px;
 }
@@ -635,7 +635,9 @@ h1.section-brand {
   line-height: 48px;
   letter-spacing: -1.44px;
   color: #fff;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   transition: opacity 0.2s ease;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -939,13 +941,29 @@ h1.section-brand {
     width: 384px;
   }
 
+  .brand-carousel__item img {
+    height: 140px;
+  }
+
+  .brand-carousel__item iframe {
+    width: 249px;
+    height: 140px;
+  }
+
+  .brand-carousel-wrapper::before,
+  .brand-carousel-wrapper::after {
+    width: 60px;
+  }
+
+  .brand-carousel__track {
+    animation-duration: 100s;
+  }
+
   .detail-page {
     padding: 0 20px;
   }
 
   .detail-nav {
-    flex-direction: column;
-    gap: 25px;
     margin: 20px 0 20px;
   }
 
@@ -958,7 +976,6 @@ h1.section-brand {
   }
 
   .external-link {
-    position: static;
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.36px;
@@ -1048,8 +1065,8 @@ h1.section-brand {
     right: auto;
     order: 3;
     width: 100%;
-    max-width: 297px;
-    height: 198px;
+    max-width: 250px;
+    height: 167px;
     margin-bottom: 30px;
   }
 
