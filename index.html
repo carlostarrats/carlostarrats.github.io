@@ -26,7 +26,10 @@
   <meta name="twitter:description" content="Product & Visual Designer simplifying complex systems. 0-1 product development, enterprise systems, and digital transformation.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=2">
 
-  <!-- Fonts -->
+  <!-- Fonts - preconnect for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="fonts/NyghtSerif-Light.woff2" as="font" type="font/woff2" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
@@ -54,16 +57,71 @@
   <script>
     (function() {
       var preloader = document.getElementById('preloader');
+
+      function loadDeferredAssets() {
+        // Load deferred images
+        document.querySelectorAll('img.deferred').forEach(function(img) {
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+          }
+        });
+        // Load deferred videos
+        document.querySelectorAll('.deferred-video').forEach(function(video) {
+          if (video.dataset.src) {
+            var source = document.createElement('source');
+            source.src = video.dataset.src;
+            source.type = 'video/mp4';
+            video.appendChild(source);
+            video.load();
+            // Handle play() rejection on mobile (autoplay may be blocked)
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(function() {
+                // Autoplay blocked - video will show first frame
+              });
+            }
+          }
+        });
+        // Load deferred iframes
+        document.querySelectorAll('.deferred-iframe').forEach(function(iframe) {
+          if (iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+          }
+        });
+        // Trigger deferred background image loading
+        document.dispatchEvent(new Event('assetsDeferred'));
+      }
+
+      function onReady(callback) {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', callback);
+        } else {
+          callback();
+        }
+      }
+
       if (sessionStorage.getItem('fontsLoaded')) {
         preloader.style.display = 'none';
+        // Wait for DOM so skeleton handlers are attached
+        onReady(loadDeferredAssets);
       } else {
-        document.fonts.ready.then(function() {
+        var loaded = false;
+        function hideAndLoad() {
+          if (loaded) return;
+          loaded = true;
           sessionStorage.setItem('fontsLoaded', 'true');
-          preloader.classList.add('is-hidden');
-          setTimeout(function() {
-            preloader.style.display = 'none';
-          }, 400);
-        });
+          // Wait for DOM so skeleton handlers are attached
+          onReady(function() {
+            loadDeferredAssets();
+            preloader.classList.add('is-hidden');
+            setTimeout(function() {
+              preloader.style.display = 'none';
+            }, 400);
+          });
+        }
+        // Load when fonts ready OR after 2s max (failsafe)
+        document.fonts.ready.then(hideAndLoad);
+        setTimeout(hideAndLoad, 2000);
       }
     })();
   </script>
@@ -74,12 +132,12 @@
     <div class="hero">
       <h1>Hi! I'm Carlos, a Product & Visual Designer</h1>
       <div class="hero-flicker">
-        <img src="images/hero-flicker/adaptiveshop-12.jpg" alt="" class="hero-flicker__img">
-        <img src="images/hero-flicker/eloquii-3.jpg" alt="" class="hero-flicker__img">
-        <img src="images/hero-flicker/brand-dds-2-flickr.jpg" alt="" class="hero-flicker__img">
-        <img src="images/hero-flicker/adaptiveshop-15.jpg" alt="" class="hero-flicker__img">
-        <img src="images/hero-flicker/control-hero.jpg" alt="" class="hero-flicker__img">
-        <img src="images/hero-flicker/adaptiveshop-6.jpg" alt="" class="hero-flicker__img">
+        <img data-src="images/hero-flicker/adaptiveshop-12.jpg" alt="" class="hero-flicker__img deferred">
+        <img data-src="images/hero-flicker/eloquii-3.jpg" alt="" class="hero-flicker__img deferred">
+        <img data-src="images/hero-flicker/brand-dds-2-flickr.jpg" alt="" class="hero-flicker__img deferred">
+        <img data-src="images/hero-flicker/adaptiveshop-15.jpg" alt="" class="hero-flicker__img deferred">
+        <img data-src="images/hero-flicker/control-hero.jpg" alt="" class="hero-flicker__img deferred">
+        <img data-src="images/hero-flicker/adaptiveshop-6.jpg" alt="" class="hero-flicker__img deferred">
       </div>
       <p class="portfolio-line"><a href="#" class="label italic contact-link" id="contact-link">Contact</a> <a href="https://www.linkedin.com/in/carlos-t-b869016" class="linkedin-link" aria-label="LinkedIn profile" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> <span class="selected-projects-text">Selected Projects:</span></p>
       <p class="tagline">Simplifying Complex Systems</p>
@@ -92,8 +150,7 @@
     <!-- AdaptiveShop Project -->
     <div class="project-row">
       <a href="projects/adaptiveshop.html" class="card card--adaptiveshop" aria-label="View AdaptiveShop project">
-        <video autoplay loop muted playsinline>
-          <source src="images/adaptiveshop/adaptiveshop-hero.mp4" type="video/mp4">
+        <video loop muted playsinline class="deferred-video" data-src="images/adaptiveshop/adaptiveshop-hero.mp4">
         </video>
         <span class="cool-button" aria-hidden="true">
           <svg class="cool-button__static" width="65" height="65" viewBox="30 30 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,8 +206,7 @@
     <div class="project-stack">
       <h2><span class="italic color--control">Control</span>— A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3) <a href="projects/control.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
       <a href="projects/control.html" class="card card--control" aria-label="View Control project">
-        <video autoplay loop muted playsinline>
-          <source src="images/control/control-hero.mp4" type="video/mp4">
+        <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
         </video>
         <span class="cool-button" aria-hidden="true">
           <svg class="cool-button__static" width="65" height="65" viewBox="30 30 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -387,41 +443,41 @@
   <div class="brand-carousel-wrapper">
     <div class="brand-carousel">
       <div class="brand-carousel__track">
-        <div class="brand-carousel__item"><img src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity" class="deferred"></div>
         <div class="brand-carousel__item">
-          <iframe src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay"></iframe>
+          <iframe data-src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
         </div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog" class="deferred"></div>
         <div class="brand-carousel__item">
-          <iframe src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay"></iframe>
+          <iframe data-src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
         </div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-2.jpg" alt="American Apparel poster"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-2.jpg" alt="American Apparel poster" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer" class="deferred"></div>
         <!-- Duplicate for seamless loop -->
-        <div class="brand-carousel__item"><img src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity" class="deferred"></div>
         <div class="brand-carousel__item">
-          <iframe src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay"></iframe>
+          <iframe data-src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
         </div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog" class="deferred"></div>
         <div class="brand-carousel__item">
-          <iframe src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay"></iframe>
+          <iframe data-src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
         </div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-2.jpg" alt="American Apparel poster"></div>
-        <div class="brand-carousel__item"><img src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-2.jpg" alt="American Apparel poster" class="deferred"></div>
+        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer" class="deferred"></div>
       </div>
     </div>
   </div>
@@ -595,54 +651,25 @@
       });
     });
 
-    // Skeleton loading handlers
+    // Skeleton loading handlers (deferred images use data-src, load event fires after fonts)
     (function() {
       // Handle hero flicker images
       var heroFlicker = document.querySelector('.hero-flicker');
       if (heroFlicker) {
         var firstImg = heroFlicker.querySelector('.hero-flicker__img');
         if (firstImg) {
-          if (firstImg.complete) {
+          firstImg.addEventListener('load', function() {
             heroFlicker.classList.add('is-loaded');
-          } else {
-            firstImg.addEventListener('load', function() {
-              heroFlicker.classList.add('is-loaded');
-            });
-          }
+          });
         }
       }
 
       // Handle card videos (control, adaptiveshop)
       document.querySelectorAll('.card video').forEach(function(video) {
         var card = video.closest('.card');
-        if (video.readyState >= 3) {
+        video.addEventListener('canplay', function() {
           card.classList.add('is-loaded');
-        } else {
-          video.addEventListener('canplay', function() {
-            card.classList.add('is-loaded');
-          });
-        }
-      });
-
-      // Handle card background images (dds, eloquii)
-      ['dds', 'eloquii'].forEach(function(name) {
-        var card = document.querySelector('.card--' + name);
-        if (card) {
-          var style = window.getComputedStyle(card);
-          var bgUrl = style.backgroundImage;
-          // Cards start with skeleton, we need to preload the actual image
-          var img = new Image();
-          img.onload = function() {
-            card.classList.add('is-loaded');
-          };
-          // Extract URL from url('images/dds/dds-hero.jpg') - but we're using skeleton first
-          // So load the intended background image
-          if (name === 'dds') {
-            img.src = 'images/dds/dds-hero.jpg';
-          } else if (name === 'eloquii') {
-            img.src = 'images/eloquii/eloquii-hero.jpg';
-          }
-        }
+        });
       });
 
       // Handle brand carousel images
@@ -650,19 +677,34 @@
         var img = item.querySelector('img');
         var iframe = item.querySelector('iframe');
         if (img) {
-          if (img.complete) {
+          img.addEventListener('load', function() {
             item.classList.add('is-loaded');
-          } else {
-            img.addEventListener('load', function() {
-              item.classList.add('is-loaded');
-            });
-          }
+          });
         } else if (iframe) {
-          // Iframes (vimeo videos) - mark as loaded after a short delay
-          item.classList.add('is-loaded');
+          iframe.addEventListener('load', function() {
+            item.classList.add('is-loaded');
+          });
         }
       });
     })();
+
+    // Deferred background image loading (triggered after fonts via custom event)
+    document.addEventListener('assetsDeferred', function() {
+      ['dds', 'eloquii'].forEach(function(name) {
+        var card = document.querySelector('.card--' + name);
+        if (card) {
+          var img = new Image();
+          img.onload = function() {
+            card.classList.add('is-loaded');
+          };
+          if (name === 'dds') {
+            img.src = 'images/dds/dds-hero.jpg';
+          } else if (name === 'eloquii') {
+            img.src = 'images/eloquii/eloquii-hero.jpg';
+          }
+        }
+      });
+    });
   </script>
 </body>
 </html>
