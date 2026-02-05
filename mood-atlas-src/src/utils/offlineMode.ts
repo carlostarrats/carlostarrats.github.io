@@ -1,20 +1,6 @@
 // Offline mode - download music data once, then disconnect account
 import { SecurityManager } from './security';
-
-// Simple emotion analyzer based on audio features
-function analyzeSongEmotion(features: { energy: number; valence: number }): string {
-  const { energy, valence } = features;
-  
-  if (energy > 0.7 && valence > 0.7) return 'Happy';
-  if (energy > 0.7 && valence > 0.4) return 'Energetic';
-  if (energy > 0.7 && valence <= 0.4) return 'Angry';
-  if (energy > 0.4 && valence > 0.7) return 'Excited';
-  if (energy > 0.4 && valence > 0.4) return 'Romantic';
-  if (energy <= 0.4 && valence > 0.5) return 'Peaceful';
-  if (energy <= 0.4 && valence > 0.3) return 'Calm';
-  if (energy > 0.3 && valence <= 0.4) return 'Melancholic';
-  return 'Sad';
-}
+import { analyzeSongEmotion } from './emotionAnalysis';
 
 export interface OfflineSongData {
   id: string;
@@ -43,8 +29,6 @@ export class OfflineMusicManager {
   // Download and cache user's music data
   static async downloadMusicData(musicKit: any, maxSongs: number = 100): Promise<OfflineSongData[]> {
     try {
-      console.log('🔄 Downloading music data for offline mode...');
-      
       // Get user's library
       const libraryData = await musicKit.api.library.songs(null, {
         limit: maxSongs,
@@ -58,15 +42,15 @@ export class OfflineMusicManager {
         
         const song: OfflineSongData = {
           id: appleSong.id,
-          title: this.sanitizeInput(appleSong.attributes?.name || 'Unknown'),
-          artist: this.sanitizeInput(appleSong.attributes?.artistName || 'Unknown Artist'),
-          album: this.sanitizeInput(appleSong.attributes?.albumName || 'Unknown Album'),
+          title: SecurityManager.sanitizeInput(appleSong.attributes?.name || 'Unknown'),
+          artist: SecurityManager.sanitizeInput(appleSong.attributes?.artistName || 'Unknown Artist'),
+          album: SecurityManager.sanitizeInput(appleSong.attributes?.albumName || 'Unknown Album'),
           energy: audioFeatures.energy,
           valence: audioFeatures.valence,
           danceability: audioFeatures.danceability,
           acousticness: audioFeatures.acousticness,
           tempo: audioFeatures.tempo,
-          mood: analyzeSongEmotion(audioFeatures),
+          mood: analyzeSongEmotion(audioFeatures.energy, audioFeatures.valence),
           previewUrl: appleSong.attributes?.previews?.[0]?.url,
           duration: appleSong.attributes?.durationInMillis ? 
             Math.round(appleSong.attributes.durationInMillis / 1000) : undefined,
@@ -90,11 +74,9 @@ export class OfflineMusicManager {
         dataVersion: '1.0'
       }));
 
-      console.log(`✅ Downloaded ${songs.length} songs for offline mode`);
       return songs;
-      
-    } catch (error) {
-      console.error('Failed to download music data:', error);
+
+    } catch {
       throw new Error('Failed to download music data for offline mode');
     }
   }
@@ -104,19 +86,20 @@ export class OfflineMusicManager {
     try {
       const offlineInfo = localStorage.getItem(this.OFFLINE_DATA_KEY);
       if (!offlineInfo) {
-        console.log('No offline data found');
         return null;
       }
 
+      // Validate stored info structure
       const info = JSON.parse(offlineInfo);
-      console.log(`📱 Loading offline data: ${info.songCount} songs from ${new Date(info.downloadedAt).toLocaleDateString()}`);
+      if (!info.songCount || !info.downloadedAt) {
+        return null;
+      }
 
       // Load encrypted data
       const encryptedData = await SecurityManager.getUserLibrary();
       return encryptedData as OfflineSongData[];
-      
-    } catch (error) {
-      console.error('Failed to load offline data:', error);
+
+    } catch {
       return null;
     }
   }
@@ -124,26 +107,21 @@ export class OfflineMusicManager {
   // Disconnect Apple Music account and clear sensitive data
   static async disconnectAccount(musicKit: any): Promise<void> {
     try {
-      console.log('🔌 Disconnecting Apple Music account...');
-      
       // Sign out from MusicKit
       if (musicKit) {
         await musicKit.unauthorize();
       }
-      
+
       // Clear sensitive session data
       SecurityManager.clearUserData();
-      
+
       // Mark account as disconnected
       localStorage.setItem(this.ACCOUNT_STATUS_KEY, JSON.stringify({
         connected: false,
         disconnectedAt: new Date().toISOString()
       }));
-      
-      console.log('✅ Account disconnected. Offline data preserved.');
-      
-    } catch (error) {
-      console.error('Failed to disconnect account:', error);
+
+    } catch {
       throw new Error('Failed to disconnect Apple Music account');
     }
   }
@@ -335,19 +313,11 @@ export class OfflineMusicManager {
     return btoa(songId + Date.now().toString()).substring(0, 16);
   }
 
-  // Sanitize input to prevent XSS
-  private static sanitizeInput(input: string): string {
-    const div = document.createElement('div');
-    div.textContent = input;
-    return div.innerHTML;
-  }
-
   // Clear all offline data (for account reconnection)
   static clearOfflineData(): void {
     localStorage.removeItem(this.OFFLINE_DATA_KEY);
     localStorage.removeItem(this.ACCOUNT_STATUS_KEY);
     SecurityManager.clearUserData();
-    console.log('🗑️ Offline data cleared');
   }
 }
 

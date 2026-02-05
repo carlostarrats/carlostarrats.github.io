@@ -2,21 +2,7 @@
 
 import { CityData, CityChartSong, CityCluster, getDemoCities } from '@/data/cityChartData';
 import { emotionColors } from '@/data/mockSongs';
-
-// Simple emotion analyzer based on audio features (same as in offlineMode.ts)
-function analyzeSongEmotion(features: { energy: number; valence: number }): string {
-  const { energy, valence } = features;
-
-  if (energy > 0.7 && valence > 0.7) return 'Happy';
-  if (energy > 0.7 && valence > 0.4) return 'Energetic';
-  if (energy > 0.7 && valence <= 0.4) return 'Angry';
-  if (energy > 0.4 && valence > 0.7) return 'Excited';
-  if (energy > 0.4 && valence > 0.4) return 'Romantic';
-  if (energy <= 0.4 && valence > 0.5) return 'Peaceful';
-  if (energy <= 0.4 && valence > 0.3) return 'Calm';
-  if (energy > 0.3 && valence <= 0.4) return 'Melancholic';
-  return 'Sad';
-}
+import { analyzeSongEmotion, generateEmotionScores } from './emotionAnalysis';
 
 // Generate audio features based on genre (extracted from offlineMode.ts)
 function generateAudioFeatures(genre: string): { energy: number; valence: number } {
@@ -94,55 +80,9 @@ function generateAudioFeatures(genre: string): { energy: number; valence: number
   };
 }
 
-// Generate emotion scores for a song
-function generateEmotionScores(energy: number, valence: number): Record<string, number> {
-  const emotions = ['Happy', 'Energetic', 'Excited', 'Romantic', 'Calm', 'Peaceful', 'Sad', 'Melancholic', 'Angry'];
-  const scores: Record<string, number> = {};
-
-  emotions.forEach(emotion => {
-    let score = 0.1; // Base score
-
-    switch (emotion) {
-      case 'Happy':
-        score = (energy > 0.5 ? 0.5 : 0.2) + (valence * 0.5);
-        break;
-      case 'Energetic':
-        score = energy * 0.8 + (valence > 0.4 ? 0.2 : 0);
-        break;
-      case 'Excited':
-        score = (energy * 0.5) + (valence * 0.5);
-        break;
-      case 'Romantic':
-        score = (1 - Math.abs(energy - 0.5)) * 0.5 + valence * 0.3;
-        break;
-      case 'Calm':
-        score = (1 - energy) * 0.6 + (valence > 0.4 ? 0.4 : 0.2);
-        break;
-      case 'Peaceful':
-        score = (1 - energy) * 0.5 + valence * 0.4;
-        break;
-      case 'Sad':
-        score = (1 - valence) * 0.7 + (energy < 0.5 ? 0.3 : 0);
-        break;
-      case 'Melancholic':
-        score = (1 - valence) * 0.5 + (energy * 0.3);
-        break;
-      case 'Angry':
-        score = energy * 0.7 + (1 - valence) * 0.3;
-        break;
-    }
-
-    scores[emotion] = Math.max(0.1, Math.min(1.0, score));
-  });
-
-  return scores;
-}
-
 // Fetch a city chart playlist from Apple Music
 export async function fetchCityChart(musicKit: any, city: CityData): Promise<CityChartSong[]> {
   try {
-    console.log(`🎵 Fetching chart for ${city.name}...`);
-
     const response = await musicKit.api.music(`/v1/catalog/${city.countryCode.toLowerCase()}/playlists/${city.playlistId}`, {
       include: 'tracks',
     });
@@ -156,7 +96,7 @@ export async function fetchCityChart(musicKit: any, city: CityData): Promise<Cit
     for (const track of tracksToProcess) {
       const genre = track.attributes?.genreNames?.[0] || '';
       const features = generateAudioFeatures(genre);
-      const primaryEmotion = analyzeSongEmotion(features);
+      const primaryEmotion = analyzeSongEmotion(features.energy, features.valence);
       const emotionScores = generateEmotionScores(features.energy, features.valence);
 
       songs.push({
@@ -176,10 +116,8 @@ export async function fetchCityChart(musicKit: any, city: CityData): Promise<Cit
       });
     }
 
-    console.log(`✅ Fetched ${songs.length} songs for ${city.name}`);
     return songs;
-  } catch (error) {
-    console.error(`Failed to fetch chart for ${city.name}:`, error);
+  } catch {
     return [];
   }
 }
@@ -192,7 +130,7 @@ export function processCityMood(songs: CityChartSong[]): { avgEnergy: number; av
 
   const avgEnergy = songs.reduce((sum, song) => sum + song.energy, 0) / songs.length;
   const avgValence = songs.reduce((sum, song) => sum + song.valence, 0) / songs.length;
-  const primaryEmotion = analyzeSongEmotion({ energy: avgEnergy, valence: avgValence });
+  const primaryEmotion = analyzeSongEmotion(avgEnergy, avgValence);
 
   return { avgEnergy, avgValence, primaryEmotion };
 }
@@ -270,8 +208,8 @@ export async function fetchAllCityCharts(
         cityChartCache.set(city.id, { data: cluster, timestamp: now });
         clusters.push(cluster);
       }
-    } catch (error) {
-      console.error(`Failed to fetch ${city.name}:`, error);
+    } catch {
+      // Skip failed cities
     }
 
     onProgress?.(i + 1, cities.length);
@@ -286,7 +224,7 @@ export function generateMockCityClusters(cities: CityData[] = getDemoCities(20))
     // Generate random mood for each city
     const avgEnergy = 0.3 + Math.random() * 0.5;
     const avgValence = 0.3 + Math.random() * 0.5;
-    const actualEmotion = analyzeSongEmotion({ energy: avgEnergy, valence: avgValence });
+    const actualEmotion = analyzeSongEmotion(avgEnergy, avgValence);
     const position = calculateCityPosition(avgEnergy, avgValence, index);
     const color = getCityColor(actualEmotion);
 
@@ -294,7 +232,7 @@ export function generateMockCityClusters(cities: CityData[] = getDemoCities(20))
     const songs: CityChartSong[] = Array.from({ length: 25 }, (_, songIndex) => {
       const songEnergy = avgEnergy + (Math.random() - 0.5) * 0.3;
       const songValence = avgValence + (Math.random() - 0.5) * 0.3;
-      const songEmotion = analyzeSongEmotion({ energy: songEnergy, valence: songValence });
+      const songEmotion = analyzeSongEmotion(songEnergy, songValence);
 
       return {
         id: `${city.id}-song-${songIndex}`,

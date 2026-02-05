@@ -35,12 +35,16 @@ const CitySongNode: React.FC<CitySongNodeProps> = ({
   const emissiveIntensity = isSelected ? 2.5 : 1.5;
 
   useFrame((state) => {
+    // Skip animation logic entirely when not selected (performance optimization)
+    if (!isSelected) return;
+
     // Animate pulse for selected node
-    if (pulseRef.current && isSelected) {
+    if (pulseRef.current) {
       const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.5 + 0.5;
       const pulseScale = 1.5 + pulse * 1.5;
       pulseRef.current.scale.set(pulseScale, pulseScale, pulseScale);
-      (pulseRef.current.material as any).opacity = 0.3 - pulse * 0.25;
+      const material = pulseRef.current.material as THREE.MeshBasicMaterial;
+      material.opacity = 0.3 - pulse * 0.25;
     }
   });
 

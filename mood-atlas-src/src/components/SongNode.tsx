@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Mesh, Vector3 } from 'three';
+import { Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { Song, emotionColors, getNodeSize } from '@/data/mockSongs';
 
 interface SongNodeProps {
@@ -45,7 +45,8 @@ const SongNode: React.FC<SongNodeProps> = ({
       const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.5 + 0.5;
       const pulseScale = 1.5 + pulse * 1.5;
       pulseRef.current.scale.set(pulseScale, pulseScale, pulseScale);
-      (pulseRef.current.material as any).opacity = 0.3 - pulse * 0.25;
+      const material = pulseRef.current.material as MeshBasicMaterial;
+      material.opacity = 0.3 - pulse * 0.25;
     }
   });
 

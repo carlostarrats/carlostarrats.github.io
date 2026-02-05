@@ -1,13 +1,64 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, Component, ErrorInfo, ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import MoodLayers from './MoodLayers';
 import CityGalaxies from './CityGalaxies';
 import SongDetailPanel from './SongDetailPanel';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
 import { CityCluster, CityChartSong } from '@/data/cityChartData';
 import { ViewMode } from './Header';
+import { SecurityManager } from '@/utils/security';
 import * as THREE from 'three';
+
+// Error boundary for Canvas/Three.js errors
+interface CanvasErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface CanvasErrorBoundaryState {
+  hasError: boolean;
+}
+
+class CanvasErrorBoundary extends Component<CanvasErrorBoundaryProps, CanvasErrorBoundaryState> {
+  constructor(props: CanvasErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(_error: Error): CanvasErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(_error: Error, _errorInfo: ErrorInfo): void {
+    // Errors are already logged by React in development
+    // In production, could send to error tracking service here
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        <div className="w-full h-full flex items-center justify-center bg-gray-900">
+          <div className="text-center p-8">
+            <h2 className="text-white font-mono text-xl mb-4">3D Visualization Error</h2>
+            <p className="text-gray-400 font-mono text-sm mb-4">
+              Unable to render the 3D scene. This may be due to WebGL compatibility issues.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-white text-black font-mono text-sm rounded hover:bg-gray-200 transition-colors"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 // Grid orb for examine mode - with hover and selection effects
 const GridOrb: React.FC<{
@@ -22,12 +73,16 @@ const GridOrb: React.FC<{
   const pulseRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
+    // Skip animation logic entirely when not selected (performance optimization)
+    if (!isSelected) return;
+
     // Animate pulse for selected orb
-    if (pulseRef.current && isSelected) {
+    if (pulseRef.current) {
       const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.5 + 0.5;
       const pulseScale = 1.5 + pulse * 1.5;
       pulseRef.current.scale.set(pulseScale, pulseScale, pulseScale);
-      (pulseRef.current.material as any).opacity = 0.3 - pulse * 0.25;
+      const material = pulseRef.current.material as THREE.MeshBasicMaterial;
+      material.opacity = 0.3 - pulse * 0.25;
     }
   });
 
@@ -179,7 +234,7 @@ const FadeGroup: React.FC<{
 const CameraAnimator: React.FC<{
   targetPosition: THREE.Vector3 | null;
   targetLookAt: THREE.Vector3 | null;
-  controlsRef: React.MutableRefObject<any>;
+  controlsRef: React.MutableRefObject<OrbitControlsImpl | null>;
   onComplete: () => void;
 }> = ({ targetPosition, targetLookAt, controlsRef, onComplete }) => {
   useFrame(({ camera }) => {
@@ -224,6 +279,21 @@ interface CityExamineMode {
   songs: CityChartSong[];
 }
 
+// Helper to convert CityChartSong to Song for components that expect Song type
+const cityChartSongToSong = (cityChartSong: CityChartSong): Song => ({
+  id: cityChartSong.id,
+  title: cityChartSong.title,
+  artist: cityChartSong.artist,
+  album: cityChartSong.album,
+  energy: cityChartSong.energy,
+  primaryEmotion: cityChartSong.primaryEmotion,
+  emotionScores: cityChartSong.emotionScores,
+  previewUrl: cityChartSong.previewUrl,
+  duration: cityChartSong.duration,
+  genre: cityChartSong.genre,
+  year: cityChartSong.year,
+});
+
 interface MoodAtlasSceneProps {
   songs: Song[];
   resetTrigger?: number;
@@ -258,8 +328,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
   const [controlsExpanded, setControlsExpanded] = useState<boolean>(true);
-  const controlsRef = useRef<any>(null);
-  const cameraRef = useRef<any>(null);
+  const controlsRef = useRef<OrbitControlsImpl | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const hoveredSongRef = useRef<Song | null>(null);
   const hoverInfoRef = useRef<HTMLDivElement>(null);
 
@@ -272,23 +342,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     setTargetLookAt(new THREE.Vector3(0, 0, 0));
   };
 
-  const handleLayerClick = (_layer: any) => {
-    // Disabled - layers are not clickable
-  };
-
-  const handleLayerHover = (_layer: any) => {
-    // Disabled - layers don't show hover info
-  };
-
   const handleSongClick = (song: Song) => {
     onSongSelect?.(song);
-  };
-
-  // Sanitize text to prevent XSS
-  const sanitizeText = (text: string): string => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   };
 
   const handleSongHover = (song: Song | null) => {
@@ -301,8 +356,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
         const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
         // Sanitize external data to prevent XSS
-        const safeTitle = sanitizeText(song.title);
-        const safeArtist = sanitizeText(song.artist);
+        const safeTitle = SecurityManager.sanitizeInput(song.title);
+        const safeArtist = SecurityManager.sanitizeInput(song.artist);
         hoverInfoRef.current.innerHTML = `
           <div class="${titleColor} font-bold">${safeTitle}</div>
           <div class="${artistColor}">${safeArtist}</div>
@@ -328,9 +383,9 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     if (hoverInfoRef.current) {
       if (cluster) {
         // Sanitize data from Deezer API to prevent XSS
-        const safeName = sanitizeText(cluster.city.name);
-        const safeCountry = sanitizeText(cluster.city.country);
-        const safeEmotion = sanitizeText(cluster.primaryEmotion);
+        const safeName = SecurityManager.sanitizeInput(cluster.city.name);
+        const safeCountry = SecurityManager.sanitizeInput(cluster.city.country);
+        const safeEmotion = SecurityManager.sanitizeInput(cluster.primaryEmotion);
         hoverInfoRef.current.innerHTML = `
           <div class="text-white font-bold">${safeName}</div>
           <div class="text-gray-400">${safeCountry}</div>
@@ -355,8 +410,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
         const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
         // Sanitize data from Deezer API to prevent XSS
-        const safeTitle = sanitizeText(song.title);
-        const safeArtist = sanitizeText(song.artist);
+        const safeTitle = SecurityManager.sanitizeInput(song.title);
+        const safeArtist = SecurityManager.sanitizeInput(song.artist);
         hoverInfoRef.current.innerHTML = `
           <div class="${titleColor} font-bold">${safeTitle}</div>
           <div class="${artistColor}">${safeArtist}</div>
@@ -457,7 +512,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     }
   }, [cityExamineMode]);
 
-
   const backgroundColor = examineMode
     ? examineMode.color
     : cityExamineMode
@@ -472,10 +526,11 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
       className="w-full h-full relative transition-colors duration-500 ease-out"
       style={{ backgroundColor }}
     >
-          <Canvas
-            camera={{ position: [0, -15, 0], fov: 60 }}
-            style={{ background: 'transparent' }}
-          >
+      <CanvasErrorBoundary>
+        <Canvas
+          camera={{ position: [0, -15, 0], fov: 60 }}
+          style={{ background: 'transparent' }}
+        >
         <PerspectiveCamera ref={cameraRef} makeDefault position={[0, -15, 0]} />
         
         {/* Lighting setup */}
@@ -526,8 +581,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           {/* Mood layers */}
           <MoodLayers
             layers={moodLayers}
-            onLayerClick={handleLayerClick}
-            onLayerHover={handleLayerHover}
             onSongClick={handleSongClick}
             onSongHover={handleSongHover}
             selectedSongId={selectedSong?.id}
@@ -566,16 +619,25 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         {/* City examine mode - grid of city songs */}
         {cityExamineMode && (
           <ExamineGrid
-            songs={cityExamineMode.songs.map(s => ({
-              ...s,
-              primaryEmotion: s.primaryEmotion,
-            })) as any}
-            onSongClick={(song: any) => handleCitySongClick(song as CityChartSong)}
-            onSongHover={(song: any) => handleCitySongHover(song as CityChartSong | null)}
+            songs={cityExamineMode.songs.map(cityChartSongToSong)}
+            onSongClick={(song: Song) => {
+              // Find the original CityChartSong by id
+              const citySong = cityExamineMode.songs.find(s => s.id === song.id);
+              if (citySong) handleCitySongClick(citySong);
+            }}
+            onSongHover={(song: Song | null) => {
+              if (song) {
+                const citySong = cityExamineMode.songs.find(s => s.id === song.id);
+                handleCitySongHover(citySong ?? null);
+              } else {
+                handleCitySongHover(null);
+              }
+            }}
             selectedSongId={selectedCitySong?.id}
           />
         )}
-      </Canvas>
+        </Canvas>
+      </CanvasErrorBoundary>
 
       {/* UI Overlay - No React state to prevent jumping */}
       <div className="absolute top-20 left-4 z-10 w-80 pointer-events-none">

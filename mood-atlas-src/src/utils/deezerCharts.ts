@@ -2,6 +2,7 @@
 // Documentation: https://developers.deezer.com/api
 
 import { CityChartSong, CityCluster } from '@/data/cityChartData';
+import { analyzeSongEmotion, generateEmotionScores } from './emotionAnalysis';
 
 // Deezer track type
 interface DeezerTrack {
@@ -77,43 +78,6 @@ const chartRegions: ChartRegion[] = [
   { id: 'australia', name: 'Australia', country: 'Australia', endpoint: '1116188731', energyBias: 0.05, valenceBias: 0.05 },
   { id: 'new-zealand', name: 'New Zealand', country: 'New Zealand', endpoint: '1362520355', energyBias: 0.0, valenceBias: 0.0 },
 ];
-
-// Simple emotion analyzer based on audio features
-function analyzeSongEmotion(energy: number, valence: number): string {
-  if (energy > 0.7 && valence > 0.7) return 'Happy';
-  if (energy > 0.7 && valence > 0.4) return 'Energetic';
-  if (energy > 0.7 && valence <= 0.4) return 'Angry';
-  if (energy > 0.4 && valence > 0.7) return 'Excited';
-  if (energy > 0.4 && valence > 0.4) return 'Romantic';
-  if (energy <= 0.4 && valence > 0.5) return 'Peaceful';
-  if (energy <= 0.4 && valence > 0.3) return 'Calm';
-  if (energy > 0.3 && valence <= 0.4) return 'Melancholic';
-  return 'Sad';
-}
-
-// Generate emotion scores
-function generateEmotionScores(energy: number, valence: number): Record<string, number> {
-  const emotions = ['Happy', 'Energetic', 'Excited', 'Romantic', 'Calm', 'Peaceful', 'Sad', 'Melancholic', 'Angry'];
-  const scores: Record<string, number> = {};
-
-  emotions.forEach(emotion => {
-    let score = 0.1;
-    switch (emotion) {
-      case 'Happy': score = (energy > 0.5 ? 0.5 : 0.2) + (valence * 0.5); break;
-      case 'Energetic': score = energy * 0.8 + (valence > 0.4 ? 0.2 : 0); break;
-      case 'Excited': score = (energy * 0.5) + (valence * 0.5); break;
-      case 'Romantic': score = (1 - Math.abs(energy - 0.5)) * 0.5 + valence * 0.3; break;
-      case 'Calm': score = (1 - energy) * 0.6 + (valence > 0.4 ? 0.4 : 0.2); break;
-      case 'Peaceful': score = (1 - energy) * 0.5 + valence * 0.4; break;
-      case 'Sad': score = (1 - valence) * 0.7 + (energy < 0.5 ? 0.3 : 0); break;
-      case 'Melancholic': score = (1 - valence) * 0.5 + (energy * 0.3); break;
-      case 'Angry': score = energy * 0.7 + (1 - valence) * 0.3; break;
-    }
-    scores[emotion] = Math.max(0.1, Math.min(1.0, score));
-  });
-
-  return scores;
-}
 
 // Estimate energy/valence from track characteristics + regional culture
 // Since Deezer doesn't provide audio features, we estimate based on patterns
@@ -265,57 +229,84 @@ function getQuadrantColor(avgEnergy: number, avgValence: number): string {
   return lerpColor(bottomColor, topColor, avgEnergy);
 }
 
-// Fetch all region charts
-export async function fetchAllRegionCharts(
-  onProgress?: (loaded: number, total: number) => void
-): Promise<CityCluster[]> {
-  const clusters: CityCluster[] = [];
-  const regions = chartRegions; // All 34 regions
+// Process a single region and return cluster data
+async function processRegion(
+  region: ChartRegion,
+  regionIndex: number,
+  totalRegions: number
+): Promise<CityCluster | null> {
+  try {
+    const songs = await fetchRegionChart(region);
 
-  for (let i = 0; i < regions.length; i++) {
-    const region = regions[i];
+    if (songs.length > 0) {
+      const avgEnergy = songs.reduce((sum, s) => sum + s.energy, 0) / songs.length;
+      const avgValence = songs.reduce((sum, s) => sum + s.valence, 0) / songs.length;
+      const primaryEmotion = analyzeSongEmotion(avgEnergy, avgValence);
+      const position = calculatePosition(avgEnergy, avgValence, regionIndex, totalRegions);
+      const color = getQuadrantColor(avgEnergy, avgValence);
 
-    try {
-      const songs = await fetchRegionChart(region);
-
-      if (songs.length > 0) {
-        // Calculate average mood
-        const avgEnergy = songs.reduce((sum, s) => sum + s.energy, 0) / songs.length;
-        const avgValence = songs.reduce((sum, s) => sum + s.valence, 0) / songs.length;
-        const primaryEmotion = analyzeSongEmotion(avgEnergy, avgValence);
-        const position = calculatePosition(avgEnergy, avgValence, i, regions.length);
-        const color = getQuadrantColor(avgEnergy, avgValence);
-
-        clusters.push({
-          city: {
-            id: region.id,
-            name: region.name,
-            country: region.country,
-            countryCode: region.id.toUpperCase(),
-            playlistId: region.endpoint,
-            songs,
-            avgEnergy,
-            avgValence,
-            primaryEmotion,
-            position,
-            color,
-          },
+      return {
+        city: {
+          id: region.id,
+          name: region.name,
+          country: region.country,
+          countryCode: region.id.toUpperCase(),
+          playlistId: region.endpoint,
           songs,
           avgEnergy,
           avgValence,
           primaryEmotion,
-          color,
           position,
-        });
+          color,
+        },
+        songs,
+        avgEnergy,
+        avgValence,
+        primaryEmotion,
+        color,
+        position,
+      };
+    }
+  } catch {
+    // Skip failed regions
+  }
+  return null;
+}
+
+// Fetch all region charts with batched parallel requests
+export async function fetchAllRegionCharts(
+  onProgress?: (loaded: number, total: number) => void
+): Promise<CityCluster[]> {
+  const regions = chartRegions; // All 34 regions
+  const BATCH_SIZE = 6; // Concurrent requests per batch
+  const clusters: CityCluster[] = [];
+  let loadedCount = 0;
+
+  // Process regions in batches
+  for (let batchStart = 0; batchStart < regions.length; batchStart += BATCH_SIZE) {
+    const batchEnd = Math.min(batchStart + BATCH_SIZE, regions.length);
+    const batch = regions.slice(batchStart, batchEnd);
+
+    // Create promises for all regions in this batch
+    const batchPromises = batch.map((region, batchIndex) => {
+      const regionIndex = batchStart + batchIndex;
+      return processRegion(region, regionIndex, regions.length);
+    });
+
+    // Execute batch in parallel
+    const results = await Promise.allSettled(batchPromises);
+
+    // Collect successful results
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value !== null) {
+        clusters.push(result.value);
       }
-    } catch {
-      // Skip failed regions
+      loadedCount++;
+      onProgress?.(loadedCount, regions.length);
     }
 
-    onProgress?.(i + 1, regions.length);
-
-    // Small delay to avoid rate limiting
-    if (i < regions.length - 1) {
+    // Delay between batches to avoid rate limiting (skip after last batch)
+    if (batchEnd < regions.length) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
