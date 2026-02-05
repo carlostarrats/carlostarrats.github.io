@@ -30,13 +30,20 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
       setPreviewUrl(null);
 
       fetch(`https://itunes.apple.com/lookup?id=${song.trackId}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`iTunes API error: ${res.status}`);
+          }
+          return res.json();
+        })
         .then(data => {
           if (data.results?.[0]?.previewUrl) {
             setPreviewUrl(data.results[0].previewUrl);
           }
         })
-        .catch(err => console.error('Failed to fetch preview:', err))
+        .catch(() => {
+          // Silently fail - user will see "No Preview" button
+        })
         .finally(() => setIsLoadingPreview(false));
     } else {
       setPreviewUrl(null);

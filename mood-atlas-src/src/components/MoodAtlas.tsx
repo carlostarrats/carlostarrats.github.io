@@ -19,9 +19,7 @@ interface CityExamineMode {
 
 const MoodAtlas: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([]);
-  const [, setHoveredSong] = useState<Song | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
-  const [, setDataSource] = useState<'mock' | 'apple'>('mock');
   const [examineMode, setExamineMode] = useState<ExamineMode | null>(null);
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
@@ -35,19 +33,11 @@ const MoodAtlas: React.FC = () => {
 
   useEffect(() => {
     // Load Apple Music data directly
-    console.log('Loading Apple Music data...');
-    console.log('Apple Music data available:', appleMusicData?.length, 'songs');
-
     if (appleMusicData && appleMusicData.length > 0) {
       setSongs(appleMusicData as Song[]);
-      setDataSource('apple');
-      console.log('Successfully loaded Apple Music data with', appleMusicData.length, 'songs');
     } else {
-      console.log('Apple Music data is empty, using mock data');
       setSongs(mockSongs);
-      setDataSource('mock');
     }
-
   }, []);
 
   // Load city charts when switching to discover mode
@@ -58,11 +48,8 @@ const MoodAtlas: React.FC = () => {
     setCityLoadError(null);
     try {
       // Fetch real chart data from Deezer API (free, no auth)
-      const clusters = await fetchAllRegionCharts((loaded, total) => {
-        console.log(`Loading charts: ${loaded}/${total}`);
-      });
+      const clusters = await fetchAllRegionCharts();
       setCityCharts(clusters);
-      console.log(`🌍 Loaded ${clusters.length} region charts with real data`);
 
       // Check if we got any data
       if (clusters.length === 0) {
@@ -140,7 +127,6 @@ const MoodAtlas: React.FC = () => {
       <main className="h-screen">
         <MoodAtlasScene
           songs={songs}
-          onSongHover={setHoveredSong}
           resetTrigger={resetTrigger}
           examineMode={examineMode}
           onExamine={handleExamine}

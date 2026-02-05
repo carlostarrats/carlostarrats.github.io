@@ -165,8 +165,8 @@ async function fetchWithCorsProxy(url: string): Promise<Response> {
     try {
       const response = await fetch(proxy + encodeURIComponent(url));
       if (response.ok) return response;
-    } catch (e) {
-      console.warn(`Proxy ${proxy} failed, trying next...`);
+    } catch {
+      // Try next proxy
     }
   }
   throw new Error('All CORS proxies failed');
@@ -204,8 +204,7 @@ async function fetchRegionChart(region: ChartRegion): Promise<CityChartSong[]> {
         artworkUrl: track.album.cover_medium,
       };
     });
-  } catch (error) {
-    console.error(`Failed to fetch chart for ${region.name}:`, error);
+  } catch {
     return [];
   }
 }
@@ -273,8 +272,6 @@ export async function fetchAllRegionCharts(
   const clusters: CityCluster[] = [];
   const regions = chartRegions; // All 34 regions
 
-  console.log(`🌍 Fetching charts for ${regions.length} regions...`);
-
   for (let i = 0; i < regions.length; i++) {
     const region = regions[i];
 
@@ -310,11 +307,9 @@ export async function fetchAllRegionCharts(
           color,
           position,
         });
-
-        console.log(`✅ Loaded ${songs.length} songs for ${region.name}`);
       }
-    } catch (error) {
-      console.error(`Failed to load ${region.name}:`, error);
+    } catch {
+      // Skip failed regions
     }
 
     onProgress?.(i + 1, regions.length);
@@ -325,7 +320,6 @@ export async function fetchAllRegionCharts(
     }
   }
 
-  console.log(`🎉 Loaded ${clusters.length} region charts`);
   return clusters;
 }
 
