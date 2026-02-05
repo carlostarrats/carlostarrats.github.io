@@ -27,7 +27,6 @@ const CitySongNode: React.FC<CitySongNodeProps> = ({
   onHover,
   isSelected = false,
 }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
   const pulseRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
@@ -59,7 +58,6 @@ const CitySongNode: React.FC<CitySongNodeProps> = ({
     <group position={position}>
       {/* Main sphere */}
       <mesh
-        ref={meshRef}
         onClick={() => onClick?.(song)}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}

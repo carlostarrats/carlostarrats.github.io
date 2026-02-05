@@ -257,8 +257,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   selectedCitySong,
   onCitySongSelect,
 }) => {
-  const [hoveredLayer] = useState<any>(null);
-  const [, setSelectedLayer] = useState<any>(null);
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
   const [controlsExpanded, setControlsExpanded] = useState<boolean>(true);
@@ -386,7 +384,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
       setTargetCameraPos(new THREE.Vector3(0, -15, 0));
       setTargetLookAt(new THREE.Vector3(0, 30, 0));
     }
-    setSelectedLayer(null);
   }, [viewMode]);
 
   const clearCameraTargets = useCallback(() => {
@@ -535,7 +532,6 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
             onLayerHover={handleLayerHover}
             onSongClick={handleSongClick}
             onSongHover={handleSongHover}
-            hoveredEmotion={hoveredLayer?.id}
             selectedSongId={selectedSong?.id}
             onExamine={handleExamine}
           />

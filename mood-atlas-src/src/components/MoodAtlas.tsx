@@ -55,8 +55,7 @@ const MoodAtlas: React.FC = () => {
       if (clusters.length === 0) {
         setCityLoadError('Unable to load music charts. Please try again later.');
       }
-    } catch (error) {
-      console.error('Failed to load city charts:', error);
+    } catch {
       setCityLoadError('Failed to load music charts. Check your connection and try again.');
     } finally {
       setIsLoadingCities(false);
