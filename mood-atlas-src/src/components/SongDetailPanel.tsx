@@ -103,6 +103,7 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
       try {
         await newAudio.play();
         setIsPlaying(true);
+        setPlaybackError(null); // Clear any previous error on success
       } catch {
         setPlaybackError('Unable to play preview');
         setIsPlaying(false);

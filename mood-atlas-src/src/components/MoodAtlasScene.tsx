@@ -226,9 +226,7 @@ interface CityExamineMode {
 
 interface MoodAtlasSceneProps {
   songs: Song[];
-  onSongHover?: (song: Song | null) => void;
   resetTrigger?: number;
-  musicKit?: any;
   examineMode?: ExamineMode | null;
   onExamine?: (emotion: string, color: string, songs: Song[]) => void;
   selectedSong?: Song | null;
