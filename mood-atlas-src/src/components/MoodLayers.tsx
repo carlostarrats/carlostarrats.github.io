@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Mesh, Vector3 } from 'three';
-import { Text, Line } from '@react-three/drei';
+import { Text, Line, Billboard } from '@react-three/drei';
 import { Song } from '@/data/mockSongs';
 import SongNode from './SongNode';
 
@@ -131,30 +131,37 @@ const LayerSurface: React.FC<{
         />
       </mesh>
 
-      {/* 3D Text label next to container */}
-      <Text
-        position={[layer.radius + 2, 0, 0]}
-        fontSize={0.8}
-        color={layer.color}
-        anchorX="left"
-        anchorY="middle"
-        font="./fonts/JetBrainsMono-Regular.ttf"
-      >
-        {layer.name}
-      </Text>
-      <Text
-        position={[layer.radius + 2 + layer.name.length * 0.5, 0, 0]}
-        fontSize={0.3}
-        color={layer.color}
-        anchorX="left"
-        anchorY="middle"
-        font="./fonts/JetBrainsMono-Regular.ttf"
-      >
-        ({layer.songs.length})
-      </Text>
-
-      {/* Examine button */}
-      <ExamineButton layer={layer} onExamine={onExamine} />
+      {/* Label group - billboarded to face viewer */}
+      <Billboard position={[layer.radius + 2, 0, 0]}>
+        <group>
+          {/* Emotion name */}
+          <Text
+            position={[0, 0, 0]}
+            fontSize={0.8}
+            color={layer.color}
+            anchorX="left"
+            anchorY="middle"
+            font="./fonts/JetBrainsMono-Regular.ttf"
+          >
+            {layer.name}
+          </Text>
+          {/* Song count */}
+          <Text
+            position={[layer.name.length * 0.5, 0, 0]}
+            fontSize={0.3}
+            color={layer.color}
+            anchorX="left"
+            anchorY="middle"
+            font="./fonts/JetBrainsMono-Regular.ttf"
+          >
+            ({layer.songs.length})
+          </Text>
+          {/* Examine button */}
+          <group position={[0, -0.8, 0]}>
+            <ExamineButtonContent layer={layer} onExamine={onExamine} />
+          </group>
+        </group>
+      </Billboard>
 
       {/* Song points inside container */}
       <SongNodes
@@ -218,8 +225,8 @@ const SongNodes: React.FC<{
   );
 };
 
-// Examine button with hover effect
-const ExamineButton: React.FC<{
+// Examine button content (without position - used inside Billboard)
+const ExamineButtonContent: React.FC<{
   layer: MoodLayer;
   onExamine?: (emotion: string, color: string, songs: Song[]) => void;
 }> = ({ layer, onExamine }) => {
@@ -229,17 +236,8 @@ const ExamineButton: React.FC<{
     onExamine?.(layer.name, layer.color, layer.songs);
   };
 
-  // Convert hex color to rgba with 10% opacity
-  const hexToRgba = (hex: string) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, 0.1)`;
-  };
-
   return (
     <group
-      position={[layer.radius + 2, -0.8, 0]}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
       onClick={handleClick}

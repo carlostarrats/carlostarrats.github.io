@@ -1,7 +1,6 @@
 import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
-import GridPlane from './GridPlane';
 import MoodLayers from './MoodLayers';
 import SongDetailPanel from './SongDetailPanel';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
@@ -295,8 +294,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   };
 
   const resetCamera = useCallback(() => {
-    setTargetCameraPos(new THREE.Vector3(0, 25, 80));
-    setTargetLookAt(new THREE.Vector3(0, 15, 0));
+    setTargetCameraPos(new THREE.Vector3(0, -15, 0));
+    setTargetLookAt(new THREE.Vector3(0, 30, 0));
     setSelectedLayer(null);
   }, []);
 
@@ -365,10 +364,10 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
       style={{ backgroundColor }}
     >
           <Canvas
-            camera={{ position: [0, 25, 80], fov: 60 }}
+            camera={{ position: [0, -15, 0], fov: 60 }}
             style={{ background: 'transparent' }}
           >
-        <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 25, 80]} />
+        <PerspectiveCamera ref={cameraRef} makeDefault position={[0, -15, 0]} />
         
         {/* Lighting setup */}
         <ambientLight intensity={0.2} />
@@ -396,33 +395,25 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         {/* Controls */}
         <OrbitControls
           ref={controlsRef}
-          target={[0, 15, 0]}
+          target={[0, 30, 0]}
           enablePan={true}
           enableZoom={true}
           enableRotate={true}
+          enableDamping={true}
+          dampingFactor={0.05}
           minDistance={0.1}
           maxDistance={200}
-          maxPolarAngle={Math.PI}
           panSpeed={1.5}
           zoomSpeed={1.2}
           rotateSpeed={1.0}
           mouseButtons={{
-            LEFT: 0, // Rotate
-            RIGHT: 2, // Pan
-          }}
-          touches={{
-            ONE: 1, // Rotate
-            TWO: 2, // Pan and zoom
+            LEFT: 0,
+            RIGHT: 2,
           }}
         />
 
         {/* Normal view with fade - fast fade out */}
         <FadeGroup visible={!examineMode} fadeOutSpeed={0.25}>
-          {/* Grid */}
-          <Suspense fallback={null}>
-            <GridPlane />
-          </Suspense>
-
           {/* Mood layers */}
           <MoodLayers
             layers={moodLayers}
