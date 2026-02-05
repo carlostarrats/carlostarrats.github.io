@@ -10,9 +10,26 @@
 
 ## Browser Testing Tools
 Three browser automation options available. Use in this order of preference:
-1. **Agent Browser** - Task tool with browser agent (preferred for testing)
-2. **Claude in Chrome** - MCP tools (`mcp__claude-in-chrome__*`) for direct browser control
-3. **Playwright** - For automated testing scripts
+
+### 1. Agent Browser (PREFERRED)
+Vercel's agent-browser CLI at `/opt/homebrew/bin/agent-browser`. Fast, headless browser automation.
+```bash
+agent-browser open <url>           # Navigate to URL
+agent-browser snapshot             # Get page structure (for AI)
+agent-browser snapshot -i          # Interactive elements only
+agent-browser click "text=Button"  # Click by text
+agent-browser find text Discover click  # Find and click
+agent-browser wait 2000            # Wait ms
+agent-browser screenshot           # Take screenshot
+agent-browser close                # Close browser
+```
+GitHub: https://github.com/vercel-labs/agent-browser
+
+### 2. Claude in Chrome
+MCP tools (`mcp__claude-in-chrome__*`) for direct browser control. Requires Chrome extension.
+
+### 3. Playwright
+For automated testing scripts.
 
 ## About
 Personal design portfolio for Carlos Tarrats, a Product Designer focused on simplifying complex systems. Site is hosted on GitHub Pages at https://carlostarrats.github.io
