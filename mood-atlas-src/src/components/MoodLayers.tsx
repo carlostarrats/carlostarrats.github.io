@@ -1,7 +1,7 @@
 import React, { useRef, useState, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Mesh, Vector3 } from 'three';
-import { Text } from '@react-three/drei';
+import { Text, Line } from '@react-three/drei';
 import { Song } from '@/data/mockSongs';
 import SongNode from './SongNode';
 
@@ -30,6 +30,7 @@ interface MoodLayersProps {
   onSongHover?: (song: Song | null) => void;
   hoveredEmotion?: string | null;
   selectedSongId?: string;
+  onExamine?: (emotion: string, color: string, songs: Song[]) => void;
 }
 
 const MoodLayers: React.FC<MoodLayersProps> = ({
@@ -39,7 +40,8 @@ const MoodLayers: React.FC<MoodLayersProps> = ({
   onSongClick,
   onSongHover,
   hoveredEmotion,
-  selectedSongId
+  selectedSongId,
+  onExamine
 }) => {
   const [hoveredLayer, setHoveredLayer] = useState<string | null>(null);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
@@ -76,6 +78,7 @@ const MoodLayers: React.FC<MoodLayersProps> = ({
             onClick={() => handleLayerClick(layer)}
             onSongClick={onSongClick}
             onSongHover={onSongHover}
+            onExamine={onExamine}
           />
         );
       })}
@@ -97,7 +100,8 @@ const LayerSurface: React.FC<{
   onClick: () => void;
   onSongClick?: (song: Song) => void;
   onSongHover?: (song: Song | null) => void;
-}> = ({ layer, opacity, scale, onHover: _onHover, onClick: _onClick, selectedEmotion, hoveredEmotion, selectedSongId, onSongClick, onSongHover }) => {
+  onExamine?: (emotion: string, color: string, songs: Song[]) => void;
+}> = ({ layer, opacity, scale, onHover: _onHover, onClick: _onClick, selectedEmotion, hoveredEmotion, selectedSongId, onSongClick, onSongHover, onExamine }) => {
   const meshRef = useRef<Mesh>(null);
   const groupRef = useRef<any>(null);
 
@@ -148,6 +152,9 @@ const LayerSurface: React.FC<{
       >
         ({layer.songs.length})
       </Text>
+
+      {/* Examine button */}
+      <ExamineButton layer={layer} onExamine={onExamine} />
 
       {/* Song points inside container */}
       <SongNodes
@@ -208,6 +215,68 @@ const SongNodes: React.FC<{
         );
       })}
     </>
+  );
+};
+
+// Examine button with hover effect
+const ExamineButton: React.FC<{
+  layer: MoodLayer;
+  onExamine?: (emotion: string, color: string, songs: Song[]) => void;
+}> = ({ layer, onExamine }) => {
+  const [hovered, setHovered] = useState(false);
+
+  const handleClick = () => {
+    onExamine?.(layer.name, layer.color, layer.songs);
+  };
+
+  return (
+    <group
+      position={[layer.radius + 2, -0.8, 0]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+      onClick={handleClick}
+    >
+      {/* Hover fill background */}
+      {hovered && (
+        <mesh position={[0.8, 0, 0]}>
+          <planeGeometry args={[1.6, 0.4]} />
+          <meshBasicMaterial color={layer.color} transparent opacity={0.2} />
+        </mesh>
+      )}
+      {/* Outline */}
+      <Line
+        points={[
+          [0, -0.2, 0],
+          [1.6, -0.2, 0],
+          [1.6, 0.2, 0],
+          [0, 0.2, 0],
+          [0, -0.2, 0],
+        ]}
+        color={layer.color}
+        lineWidth={1}
+      />
+      {/* Text */}
+      <Text
+        position={[0.8, 0, 0.01]}
+        fontSize={0.25}
+        color={layer.color}
+        anchorX="center"
+        anchorY="middle"
+        font="./fonts/JetBrainsMono-Regular.ttf"
+      >
+        Examine
+      </Text>
+      {/* Invisible hitbox for better hover/click detection */}
+      <mesh
+        position={[0.8, 0, 0]}
+        onClick={handleClick}
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+      >
+        <planeGeometry args={[1.6, 0.4]} />
+        <meshBasicMaterial visible={false} />
+      </mesh>
+    </group>
   );
 };
 

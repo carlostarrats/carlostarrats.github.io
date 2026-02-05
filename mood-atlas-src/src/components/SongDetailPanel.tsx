@@ -5,9 +5,10 @@ import { Song, emotionColors } from '@/data/mockSongs';
 interface SongDetailPanelProps {
   song: Song | null;
   onClose: () => void;
+  examineMode?: boolean;
 }
 
-const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
+const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examineMode = false }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -81,30 +82,39 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
   // Calculate emotion bar widths
   const emotionEntries = Object.entries(song.emotionScores || {}).sort((a, b) => b[1] - a[1]);
 
+  // Dynamic colors based on examine mode
+  const textPrimary = examineMode ? 'text-black' : 'text-white';
+  const textSecondary = examineMode ? 'text-black/60' : 'text-gray-400';
+  const textMuted = examineMode ? 'text-black/40' : 'text-gray-500';
+  const borderColor = examineMode ? 'border-black' : 'border-white/20';
+  const bgBar = examineMode ? 'bg-black/10' : 'bg-white/10';
+
   return (
-    <div className="fixed right-0 top-0 h-full w-96 bg-transparent backdrop-blur-md border-l border-white/20 z-50 overflow-y-auto animate-slide-in">
+    <div className={`fixed right-0 top-0 h-full w-96 backdrop-blur-md border-l z-50 overflow-y-auto animate-slide-in transition-colors ${
+      examineMode ? 'bg-black/10 border-black' : 'bg-transparent border-white/20'
+    }`}>
       <div className="p-6">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-3">
             <div>
-              <h2 className="text-xl text-white font-mono">{song.title}</h2>
-              <p className="text-sm text-gray-400 font-mono">{song.artist}</p>
+              <h2 className={`text-xl font-mono ${textPrimary}`}>{song.title}</h2>
+              <p className={`text-sm font-mono ${textSecondary}`}>{song.artist}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className={`p-2 rounded-lg transition-colors ${examineMode ? 'hover:bg-white/20' : 'hover:bg-white/10'}`}
           >
-            <X className="w-5 h-5 text-gray-400" />
+            <X className={`w-5 h-5 ${examineMode ? 'text-white' : 'text-gray-400'}`} />
           </button>
         </div>
 
         {/* Album info if available */}
         {song.album && (
           <div className="mb-6">
-            <p className="text-xs text-gray-500 uppercase tracking-wide mb-1 font-mono">Album</p>
-            <p className="text-white font-mono">{song.album}</p>
+            <p className={`text-xs uppercase tracking-wide mb-1 font-mono ${textMuted}`}>Album</p>
+            <p className={`font-mono ${textPrimary}`}>{song.album}</p>
           </div>
         )}
 
@@ -114,7 +124,11 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
           <button
             onClick={handlePlayPreview}
             disabled={isLoadingPreview || !previewUrl}
-            className="py-2 px-3 bg-white hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed text-black rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs"
+            className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs disabled:opacity-50 disabled:cursor-not-allowed ${
+              examineMode
+                ? 'bg-black hover:bg-gray-800 text-white'
+                : 'bg-white hover:bg-gray-200 text-black'
+            }`}
           >
             {isLoadingPreview ? (
               '...'
@@ -130,7 +144,11 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
           {song.trackId && (
             <button
               onClick={handleOpenInAppleMusic}
-              className="py-2 px-3 bg-gray-600 hover:bg-gray-500 text-white rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs"
+              className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
+                examineMode
+                  ? 'bg-black/50 hover:bg-black/70 text-white'
+                  : 'bg-gray-600 hover:bg-gray-500 text-white'
+              }`}
             >
               <ExternalLink className="w-3 h-3" />
               Apple Music
@@ -140,25 +158,25 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
 
         {/* Play Statistics */}
         {song.dataSource === 'apple' && (
-          <div className="mb-6 p-4 bg-transparent backdrop-blur-md border border-white/20 rounded-lg">
-            <h3 className="text-sm text-white mb-3 font-mono">Your Listening Stats</h3>
+          <div className={`mb-6 p-4 backdrop-blur-md border rounded-lg ${borderColor}`}>
+            <h3 className={`text-sm mb-3 font-mono ${textPrimary}`}>Your Listening Stats</h3>
             <div className="space-y-2">
               {song.playCount !== undefined && (
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-400 font-mono">Play Count</span>
-                  <span className="text-sm text-white font-mono">{song.playCount}</span>
+                  <span className={`text-xs font-mono ${textSecondary}`}>Play Count</span>
+                  <span className={`text-sm font-mono ${textPrimary}`}>{song.playCount}</span>
                 </div>
               )}
               {song.skipCount !== undefined && (
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-400 font-mono">Skip Count</span>
-                  <span className="text-sm text-white font-mono">{song.skipCount}</span>
+                  <span className={`text-xs font-mono ${textSecondary}`}>Skip Count</span>
+                  <span className={`text-sm font-mono ${textPrimary}`}>{song.skipCount}</span>
                 </div>
               )}
               {song.completionRate !== undefined && (
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-400 font-mono">Completion Rate</span>
-                  <span className="text-sm text-white font-mono">{song.completionRate}%</span>
+                  <span className={`text-xs font-mono ${textSecondary}`}>Completion Rate</span>
+                  <span className={`text-sm font-mono ${textPrimary}`}>{song.completionRate}%</span>
                 </div>
               )}
             </div>
@@ -167,17 +185,17 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
 
         {/* Primary Emotion */}
         <div className="mb-6">
-          <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 font-mono">Primary Emotion</p>
-          <div 
+          <p className={`text-xs uppercase tracking-wide mb-2 font-mono ${textMuted}`}>Primary Emotion</p>
+          <div
             className="inline-block px-4 py-2 rounded-lg border"
-            style={{ 
-              backgroundColor: `${emotionColors[song.primaryEmotion] || '#666'}20`,
-              borderColor: `${emotionColors[song.primaryEmotion] || '#666'}50`
+            style={{
+              backgroundColor: examineMode ? 'rgba(0,0,0,0.1)' : `${emotionColors[song.primaryEmotion] || '#666'}20`,
+              borderColor: examineMode ? 'black' : `${emotionColors[song.primaryEmotion] || '#666'}50`
             }}
           >
-            <p 
+            <p
               className="font-mono"
-              style={{ color: emotionColors[song.primaryEmotion] || '#fff' }}
+              style={{ color: examineMode ? 'black' : (emotionColors[song.primaryEmotion] || '#fff') }}
             >
               {song.primaryEmotion}
             </p>
@@ -187,15 +205,15 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
         {/* Thayer's Engagement Level */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <p className="text-xs text-gray-400 tracking-wide font-mono">Thayer's Engagement Level</p>
-            <p className="text-sm text-white font-mono">{Math.round(song.energy * 100)}%</p>
+            <p className={`text-xs tracking-wide font-mono ${textSecondary}`}>Thayer's Engagement Level</p>
+            <p className={`text-sm font-mono ${textPrimary}`}>{Math.round(song.energy * 100)}%</p>
           </div>
-          <div className="w-full h-1 bg-white/10 overflow-hidden">
+          <div className={`w-full h-1 overflow-hidden ${bgBar}`}>
             <div
               className="h-full transition-all duration-500"
-              style={{ 
+              style={{
                 width: `${song.energy * 100}%`,
-                backgroundColor: '#ffffff'
+                backgroundColor: examineMode ? '#000000' : '#ffffff'
               }}
             />
           </div>
@@ -203,20 +221,20 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
 
         {/* Emotion Breakdown */}
         <div className="mb-6">
-          <h3 className="text-sm text-white mb-3 font-mono">Emotion Breakdown</h3>
+          <h3 className={`text-sm mb-3 font-mono ${textPrimary}`}>Emotion Breakdown</h3>
           <div className="space-y-2">
             {emotionEntries.map(([emotion, score]) => (
               <div key={emotion} className="space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-gray-400 font-mono">{emotion}</span>
-                  <span className="text-xs text-white font-mono">{Math.round(score * 100)}%</span>
+                  <span className={`text-xs font-mono ${textSecondary}`}>{emotion}</span>
+                  <span className={`text-xs font-mono ${textPrimary}`}>{Math.round(score * 100)}%</span>
                 </div>
-                <div className="w-full h-1 bg-white/10 overflow-hidden">
+                <div className={`w-full h-1 overflow-hidden ${bgBar}`}>
                   <div
                     className="h-full transition-all duration-500"
-                    style={{ 
+                    style={{
                       width: `${score * 100}%`,
-                      backgroundColor: emotionColors[emotion] || '#fff'
+                      backgroundColor: examineMode ? '#000000' : (emotionColors[emotion] || '#fff')
                     }}
                   />
                 </div>
@@ -227,18 +245,18 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose }) => {
 
         {/* Additional Info */}
         {(song.genre || song.year) && (
-          <div className="mt-6 pt-6 border-t border-white/10">
+          <div className={`mt-6 pt-6 border-t ${examineMode ? 'border-black/20' : 'border-white/10'}`}>
             <div className="grid grid-cols-2 gap-4">
               {song.genre && (
                 <div>
-                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1 font-mono">Genre</p>
-                  <p className="text-sm text-white font-mono">{song.genre}</p>
+                  <p className={`text-xs uppercase tracking-wide mb-1 font-mono ${textMuted}`}>Genre</p>
+                  <p className={`text-sm font-mono ${textPrimary}`}>{song.genre}</p>
                 </div>
               )}
               {song.year && (
                 <div>
-                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-1 font-mono">Year</p>
-                  <p className="text-sm text-white font-mono">{song.year}</p>
+                  <p className={`text-xs uppercase tracking-wide mb-1 font-mono ${textMuted}`}>Year</p>
+                  <p className={`text-sm font-mono ${textPrimary}`}>{song.year}</p>
                 </div>
               )}
             </div>

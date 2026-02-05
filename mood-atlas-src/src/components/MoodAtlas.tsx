@@ -4,17 +4,24 @@ import MoodAtlasScene from './MoodAtlasScene';
 import { Song, mockSongs } from '@/data/mockSongs';
 import appleMusicData from '@/data/appleMusicSongs.json';
 
+interface ExamineMode {
+  emotion: string;
+  color: string;
+  songs: Song[];
+}
+
 const MoodAtlas: React.FC = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [, setHoveredSong] = useState<Song | null>(null);
   const [resetTrigger, setResetTrigger] = useState(0);
   const [, setDataSource] = useState<'mock' | 'apple'>('mock');
+  const [examineMode, setExamineMode] = useState<ExamineMode | null>(null);
 
   useEffect(() => {
     // Load Apple Music data directly
     console.log('Loading Apple Music data...');
     console.log('Apple Music data available:', appleMusicData?.length, 'songs');
-    
+
     if (appleMusicData && appleMusicData.length > 0) {
       setSongs(appleMusicData as Song[]);
       setDataSource('apple');
@@ -24,9 +31,8 @@ const MoodAtlas: React.FC = () => {
       setSongs(mockSongs);
       setDataSource('mock');
     }
-    
-  }, []);
 
+  }, []);
 
   const handleHomeClick = () => {
     window.location.href = '/'; // Navigate back to main portfolio
@@ -36,19 +42,31 @@ const MoodAtlas: React.FC = () => {
     setResetTrigger(prev => prev + 1);
   };
 
+  const handleExamine = (emotion: string, color: string, emotionSongs: Song[]) => {
+    setExamineMode({ emotion, color, songs: emotionSongs });
+  };
+
+  const handleCloseExamine = () => {
+    setExamineMode(null);
+    setResetTrigger(prev => prev + 1);
+  };
 
   return (
     <div className="min-h-screen text-white overflow-hidden">
-      <Header 
+      <Header
         onHomeClick={handleHomeClick}
         onResetView={handleResetView}
+        examineMode={examineMode}
+        onCloseExamine={handleCloseExamine}
       />
-      
+
       <main className="h-screen">
-        <MoodAtlasScene 
+        <MoodAtlasScene
           songs={songs}
           onSongHover={setHoveredSong}
           resetTrigger={resetTrigger}
+          examineMode={examineMode}
+          onExamine={handleExamine}
         />
       </main>
     </div>
