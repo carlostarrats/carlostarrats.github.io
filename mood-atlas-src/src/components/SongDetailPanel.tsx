@@ -98,15 +98,15 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-3">
             <div>
-              <h2 className={`text-xl font-mono ${textPrimary}`}>{song.title}</h2>
-              <p className={`text-sm font-mono ${textSecondary}`}>{song.artist}</p>
+              <h2 className={`text-xl font-mono ${examineMode ? 'text-black' : 'text-white'}`}>{song.title}</h2>
+              <p className={`text-sm font-mono ${examineMode ? 'text-black/70' : 'text-white/70'}`}>{song.artist}</p>
             </div>
           </div>
           <button
             onClick={onClose}
             className={`p-2 rounded-lg transition-colors ${examineMode ? 'hover:bg-white/20' : 'hover:bg-white/10'}`}
           >
-            <X className={`w-5 h-5 ${examineMode ? 'text-white' : 'text-gray-400'}`} />
+            <X className={`w-5 h-5 ${examineMode ? 'text-black' : 'text-gray-400'}`} />
           </button>
         </div>
 
@@ -124,20 +124,17 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
           <button
             onClick={handlePlayPreview}
             disabled={isLoadingPreview || !previewUrl}
-            className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs disabled:opacity-50 disabled:cursor-not-allowed ${
-              examineMode
-                ? 'bg-black hover:bg-gray-800 text-white'
-                : 'bg-white hover:bg-gray-200 text-black'
-            }`}
+            className="py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs disabled:opacity-50 disabled:cursor-not-allowed text-black"
+            style={{ backgroundColor: '#ffffff' }}
           >
             {isLoadingPreview ? (
               '...'
-            ) : isPlaying ? (
+            ) : !previewUrl ? null : isPlaying ? (
               <Pause className="w-3.5 h-3.5" />
             ) : (
               <Play className="w-3.5 h-3.5" />
             )}
-            {isLoadingPreview ? '' : isPlaying ? 'Stop' : 'Preview'}
+            {isLoadingPreview ? '' : !previewUrl ? 'No Preview' : isPlaying ? 'Stop' : 'Preview'}
           </button>
 
           {/* Open in Apple Music Button */}
@@ -146,7 +143,7 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
               onClick={handleOpenInAppleMusic}
               className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
                 examineMode
-                  ? 'bg-black/50 hover:bg-black/70 text-white'
+                  ? 'bg-white/70 hover:bg-white text-black'
                   : 'bg-gray-600 hover:bg-gray-500 text-white'
               }`}
             >

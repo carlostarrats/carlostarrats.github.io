@@ -7,6 +7,81 @@ import SongDetailPanel from './SongDetailPanel';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
 import * as THREE from 'three';
 
+// Grid orb for examine mode - with hover and selection effects
+const GridOrb: React.FC<{
+  song: Song;
+  x: number;
+  y: number;
+  isSelected: boolean;
+  onSongClick?: (song: Song) => void;
+  onSongHover?: (song: Song | null) => void;
+}> = ({ song, x, y, isSelected, onSongClick, onSongHover }) => {
+  const [hovered, setHovered] = useState(false);
+  const pulseRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    // Animate pulse for selected orb
+    if (pulseRef.current && isSelected) {
+      const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.5 + 0.5;
+      const pulseScale = 1.5 + pulse * 1.5;
+      pulseRef.current.scale.set(pulseScale, pulseScale, pulseScale);
+      (pulseRef.current.material as any).opacity = 0.3 - pulse * 0.25;
+    }
+  });
+
+  const handlePointerOver = () => {
+    setHovered(true);
+    onSongHover?.(song);
+  };
+
+  const handlePointerOut = () => {
+    setHovered(false);
+    onSongHover?.(null);
+  };
+
+  return (
+    <group position={[x, y, 0]}>
+      <mesh
+        onClick={() => onSongClick?.(song)}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+      >
+        <sphereGeometry args={[0.4, 16, 16]} />
+        <meshBasicMaterial
+          color={isSelected ? '#ffffff' : '#000000'}
+          transparent
+          opacity={1}
+        />
+      </mesh>
+
+      {/* Hover ring outline */}
+      {hovered && !isSelected && (
+        <mesh>
+          <ringGeometry args={[0.64, 0.72, 32]} />
+          <meshBasicMaterial
+            color="#000000"
+            transparent
+            opacity={0.6}
+            side={2}
+          />
+        </mesh>
+      )}
+
+      {/* Selected pulse effect - radiating sphere */}
+      {isSelected && (
+        <mesh ref={pulseRef}>
+          <sphereGeometry args={[0.4, 16, 16]} />
+          <meshBasicMaterial
+            color="#ffffff"
+            transparent
+            opacity={0.3}
+          />
+        </mesh>
+      )}
+    </group>
+  );
+};
+
 // Examine grid - songs arranged in a flat grid
 const ExamineGrid: React.FC<{
   songs: Song[];
@@ -29,25 +104,76 @@ const ExamineGrid: React.FC<{
         const isSelected = song.id === selectedSongId;
 
         return (
-          <mesh
+          <GridOrb
             key={song.id}
-            position={[x, y, 0]}
-            onClick={() => onSongClick?.(song)}
-            onPointerOver={() => onSongHover?.(song)}
-            onPointerOut={() => onSongHover?.(null)}
-          >
-            <sphereGeometry args={[0.4, 16, 16]} />
-            <meshBasicMaterial
-              color={isSelected ? '#ffffff' : '#000000'}
-            />
-          </mesh>
+            song={song}
+            x={x}
+            y={y}
+            isSelected={isSelected}
+            onSongClick={onSongClick}
+            onSongHover={onSongHover}
+          />
         );
       })}
     </group>
   );
 };
 
-// Camera animation helper
+// Fade group for smooth transitions with tilt
+const FadeGroup: React.FC<{
+  visible: boolean;
+  children: React.ReactNode;
+  tilt?: boolean;
+  fadeOutSpeed?: number;
+}> = ({ visible, children, tilt = false, fadeOutSpeed = 0.2 }) => {
+  const groupRef = useRef<THREE.Group>(null);
+  const [shouldRender, setShouldRender] = useState(visible);
+  const targetOpacity = visible ? 1 : 0;
+  const targetRotation = visible ? 0 : (tilt ? 0.3 : 0);
+
+  useEffect(() => {
+    if (visible) setShouldRender(true);
+  }, [visible]);
+
+  useFrame(() => {
+    if (!groupRef.current) return;
+
+    // Tilt animation
+    if (tilt) {
+      groupRef.current.rotation.x += (targetRotation - groupRef.current.rotation.x) * 0.1;
+    }
+
+    let allFaded = true;
+    // Faster fade out, normal fade in
+    const fadeSpeed = visible ? 0.1 : fadeOutSpeed;
+
+    groupRef.current.traverse((child) => {
+      if ((child as THREE.Mesh).material) {
+        const material = (child as THREE.Mesh).material as THREE.Material;
+        if ('opacity' in material) {
+          const currentOpacity = material.opacity;
+          const newOpacity = currentOpacity + (targetOpacity - currentOpacity) * fadeSpeed;
+          material.opacity = newOpacity;
+          material.transparent = true;
+
+          if (Math.abs(newOpacity - targetOpacity) > 0.01) {
+            allFaded = false;
+          }
+        }
+      }
+    });
+
+    if (!visible && allFaded) {
+      setShouldRender(false);
+    }
+  });
+
+  if (!shouldRender) return null;
+
+  return <group ref={groupRef} rotation={[tilt && !visible ? 0.3 : 0, 0, 0]}>{children}</group>;
+};
+
+// Camera animation helper with smooth easing
 const CameraAnimator: React.FC<{
   targetPosition: THREE.Vector3 | null;
   targetLookAt: THREE.Vector3 | null;
@@ -56,23 +182,22 @@ const CameraAnimator: React.FC<{
 }> = ({ targetPosition, targetLookAt, controlsRef, onComplete }) => {
   useFrame(({ camera }) => {
     if (targetPosition && targetLookAt) {
-      // Smoothly interpolate camera position
-      camera.position.lerp(targetPosition, 0.15);
+      const positionDistance = camera.position.distanceTo(targetPosition);
 
-      // Smoothly interpolate controls target
+      // Fast, smooth lerp
+      camera.position.lerp(targetPosition, 0.08);
+
       if (controlsRef.current) {
-        controlsRef.current.target.lerp(targetLookAt, 0.15);
+        controlsRef.current.target.lerp(targetLookAt, 0.08);
         controlsRef.current.update();
       }
 
-      // Check if we've reached the target (within threshold)
-      const positionDistance = camera.position.distanceTo(targetPosition);
+      // Check completion
       const targetDistance = controlsRef.current
         ? controlsRef.current.target.distanceTo(targetLookAt)
         : Infinity;
 
-      // If close enough, snap to position and complete
-      if (positionDistance < 1 && targetDistance < 1) {
+      if (positionDistance < 0.5 && targetDistance < 0.5) {
         camera.position.copy(targetPosition);
         if (controlsRef.current) {
           controlsRef.current.target.copy(targetLookAt);
@@ -99,6 +224,8 @@ interface MoodAtlasSceneProps {
   musicKit?: any;
   examineMode?: ExamineMode | null;
   onExamine?: (emotion: string, color: string, songs: Song[]) => void;
+  selectedSong?: Song | null;
+  onSongSelect?: (song: Song | null) => void;
 }
 
 const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
@@ -106,11 +233,12 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   resetTrigger,
   musicKit,
   examineMode,
-  onExamine
+  onExamine,
+  selectedSong,
+  onSongSelect
 }) => {
   const [hoveredLayer] = useState<any>(null);
   const [, setSelectedLayer] = useState<any>(null);
-  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
   const [targetCameraPos, setTargetCameraPos] = useState<THREE.Vector3 | null>(null);
   const [targetLookAt, setTargetLookAt] = useState<THREE.Vector3 | null>(null);
   const [controlsExpanded, setControlsExpanded] = useState<boolean>(true);
@@ -137,7 +265,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   };
 
   const handleSongClick = (song: Song) => {
-    setSelectedSong(song);
+    onSongSelect?.(song);
   };
 
   const handleSongHover = (song: Song | null) => {
@@ -163,7 +291,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   };
 
   const handleCloseSongDetail = () => {
-    setSelectedSong(null);
+    onSongSelect?.(null);
   };
 
   const resetCamera = useCallback(() => {
@@ -184,28 +312,56 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     }
   }, [resetTrigger, resetCamera]);
 
-  // Effect to set camera for examine mode
+  // Effect to set camera for examine mode - zoom based on grid size
   useEffect(() => {
     if (examineMode) {
-      setTargetCameraPos(new THREE.Vector3(0, 0, 50));
+      // Calculate grid dimensions
+      const songCount = examineMode.songs.length;
+      const cols = Math.ceil(Math.sqrt(songCount));
+      const rows = Math.ceil(songCount / cols);
+      const spacing = 1.5;
+      const gridWidth = cols * spacing;
+      const gridHeight = rows * spacing;
+
+      // Calculate camera distance to fit grid (fov = 60 degrees)
+      const maxDimension = Math.max(gridWidth, gridHeight);
+      const fov = 60 * (Math.PI / 180);
+      const cameraZ = (maxDimension / 2) / Math.tan(fov / 2) * 1.3 + 10; // 1.3x + padding
+
+      // Snap lookAt to center immediately for consistent animation
+      if (controlsRef.current) {
+        controlsRef.current.target.set(0, 0, 0);
+        controlsRef.current.update();
+      }
+
+      setTargetCameraPos(new THREE.Vector3(0, 0, Math.max(cameraZ, 25)));
       setTargetLookAt(new THREE.Vector3(0, 0, 0));
     } else {
-      // Clear targets after a short delay when exiting examine mode
-      // This allows the reset animation to complete before releasing control
+      // Clear targets after animation completes
       const timeout = setTimeout(() => {
         setTargetCameraPos(null);
         setTargetLookAt(null);
-      }, 2000);
+      }, 1500);
       return () => clearTimeout(timeout);
     }
   }, [examineMode]);
 
 
   const backgroundColor = examineMode ? examineMode.color : '#1a1a1a';
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Handle transition timing
+  useEffect(() => {
+    if (examineMode) {
+      setIsTransitioning(true);
+      const timeout = setTimeout(() => setIsTransitioning(false), 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [examineMode]);
 
   return (
     <div
-      className="w-full h-full relative transition-colors duration-500"
+      className="w-full h-full relative transition-colors duration-500 ease-out"
       style={{ backgroundColor }}
     >
           <Canvas
@@ -260,33 +416,31 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           }}
         />
 
-        {/* Normal view */}
-        {!examineMode && (
-          <>
-            {/* Grid */}
-            <Suspense fallback={null}>
-              <GridPlane />
-            </Suspense>
+        {/* Normal view with fade - fast fade out */}
+        <FadeGroup visible={!examineMode} fadeOutSpeed={0.25}>
+          {/* Grid */}
+          <Suspense fallback={null}>
+            <GridPlane />
+          </Suspense>
 
-            {/* Mood layers */}
-            <MoodLayers
-              layers={moodLayers}
-              onLayerClick={handleLayerClick}
-              onLayerHover={handleLayerHover}
-              onSongClick={handleSongClick}
-              onSongHover={handleSongHover}
-              hoveredEmotion={hoveredLayer?.id}
-              selectedSongId={selectedSong?.id}
-              onExamine={handleExamine}
-            />
+          {/* Mood layers */}
+          <MoodLayers
+            layers={moodLayers}
+            onLayerClick={handleLayerClick}
+            onLayerHover={handleLayerHover}
+            onSongClick={handleSongClick}
+            onSongHover={handleSongHover}
+            hoveredEmotion={hoveredLayer?.id}
+            selectedSongId={selectedSong?.id}
+            onExamine={handleExamine}
+          />
 
-            {/* Central light source */}
-            <mesh position={[0, 0, 0]}>
-              <sphereGeometry args={[0.1, 16, 16]} />
-              <meshBasicMaterial color="#ffffff" />
-            </mesh>
-          </>
-        )}
+          {/* Central light source */}
+          <mesh position={[0, 0, 0]}>
+            <sphereGeometry args={[0.1, 16, 16]} />
+            <meshBasicMaterial color="#ffffff" transparent />
+          </mesh>
+        </FadeGroup>
 
         {/* Examine mode - grid of songs */}
         {examineMode && (
@@ -301,7 +455,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
       {/* UI Overlay - No React state to prevent jumping */}
       <div className="absolute top-20 left-4 z-10 w-80 pointer-events-none">
-        <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors ${
+        <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors duration-500 ease-out ${
           examineMode
             ? 'bg-black/10 border border-black text-black'
             : 'bg-transparent border border-white/20 text-gray-300'
@@ -325,7 +479,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
       {/* Instructions - positioned at bottom */}
       <div className="absolute bottom-4 left-4 z-10 w-80">
-        <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors ${
+        <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors duration-500 ease-out ${
           examineMode
             ? 'bg-black/10 border border-black text-black'
             : 'bg-transparent border border-white/20 text-gray-300'

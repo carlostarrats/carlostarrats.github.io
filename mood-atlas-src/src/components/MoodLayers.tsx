@@ -229,6 +229,14 @@ const ExamineButton: React.FC<{
     onExamine?.(layer.name, layer.color, layer.songs);
   };
 
+  // Convert hex color to rgba with 10% opacity
+  const hexToRgba = (hex: string) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, 0.1)`;
+  };
+
   return (
     <group
       position={[layer.radius + 2, -0.8, 0]}
@@ -236,11 +244,16 @@ const ExamineButton: React.FC<{
       onPointerOut={() => setHovered(false)}
       onClick={handleClick}
     >
-      {/* Hover fill background */}
+      {/* Background - 10% opacity on hover only */}
       {hovered && (
-        <mesh position={[0.8, 0, 0]}>
+        <mesh position={[0.8, 0, -0.05]}>
           <planeGeometry args={[1.6, 0.4]} />
-          <meshBasicMaterial color={layer.color} transparent opacity={0.2} />
+          <meshStandardMaterial
+            color={layer.color}
+            transparent={true}
+            opacity={0.1}
+            toneMapped={false}
+          />
         </mesh>
       )}
       {/* Outline */}

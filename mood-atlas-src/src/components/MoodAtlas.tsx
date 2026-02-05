@@ -16,6 +16,7 @@ const MoodAtlas: React.FC = () => {
   const [resetTrigger, setResetTrigger] = useState(0);
   const [, setDataSource] = useState<'mock' | 'apple'>('mock');
   const [examineMode, setExamineMode] = useState<ExamineMode | null>(null);
+  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
   useEffect(() => {
     // Load Apple Music data directly
@@ -58,6 +59,7 @@ const MoodAtlas: React.FC = () => {
         onResetView={handleResetView}
         examineMode={examineMode}
         onCloseExamine={handleCloseExamine}
+        hidButtons={!!examineMode && !!selectedSong}
       />
 
       <main className="h-screen">
@@ -67,6 +69,8 @@ const MoodAtlas: React.FC = () => {
           resetTrigger={resetTrigger}
           examineMode={examineMode}
           onExamine={handleExamine}
+          selectedSong={selectedSong}
+          onSongSelect={setSelectedSong}
         />
       </main>
     </div>

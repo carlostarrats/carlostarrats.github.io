@@ -6,13 +6,15 @@ interface HeaderProps {
   onResetView?: () => void;
   examineMode?: { emotion: string; color: string } | null;
   onCloseExamine?: () => void;
+  hidButtons?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
   onHomeClick,
   onResetView,
   examineMode,
-  onCloseExamine
+  onCloseExamine,
+  hidButtons = false
 }) => {
   const isExamining = !!examineMode;
 
@@ -25,15 +27,15 @@ const Header: React.FC<HeaderProps> = ({
             onClick={onHomeClick}
             className={`text-sm font-mono transition-colors cursor-pointer ${
               isExamining
-                ? 'text-black hover:text-gray-700 hover:underline'
-                : 'text-white hover:text-gray-300 hover:underline'
+                ? 'text-black hover:text-gray-700'
+                : 'text-white hover:text-gray-300'
             }`}
           >
             {examineMode ? `Examining: ${examineMode.emotion}` : "Robert Thayer's model of mood x music"}
           </div>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Buttons - invisible when song detail is open in examine mode */}
+          <div className={`flex items-center gap-2 ${hidButtons ? 'invisible' : ''}`}>
             {/* Close Examine Button */}
             {examineMode && onCloseExamine && (
               <div

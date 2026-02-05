@@ -78,27 +78,40 @@ const SongNode: React.FC<SongNodeProps> = ({
         <meshStandardMaterial
           color={color}
           emissive={color}
-          emissiveIntensity={emissiveIntensity}
+          emissiveIntensity={hovered ? emissiveIntensity + 0.5 : emissiveIntensity}
           transparent
-          opacity={hovered ? 0.9 : 0.7}
+          opacity={0.8}
           metalness={0.1}
           roughness={0.1}
         />
       </mesh>
       
-      {/* Invisible hitbox overlay - larger */}
+      {/* Invisible hitbox overlay - much larger to prevent flicker */}
       <mesh
         onClick={handleClick}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
       >
-        <sphereGeometry args={[size * 3, 8, 8]} />
+        <sphereGeometry args={[size * 5, 8, 8]} />
         <meshBasicMaterial visible={false} />
       </mesh>
 
       {/* Outer glow ring - DISABLED */}
 
       {/* Hover tooltip - DISABLED FOR TESTING */}
+
+      {/* Hover ring outline */}
+      {hovered && !isSelected && (
+        <mesh>
+          <ringGeometry args={[size * 1.9, size * 2.1, 32]} />
+          <meshBasicMaterial
+            color={color}
+            transparent
+            opacity={0.6}
+            side={2}
+          />
+        </mesh>
+      )}
 
       {/* Click effect */}
       {clicked && (
