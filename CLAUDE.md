@@ -110,12 +110,20 @@ Homepage also has:
 - Favicon (favicon.svg)
 - Share image (og:image, twitter:image)
 
-## Brand Carousel
+## Brand Carousel (REMOVED)
+**Removed:** 2026-02-05
+**Recovery:**
+- HTML: `git show HEAD~1:index.html`
+- CSS: `git show HEAD~1:styles.css` (or uncomment in current file)
+
+Previously included:
 - 3D rotating carousel with perspective effect
 - Infinite scroll animation (120s loop)
 - JavaScript-based hover detection for reliable interaction on 3D elements
 - Hover lifts item 70px, rotates flat, scales 1.1x
 - Bounce easing on return animation
+- Images in `images/brand/`
+- CSS commented out in styles.css (not deleted)
 
 ## Deployment
 - Push to `main` branch auto-deploys to GitHub Pages
@@ -148,7 +156,8 @@ Images must be resized before adding to the site:
 - **Format:** JPG
 - **Command:** `sips -z 394 700 <image.jpg>`
 
-### Brand Carousel (`images/brand/`)
+### Brand Carousel (`images/brand/`) - REMOVED
+(Section removed 2026-02-05, images still exist in `images/brand/`)
 - **Target size:** 700×400px (retina-ready for 200px display height)
 - **Format:** JPG
 - **Command:** `sips -z 400 700 <image.jpg>`
@@ -174,15 +183,14 @@ Loading states shown before images/videos are ready:
 - JavaScript detects `img.complete` or `video.readyState >= 3`
 - Skeleton removed once asset is ready
 
-## Vimeo Embeds
-Brand carousel includes Vimeo background videos:
+## Vimeo Embeds (REMOVED with Brand Carousel)
+Previously in brand carousel:
 - **367486985** - LoCA video
 - **367487760** - American Apparel video
 - Embedded with `?background=1&muted=1&autoplay=1&loop=1&autopause=0`
 
 ## Design Notes (v2)
 - Dark background (#252525)
-- 3D brand carousel with hover interactions
 - Mobile responsive with media queries
 - Smooth transitions and animations
 

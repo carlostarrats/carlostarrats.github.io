@@ -480,58 +480,9 @@
         </span>
       </a>
     </div>
-
-    <!-- Brand -->
-    <h1 class="center section-brand">Brand</h1>
   </main>
 
-  <!-- Brand Carousel (full width) -->
-  <div class="brand-carousel-wrapper">
-    <div class="brand-carousel">
-      <div class="brand-carousel__track">
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity" class="deferred"></div>
-        <div class="brand-carousel__item">
-          <iframe data-src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
-        </div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog" class="deferred"></div>
-        <div class="brand-carousel__item">
-          <iframe data-src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
-        </div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-2.jpg" alt="American Apparel poster" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer" class="deferred"></div>
-        <!-- Duplicate for seamless loop -->
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-2.jpg" alt="DDS branded stickers" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-dds-4.jpg" alt="Hack the Pentagon brand" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-1.jpg" alt="LoCA brand identity" class="deferred"></div>
-        <div class="brand-carousel__item">
-          <iframe data-src="https://player.vimeo.com/video/367486985?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
-        </div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-loca-2.jpg" alt="LoCA marketing materials" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-1.jpg" alt="ELOQUII catalog" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-elq-2.jpg" alt="ELOQUII blog rebrand" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-2.jpg" alt="Amazon Fashion editorial" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-amz-3.jpg" alt="Amazon Fashion ad" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-1.jpg" alt="American Apparel catalog" class="deferred"></div>
-        <div class="brand-carousel__item">
-          <iframe data-src="https://player.vimeo.com/video/367487760?background=1&muted=1&autoplay=1&loop=1&autopause=0" frameborder="0" allow="autoplay" class="deferred-iframe"></iframe>
-        </div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-2.jpg" alt="American Apparel poster" class="deferred"></div>
-        <div class="brand-carousel__item"><img data-src="images/brand/brand-aa-3.jpg" alt="American Apparel flyer" class="deferred"></div>
-      </div>
-    </div>
-  </div>
-
   <div class="page">
-    <!-- Projects -->
-    <h1 class="center">Projects</h1>
-
     <!-- Copyright -->
     <p class="body center">© 2026</p>
   </div>
@@ -546,128 +497,6 @@
       if (link) {
         link.href = 'mailto:' + a + '@' + b;
       }
-    })();
-
-    (function() {
-      const wrapper = document.querySelector('.brand-carousel-wrapper');
-      const items = document.querySelectorAll('.brand-carousel__item');
-      let currentHovered = null;
-
-      wrapper.addEventListener('mousemove', function(e) {
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        let found = null;
-        let closestDist = Infinity;
-
-        // Find all items containing mouse, pick closest center
-        items.forEach(function(item) {
-          const rect = item.getBoundingClientRect();
-          if (mouseX >= rect.left && mouseX <= rect.right &&
-              mouseY >= rect.top && mouseY <= rect.bottom) {
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const dist = Math.abs(mouseX - centerX) + Math.abs(mouseY - centerY);
-            if (dist < closestDist) {
-              closestDist = dist;
-              found = item;
-            }
-          }
-        });
-
-        // Update hover state and cursor
-        if (found !== currentHovered) {
-          if (currentHovered) {
-            currentHovered.classList.remove('is-hovered');
-          }
-          if (found) {
-            found.classList.add('is-hovered');
-            wrapper.style.cursor = 'pointer';
-          } else {
-            wrapper.style.cursor = 'default';
-          }
-          currentHovered = found;
-        }
-      });
-
-      wrapper.addEventListener('mouseleave', function() {
-        if (currentHovered) {
-          currentHovered.classList.remove('is-hovered');
-          currentHovered = null;
-        }
-        wrapper.style.cursor = 'default';
-      });
-
-      // Touch handling for mobile
-      const track = document.querySelector('.brand-carousel__track');
-      let touchStartX = 0;
-      let touchStartTime = 0;
-      let currentOffset = 0;
-      let velocity = 0;
-      let animationPaused = false;
-      let inertiaFrame = null;
-
-      function getTrackOffset() {
-        const style = window.getComputedStyle(track);
-        const matrix = new DOMMatrix(style.transform);
-        return matrix.m41;
-      }
-
-      function pauseAnimation() {
-        if (!animationPaused) {
-          currentOffset = getTrackOffset();
-          track.style.animation = 'none';
-          track.style.transform = 'translateX(' + currentOffset + 'px)';
-          animationPaused = true;
-        }
-      }
-
-      function resumeAnimation() {
-        if (animationPaused) {
-          const trackWidth = track.scrollWidth / 2;
-          const progress = Math.abs(currentOffset % trackWidth) / trackWidth;
-          const duration = parseFloat(window.getComputedStyle(track).animationDuration) || 100;
-          const delay = -(progress * duration);
-          track.style.transform = '';
-          track.style.animation = 'scroll-left ' + duration + 's linear infinite';
-          track.style.animationDelay = delay + 's';
-          animationPaused = false;
-        }
-      }
-
-      track.addEventListener('touchstart', function(e) {
-        if (inertiaFrame) cancelAnimationFrame(inertiaFrame);
-        pauseAnimation();
-        touchStartX = e.touches[0].clientX;
-        touchStartTime = Date.now();
-        velocity = 0;
-      }, { passive: true });
-
-      track.addEventListener('touchmove', function(e) {
-        const touchX = e.touches[0].clientX;
-        const deltaX = touchX - touchStartX;
-        const now = Date.now();
-        const deltaTime = now - touchStartTime;
-        if (deltaTime > 0) {
-          velocity = deltaX / deltaTime * 16;
-        }
-        track.style.transform = 'translateX(' + (currentOffset + deltaX) + 'px)';
-      }, { passive: true });
-
-      track.addEventListener('touchend', function(e) {
-        currentOffset = getTrackOffset();
-
-        function inertia() {
-          if (Math.abs(velocity) < 0.5) {
-            resumeAnimation();
-            return;
-          }
-          velocity *= 0.95;
-          currentOffset += velocity;
-          track.style.transform = 'translateX(' + currentOffset + 'px)';
-          inertiaFrame = requestAnimationFrame(inertia);
-        }
-        inertia();
-      }, { passive: true });
     })();
 
     // External links - open in new window, fallback to same window if blocked
@@ -698,21 +527,6 @@
         img.addEventListener('load', function() {
           card.classList.add('is-loaded');
         });
-      });
-
-      // Handle brand carousel images
-      document.querySelectorAll('.brand-carousel__item').forEach(function(item) {
-        var img = item.querySelector('img');
-        var iframe = item.querySelector('iframe');
-        if (img) {
-          img.addEventListener('load', function() {
-            item.classList.add('is-loaded');
-          });
-        } else if (iframe) {
-          iframe.addEventListener('load', function() {
-            item.classList.add('is-loaded');
-          });
-        }
       });
     })();
 

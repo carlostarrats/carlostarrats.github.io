@@ -610,14 +610,18 @@ h1.center {
   text-decoration: none;
 }
 
+/* h1.section-brand - REMOVED 2026-02-05
 h1.section-brand {
   margin-top: 110px;
 }
+*/
 
 /* ============================================
-   BRAND CAROUSEL
+   BRAND CAROUSEL (REMOVED 2026-02-05)
+   Recover from git: git show HEAD~1:styles.css
    ============================================ */
 
+/*
 .brand-carousel-wrapper {
   width: 100%;
   overflow: hidden;
@@ -722,6 +726,7 @@ h1.section-brand {
     transform: translateX(-50%);
   }
 }
+*/
 
 /* ============================================
    COPYRIGHT
@@ -1116,6 +1121,7 @@ h1.section-brand {
     width: 384px;
   }
 
+  /* Brand carousel media queries (REMOVED 2026-02-05)
   .brand-carousel__item {
     min-width: 249px;
     min-height: 140px;
@@ -1138,6 +1144,7 @@ h1.section-brand {
   .brand-carousel__track {
     animation-duration: 100s;
   }
+  */
 
   .detail-page {
     padding: 0 20px;
