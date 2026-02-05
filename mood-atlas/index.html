@@ -6,44 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mood Atlas - 3D Music Visualization</title>
     <meta name="description" content="Interactive 3D visualization of your Apple Music library with retro synthwave aesthetics" />
-
+    
     <!-- Apple Music SDK -->
     <script src="https://js-cdn.music.apple.com/musickit/v1/musickit.js"></script>
-
+    
     <!-- Google Fonts for retro styling -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-20d4fc28.js"></script>
+    <script type="module" crossorigin src="./assets/index-3e543f9e.js"></script>
     <link rel="stylesheet" href="./assets/index-e86cbe4f.css">
   </head>
   <body class="text-white overflow-hidden">
-    <div id="root">
-      <div class="initial-loader">
-        <div class="initial-spinner"></div>
-      </div>
-      <style>
-        .initial-loader {
-          position: fixed;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #1a1a1a;
-        }
-        .initial-spinner {
-          width: 40px;
-          height: 40px;
-          border: 2px solid rgba(255, 255, 255, 0.2);
-          border-top-color: #fff;
-          border-radius: 50%;
-          animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      </style>
-    </div>
-
+    <div id="root"></div>
+    
   </body>
 </html>

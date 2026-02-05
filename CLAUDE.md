@@ -8,6 +8,12 @@
 - **NEVER summarize** - Do not paraphrase or summarize instructions. Follow them exactly as given.
 - **Look at pixels and placement in detail** - Pay close attention to exact pixel values, spacing, and positioning. Do not approximate.
 
+## Browser Testing Tools
+Three browser automation options available. Use in this order of preference:
+1. **Agent Browser** - Task tool with browser agent (preferred for testing)
+2. **Claude in Chrome** - MCP tools (`mcp__claude-in-chrome__*`) for direct browser control
+3. **Playwright** - For automated testing scripts
+
 ## About
 Personal design portfolio for Carlos Tarrats, a Product Designer focused on simplifying complex systems. Site is hosted on GitHub Pages at https://carlostarrats.github.io
 
@@ -49,6 +55,7 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 2. **AdaptiveShop** - Modern ecommerce platform with AI features
 3. **Defense Digital Service** - DoD digital transformation
 4. **Eloquii** - Plus-size fashion e-commerce redesign
+5. **Mood Atlas** - 3D music visualization using Thayer Model of Mood
 
 ## Repository Structure
 ```
@@ -60,6 +67,10 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 ├── .nojekyll        # Disables Jekyll for GitHub Pages
 ├── fonts/           # Custom fonts (Nyght Serif)
 ├── images/          # All image assets
+├── mood-atlas/      # Mood Atlas built app (compiled)
+│   ├── index.html
+│   └── assets/      # JS/CSS bundles
+├── mood-atlas-src/  # Mood Atlas source (gitignored, local only)
 └── projects/        # Project detail pages
     ├── control.html
     ├── adaptiveshop.html
@@ -157,3 +168,63 @@ Brand carousel includes Vimeo background videos:
 - 3D brand carousel with hover interactions
 - Mobile responsive with media queries
 - Smooth transitions and animations
+
+## Mood Atlas
+Interactive 3D music visualization using the Thayer Model of Mood. Live at https://tarrats.xyz/mood-atlas/
+
+### Tech Stack
+- React + TypeScript + Vite
+- Three.js / React Three Fiber for 3D
+- Tailwind CSS
+- Deezer API for chart data
+
+### Features
+- **Personal Mode** - Visualize your Apple Music library by emotion
+- **Discover Mode** - Explore global music charts by country (21 regions)
+- **Examine Mode** - Deep dive into emotion clusters
+- 3D positioning based on energy (Y-axis) and valence (X-axis)
+- Color-coded by Thayer quadrants (Happy=Yellow, Sad=Blue, Frantic=Red, Calm=Cyan)
+
+### Source Code (gitignored - local only)
+Location: `mood-atlas-src/`
+```
+mood-atlas-src/
+├── src/
+│   ├── components/     # React components
+│   ├── data/           # Static data files
+│   │   ├── discoverCharts.json  # Pre-fetched Deezer data
+│   │   └── cityChartData.ts     # Type definitions
+│   └── utils/
+│       ├── deezerCharts.ts      # Loads static chart data
+│       └── emotionAnalysis.ts   # Thayer model logic
+├── scripts/
+│   └── fetchDeezerCharts.js     # Monthly data refresh script
+└── package.json
+```
+
+### Updating Discover Charts
+Run monthly to refresh global chart data:
+```bash
+cd mood-atlas-src
+node scripts/fetchDeezerCharts.js
+npm run build
+```
+Data is pre-fetched and bundled (no runtime API calls needed).
+
+### Build & Deploy
+```bash
+cd mood-atlas-src
+npm install          # First time only
+npm run build        # Outputs to ../mood-atlas/
+```
+Then commit the `mood-atlas/` folder changes.
+
+## Recent Commits
+- `a8f92af` - Update Eloquii project and site title
+- `3f5fcf0` - Add loading spinner to Mood Atlas
+- `29faa77` - Remove source code from repo, update Thayer project
+- `79f8366` - Add Thayer Model of Mood project to homepage
+- `05c4399` - Refactor emotion analysis and improve type safety
+- `c7dae8d` - Add Discover mode with live Deezer regional charts
+- `2b0c2f7` - Add Examine mode with colored background and UI adaptations
+- `d32f2cf` - Add Mood Atlas music visualization project
