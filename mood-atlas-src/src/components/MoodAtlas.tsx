@@ -29,6 +29,7 @@ const MoodAtlas: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('personal');
   const [cityCharts, setCityCharts] = useState<CityCluster[]>([]);
   const [isLoadingCities, setIsLoadingCities] = useState(false);
+  const [cityLoadError, setCityLoadError] = useState<string | null>(null);
   const [cityExamineMode, setCityExamineMode] = useState<CityExamineMode | null>(null);
   const [selectedCitySong, setSelectedCitySong] = useState<CityChartSong | null>(null);
 
@@ -54,6 +55,7 @@ const MoodAtlas: React.FC = () => {
     if (cityCharts.length > 0) return; // Already loaded
 
     setIsLoadingCities(true);
+    setCityLoadError(null);
     try {
       // Fetch real chart data from Deezer API (free, no auth)
       const clusters = await fetchAllRegionCharts((loaded, total) => {
@@ -61,8 +63,14 @@ const MoodAtlas: React.FC = () => {
       });
       setCityCharts(clusters);
       console.log(`🌍 Loaded ${clusters.length} region charts with real data`);
+
+      // Check if we got any data
+      if (clusters.length === 0) {
+        setCityLoadError('Unable to load music charts. Please try again later.');
+      }
     } catch (error) {
       console.error('Failed to load city charts:', error);
+      setCityLoadError('Failed to load music charts. Check your connection and try again.');
     } finally {
       setIsLoadingCities(false);
     }
@@ -146,6 +154,25 @@ const MoodAtlas: React.FC = () => {
           selectedCitySong={selectedCitySong}
           onCitySongSelect={handleCitySongSelect}
         />
+
+        {/* Error display for Discover mode */}
+        {viewMode === 'discover' && cityLoadError && !isLoadingCities && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-black/80 backdrop-blur-md rounded-lg p-6 max-w-md text-center pointer-events-auto">
+              <p className="text-white font-mono mb-4">{cityLoadError}</p>
+              <button
+                onClick={() => {
+                  setCityCharts([]);
+                  setCityLoadError(null);
+                  loadCityCharts();
+                }}
+                className="px-4 py-2 bg-white text-black font-mono text-sm rounded hover:bg-gray-200 transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

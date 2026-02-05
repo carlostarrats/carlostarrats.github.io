@@ -288,6 +288,13 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     onSongSelect?.(song);
   };
 
+  // Sanitize text to prevent XSS
+  const sanitizeText = (text: string): string => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  };
+
   const handleSongHover = (song: Song | null) => {
     hoveredSongRef.current = song;
     // Update DOM directly without React re-render
@@ -297,11 +304,12 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
         const titleColor = isExamining ? 'text-black' : 'text-white';
         const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
         const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
-        // Using textContent would be safer, but we need multiple styled divs
-        // Data comes from user's own Apple Music library, not external input
+        // Sanitize external data to prevent XSS
+        const safeTitle = sanitizeText(song.title);
+        const safeArtist = sanitizeText(song.artist);
         hoverInfoRef.current.innerHTML = `
-          <div class="${titleColor} font-bold">${song.title}</div>
-          <div class="${artistColor}">${song.artist}</div>
+          <div class="${titleColor} font-bold">${safeTitle}</div>
+          <div class="${artistColor}">${safeArtist}</div>
           <div class="${hintColor}">Click to view details</div>
         `;
       } else {
@@ -321,13 +329,16 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
   const handleCityHover = (cluster: CityCluster | null) => {
     // Update DOM directly for city hover info
-    // Data is internally generated mock data, not external input
     if (hoverInfoRef.current) {
       if (cluster) {
+        // Sanitize data from Deezer API to prevent XSS
+        const safeName = sanitizeText(cluster.city.name);
+        const safeCountry = sanitizeText(cluster.city.country);
+        const safeEmotion = sanitizeText(cluster.primaryEmotion);
         hoverInfoRef.current.innerHTML = `
-          <div class="text-white font-bold">${cluster.city.name}</div>
-          <div class="text-gray-400">${cluster.city.country}</div>
-          <div class="text-purple-400">${cluster.songs.length} songs • ${cluster.primaryEmotion}</div>
+          <div class="text-white font-bold">${safeName}</div>
+          <div class="text-gray-400">${safeCountry}</div>
+          <div class="text-purple-400">${cluster.songs.length} songs • ${safeEmotion}</div>
         `;
       } else {
         hoverInfoRef.current.innerHTML = `<div class="text-gray-500 italic">Hover over a city for info</div>`;
@@ -341,16 +352,18 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
 
   const handleCitySongHover = (song: CityChartSong | null) => {
     // Update DOM directly for city song hover info
-    // Data is internally generated mock data, not external input
     if (hoverInfoRef.current) {
       const isExamining = cityExamineMode;
       if (song) {
         const titleColor = isExamining ? 'text-black' : 'text-white';
         const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
         const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
+        // Sanitize data from Deezer API to prevent XSS
+        const safeTitle = sanitizeText(song.title);
+        const safeArtist = sanitizeText(song.artist);
         hoverInfoRef.current.innerHTML = `
-          <div class="${titleColor} font-bold">${song.title}</div>
-          <div class="${artistColor}">${song.artist}</div>
+          <div class="${titleColor} font-bold">${safeTitle}</div>
+          <div class="${artistColor}">${safeArtist}</div>
           <div class="${hintColor}">Click to view details</div>
         `;
       } else {

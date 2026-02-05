@@ -1,5 +1,6 @@
 .DS_Store
 mood-atlas-src/node_modules/
 mood-atlas-src/dist/
+mood-atlas-src/.env
 mood-atlas-deploy/
 .playwright-mcp/

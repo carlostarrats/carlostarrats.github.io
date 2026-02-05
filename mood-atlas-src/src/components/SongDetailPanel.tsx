@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Play, Pause, ExternalLink } from 'lucide-react';
 import { Song, emotionColors } from '@/data/mockSongs';
 
@@ -10,9 +10,10 @@ interface SongDetailPanelProps {
 
 const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examineMode = false }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
+  const [playbackError, setPlaybackError] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Get preview URL - either from song directly (Deezer) or fetch from iTunes API
   useEffect(() => {
@@ -43,48 +44,69 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
     }
   }, [song?.trackId, song?.previewUrl]);
 
-  // Cleanup audio on unmount or song change
+  // Cleanup audio on unmount
   useEffect(() => {
     return () => {
-      if (audio) {
-        audio.pause();
-        audio.src = '';
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+        audioRef.current = null;
       }
     };
-  }, [audio, song]);
+  }, []);
 
   // Stop audio when song changes
   useEffect(() => {
-    if (audio) {
-      audio.pause();
-      setAudio(null);
-      setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = '';
+      audioRef.current = null;
     }
+    setIsPlaying(false);
+    setPlaybackError(null);
   }, [song?.id]);
 
   if (!song) return null;
 
   const handlePlayPreview = async () => {
-    if (isPlaying && audio) {
-      audio.pause();
+    setPlaybackError(null);
+
+    if (isPlaying && audioRef.current) {
+      audioRef.current.pause();
       setIsPlaying(false);
       return;
     }
 
     if (previewUrl) {
+      // Clean up existing audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+      }
+
       const newAudio = new Audio(previewUrl);
-      newAudio.play().then(() => {
+      audioRef.current = newAudio;
+
+      newAudio.onended = () => setIsPlaying(false);
+      newAudio.onerror = () => {
+        setPlaybackError('Preview unavailable');
+        setIsPlaying(false);
+      };
+
+      try {
+        await newAudio.play();
         setIsPlaying(true);
-        setAudio(newAudio);
-        newAudio.onended = () => setIsPlaying(false);
-      }).catch(err => {
+      } catch (err) {
         console.error('Failed to play preview:', err);
-      });
+        setPlaybackError('Unable to play preview');
+        setIsPlaying(false);
+      }
     }
   };
 
   const handleOpenInAppleMusic = () => {
-    if (song.trackId) {
+    // Validate trackId is numeric to prevent URL injection
+    if (song.trackId && /^\d+$/.test(String(song.trackId))) {
       window.open(`https://music.apple.com/us/song/${song.trackId}`, '_blank');
     }
   };
@@ -93,7 +115,10 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
     // Deezer song IDs are prefixed with 'dz-'
     if (song.id.startsWith('dz-')) {
       const deezerId = song.id.replace('dz-', '');
-      window.open(`https://www.deezer.com/track/${deezerId}`, '_blank');
+      // Validate deezerId is numeric to prevent URL injection
+      if (/^\d+$/.test(deezerId)) {
+        window.open(`https://www.deezer.com/track/${deezerId}`, '_blank');
+      }
     }
   };
 
@@ -140,52 +165,60 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
         )}
 
         {/* Music Controls - Side by side */}
-        <div className="mb-6 grid grid-cols-2 gap-2">
-          {/* Preview Button */}
-          <button
-            onClick={handlePlayPreview}
-            disabled={isLoadingPreview || !previewUrl}
-            className="py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs disabled:opacity-50 disabled:cursor-not-allowed text-black"
-            style={{ backgroundColor: '#ffffff' }}
-          >
-            {isLoadingPreview ? (
-              '...'
-            ) : !previewUrl ? null : isPlaying ? (
-              <Pause className="w-3.5 h-3.5" />
-            ) : (
-              <Play className="w-3.5 h-3.5" />
+        <div className="mb-6">
+          <div className="grid grid-cols-2 gap-2">
+            {/* Preview Button */}
+            <button
+              onClick={handlePlayPreview}
+              disabled={isLoadingPreview || !previewUrl}
+              className="py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs disabled:opacity-50 disabled:cursor-not-allowed text-black"
+              style={{ backgroundColor: '#ffffff' }}
+            >
+              {isLoadingPreview ? (
+                '...'
+              ) : !previewUrl ? null : isPlaying ? (
+                <Pause className="w-3.5 h-3.5" />
+              ) : (
+                <Play className="w-3.5 h-3.5" />
+              )}
+              {isLoadingPreview ? '' : !previewUrl ? 'No Preview' : isPlaying ? 'Stop' : 'Preview'}
+            </button>
+
+            {/* Open in Apple Music Button */}
+            {song.trackId && (
+              <button
+                onClick={handleOpenInAppleMusic}
+                className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
+                  examineMode
+                    ? 'bg-white/70 hover:bg-white text-black'
+                    : 'bg-gray-600 hover:bg-gray-500 text-white'
+                }`}
+              >
+                <ExternalLink className="w-3 h-3" />
+                Apple Music
+              </button>
             )}
-            {isLoadingPreview ? '' : !previewUrl ? 'No Preview' : isPlaying ? 'Stop' : 'Preview'}
-          </button>
 
-          {/* Open in Apple Music Button */}
-          {song.trackId && (
-            <button
-              onClick={handleOpenInAppleMusic}
-              className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
-                examineMode
-                  ? 'bg-white/70 hover:bg-white text-black'
-                  : 'bg-gray-600 hover:bg-gray-500 text-white'
-              }`}
-            >
-              <ExternalLink className="w-3 h-3" />
-              Apple Music
-            </button>
-          )}
-
-          {/* Open in Deezer Button */}
-          {isDeezerSong && (
-            <button
-              onClick={handleOpenInDeezer}
-              className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
-                examineMode
-                  ? 'bg-white/70 hover:bg-white text-black'
-                  : 'bg-gray-600 hover:bg-gray-500 text-white'
-              }`}
-            >
-              <ExternalLink className="w-3 h-3" />
-              Deezer
-            </button>
+            {/* Open in Deezer Button */}
+            {isDeezerSong && (
+              <button
+                onClick={handleOpenInDeezer}
+                className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
+                  examineMode
+                    ? 'bg-white/70 hover:bg-white text-black'
+                    : 'bg-gray-600 hover:bg-gray-500 text-white'
+                }`}
+              >
+                <ExternalLink className="w-3 h-3" />
+                Deezer
+              </button>
+            )}
+          </div>
+          {/* Playback error message */}
+          {playbackError && (
+            <p className={`mt-2 text-xs font-mono ${examineMode ? 'text-red-600' : 'text-red-400'}`}>
+              {playbackError}
+            </p>
           )}
         </div>
 
