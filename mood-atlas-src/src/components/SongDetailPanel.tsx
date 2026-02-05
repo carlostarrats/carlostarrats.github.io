@@ -14,8 +14,16 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoadingPreview, setIsLoadingPreview] = useState(false);
 
-  // Fetch preview URL from iTunes API when song changes
+  // Get preview URL - either from song directly (Deezer) or fetch from iTunes API
   useEffect(() => {
+    // If song already has a preview URL (e.g., from Deezer), use it directly
+    if (song?.previewUrl) {
+      setPreviewUrl(song.previewUrl);
+      setIsLoadingPreview(false);
+      return;
+    }
+
+    // Otherwise, fetch from iTunes API using trackId (Apple Music songs)
     if (song?.trackId) {
       setIsLoadingPreview(true);
       setPreviewUrl(null);
@@ -29,8 +37,11 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
         })
         .catch(err => console.error('Failed to fetch preview:', err))
         .finally(() => setIsLoadingPreview(false));
+    } else {
+      setPreviewUrl(null);
+      setIsLoadingPreview(false);
     }
-  }, [song?.trackId]);
+  }, [song?.trackId, song?.previewUrl]);
 
   // Cleanup audio on unmount or song change
   useEffect(() => {
@@ -77,6 +88,16 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
       window.open(`https://music.apple.com/us/song/${song.trackId}`, '_blank');
     }
   };
+
+  const handleOpenInDeezer = () => {
+    // Deezer song IDs are prefixed with 'dz-'
+    if (song.id.startsWith('dz-')) {
+      const deezerId = song.id.replace('dz-', '');
+      window.open(`https://www.deezer.com/track/${deezerId}`, '_blank');
+    }
+  };
+
+  const isDeezerSong = song.id.startsWith('dz-');
 
 
   // Calculate emotion bar widths
@@ -149,6 +170,21 @@ const SongDetailPanel: React.FC<SongDetailPanelProps> = ({ song, onClose, examin
             >
               <ExternalLink className="w-3 h-3" />
               Apple Music
+            </button>
+          )}
+
+          {/* Open in Deezer Button */}
+          {isDeezerSong && (
+            <button
+              onClick={handleOpenInDeezer}
+              className={`py-2 px-3 rounded-md transition-all duration-200 flex items-center justify-center gap-1.5 font-mono text-xs ${
+                examineMode
+                  ? 'bg-white/70 hover:bg-white text-black'
+                  : 'bg-gray-600 hover:bg-gray-500 text-white'
+              }`}
+            >
+              <ExternalLink className="w-3 h-3" />
+              Deezer
             </button>
           )}
         </div>

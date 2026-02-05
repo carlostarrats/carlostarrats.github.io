@@ -115,6 +115,48 @@ export function mapAppleMusicToSong(appleSong: any) {
   };
 }
 
+// Fetch a catalog playlist (public, no user auth needed)
+export async function fetchCatalogPlaylist(musicKit: any, playlistId: string, storefront: string = 'us') {
+  try {
+    const response = await musicKit.api.music(`/v1/catalog/${storefront}/playlists/${playlistId}`, {
+      include: 'tracks',
+    });
+    return response.data?.data?.[0] || null;
+  } catch (error) {
+    console.error('Failed to fetch catalog playlist:', error);
+    return null;
+  }
+}
+
+// Search for playlists in the catalog (public, no user auth needed)
+export async function searchCatalogPlaylists(musicKit: any, query: string, storefront: string = 'us', limit: number = 5) {
+  try {
+    const response = await musicKit.api.music(`/v1/catalog/${storefront}/search`, {
+      term: query,
+      types: 'playlists',
+      limit: limit,
+    });
+    return response.data?.results?.playlists?.data || [];
+  } catch (error) {
+    console.error('Failed to search playlists:', error);
+    return [];
+  }
+}
+
+// Fetch charts for a storefront (public, no user auth needed)
+export async function fetchCharts(musicKit: any, storefront: string = 'us', types: string = 'songs', limit: number = 25) {
+  try {
+    const response = await musicKit.api.music(`/v1/catalog/${storefront}/charts`, {
+      types: types,
+      limit: limit,
+    });
+    return response.data?.results || null;
+  } catch (error) {
+    console.error('Failed to fetch charts:', error);
+    return null;
+  }
+}
+
 // Default configuration for development
 export const defaultConfig: MusicKitConfig = {
   developerToken: '', // Set this in your .env file

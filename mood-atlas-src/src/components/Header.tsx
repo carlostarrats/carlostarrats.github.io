@@ -1,5 +1,7 @@
 import React from 'react';
-import { RotateCcw, X } from 'lucide-react';
+import { RotateCcw, X, Globe, User } from 'lucide-react';
+
+export type ViewMode = 'personal' | 'discover';
 
 interface HeaderProps {
   onHomeClick?: () => void;
@@ -7,6 +9,9 @@ interface HeaderProps {
   examineMode?: { emotion: string; color: string } | null;
   onCloseExamine?: () => void;
   hidButtons?: boolean;
+  viewMode?: ViewMode;
+  onViewModeChange?: (mode: ViewMode) => void;
+  isLoadingCities?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -14,7 +19,10 @@ const Header: React.FC<HeaderProps> = ({
   onResetView,
   examineMode,
   onCloseExamine,
-  hidButtons = false
+  hidButtons = false,
+  viewMode = 'personal',
+  onViewModeChange,
+  isLoadingCities = false,
 }) => {
   const isExamining = !!examineMode;
 
@@ -36,6 +44,36 @@ const Header: React.FC<HeaderProps> = ({
 
           {/* Buttons - invisible when song detail is open in examine mode */}
           <div className={`flex items-center gap-2 ${hidButtons ? 'invisible' : ''}`}>
+            {/* View Mode Toggle - only show when not in examine mode */}
+            {!examineMode && onViewModeChange && (
+              <div className="backdrop-blur-md rounded-lg p-1 bg-transparent border border-white/20 flex">
+                <div
+                  onClick={() => onViewModeChange('personal')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-all ${
+                    viewMode === 'personal'
+                      ? 'bg-white/20 text-white'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <User className="w-4 h-4" />
+                  <span className="text-xs font-mono">My Music</span>
+                </div>
+                <div
+                  onClick={() => !isLoadingCities && onViewModeChange('discover')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-all ${
+                    viewMode === 'discover'
+                      ? 'bg-white/20 text-white'
+                      : 'text-gray-400 hover:text-white'
+                  } ${isLoadingCities ? 'opacity-50 cursor-wait' : ''}`}
+                >
+                  <Globe className="w-4 h-4" />
+                  <span className="text-xs font-mono">
+                    {isLoadingCities ? 'Loading...' : 'Discover'}
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Close Examine Button */}
             {examineMode && onCloseExamine && (
               <div

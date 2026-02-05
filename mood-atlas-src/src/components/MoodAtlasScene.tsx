@@ -1,9 +1,12 @@
-import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei';
 import MoodLayers from './MoodLayers';
+import CityGalaxies from './CityGalaxies';
 import SongDetailPanel from './SongDetailPanel';
 import { Song, generateMoodLayers } from '@/data/mockSongs';
+import { CityCluster, CityChartSong } from '@/data/cityChartData';
+import { ViewMode } from './Header';
 import * as THREE from 'three';
 
 // Grid orb for examine mode - with hover and selection effects
@@ -216,6 +219,11 @@ interface ExamineMode {
   songs: Song[];
 }
 
+interface CityExamineMode {
+  city: CityCluster;
+  songs: CityChartSong[];
+}
+
 interface MoodAtlasSceneProps {
   songs: Song[];
   onSongHover?: (song: Song | null) => void;
@@ -225,16 +233,29 @@ interface MoodAtlasSceneProps {
   onExamine?: (emotion: string, color: string, songs: Song[]) => void;
   selectedSong?: Song | null;
   onSongSelect?: (song: Song | null) => void;
+  // City Galaxies props
+  viewMode?: ViewMode;
+  cityCharts?: CityCluster[];
+  cityExamineMode?: CityExamineMode | null;
+  onCityExamine?: (cluster: CityCluster) => void;
+  selectedCitySong?: CityChartSong | null;
+  onCitySongSelect?: (song: CityChartSong | null) => void;
 }
 
 const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   songs,
   resetTrigger,
-  musicKit,
   examineMode,
   onExamine,
   selectedSong,
-  onSongSelect
+  onSongSelect,
+  // City Galaxies props
+  viewMode = 'personal',
+  cityCharts = [],
+  cityExamineMode,
+  onCityExamine,
+  selectedCitySong,
+  onCitySongSelect,
 }) => {
   const [hoveredLayer] = useState<any>(null);
   const [, setSelectedLayer] = useState<any>(null);
@@ -271,10 +292,11 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     hoveredSongRef.current = song;
     // Update DOM directly without React re-render
     if (hoverInfoRef.current) {
+      const isExamining = examineMode || cityExamineMode;
       if (song) {
-        const titleColor = examineMode ? 'text-black' : 'text-white';
-        const artistColor = examineMode ? 'text-black/60' : 'text-gray-400';
-        const hintColor = examineMode ? 'text-black/80' : 'text-purple-400';
+        const titleColor = isExamining ? 'text-black' : 'text-white';
+        const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
+        const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
         // Using textContent would be safer, but we need multiple styled divs
         // Data comes from user's own Apple Music library, not external input
         hoverInfoRef.current.innerHTML = `
@@ -283,7 +305,56 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           <div class="${hintColor}">Click to view details</div>
         `;
       } else {
-        const placeholderColor = examineMode ? 'text-black italic' : 'text-gray-500 italic';
+        const placeholderColor = isExamining ? 'text-black italic' : 'text-gray-500 italic';
+        hoverInfoRef.current.innerHTML = `<div class="${placeholderColor}">Hover over a dot for info</div>`;
+      }
+    }
+  };
+
+  // City handlers
+  const handleCityClick = (cluster: CityCluster) => {
+    onCityExamine?.(cluster);
+    // Set camera for city examine view
+    setTargetCameraPos(new THREE.Vector3(0, 0, 50));
+    setTargetLookAt(new THREE.Vector3(0, 0, 0));
+  };
+
+  const handleCityHover = (cluster: CityCluster | null) => {
+    // Update DOM directly for city hover info
+    // Data is internally generated mock data, not external input
+    if (hoverInfoRef.current) {
+      if (cluster) {
+        hoverInfoRef.current.innerHTML = `
+          <div class="text-white font-bold">${cluster.city.name}</div>
+          <div class="text-gray-400">${cluster.city.country}</div>
+          <div class="text-purple-400">${cluster.songs.length} songs • ${cluster.primaryEmotion}</div>
+        `;
+      } else {
+        hoverInfoRef.current.innerHTML = `<div class="text-gray-500 italic">Hover over a city for info</div>`;
+      }
+    }
+  };
+
+  const handleCitySongClick = (song: CityChartSong) => {
+    onCitySongSelect?.(song);
+  };
+
+  const handleCitySongHover = (song: CityChartSong | null) => {
+    // Update DOM directly for city song hover info
+    // Data is internally generated mock data, not external input
+    if (hoverInfoRef.current) {
+      const isExamining = cityExamineMode;
+      if (song) {
+        const titleColor = isExamining ? 'text-black' : 'text-white';
+        const artistColor = isExamining ? 'text-black/60' : 'text-gray-400';
+        const hintColor = isExamining ? 'text-black/80' : 'text-purple-400';
+        hoverInfoRef.current.innerHTML = `
+          <div class="${titleColor} font-bold">${song.title}</div>
+          <div class="${artistColor}">${song.artist}</div>
+          <div class="${hintColor}">Click to view details</div>
+        `;
+      } else {
+        const placeholderColor = isExamining ? 'text-black italic' : 'text-gray-500 italic';
         hoverInfoRef.current.innerHTML = `<div class="${placeholderColor}">Hover over a dot for info</div>`;
       }
     }
@@ -294,10 +365,16 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
   };
 
   const resetCamera = useCallback(() => {
-    setTargetCameraPos(new THREE.Vector3(0, -15, 0));
-    setTargetLookAt(new THREE.Vector3(0, 30, 0));
+    if (viewMode === 'discover') {
+      // Wider view for city galaxies
+      setTargetCameraPos(new THREE.Vector3(0, 0, 150));
+      setTargetLookAt(new THREE.Vector3(0, 0, 0));
+    } else {
+      setTargetCameraPos(new THREE.Vector3(0, -15, 0));
+      setTargetLookAt(new THREE.Vector3(0, 30, 0));
+    }
     setSelectedLayer(null);
-  }, []);
+  }, [viewMode]);
 
   const clearCameraTargets = useCallback(() => {
     setTargetCameraPos(null);
@@ -345,18 +422,42 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
     }
   }, [examineMode]);
 
-
-  const backgroundColor = examineMode ? examineMode.color : '#1a1a1a';
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  // Handle transition timing
+  // Effect to set camera for city examine mode
   useEffect(() => {
-    if (examineMode) {
-      setIsTransitioning(true);
-      const timeout = setTimeout(() => setIsTransitioning(false), 800);
-      return () => clearTimeout(timeout);
+    if (cityExamineMode) {
+      // Calculate grid dimensions for city songs
+      const songCount = cityExamineMode.songs.length;
+      const cols = Math.ceil(Math.sqrt(songCount));
+      const rows = Math.ceil(songCount / cols);
+      const spacing = 1.5;
+      const gridWidth = cols * spacing;
+      const gridHeight = rows * spacing;
+
+      // Calculate camera distance to fit grid
+      const maxDimension = Math.max(gridWidth, gridHeight);
+      const fov = 60 * (Math.PI / 180);
+      const cameraZ = (maxDimension / 2) / Math.tan(fov / 2) * 1.3 + 10;
+
+      // Snap lookAt to center
+      if (controlsRef.current) {
+        controlsRef.current.target.set(0, 0, 0);
+        controlsRef.current.update();
+      }
+
+      setTargetCameraPos(new THREE.Vector3(0, 0, Math.max(cameraZ, 25)));
+      setTargetLookAt(new THREE.Vector3(0, 0, 0));
     }
-  }, [examineMode]);
+  }, [cityExamineMode]);
+
+
+  const backgroundColor = examineMode
+    ? examineMode.color
+    : cityExamineMode
+      ? cityExamineMode.city.color
+      : '#1a1a1a';
+
+  const isExamining = examineMode || cityExamineMode;
+  const isDiscoverMode = viewMode === 'discover';
 
   return (
     <div
@@ -412,8 +513,8 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           }}
         />
 
-        {/* Normal view with fade - fast fade out */}
-        <FadeGroup visible={!examineMode} fadeOutSpeed={0.25}>
+        {/* Personal view - Mood layers */}
+        <FadeGroup visible={viewMode === 'personal' && !examineMode} fadeOutSpeed={0.25}>
           {/* Mood layers */}
           <MoodLayers
             layers={moodLayers}
@@ -433,7 +534,7 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           </mesh>
         </FadeGroup>
 
-        {/* Examine mode - grid of songs */}
+        {/* Personal examine mode - grid of songs */}
         {examineMode && (
           <ExamineGrid
             songs={examineMode.songs}
@@ -442,42 +543,110 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
             selectedSongId={selectedSong?.id}
           />
         )}
+
+        {/* Discover view - City Galaxies */}
+        <FadeGroup visible={viewMode === 'discover' && !cityExamineMode} fadeOutSpeed={0.25}>
+          <CityGalaxies
+            clusters={cityCharts}
+            onCityClick={handleCityClick}
+            onCityHover={handleCityHover}
+            onSongClick={handleCitySongClick}
+            onSongHover={handleCitySongHover}
+            selectedSongId={selectedCitySong?.id}
+          />
+        </FadeGroup>
+
+        {/* City examine mode - grid of city songs */}
+        {cityExamineMode && (
+          <ExamineGrid
+            songs={cityExamineMode.songs.map(s => ({
+              ...s,
+              primaryEmotion: s.primaryEmotion,
+            })) as any}
+            onSongClick={(song: any) => handleCitySongClick(song as CityChartSong)}
+            onSongHover={(song: any) => handleCitySongHover(song as CityChartSong | null)}
+            selectedSongId={selectedCitySong?.id}
+          />
+        )}
       </Canvas>
 
       {/* UI Overlay - No React state to prevent jumping */}
       <div className="absolute top-20 left-4 z-10 w-80 pointer-events-none">
         <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors duration-500 ease-out ${
-          examineMode
+          isExamining
             ? 'bg-black/10 border border-black text-black'
             : 'bg-transparent border border-white/20 text-gray-300'
         }`}>
-          <div className={`font-bold mb-2 ${examineMode ? 'text-black' : 'text-white'}`}>
-            {examineMode ? examineMode.emotion : 'Mood Atlas'}
+          <div className={`font-bold mb-2 ${isExamining ? 'text-black' : 'text-white'}`}>
+            {examineMode
+              ? examineMode.emotion
+              : cityExamineMode
+                ? cityExamineMode.city.city.name
+                : isDiscoverMode
+                  ? 'City Galaxies'
+                  : 'Mood Atlas'}
           </div>
-          <div>{examineMode ? `Songs: ${examineMode.songs.length}` : `Layers: ${moodLayers.length} | Songs: ${songs.length}`}</div>
-          <div ref={hoverInfoRef} className={`mt-2 pt-2 h-20 ${examineMode ? 'border-t border-black/30' : 'border-t border-gray-600'}`}>
-            <div className={examineMode ? 'text-black italic' : 'text-gray-500 italic'}>Hover over a dot for info</div>
+          <div>
+            {examineMode
+              ? `Songs: ${examineMode.songs.length}`
+              : cityExamineMode
+                ? `${cityExamineMode.city.city.country} • ${cityExamineMode.songs.length} songs`
+                : isDiscoverMode
+                  ? `Cities: ${cityCharts.length}`
+                  : `Layers: ${moodLayers.length} | Songs: ${songs.length}`}
+          </div>
+          {/* Show primary emotion for city examine mode */}
+          {cityExamineMode && (
+            <div className="mt-1">
+              Mood: {cityExamineMode.city.primaryEmotion}
+            </div>
+          )}
+          <div ref={hoverInfoRef} className={`mt-2 pt-2 h-20 ${isExamining ? 'border-t border-black/30' : 'border-t border-gray-600'}`}>
+            <div className={isExamining ? 'text-black italic' : 'text-gray-500 italic'}>
+              {isDiscoverMode ? 'Hover over a city for info' : 'Hover over a dot for info'}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Song Detail Panel */}
+      {/* Song Detail Panel - for personal view */}
       <SongDetailPanel
-        song={selectedSong}
+        song={selectedSong ?? null}
         onClose={handleCloseSongDetail}
         examineMode={!!examineMode}
       />
 
+      {/* Song Detail Panel - for city view (convert CityChartSong to Song) */}
+      {selectedCitySong && (
+        <SongDetailPanel
+          song={{
+            id: selectedCitySong.id,
+            title: selectedCitySong.title,
+            artist: selectedCitySong.artist,
+            album: selectedCitySong.album,
+            energy: selectedCitySong.energy,
+            primaryEmotion: selectedCitySong.primaryEmotion,
+            emotionScores: selectedCitySong.emotionScores,
+            previewUrl: selectedCitySong.previewUrl,
+            duration: selectedCitySong.duration,
+            genre: selectedCitySong.genre,
+            year: selectedCitySong.year,
+          }}
+          onClose={() => onCitySongSelect?.(null)}
+          examineMode={!!cityExamineMode}
+        />
+      )}
+
       {/* Instructions - positioned at bottom */}
       <div className="absolute bottom-4 left-4 z-10 w-80">
         <div className={`backdrop-blur-md rounded-lg p-4 font-mono text-xs transition-colors duration-500 ease-out ${
-          examineMode
+          isExamining
             ? 'bg-black/10 border border-black text-black'
             : 'bg-transparent border border-white/20 text-gray-300'
         }`}>
           <div
             className={`font-bold mb-2 cursor-pointer flex items-center justify-between ${
-              examineMode ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'
+              isExamining ? 'text-black hover:text-gray-700' : 'text-white hover:text-gray-300'
             }`}
             onClick={() => setControlsExpanded(!controlsExpanded)}
           >
@@ -486,13 +655,13 @@ const MoodAtlasScene: React.FC<MoodAtlasSceneProps> = ({
           </div>
           {controlsExpanded && (
             <>
-              <div>• Click orbs to view details</div>
-              <div>• Hover orbs for song info</div>
-              <div className={`mt-2 font-bold ${examineMode ? 'text-black' : 'text-white'}`}>Mouse:</div>
+              <div>• Click {isDiscoverMode ? 'cities' : 'orbs'} to {isDiscoverMode ? 'examine' : 'view details'}</div>
+              <div>• Hover {isDiscoverMode ? 'cities' : 'orbs'} for info</div>
+              <div className={`mt-2 font-bold ${isExamining ? 'text-black' : 'text-white'}`}>Mouse:</div>
               <div>• Click + drag: rotate</div>
               <div>• Right-click + drag: pan</div>
               <div>• Scroll: zoom</div>
-              <div className={`mt-2 font-bold ${examineMode ? 'text-black' : 'text-white'}`}>Trackpad:</div>
+              <div className={`mt-2 font-bold ${isExamining ? 'text-black' : 'text-white'}`}>Trackpad:</div>
               <div>• Drag: rotate</div>
               <div>• Two-finger drag: pan</div>
               <div>• Pinch/spread: zoom</div>

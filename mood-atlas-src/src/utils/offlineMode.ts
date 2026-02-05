@@ -199,37 +199,123 @@ export class OfflineMusicManager {
     let baseAcousticness = 0.3;
     let baseTempo = 120;
 
-    // Adjust based on genre
-    if (genre.includes('electronic') || genre.includes('dance')) {
-      baseEnergy = 0.8;
+    // Adjust based on genre - expanded mappings based on Thayer's arousal-valence model
+    // Reference: Music Emotion Recognition research papers
+
+    if (genre.includes('electronic') || genre.includes('dance') || genre.includes('edm') || genre.includes('house') || genre.includes('techno')) {
+      baseEnergy = 0.85;
       baseValence = 0.7;
       baseDanceability = 0.9;
-      baseAcousticness = 0.1;
+      baseAcousticness = 0.05;
       baseTempo = 128;
-    } else if (genre.includes('rock') || genre.includes('metal')) {
-      baseEnergy = 0.7;
-      baseValence = 0.6;
+    } else if (genre.includes('hip-hop') || genre.includes('hip hop') || genre.includes('rap')) {
+      baseEnergy = 0.75;
+      baseValence = 0.55;
+      baseDanceability = 0.8;
+      baseAcousticness = 0.15;
+      baseTempo = 95;
+    } else if (genre.includes('r&b') || genre.includes('rnb') || genre.includes('soul')) {
+      baseEnergy = 0.5;
+      baseValence = 0.65;
+      baseDanceability = 0.7;
+      baseAcousticness = 0.4;
+      baseTempo = 90;
+    } else if (genre.includes('rock') || genre.includes('metal') || genre.includes('punk') || genre.includes('grunge')) {
+      baseEnergy = 0.8;
+      baseValence = 0.5;
       baseDanceability = 0.4;
       baseAcousticness = 0.2;
-      baseTempo = 140;
+      baseTempo = 130;
+    } else if (genre.includes('indie') || genre.includes('alternative')) {
+      baseEnergy = 0.55;
+      baseValence = 0.5;
+      baseDanceability = 0.5;
+      baseAcousticness = 0.45;
+      baseTempo = 115;
     } else if (genre.includes('pop')) {
-      baseEnergy = 0.6;
-      baseValence = 0.7;
+      baseEnergy = 0.65;
+      baseValence = 0.75;
       baseDanceability = 0.8;
       baseAcousticness = 0.2;
       baseTempo = 120;
+    } else if (genre.includes('latin') || genre.includes('reggaeton') || genre.includes('salsa') || genre.includes('bachata')) {
+      baseEnergy = 0.8;
+      baseValence = 0.8;
+      baseDanceability = 0.9;
+      baseAcousticness = 0.25;
+      baseTempo = 100;
+    } else if (genre.includes('afrobeat') || genre.includes('afro')) {
+      baseEnergy = 0.75;
+      baseValence = 0.75;
+      baseDanceability = 0.85;
+      baseAcousticness = 0.3;
+      baseTempo = 105;
+    } else if (genre.includes('k-pop') || genre.includes('kpop') || genre.includes('j-pop') || genre.includes('jpop')) {
+      baseEnergy = 0.8;
+      baseValence = 0.8;
+      baseDanceability = 0.85;
+      baseAcousticness = 0.15;
+      baseTempo = 125;
+    } else if (genre.includes('reggae') || genre.includes('dub')) {
+      baseEnergy = 0.5;
+      baseValence = 0.7;
+      baseDanceability = 0.7;
+      baseAcousticness = 0.4;
+      baseTempo = 80;
+    } else if (genre.includes('country') || genre.includes('folk')) {
+      baseEnergy = 0.5;
+      baseValence = 0.6;
+      baseDanceability = 0.5;
+      baseAcousticness = 0.7;
+      baseTempo = 110;
     } else if (genre.includes('jazz') || genre.includes('blues')) {
       baseEnergy = 0.4;
-      baseValence = 0.5;
-      baseDanceability = 0.3;
+      baseValence = 0.55;
+      baseDanceability = 0.35;
       baseAcousticness = 0.8;
       baseTempo = 100;
-    } else if (genre.includes('classical')) {
-      baseEnergy = 0.3;
+    } else if (genre.includes('classical') || genre.includes('orchestra') || genre.includes('symphony')) {
+      baseEnergy = 0.35;
       baseValence = 0.6;
-      baseDanceability = 0.2;
-      baseAcousticness = 0.9;
+      baseDanceability = 0.15;
+      baseAcousticness = 0.95;
       baseTempo = 80;
+    } else if (genre.includes('ambient') || genre.includes('chill') || genre.includes('lofi') || genre.includes('lo-fi')) {
+      baseEnergy = 0.25;
+      baseValence = 0.6;
+      baseDanceability = 0.3;
+      baseAcousticness = 0.5;
+      baseTempo = 85;
+    } else if (genre.includes('singer') || genre.includes('songwriter')) {
+      baseEnergy = 0.4;
+      baseValence = 0.5;
+      baseDanceability = 0.35;
+      baseAcousticness = 0.7;
+      baseTempo = 100;
+    } else if (genre.includes('funk') || genre.includes('disco')) {
+      baseEnergy = 0.8;
+      baseValence = 0.8;
+      baseDanceability = 0.9;
+      baseAcousticness = 0.25;
+      baseTempo = 115;
+    } else if (genre.includes('new wave') || genre.includes('synth') || genre.includes('synthpop')) {
+      baseEnergy = 0.7;
+      baseValence = 0.6;
+      baseDanceability = 0.75;
+      baseAcousticness = 0.1;
+      baseTempo = 120;
+    } else if (genre.includes('post-punk') || genre.includes('darkwave') || genre.includes('goth')) {
+      baseEnergy = 0.6;
+      baseValence = 0.35;
+      baseDanceability = 0.5;
+      baseAcousticness = 0.25;
+      baseTempo = 120;
+    } else if (genre.includes('soundtrack') || genre.includes('score') || genre.includes('cinematic')) {
+      baseEnergy = 0.5;
+      baseValence = 0.5;
+      baseDanceability = 0.2;
+      baseAcousticness = 0.6;
+      baseTempo = 90;
     }
 
     // Add some randomness for realism
