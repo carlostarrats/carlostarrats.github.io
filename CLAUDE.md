@@ -218,20 +218,70 @@ mood-atlas-src/
 │   ├── components/     # React components
 │   ├── data/           # Static data files
 │   │   ├── discoverCharts.json  # Pre-fetched Deezer data
+│   │   ├── appleMusicSongs.json # Personal mode data
 │   │   └── cityChartData.ts     # Type definitions
 │   └── utils/
 │       ├── deezerCharts.ts      # Loads static chart data
-│       └── emotionAnalysis.ts   # Thayer model logic
+│       └── emotionAnalysis.ts   # Thayer model logic (9 emotions)
 ├── scripts/
-│   └── fetchDeezerCharts.js     # Monthly data refresh script
+│   ├── lastfmUtils.js           # Shared Last.fm API client & tag mapping
+│   ├── fetchDeezerCharts.js     # Discover mode data refresh
+│   ├── processAppleData.js      # Personal mode from CSV (requires Apple Music CSV)
+│   └── enrichAppleData.js       # Personal mode enrichment (re-enriches existing JSON)
+├── .env                         # API keys (gitignored)
 └── package.json
 ```
 
+### Mood Atlas Emotion Analysis
+**Data source:** Last.fm crowd-sourced mood tags mapped to Thayer model coordinates.
+
+**How it works:**
+1. Each track is looked up on Last.fm via `track.getTopTags` API
+2. Tags are filtered to ~70 mood-related words (e.g. "happy", "sad", "chill", "angry")
+3. Each mood tag has pre-mapped `{energy, valence}` coordinates based on MIR research
+4. Weighted average of matching tags produces final energy/valence for the track
+
+**Fallback chain:**
+1. Track-level tags (best quality — specific to the song)
+2. Artist-level tags (fallback — general artist mood)
+3. Neutral values `{0.5, 0.5}` marked as `dataQuality: 'fallback'`
+
+**9 Emotion Categories** (from `emotionAnalysis.ts`):
+| Emotion | Energy | Valence |
+|---------|--------|---------|
+| Happy | > 0.7 | > 0.7 |
+| Energetic | > 0.7 | 0.4–0.7 |
+| Angry | > 0.7 | ≤ 0.4 |
+| Excited | 0.4–0.7 | > 0.7 |
+| Romantic | 0.4–0.7 | 0.4–0.7 |
+| Melancholic | 0.3–0.7 | ≤ 0.4 |
+| Peaceful | ≤ 0.4 | > 0.5 |
+| Calm | ≤ 0.4 | 0.3–0.5 |
+| Sad | ≤ 0.3 | ≤ 0.3 |
+
+**Cache:** `scripts/.lastfm-cache.json` (gitignored) — persists tag lookups across runs. Only new/uncached tracks make API calls.
+
+**API key:** Required in `mood-atlas-src/.env` as `LASTFM_API_KEY`. Free at https://www.last.fm/api/account/create
+
 ### Updating Discover Charts
-Run monthly to refresh global chart data:
+Run monthly to refresh global chart data (requires `LASTFM_API_KEY` in `.env`):
 ```bash
 cd mood-atlas-src
 node scripts/fetchDeezerCharts.js
+npm run build
+```
+
+### Updating Personal Mode Data
+If you have the Apple Music CSV:
+```bash
+cd mood-atlas-src
+node scripts/processAppleData.js
+npm run build
+```
+To re-enrich existing data without the CSV:
+```bash
+cd mood-atlas-src
+node scripts/enrichAppleData.js
 npm run build
 ```
 Data is pre-fetched and bundled (no runtime API calls needed).
