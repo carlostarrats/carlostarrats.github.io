@@ -227,24 +227,43 @@ mood-atlas-src/
 │   ├── lastfmUtils.js           # Shared Last.fm API client & tag mapping
 │   ├── fetchDeezerCharts.js     # Discover mode data refresh
 │   ├── processAppleData.js      # Personal mode from CSV (requires Apple Music CSV)
-│   └── enrichAppleData.js       # Personal mode enrichment (re-enriches existing JSON)
+│   ├── enrich.js                # Multi-source enrichment (Last.fm + iTunes + Deezer)
+│   └── blend.js                 # Configurable energy/valence/emotion computation
 ├── .env                         # API keys (gitignored)
 └── package.json
 ```
 
 ### Mood Atlas Emotion Analysis
-**Data source:** Last.fm crowd-sourced mood tags mapped to Thayer model coordinates.
+**Two-phase pipeline: `enrich.js` (fetch) → `blend.js` (compute)**
 
-**How it works:**
-1. Each track is looked up on Last.fm via `track.getTopTags` API
-2. Tags are filtered to ~70 mood-related words (e.g. "happy", "sad", "chill", "angry")
-3. Each mood tag has pre-mapped `{energy, valence}` coordinates based on MIR research
-4. Weighted average of matching tags produces final energy/valence for the track
+Source data is stored permanently in `song.sources.*` and NEVER overwritten by blending. Computed fields (energy, valence, primaryEmotion, emotionScores) are derived from sources and can be recomputed instantly.
 
-**Fallback chain:**
-1. Track-level tags (best quality — specific to the song)
-2. Artist-level tags (fallback — general artist mood)
-3. Neutral values `{0.5, 0.5}` marked as `dataQuality: 'fallback'`
+#### Phase 1: enrich.js — Multi-source data fetching
+Fetches raw data from 3 sources and saves to `song.sources.*`. Idempotent — skips already-enriched songs unless forced.
+
+**Sources stored per song:**
+- `sources.lastfm` — `{energy, valence, quality: 'track'|'artist'}` from Last.fm tag mapping
+- `sources.itunesGenre` — iTunes per-track genre string (e.g. "Alternative", "Punk")
+- `sources.deezer` — `{bpm, gain}` from Deezer track data
+
+**Force flags:** `--force-lastfm`, `--force-itunes`, `--force-deezer`
+
+**Caches (gitignored):** `.lastfm-cache.json`, `.itunes-cache.json`, `.deezer-cache.json`
+
+#### Phase 2: blend.js — Configurable computation
+Pure computation from `song.sources.*`. No API calls. Runs in <1 second. Re-run freely with different config.
+
+**Priority chain:**
+1. Last.fm track-level tags (song-specific mood data)
+2. Last.fm artist-level tags (specific genres like "punk", "grunge")
+3. iTunes genre (broad: "Alternative", "Rock") mapped via GENRE_THAYER table
+4. Fallback: `{0.5, 0.5}`
+
+**Blending approach (stretch + offset):**
+- Base energy/valence from priority source above
+- Stretch values away from 0.5 center to reduce clustering: `energy = 0.5 + (energy - 0.5) * stretchFactor`
+- Deezer BPM/gain applied as additive offsets (not weighted averages) for per-track variation
+- All config at top of `blend.js` (stretch factors, BPM/gain weights, clamp range)
 
 **9 Emotion Categories** (from `emotionAnalysis.ts`):
 | Emotion | Energy | Valence |
@@ -259,9 +278,9 @@ mood-atlas-src/
 | Calm | ≤ 0.4 | 0.3–0.5 |
 | Sad | ≤ 0.3 | ≤ 0.3 |
 
-**Cache:** `scripts/.lastfm-cache.json` (gitignored) — persists tag lookups across runs. Only new/uncached tracks make API calls.
-
-**API key:** Required in `mood-atlas-src/.env` as `LASTFM_API_KEY`. Free at https://www.last.fm/api/account/create
+**API keys:** Required in `mood-atlas-src/.env`:
+- `LASTFM_API_KEY` — Free at https://www.last.fm/api/account/create
+- iTunes and Deezer APIs are free, no key required
 
 ### Updating Discover Charts
 Run monthly to refresh global chart data (requires `LASTFM_API_KEY` in `.env`):
@@ -272,16 +291,22 @@ npm run build
 ```
 
 ### Updating Personal Mode Data
-If you have the Apple Music CSV:
+If you have the Apple Music CSV (initial import):
 ```bash
 cd mood-atlas-src
 node scripts/processAppleData.js
-npm run build
 ```
-To re-enrich existing data without the CSV:
+To enrich with multi-source data (Last.fm + iTunes + Deezer):
 ```bash
 cd mood-atlas-src
-node scripts/enrichAppleData.js
+node scripts/enrich.js          # Fetches missing source data (~70 min first run, instant after)
+node scripts/blend.js           # Computes energy/valence/emotion (<1 sec, re-run freely)
+npm run build
+```
+To re-blend with different config (no API calls, edit CONFIG in blend.js):
+```bash
+cd mood-atlas-src
+node scripts/blend.js
 npm run build
 ```
 Data is pre-fetched and bundled (no runtime API calls needed).
@@ -295,11 +320,11 @@ npm run build        # Outputs to ../mood-atlas/
 Then commit the `mood-atlas/` folder changes.
 
 ## Recent Commits
-- `a8f92af` - Update Eloquii project and site title
-- `3f5fcf0` - Add loading spinner to Mood Atlas
-- `29faa77` - Remove source code from repo, update Thayer project
-- `79f8366` - Add Thayer Model of Mood project to homepage
-- `05c4399` - Refactor emotion analysis and improve type safety
-- `c7dae8d` - Add Discover mode with live Deezer regional charts
-- `2b0c2f7` - Add Examine mode with colored background and UI adaptations
+- `fbc4230e` - Add loading spinner while 3D scene initializes
+- `4606ad7f` - Add linear zoom controls to Mood Atlas 3D scene
+- `87cba3ae` - Fix preview error showing when playback succeeds
+- `a310ac24` - Rebuild Mood Atlas with multi-source enrichment pipeline
+- `2e80eade` - Add all 8 Thayer emotions to Discover mode
+- `00f4b201` - Rebuild Mood Atlas bundle and disable unused LFS filter
+- `24e92f4d` - Update CLAUDE.md and rebuild Mood Atlas bundle
 - `d32f2cf` - Add Mood Atlas music visualization project
