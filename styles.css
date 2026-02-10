@@ -480,12 +480,13 @@ h2 {
   background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
   background-size: 400% 400%;
   animation: skeleton-pulse 1.2s ease-in-out infinite;
+  overflow: hidden;
   position: relative;
 }
 
 .card--dds.is-loaded {
   animation: none;
-  background: #444444 url('images/dds/dds-hero.jpg') center/cover no-repeat;
+  background: #444444;
 }
 
 .card--eloquii {
@@ -493,12 +494,13 @@ h2 {
   background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
   background-size: 400% 400%;
   animation: skeleton-pulse 1.2s ease-in-out infinite;
+  overflow: hidden;
   position: relative;
 }
 
 .card--eloquii.is-loaded {
   animation: none;
-  background: #444444 url('images/eloquii/eloquii-hero.jpg') center/cover no-repeat;
+  background: #444444;
 }
 
 .card--thayer {
@@ -560,6 +562,8 @@ h2 {
   height: 65px;
   cursor: pointer;
   filter: drop-shadow(0 0 15px rgba(0, 84, 255, 0.1));
+  z-index: 1;
+  transform: translateZ(0);
 }
 
 .cool-button svg {
@@ -582,6 +586,12 @@ h2 {
 .cool-button__hover {
   z-index: 1;
   visibility: hidden;
+}
+
+/* Card media hover — subtle dim on image/video only, not the SVG button */
+.card:hover img,
+.card:hover video {
+  opacity: 0.85;
 }
 
 .card:hover .cool-button__static {

@@ -88,8 +88,6 @@
             iframe.src = iframe.dataset.src;
           }
         });
-        // Trigger deferred background image loading
-        document.dispatchEvent(new Event('assetsDeferred'));
       }
 
       function onReady(callback) {
@@ -338,6 +336,7 @@
       <div class="project-pair__item project-pair__item--dds">
         <h2><span class="italic color--dds">Defense Digital Service </span>— Digital transformation of the Defense Department, integrating AI, data, cyber, and IT <a href="https://www.dds.mil/work/" class="see-more-tag js-external-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
         <a href="https://www.dds.mil/work/" class="card card--dds js-external-link" aria-label="View Defense Digital Service project">
+          <img data-src="images/dds/dds-hero.jpg" alt="Defense Digital Service project" class="deferred">
           <span class="cool-button" aria-hidden="true">
             <svg class="cool-button__static" width="65" height="65" viewBox="30 30 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g><rect x="30" y="30" width="65" height="65" rx="32.5" fill="url(#paint0_static_dds)"/></g>
@@ -389,6 +388,7 @@
       <div class="project-pair__item project-pair__item--eloquii">
         <h2><span class="italic color--eloquii">Eloquii </span>— Platform redesign improving the online shopping experience for plus-size fashion customers <a href="projects/eloquii.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
         <a href="projects/eloquii.html" class="card card--eloquii" aria-label="View Eloquii project">
+          <img data-src="images/eloquii/eloquii-hero.jpg" alt="Eloquii fashion project" class="deferred">
           <span class="cool-button" aria-hidden="true">
             <svg class="cool-button__static" width="65" height="65" viewBox="30 30 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g><rect x="30" y="30" width="65" height="65" rx="32.5" fill="url(#paint0_static_elq)"/></g>
@@ -533,7 +533,7 @@
         });
       });
 
-      // Handle card images (thayer)
+      // Handle card images (dds, eloquii, thayer)
       document.querySelectorAll('.card img.deferred').forEach(function(img) {
         var card = img.closest('.card');
         img.addEventListener('load', function() {
@@ -542,23 +542,6 @@
       });
     })();
 
-    // Deferred background image loading (triggered after fonts via custom event)
-    document.addEventListener('assetsDeferred', function() {
-      ['dds', 'eloquii'].forEach(function(name) {
-        var card = document.querySelector('.card--' + name);
-        if (card) {
-          var img = new Image();
-          img.onload = function() {
-            card.classList.add('is-loaded');
-          };
-          if (name === 'dds') {
-            img.src = 'images/dds/dds-hero.jpg';
-          } else if (name === 'eloquii') {
-            img.src = 'images/eloquii/eloquii-hero.jpg';
-          }
-        }
-      });
-    });
   </script>
 </body>
 </html>
