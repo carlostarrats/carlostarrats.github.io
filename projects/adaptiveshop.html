@@ -42,13 +42,30 @@
       if (sessionStorage.getItem('fontsLoaded')) {
         preloader.style.display = 'none';
       } else {
-        document.fonts.ready.then(function() {
+        var fontsReady = false;
+        var minTimeReady = false;
+        var loaded = false;
+        function tryHide() {
+          if (loaded || !fontsReady || !minTimeReady) return;
+          loaded = true;
           sessionStorage.setItem('fontsLoaded', 'true');
           preloader.classList.add('is-hidden');
           setTimeout(function() {
             preloader.style.display = 'none';
           }, 400);
-        });
+        }
+        // Minimum 2s display time
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHide();
+        }, 2000);
+        // Hide when fonts ready AND min time elapsed
+        function onFontsReady() {
+          fontsReady = true;
+          tryHide();
+        }
+        document.fonts.ready.then(onFontsReady);
+        setTimeout(onFontsReady, 4000);
       }
     })();
   </script>

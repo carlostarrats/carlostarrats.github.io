@@ -105,9 +105,11 @@
         // Wait for DOM so skeleton handlers are attached
         onReady(loadDeferredAssets);
       } else {
+        var fontsReady = false;
+        var minTimeReady = false;
         var loaded = false;
-        function hideAndLoad() {
-          if (loaded) return;
+        function tryHideAndLoad() {
+          if (loaded || !fontsReady || !minTimeReady) return;
           loaded = true;
           sessionStorage.setItem('fontsLoaded', 'true');
           // Wait for DOM so skeleton handlers are attached
@@ -119,9 +121,19 @@
             }, 400);
           });
         }
-        // Load when fonts ready OR after 2s max (failsafe)
-        document.fonts.ready.then(hideAndLoad);
-        setTimeout(hideAndLoad, 2000);
+        // Minimum 2s display time
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHideAndLoad();
+        }, 2000);
+        // Load when fonts ready AND min time elapsed
+        function onFontsReady() {
+          fontsReady = true;
+          tryHideAndLoad();
+        }
+        document.fonts.ready.then(onFontsReady);
+        // Failsafe: treat fonts as ready after 4s
+        setTimeout(onFontsReady, 4000);
       }
     })();
   </script>
