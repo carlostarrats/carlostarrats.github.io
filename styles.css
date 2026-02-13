@@ -215,7 +215,7 @@ h2 {
 .hero h1 {
   position: relative;
   z-index: 1;
-  max-width: 1100px;
+  max-width: 1000px;
 }
 
 .hero-flicker {
