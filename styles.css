@@ -1266,7 +1266,7 @@ h1.section-brand {
   h1 {
     font-size: 44px;
     line-height: 39px;
-    letter-spacing: -1.32px;
+    letter-spacing: -0.5px;
   }
 
   h2 {
@@ -1564,7 +1564,7 @@ html[data-theme="lavender"] .top-bar__swatch.active {
 
 @media (max-width: 800px) {
   .top-bar {
-    padding: 14px 20px;
+    padding: 14px 20px 34px;
   }
 }
 
@@ -1574,7 +1574,6 @@ html[data-theme="lavender"] .top-bar__swatch.active {
   }
   .top-bar {
     justify-content: center;
-    padding-bottom: 34px;
   }
 }
 
