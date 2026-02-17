@@ -32,6 +32,9 @@
   <link rel="preload" href="fonts/NyghtSerif-Light.woff2" as="font" type="font/woff2" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
+  <script>
+    (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
   <link rel="stylesheet" href="styles.css">
 
   <!-- Structured Data -->
@@ -50,6 +53,53 @@
   </script>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="top-bar__clock" id="top-bar-clock"></div>
+    <div class="top-bar__colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var clockEl = document.getElementById('top-bar-clock');
+      function updateClock() {
+        var now = new Date();
+        var time = now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        var day = now.toLocaleString('en-US', { weekday: 'long' });
+        clockEl.textContent = time + ', ' + day;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      var swatches = document.querySelectorAll('.top-bar__swatch');
+      var saved = sessionStorage.getItem('siteTheme') || 'default';
+      swatches.forEach(function(s) {
+        if (s.getAttribute('data-theme') === saved) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+        s.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          swatches.forEach(function(el) { el.classList.remove('active'); });
+          this.classList.add('active');
+          if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+            sessionStorage.removeItem('siteTheme');
+          } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            sessionStorage.setItem('siteTheme', theme);
+          }
+        });
+      });
+    })();
+  </script>
+
   <!-- Preloader -->
   <div class="preloader" id="preloader">
     <div class="preloader__label">Thinking</div>
