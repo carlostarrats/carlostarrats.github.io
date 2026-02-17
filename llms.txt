@@ -25,7 +25,7 @@ A text-only open-source on-device LLM app for iOS. Runs Gemma3, Llama3.2, SmolLM
 URL: https://carlostarrats.github.io/projects/control.html
 
 ### Defense Digital Service
-Digital transformation of the Defense Department, integrating AI, data, cyber, and IT. Work details at https://www.dds.mil/work/
+Digital transformation of the Defense Department, integrating AI, data, cyber, and IT. Work details at https://defensedigitalservice-org.github.io/dds-mil/
 
 ### Eloquii
 Platform redesign improving the online shopping experience for plus-size fashion customers. Led design of a modular, scalable system with reusable components and mobile parity.
