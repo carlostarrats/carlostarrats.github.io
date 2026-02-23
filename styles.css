@@ -1113,6 +1113,99 @@ h1.section-brand {
 
 .project-images {
   margin-bottom: 30px;
+  transition: opacity 0.2s ease;
+}
+
+/* ============================================
+   VIEW TOGGLE (Visual / Text)
+   ============================================ */
+
+.view-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 30px;
+  width: fit-content;
+}
+
+.view-toggle__btn {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.4px;
+  color: rgba(255, 255, 255, 0.5);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 24px;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.view-toggle__btn:first-child {
+  border-radius: 100px 0 0 100px;
+  border-right: none;
+}
+
+.view-toggle__btn:last-child {
+  border-radius: 0 100px 100px 0;
+}
+
+.view-toggle__btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.view-toggle__btn.active {
+  color: #ffffff;
+  background-color: #3a3a3a;
+  border-color: #3a3a3a;
+}
+
+.view-toggle__btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Text mode toggling */
+.project-text {
+  display: none;
+  margin-bottom: 30px;
+  transition: opacity 0.2s ease;
+}
+
+.is-text-mode .project-images {
+  display: none;
+}
+
+.is-text-mode .project-text {
+  display: block;
+}
+
+.project-text__section {
+  margin-bottom: 48px;
+}
+
+.project-text__section:last-child {
+  margin-bottom: 0;
+}
+
+.project-text__heading {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -1.44px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.project-text__body {
+  font-family: 'Baskervville', serif;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.6px;
+  color: #ffffff;
 }
 
 /* Skeleton loading animation */
@@ -1311,6 +1404,18 @@ h1.section-brand {
 
   .project-images__grid .project-images__item:last-child {
     margin-bottom: 0;
+  }
+
+  .view-toggle__btn {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 5px 20px;
+  }
+
+  .project-text__heading {
+    font-size: 35px;
+    line-height: 38px;
+    letter-spacing: -0.70px;
   }
 
   .see-more-tag {
@@ -1548,6 +1653,27 @@ h1.section-brand {
   .project-pair__item--dds > h2,
   .project-pair__item--eloquii > h2 {
     margin-bottom: 30px;
+  }
+
+  .view-toggle__btn {
+    font-size: 16px;
+    line-height: 22px;
+    padding: 5px 18px;
+  }
+
+  .project-text__heading {
+    font-size: 28px;
+    line-height: 30px;
+    letter-spacing: -0.56px;
+  }
+
+  .project-text__body {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .project-text__section {
+    margin-bottom: 36px;
   }
 
   .see-more-tag {
@@ -1927,4 +2053,57 @@ html[data-theme="mint"] .detail-footer__copyright,
 html[data-theme="yellow"] .detail-footer__copyright,
 html[data-theme="lavender"] .detail-footer__copyright {
   color: #1a1a1a;
+}
+
+/* View toggle → dark */
+html[data-theme="peach"] .view-toggle__btn,
+html[data-theme="pink"] .view-toggle__btn,
+html[data-theme="mint"] .view-toggle__btn,
+html[data-theme="yellow"] .view-toggle__btn,
+html[data-theme="lavender"] .view-toggle__btn {
+  color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="peach"] .view-toggle__btn:hover,
+html[data-theme="pink"] .view-toggle__btn:hover,
+html[data-theme="mint"] .view-toggle__btn:hover,
+html[data-theme="yellow"] .view-toggle__btn:hover,
+html[data-theme="lavender"] .view-toggle__btn:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+html[data-theme="peach"] .view-toggle__btn.active,
+html[data-theme="pink"] .view-toggle__btn.active,
+html[data-theme="mint"] .view-toggle__btn.active,
+html[data-theme="yellow"] .view-toggle__btn.active,
+html[data-theme="lavender"] .view-toggle__btn.active {
+  color: #1a1a1a;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="peach"] .view-toggle__btn:focus-visible,
+html[data-theme="pink"] .view-toggle__btn:focus-visible,
+html[data-theme="mint"] .view-toggle__btn:focus-visible,
+html[data-theme="yellow"] .view-toggle__btn:focus-visible,
+html[data-theme="lavender"] .view-toggle__btn:focus-visible {
+  outline-color: #1a1a1a;
+}
+
+/* Project text → dark */
+html[data-theme="peach"] .project-text__heading,
+html[data-theme="pink"] .project-text__heading,
+html[data-theme="mint"] .project-text__heading,
+html[data-theme="yellow"] .project-text__heading,
+html[data-theme="lavender"] .project-text__heading {
+  color: #1a1a1a;
+}
+
+html[data-theme="peach"] .project-text__body,
+html[data-theme="pink"] .project-text__body,
+html[data-theme="mint"] .project-text__body,
+html[data-theme="yellow"] .project-text__body,
+html[data-theme="lavender"] .project-text__body {
+  color: #000000;
 }
