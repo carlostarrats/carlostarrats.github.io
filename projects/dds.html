@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' https://defensedigitalservice-org.github.io;">
+  <title>Defense Digital Service — Carlos Tarrats</title>
+  <meta name="description" content="Defense Digital Service: Digital transformation of the Defense Department, integrating AI, data, cyber, and IT">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://carlostarrats.github.io/projects/dds.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Defense Digital Service — Carlos Tarrats">
+  <meta property="og:description" content="Defense Digital Service: Digital transformation of the Defense Department, integrating AI, data, cyber, and IT">
+  <meta property="og:url" content="https://carlostarrats.github.io/projects/dds.html">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Defense Digital Service — Carlos Tarrats">
+  <meta name="twitter:description" content="Defense Digital Service: Digital transformation of the Defense Department, integrating AI, data, cyber, and IT">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <script>
+    (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar__clock" id="top-bar-clock"></div>
+    <div class="top-bar__colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var clockEl = document.getElementById('top-bar-clock');
+      function updateClock() {
+        var now = new Date();
+        var time = now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        var day = now.toLocaleString('en-US', { weekday: 'long' });
+        clockEl.textContent = time + ', ' + day;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      var swatches = document.querySelectorAll('.top-bar__swatch');
+      var saved = sessionStorage.getItem('siteTheme') || 'default';
+      swatches.forEach(function(s) {
+        if (s.getAttribute('data-theme') === saved) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+        s.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          swatches.forEach(function(el) { el.classList.remove('active'); });
+          this.classList.add('active');
+          if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+            sessionStorage.removeItem('siteTheme');
+          } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            sessionStorage.setItem('siteTheme', theme);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__spinner"></div>
+  </div>
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (sessionStorage.getItem('fontsLoaded')) {
+        preloader.style.display = 'none';
+      } else {
+        var fontsReady = false;
+        var minTimeReady = false;
+        var loaded = false;
+        function tryHide() {
+          if (loaded || !fontsReady || !minTimeReady) return;
+          loaded = true;
+          sessionStorage.setItem('fontsLoaded', 'true');
+          preloader.classList.add('is-hidden');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+        // Minimum 2s display time
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHide();
+        }, 2000);
+        // Hide when fonts ready AND min time elapsed
+        function onFontsReady() {
+          fontsReady = true;
+          tryHide();
+        }
+        document.fonts.ready.then(onFontsReady);
+        setTimeout(onFontsReady, 4000);
+      }
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="detail-page detail-page--dds">
+    <nav class="detail-nav">
+      <a href="../index.html" class="back-link" aria-label="Back to homepage">Back</a>
+      <a href="https://defensedigitalservice-org.github.io/dds-mil/" class="external-link" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        Archive
+      </a>
+    </nav>
+
+    <article id="main-content" class="content-card">
+      <header class="project-header">
+        <div class="project-header__title">
+          <span class="project-header__title-name project-header__title-name--dds">Defense Digital Service </span><span class="project-header__title-dash">—</span> Digital transformation of the Defense Department, integrating AI, data, cyber, and IT
+        </div>
+
+        <div class="project-header__description">
+          <p>Founded in November 2015, DDS brought best practices and technologies from the private sector and paired them with the critical mission of the Department of Defense. DDS brought in America's best and most innovative talent in their fields to transform the DoD.</p>
+          <p>Projects included reforming digital services that provide military families access to critical benefits, running bug bounty programs to identify vulnerabilities and better secure defense systems, developing drone detection technologies, keeping adversaries off of defense networks, rethinking training for cyber soldiers, and more.</p>
+        </div>
+      </header>
+
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel">
+        <div class="project-images__video">
+          <video controls preload="metadata">
+            <source src="https://defensedigitalservice-org.github.io/dds-mil/Video/DDS.mp4#t=1" type="video/mp4">
+          </video>
+        </div>
+      </section>
+
+      <section class="project-text" id="project-text" role="tabpanel">
+        <div class="project-text__section">
+          <p class="project-text__body">The Defense Digital Service operated within the Department of Defense's Chief Digital and Artificial Intelligence Office, serving as a SWAT team of technologists deployed to solve critical technology problems across the military. The unit recruited engineers, designers, data scientists, and product managers from the private sector for term-limited tours of duty, bringing Silicon Valley practices into one of the world's largest and most complex organizations.</p>
+        </div>
+        <div class="project-text__section">
+          <p class="project-text__body">As a Product Design Lead from April 2022 to May 2025, I worked across multiple modernization initiatives in high-security environments. The work spanned CUI and classified settings, meaning the specifics of individual projects cannot be shared publicly. The scope ranged from reimagining how service members interact with critical digital systems to designing tools that supported operational decision-making at scale.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">How We Worked</h3>
+          <p class="project-text__body">DDS operated in product trios (a product manager, a user experience designer and researcher, and an engineer) aligned directly with user and mission needs. This model, embedded within a fully agile, human-centered process, empowered teams to move quickly while solving problems rather than just delivering features. The team was comprised mostly of civilians from the private sector serving two or four year limited terms, ensuring a constant influx of fresh ideas and a sense of urgency to maximize contributions to the DoD.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Types of Work</h3>
+          <p class="project-text__body">DDS work fell into three categories. Rapid capabilities were fast-response engagements where the team jumped in to solve urgent technical problems: supporting counter-unmanned aerial system efforts, running hackathons with Army units to improve force protection, and developing tools like Move.mil that saved the military thousands of hours annually. The team also ran experimental projects like Combee, a proof of concept that used large language models as a plain-language interface for controlling physical systems, demonstrating what was possible at the tactical edge. Cybersecurity efforts included Hack the Pentagon, the federal government's first bug bounty program, along with DNS security services and protection of critical infrastructure control systems. Technical assessments paired human-centered research with hands-on technical evaluation to help DoD organizations identify and solve the right problems.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">AI Readiness</h3>
+          <p class="project-text__body">DDS led efforts to accelerate the DoD's adoption of artificial intelligence across five dimensions: opportunity discovery to identify high-impact use cases, data management to ensure quality and interoperability across systems, IT environment modernization for secure and scalable deployment, risk and governance frameworks for responsible AI, and adoption programs to train and empower DoD personnel. The team developed Axon, the DoD's first large-language model operations framework, and deployed the first LLM to a DoD High Performance Computing Center.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Design Challenges</h3>
+          <p class="project-text__body">The design challenges at DDS were distinct from the private sector. Users operated in environments with strict security constraints, limited connectivity, and legacy systems that couldn't simply be replaced. Success meant going where the work is, showing up to experience problems firsthand, understanding deeply entrenched workflows, and delivering solutions that worked within those constraints rather than around them. Every design decision had to balance usability with operational security requirements. DDS demonstrated that modern product design practices could transform even the most complex government systems by focusing on the people who actually use the technology.</p>
+        </div>
+      </section>
+    </article>
+
+    <footer class="detail-footer">
+      <p class="body">&copy; 2026</p>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+
+      // Handle video loading
+      document.querySelectorAll('.project-images__video').forEach(function(container) {
+        var video = container.querySelector('video');
+        if (video) {
+          if (video.readyState >= 3) {
+            container.classList.add('is-loaded');
+          } else {
+            video.addEventListener('loadedmetadata', function() {
+              container.classList.add('is-loaded');
+            });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
