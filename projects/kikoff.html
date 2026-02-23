@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self';">
+  <title>Kikoff — Carlos Tarrats</title>
+  <meta name="description" content="Kikoff: Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://carlostarrats.github.io/projects/kikoff.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kikoff — Carlos Tarrats">
+  <meta property="og:description" content="Kikoff: Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences">
+  <meta property="og:url" content="https://carlostarrats.github.io/projects/kikoff.html">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kikoff — Carlos Tarrats">
+  <meta name="twitter:description" content="Kikoff: Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <script>
+    (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar__clock" id="top-bar-clock"></div>
+    <div class="top-bar__colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var clockEl = document.getElementById('top-bar-clock');
+      function updateClock() {
+        var now = new Date();
+        var time = now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        var day = now.toLocaleString('en-US', { weekday: 'long' });
+        clockEl.textContent = time + ', ' + day;
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      var swatches = document.querySelectorAll('.top-bar__swatch');
+      var saved = sessionStorage.getItem('siteTheme') || 'default';
+      swatches.forEach(function(s) {
+        if (s.getAttribute('data-theme') === saved) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+        s.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          swatches.forEach(function(el) { el.classList.remove('active'); });
+          this.classList.add('active');
+          if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+            sessionStorage.removeItem('siteTheme');
+          } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            sessionStorage.setItem('siteTheme', theme);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__spinner"></div>
+  </div>
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (sessionStorage.getItem('fontsLoaded')) {
+        preloader.style.display = 'none';
+      } else {
+        var fontsReady = false;
+        var minTimeReady = false;
+        var loaded = false;
+        function tryHide() {
+          if (loaded || !fontsReady || !minTimeReady) return;
+          loaded = true;
+          sessionStorage.setItem('fontsLoaded', 'true');
+          preloader.classList.add('is-hidden');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+        // Minimum 2s display time
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHide();
+        }, 2000);
+        // Hide when fonts ready AND min time elapsed
+        function onFontsReady() {
+          fontsReady = true;
+          tryHide();
+        }
+        document.fonts.ready.then(onFontsReady);
+        setTimeout(onFontsReady, 4000);
+      }
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="detail-page detail-page--kikoff">
+    <nav class="detail-nav">
+      <a href="../index.html" class="back-link" aria-label="Back to homepage">Back</a>
+    </nav>
+
+    <article id="main-content" class="content-card">
+      <header class="project-header">
+        <div class="project-header__title">
+          <span class="project-header__title-name project-header__title-name--kikoff">Kikoff</span><span class="project-header__title-dash"> —</span> Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences
+        </div>
+
+        <div class="project-header__description">
+          <p>Kikoff's ebook store existed to power a credit-building mechanism, not to be useful. After signup, 40% of users dropped off because the content felt irrelevant and passive — something to click past, not return to.</p>
+          <p>I led discovery and design research to find a direction that made the marketplace worth using. Through user interviews, rapid prototyping, and iterative testing, I explored conversational learning, quiz-based modules, and modular content systems. The work validated strong user interest in interactive formats, but the project was paused before shipping due to payment infrastructure constraints.</p>
+        </div>
+      </header>
+
+      <section class="project-images">
+        <!-- 1 - single image -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-1.jpg" alt="Kikoff marketplace design exploration">
+
+        <!-- 2 and 3 on a row -->
+        <div class="project-images__grid">
+          <img class="project-images__item" src="../images/kikoff/detail-kikoff-2.jpg" alt="Kikoff user research findings">
+          <img class="project-images__item" src="../images/kikoff/detail-kikoff-3.jpg" alt="Kikoff content strategy">
+        </div>
+
+        <!-- 4 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-4.jpg" alt="Kikoff interactive learning module">
+
+        <!-- 5 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-5.jpg" alt="Kikoff quiz-based engagement">
+
+        <!-- 6 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-6.jpg" alt="Kikoff modular content system">
+
+        <!-- 7 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-7.jpg" alt="Kikoff conversational learning">
+
+        <!-- 8 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-8.jpg" alt="Kikoff prototype iteration">
+
+        <!-- 9 -->
+        <img class="project-images__item" src="../images/kikoff/detail-kikoff-9.jpg" alt="Kikoff design validation">
+      </section>
+    </article>
+
+    <footer class="detail-footer">
+      <p class="body">&copy; 2026</p>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle image loading
+      document.querySelectorAll('.project-images__item').forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('is-loaded');
+          });
+        }
+      });
+
+      // Handle video loading
+      document.querySelectorAll('.project-images__video').forEach(function(container) {
+        var video = container.querySelector('video');
+        if (video) {
+          video.play().catch(function() {});
+          if (video.readyState >= 3) {
+            container.classList.add('is-loaded');
+          } else {
+            video.addEventListener('canplay', function() {
+              container.classList.add('is-loaded');
+            });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

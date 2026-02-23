@@ -397,6 +397,10 @@ h2 {
   color: #ffcbd4;
 }
 
+.color--kikoff {
+  color: #cbe8ff;
+}
+
 /* ============================================
    PAGE CONTAINER
    ============================================ */
@@ -721,6 +725,20 @@ h2 {
 }
 
 .card--thayer.is-loaded {
+  animation: none;
+  background: #444444;
+}
+
+.card--kikoff {
+  aspect-ratio: 1.5;
+  background: linear-gradient(-90deg, #2e2e2e 0%, #383838 50%, #2e2e2e 100%);
+  background-size: 400% 400%;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+  overflow: hidden;
+  position: relative;
+}
+
+.card--kikoff.is-loaded {
   animation: none;
   background: #444444;
 }
@@ -1064,6 +1082,10 @@ h1.section-brand {
 
 .project-header__title-name--dds {
   color: #f5ffcb;
+}
+
+.project-header__title-name--kikoff {
+  color: #cbe8ff;
 }
 
 .project-header__title-dash {
@@ -1666,10 +1688,12 @@ html[data-theme="peach"] .color--adaptiveshop,
 html[data-theme="peach"] .color--dds,
 html[data-theme="peach"] .color--eloquii,
 html[data-theme="peach"] .color--thayer,
+html[data-theme="peach"] .color--kikoff,
 html[data-theme="peach"] .project-header__title-name--control,
 html[data-theme="peach"] .project-header__title-name--adaptiveshop,
 html[data-theme="peach"] .project-header__title-name--eloquii,
 html[data-theme="peach"] .project-header__title-name--dds,
+html[data-theme="peach"] .project-header__title-name--kikoff,
 html[data-theme="pink"] .portfolio-line,
 html[data-theme="pink"] .tagline,
 html[data-theme="pink"] .location-line,
@@ -1681,10 +1705,12 @@ html[data-theme="pink"] .color--adaptiveshop,
 html[data-theme="pink"] .color--dds,
 html[data-theme="pink"] .color--eloquii,
 html[data-theme="pink"] .color--thayer,
+html[data-theme="pink"] .color--kikoff,
 html[data-theme="pink"] .project-header__title-name--control,
 html[data-theme="pink"] .project-header__title-name--adaptiveshop,
 html[data-theme="pink"] .project-header__title-name--eloquii,
 html[data-theme="pink"] .project-header__title-name--dds,
+html[data-theme="pink"] .project-header__title-name--kikoff,
 html[data-theme="mint"] .portfolio-line,
 html[data-theme="mint"] .tagline,
 html[data-theme="mint"] .location-line,
@@ -1696,10 +1722,12 @@ html[data-theme="mint"] .color--adaptiveshop,
 html[data-theme="mint"] .color--dds,
 html[data-theme="mint"] .color--eloquii,
 html[data-theme="mint"] .color--thayer,
+html[data-theme="mint"] .color--kikoff,
 html[data-theme="mint"] .project-header__title-name--control,
 html[data-theme="mint"] .project-header__title-name--adaptiveshop,
 html[data-theme="mint"] .project-header__title-name--eloquii,
 html[data-theme="mint"] .project-header__title-name--dds,
+html[data-theme="mint"] .project-header__title-name--kikoff,
 html[data-theme="yellow"] .portfolio-line,
 html[data-theme="yellow"] .tagline,
 html[data-theme="yellow"] .location-line,
@@ -1711,10 +1739,12 @@ html[data-theme="yellow"] .color--adaptiveshop,
 html[data-theme="yellow"] .color--dds,
 html[data-theme="yellow"] .color--eloquii,
 html[data-theme="yellow"] .color--thayer,
+html[data-theme="yellow"] .color--kikoff,
 html[data-theme="yellow"] .project-header__title-name--control,
 html[data-theme="yellow"] .project-header__title-name--adaptiveshop,
 html[data-theme="yellow"] .project-header__title-name--eloquii,
 html[data-theme="yellow"] .project-header__title-name--dds,
+html[data-theme="yellow"] .project-header__title-name--kikoff,
 html[data-theme="lavender"] .portfolio-line,
 html[data-theme="lavender"] .tagline,
 html[data-theme="lavender"] .location-line,
@@ -1726,10 +1756,12 @@ html[data-theme="lavender"] .color--adaptiveshop,
 html[data-theme="lavender"] .color--dds,
 html[data-theme="lavender"] .color--eloquii,
 html[data-theme="lavender"] .color--thayer,
+html[data-theme="lavender"] .color--kikoff,
 html[data-theme="lavender"] .project-header__title-name--control,
 html[data-theme="lavender"] .project-header__title-name--adaptiveshop,
 html[data-theme="lavender"] .project-header__title-name--eloquii,
-html[data-theme="lavender"] .project-header__title-name--dds {
+html[data-theme="lavender"] .project-header__title-name--dds,
+html[data-theme="lavender"] .project-header__title-name--kikoff {
   color: #1a1a1a !important;
 }
 
@@ -1790,6 +1822,7 @@ html[data-theme="peach"] .card--adaptiveshop,
 html[data-theme="peach"] .card--dds,
 html[data-theme="peach"] .card--eloquii,
 html[data-theme="peach"] .card--thayer,
+html[data-theme="peach"] .card--kikoff,
 html[data-theme="peach"] .project-images__item,
 html[data-theme="peach"] .project-images__video,
 html[data-theme="peach"] .project-images__placeholder,
@@ -1798,6 +1831,7 @@ html[data-theme="pink"] .card--adaptiveshop,
 html[data-theme="pink"] .card--dds,
 html[data-theme="pink"] .card--eloquii,
 html[data-theme="pink"] .card--thayer,
+html[data-theme="pink"] .card--kikoff,
 html[data-theme="pink"] .project-images__item,
 html[data-theme="pink"] .project-images__video,
 html[data-theme="pink"] .project-images__placeholder,
@@ -1806,6 +1840,7 @@ html[data-theme="mint"] .card--adaptiveshop,
 html[data-theme="mint"] .card--dds,
 html[data-theme="mint"] .card--eloquii,
 html[data-theme="mint"] .card--thayer,
+html[data-theme="mint"] .card--kikoff,
 html[data-theme="mint"] .project-images__item,
 html[data-theme="mint"] .project-images__video,
 html[data-theme="mint"] .project-images__placeholder,
@@ -1814,6 +1849,7 @@ html[data-theme="yellow"] .card--adaptiveshop,
 html[data-theme="yellow"] .card--dds,
 html[data-theme="yellow"] .card--eloquii,
 html[data-theme="yellow"] .card--thayer,
+html[data-theme="yellow"] .card--kikoff,
 html[data-theme="yellow"] .project-images__item,
 html[data-theme="yellow"] .project-images__video,
 html[data-theme="yellow"] .project-images__placeholder,
@@ -1822,6 +1858,7 @@ html[data-theme="lavender"] .card--adaptiveshop,
 html[data-theme="lavender"] .card--dds,
 html[data-theme="lavender"] .card--eloquii,
 html[data-theme="lavender"] .card--thayer,
+html[data-theme="lavender"] .card--kikoff,
 html[data-theme="lavender"] .project-images__item,
 html[data-theme="lavender"] .project-images__video,
 html[data-theme="lavender"] .project-images__placeholder {
@@ -1835,26 +1872,31 @@ html[data-theme="peach"] .card--adaptiveshop.is-loaded,
 html[data-theme="peach"] .card--dds.is-loaded,
 html[data-theme="peach"] .card--eloquii.is-loaded,
 html[data-theme="peach"] .card--thayer.is-loaded,
+html[data-theme="peach"] .card--kikoff.is-loaded,
 html[data-theme="pink"] .card--control.is-loaded,
 html[data-theme="pink"] .card--adaptiveshop.is-loaded,
 html[data-theme="pink"] .card--dds.is-loaded,
 html[data-theme="pink"] .card--eloquii.is-loaded,
 html[data-theme="pink"] .card--thayer.is-loaded,
+html[data-theme="pink"] .card--kikoff.is-loaded,
 html[data-theme="mint"] .card--control.is-loaded,
 html[data-theme="mint"] .card--adaptiveshop.is-loaded,
 html[data-theme="mint"] .card--dds.is-loaded,
 html[data-theme="mint"] .card--eloquii.is-loaded,
 html[data-theme="mint"] .card--thayer.is-loaded,
+html[data-theme="mint"] .card--kikoff.is-loaded,
 html[data-theme="yellow"] .card--control.is-loaded,
 html[data-theme="yellow"] .card--adaptiveshop.is-loaded,
 html[data-theme="yellow"] .card--dds.is-loaded,
 html[data-theme="yellow"] .card--eloquii.is-loaded,
 html[data-theme="yellow"] .card--thayer.is-loaded,
+html[data-theme="yellow"] .card--kikoff.is-loaded,
 html[data-theme="lavender"] .card--control.is-loaded,
 html[data-theme="lavender"] .card--adaptiveshop.is-loaded,
 html[data-theme="lavender"] .card--dds.is-loaded,
 html[data-theme="lavender"] .card--eloquii.is-loaded,
-html[data-theme="lavender"] .card--thayer.is-loaded {
+html[data-theme="lavender"] .card--thayer.is-loaded,
+html[data-theme="lavender"] .card--kikoff.is-loaded {
   background: rgba(0, 0, 0, 0.08);
 }
 
