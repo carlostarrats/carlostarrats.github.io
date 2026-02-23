@@ -133,12 +133,17 @@
         </div>
 
         <div class="project-header__description">
-          <p>Kikoff's ebook store existed to power a credit-building mechanism, not to be useful. After signup, 40% of users dropped off because the content felt irrelevant and passive — something to click past, not return to.</p>
+          <p>Kikoff's ebook store existed to power a credit-building mechanism, not to be useful. After signup, 40% of users dropped off because the content felt irrelevant and passive, something to click past, not return to.</p>
           <p>I led discovery and design research to find a direction that made the marketplace worth using. Through user interviews, rapid prototyping, and iterative testing, I explored conversational learning, quiz-based modules, and modular content systems. The work validated strong user interest in interactive formats, but the project was paused before shipping due to payment infrastructure constraints.</p>
         </div>
       </header>
 
-      <section class="project-images">
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel">
         <!-- 1 - single image -->
         <img class="project-images__item" src="../images/kikoff/detail-kikoff-1.jpg" alt="Kikoff marketplace design exploration">
 
@@ -166,6 +171,25 @@
         <!-- 9 -->
         <img class="project-images__item" src="../images/kikoff/detail-kikoff-9.jpg" alt="Kikoff design validation">
       </section>
+
+      <section class="project-text" id="project-text" role="tabpanel">
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Problem</h3>
+          <p class="project-text__body">Kikoff lets users build credit through low-cost digital purchases that count as recurring payments. But the existing ebook store functioned mainly as a placeholder to enable that mechanism, not to be useful on its own. After signup, 40% of users dropped off at the store. Research showed users found the ebooks boring, didn't have time to read, wanted relevant answers rather than generic knowledge, and wanted a sense of progress that reading alone didn't provide. The brief was to transform a compliance-driven utility into a marketplace users actually want to use, without breaking the credit-building model.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Process</h3>
+          <p class="project-text__body">I led discovery through user interviews and stakeholder conversations to understand the gap between function and engagement. From those insights, I explored three product directions: a conversational chatbot-style interface that personalized financial education, quiz-based modules that delivered insights through action, and a modular content system to replace the static ebook model. Each concept was prototyped and tested with real users. Testing revealed strong interest in the conversational approach for its personal feel, but also surfaced concerns about too much text and structured limitations.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Solution</h3>
+          <p class="project-text__body">I synthesized feedback from each round and combined the strongest elements: the personalization of the chatbot, the engagement of quiz-based learning, and the flexibility of modular content categories. User testing showed the chatbot met user needs best but still wasn't enough on its own, so I took the strongest elements from the other directions to round out the experience. The refined direction introduced multi-format content modules, a lightweight conversational prototype, and interactive quiz experiences, all balanced against credit-building compliance requirements.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Outcome</h3>
+          <p class="project-text__body">The project was paused before shipping due to payment infrastructure constraints. However, the work validated user interest in interactive, meaningful purchases and produced a prototype library of three distinct marketplace models tested with real users. The research and design work established a clear direction for the product's evolution and informed the company's future roadmap for higher-value engagement loops.</p>
+        </div>
+      </section>
     </article>
 
     <footer class="detail-footer">
@@ -174,6 +198,44 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+
       // Handle image loading
       document.querySelectorAll('.project-images__item').forEach(function(img) {
         if (img.complete) {

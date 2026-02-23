@@ -146,7 +146,12 @@
         </div>
       </header>
 
-      <section class="project-images">
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel">
         <img src="../images/control/control-hero.jpg" alt="Control app screenshots showing the logo, model selection, chat interface, and customization options" class="project-images__item">
         <div class="project-images__video">
           <video autoplay muted loop playsinline>
@@ -176,6 +181,25 @@
           </div>
         </div>
       </section>
+
+      <section class="project-text" id="project-text" role="tabpanel">
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Problem</h3>
+          <p class="project-text__body">I wanted to build an on-device AI app using open-source models, partly for privacy and partly to learn firsthand what small local models can and can't do. Most AI apps required accounts, sent data to servers, and offered no transparency about what happened with your conversations. There was no simple, free option that ran entirely on your phone with zero network dependency, no data collection, and no accounts. I also wanted to understand what building with these models actually felt like: what works, what breaks, and where the ceiling is when everything runs locally.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Process</h3>
+          <p class="project-text__body">Started with much bigger ambitions: speech input, reactive avatar animations that responded to voice, and full PDF comprehension. Hitting the limitations of on-device models forced repeated pivots. Speech-to-text was too unreliable at small model sizes. PDF processing had to become a summary-based extraction using Vision and PDFKit rather than full document understanding, which sacrificed accuracy. The animated avatars required more processing overhead than the device could spare while running inference. The core inference layer itself needed an Objective-C++ bridge to llama.cpp with streaming token generation and manual memory management. Over 234 commits, the scope narrowed from an ambitious multimodal assistant into something focused and honest about what these models can actually do on a phone.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Solution</h3>
+          <p class="project-text__body">A text-only iOS app that runs open-source LLMs entirely on-device using llama.cpp. Supports models from Google (Gemma 3), Meta (Llama 3.2), Hugging Face (SmolLM2), Alibaba (Qwen3), and Microsoft (Phi-3), all downloaded directly from Hugging Face and stored locally. The app is 8.9MB before model downloads. Conversations stay on your phone, reset within 24 hours, and are never transmitted anywhere. Features include PDF upload for on-device summaries, customizable colors and avatars, Metal shader visual effects, iOS Shortcuts integration for automation workflows, and support for English, French, and Spanish. Runs on iPhone, iPad, and Mac with Apple Silicon. Built natively in Swift with IBM Plex Mono throughout and a dark-only minimal interface. Free with no subscriptions, open-sourced under Apache 2.0.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Outcome</h3>
+          <p class="project-text__body">Live on the App Store at version 1.3. The project gave me a grounded understanding of what small on-device models are capable of and where they fall short. Gemma 3 and Qwen3 handle conversational tasks well, but anything requiring deep reasoning or long context breaks down fast. The constraints shaped the product into something deliberately minimal: no server costs, no user data to protect, and a genuine privacy story that's verifiable because the full source code is public. Open-sourced on GitHub with 234 commits across the full build.</p>
+        </div>
+      </section>
     </article>
 
     <footer class="detail-footer">
@@ -184,6 +208,44 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+
       // Handle image loading
       document.querySelectorAll('.project-images__item').forEach(function(img) {
         if (img.complete) {

@@ -138,7 +138,12 @@
         </div>
       </header>
 
-      <section class="project-images">
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel">
         <!-- 1 - single image -->
         <img class="project-images__item" src="../images/eloquii/eloquii-1.jpg" alt="ELOQUII homepage design">
 
@@ -192,6 +197,25 @@
           <img class="project-images__item" src="../images/eloquii/eloquii-11.jpg" alt="ELOQUII mobile experience">
         </div>
       </section>
+
+      <section class="project-text" id="project-text" role="tabpanel">
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Problem</h3>
+          <p class="project-text__body">Eloquii's legacy e-commerce platform struggled to capture the brand's core message: that fashion is transformative. User data showed shoppers often scrolled past the homepage slider but rarely engaged further, with significant drop-off past the first image. Visual hierarchy and content flexibility were limited, and internal teams relied heavily on design and engineering to make even small updates. The result was a slow, inconsistent experience that underrepresented the brand and frustrated teams trying to keep up with fast-moving campaigns.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Process</h3>
+          <p class="project-text__body">I led the design of a modular, scalable system that gave Eloquii creative freedom while maintaining visual coherence. The focus was on reusable components, mobile parity, and empowering internal teams to experiment safely within consistent boundaries. I defined a modular homepage architecture that could adapt to campaign needs, introduced messaging and promo slots that could change layout and imagery without new code, designed responsive defaults so mobile experiences automatically simplified complex layouts, and unified the visual language across web and iOS.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Solution</h3>
+          <p class="project-text__body">The redesign introduced modular homepage slots where each slot could host a single horizontal hero image or up to three stacked vertical cards, giving the business flexibility to maximize photo assets and mark differentiation for campaign days. A sticky promo bar persisted across the site to highlight urgency messaging like free shipping or limited-time offers. Teams could select 1 to 3 boxes per promo area, with mobile and tablet automatically defaulting to a single rotating message. Flexible image slots were added to a new dropdown desktop navigation to better illustrate categories and put featured product out front. Typography, grid, and spacing were harmonized across every page template including category pages, PDPs, account pages, and an iOS app. CMS flexibility enabled marketing to swap creative and messaging without involving engineering.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Outcome</h3>
+          <p class="project-text__body">The redesign empowered Eloquii's internal teams to iterate faster and more independently. Campaigns launched quicker, visual identity stayed consistent, and the shopping experience became simpler and more cohesive. The work reduced dependency on developers for daily updates, improved homepage engagement and campaign turnaround time, and strengthened alignment between product, marketing, and design teams. The project re-established Eloquii's site as a living reflection of its brand rather than a static storefront.</p>
+        </div>
+      </section>
     </article>
 
     <footer class="detail-footer">
@@ -200,6 +224,44 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+
       // Handle image loading
       document.querySelectorAll('.project-images__item').forEach(function(img) {
         if (img.complete) {

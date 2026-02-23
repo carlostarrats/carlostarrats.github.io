@@ -146,7 +146,12 @@
         </div>
       </header>
 
-      <section class="project-images">
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel">
         <!-- 1 - single image -->
         <img src="../images/adaptiveshop/AdaptiveShop-1.jpg" alt="AdaptiveShop interface" class="project-images__item">
 
@@ -227,6 +232,25 @@
           <img src="../images/adaptiveshop/adaptiveshop-20.jpg" alt="AdaptiveShop interface" class="project-images__item">
         </div>
       </section>
+
+      <section class="project-text" id="project-text" role="tabpanel">
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Problem</h3>
+          <p class="project-text__body">Most e-commerce platforms available to independent sellers were either too complex or too limited. Small sellers and side hustlers needed something powerful enough to grow with but simple enough to start with. Existing tools didn't offer AI-driven features like contextual product selection or auto-generated descriptions without enterprise pricing, and merchants had no way to share a single link that adapted its content based on who clicked it.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Process</h3>
+          <p class="project-text__body">Built over 44 days using Claude Code. Development started with core infrastructure (passwordless authentication, Stripe Connect onboarding, and buyer checkout) then layered features iteratively. The design followed an Everlane-style minimal aesthetic with two-column product layouts, dropdown variant selectors, and accordion sections. A tiered subscription model ($7.99–$24.99/mo) was designed so merchants could start with basics and add capabilities like dynamic links, POD integrations, custom domains, and AI analytics as they grew. Security hardening, accessibility (WCAG 2.2 AA), and a full legal documentation suite were built in from the start.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Solution</h3>
+          <p class="project-text__body">An AI-driven e-commerce platform with three tiers. All merchants get a customizable shop with product pages, AI-generated descriptions, analytics, BNPL support, and in-person sales mode. Growth and Pro tiers unlock shareable dynamic links, a single URL where AI selects which products to show and rewrites content based on visitor context. Pro tier adds print-on-demand integration across four providers (Printful, Gelato, Fourthwall, Prodigi), product categories with filtering, Google Shopping and Pinterest catalog feeds, cart recovery, team members, and GA4 integration. Built with Next.js, Supabase, Stripe, and Google Gemini.</p>
+        </div>
+        <div class="project-text__section">
+          <h3 class="project-text__heading">Outcome</h3>
+          <p class="project-text__body">Live in production with all core features, pro tier features, and security hardening complete. The platform includes a full order management system with shipping tracking, returns and refunds, a complete legal policy suite (12 pages), a 10-section help system, MFA support, and an admin dashboard with merchant moderation. 264+ end-to-end tests cover auth, product management, checkout, and dynamic links across browsers. Marketing site deployed at adaptiveshop.ai with demo shops in browse-only mode. Infrastructure runs at 98% gross margin at scale with fixed costs under $30/month, profitable from the second or third paying customer.</p>
+        </div>
+      </section>
     </article>
 
     <footer class="detail-footer">
@@ -235,6 +259,44 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+
       // Handle image loading
       document.querySelectorAll('.project-images__item').forEach(function(img) {
         if (img.complete) {
