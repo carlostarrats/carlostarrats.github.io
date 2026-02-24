@@ -542,7 +542,7 @@ h2 {
 }
 
 .location-line {
-  text-align: right;
+  text-align: left;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-size: 36px;
