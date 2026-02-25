@@ -327,7 +327,7 @@ a {
 h1 {
   font-family: 'Nyght Serif', serif;
   font-weight: 300;
-  font-size: 96px;
+  font-size: 90px;
   line-height: 88px;
   letter-spacing: -1px;
   margin-bottom: 30px;
@@ -336,9 +336,9 @@ h1 {
 h2 {
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
-  font-size: 55px;
-  line-height: 60px;
-  letter-spacing: -1.1px;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.5px;
 }
 
 .body {
@@ -351,9 +351,9 @@ h2 {
 
 .label {
   font-family: 'Instrument Serif', serif;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
 }
 
 /* ============================================
@@ -427,7 +427,7 @@ h2 {
 .hero h1 {
   position: relative;
   z-index: 1;
-  max-width: 1000px;
+  max-width: 900px;
 }
 
 .hero-flicker {
@@ -469,9 +469,9 @@ h2 {
 .portfolio-line {
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #ffcbcc;
   margin-bottom: 30px;
 }
@@ -535,9 +535,9 @@ h2 {
   text-align: right;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #ffcbcc;
 }
 
@@ -545,9 +545,9 @@ h2 {
   text-align: left;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #ffcbcc;
   margin-top: -30px;
   margin-bottom: 60px;
@@ -1000,9 +1000,9 @@ h1.section-brand {
   width: fit-content;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #ffffff;
   background-color: #3a3a3a;
   padding: 5px 35px;
@@ -1023,9 +1023,9 @@ h1.section-brand {
   gap: 6px;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #fff;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -1061,9 +1061,9 @@ h1.section-brand {
   vertical-align: top;
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
-  font-size: 55px;
-  line-height: 60px;
-  letter-spacing: -1.1px;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.5px;
 }
 
 .project-header__title-name {
@@ -1134,7 +1134,7 @@ h1.section-brand {
   font-style: italic;
   font-size: 20px;
   line-height: 28px;
-  letter-spacing: -0.4px;
+  letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.5);
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1194,9 +1194,9 @@ h1.section-brand {
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-weight: 400;
-  font-size: 36px;
-  line-height: 48px;
-  letter-spacing: -1.44px;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0px;
   color: #ffffff;
   margin-bottom: 12px;
 }
@@ -1320,8 +1320,8 @@ h1.section-brand {
 .detail-footer__copyright {
   font-family: system-ui, sans-serif;
   font-weight: 400;
-  font-size: 30px;
-  line-height: 40px;
+  font-size: 20px;
+  line-height: 28px;
   color: #ffffff;
 }
 
@@ -1335,26 +1335,26 @@ h1.section-brand {
   h1 {
     font-size: 70px;
     line-height: 62px;
-    letter-spacing: -2.1px;
+    letter-spacing: -0.5px;
   }
 
   .hero h1 {
-    max-width: 800px;
+    max-width: 720px;
   }
 
   h2 {
     font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    line-height: 40px;
+    letter-spacing: 0px;
   }
 
   .label,
   .portfolio-line,
   .tagline,
   .location-line {
-    font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: 0.25px;
   }
 
   .branding-image {
@@ -1362,20 +1362,20 @@ h1.section-brand {
   }
 
   .back-link {
-    font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: 0.25px;
   }
 
   .project-header__title {
     font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    line-height: 40px;
+    letter-spacing: 0px;
   }
 
   .detail-footer__copyright {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 28px;
   }
 
   .location-line {
@@ -1411,13 +1411,14 @@ h1.section-brand {
   .view-toggle__btn {
     font-size: 18px;
     line-height: 24px;
+    letter-spacing: 0.75px;
     padding: 5px 20px;
   }
 
   .project-text__heading {
-    font-size: 35px;
-    line-height: 38px;
-    letter-spacing: -0.70px;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: 0.25px;
   }
 
   .see-more-tag {
@@ -1446,13 +1447,13 @@ h1.section-brand {
   h1 {
     font-size: 44px;
     line-height: 39px;
-    letter-spacing: -0.5px;
+    letter-spacing: 0px;
   }
 
   h2 {
     font-size: 28px;
-    line-height: 30px;
-    letter-spacing: -0.56px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
   }
 
   .label,
@@ -1460,8 +1461,8 @@ h1.section-brand {
   .tagline,
   .location-line {
     font-size: 28px;
-    line-height: 30px;
-    letter-spacing: -0.56px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
   }
 
   .branding-image {
@@ -1498,21 +1499,22 @@ h1.section-brand {
   }
 
   .detail-nav {
+    justify-content: flex-start;
     margin: 20px 0 20px;
   }
 
   .back-link {
     font-size: 28px;
-    line-height: 30px;
-    letter-spacing: -0.56px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
     padding: 8px 30px;
     margin: 0;
   }
 
   .external-link {
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.36px;
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
   }
 
   .external-link svg {
@@ -1534,8 +1536,8 @@ h1.section-brand {
     display: block;
     width: 100%;
     font-size: 28px;
-    line-height: 32px;
-    letter-spacing: -0.56px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
     margin-bottom: 20px;
   }
 
@@ -1548,8 +1550,8 @@ h1.section-brand {
   }
 
   .detail-footer__copyright {
-    font-size: 15px;
-    line-height: 21px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   /* Project images grid stacks on mobile */
@@ -1660,13 +1662,14 @@ h1.section-brand {
   .view-toggle__btn {
     font-size: 16px;
     line-height: 22px;
+    letter-spacing: 1px;
     padding: 5px 18px;
   }
 
   .project-text__heading {
     font-size: 28px;
-    line-height: 30px;
-    letter-spacing: -0.56px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
   }
 
   .project-text__body {
