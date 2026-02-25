@@ -1608,6 +1608,11 @@ h1.section-brand {
 
   .portfolio-line {
     order: 4;
+    margin-bottom: 0px;
+  }
+
+  .selected-projects-text {
+    display: block;
   }
 
   .tagline {
@@ -1616,6 +1621,7 @@ h1.section-brand {
 
   .location-line {
     order: 6;
+    margin-bottom: 30px;
   }
 
   /* Control: text above, card below */
