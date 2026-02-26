@@ -32,7 +32,7 @@
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260225">
+  <link rel="stylesheet" href="../styles.css?v=20260225b">
 </head>
 <body>
   <div class="top-bar">
@@ -276,15 +276,29 @@
         <div class="chat-messages" id="chat-messages">
           <div class="chat-welcome" id="chat-welcome">
             <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
+            <p class="chat-welcome__hint">Ask me anything or try one of these:</p>
             <div class="chat-starters" id="chat-starters">
               <button class="chat-starter">What kind of work are you looking for?</button>
               <button class="chat-starter">Tell me about your time at DDS</button>
               <button class="chat-starter">What's your design philosophy?</button>
               <button class="chat-starter">What are you building right now?</button>
+              <button class="chat-starter">What tools do you use?</button>
+              <button class="chat-starter">How do you approach simplifying complex systems?</button>
+              <button class="chat-starter">What was it like working at Amazon?</button>
+              <button class="chat-starter">Tell me about AdaptiveShop</button>
+              <button class="chat-starter">What makes a great designer?</button>
+              <button class="chat-starter">What are you reading right now?</button>
+              <button class="chat-starter">What products do you think are well-designed?</button>
+              <button class="chat-starter">How do you work with engineers?</button>
             </div>
           </div>
         </div>
         <div class="chat-input-area">
+          <div class="chat-actions">
+            <button class="chat-action" id="chat-reset" aria-label="Reset chat">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </button>
+          </div>
           <div class="chat-input-wrap">
             <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" maxlength="500" autocomplete="off">
             <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
@@ -320,6 +334,8 @@
       input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !sendBtn.disabled) sendMessage(input.value.trim()); });
       sendBtn.addEventListener('click', function() { if (!sendBtn.disabled) sendMessage(input.value.trim()); });
       startersEl.addEventListener('click', function(e) { var btn = e.target.closest('.chat-starter'); if (btn) sendMessage(btn.textContent); });
+      var resetBtn = document.getElementById('chat-reset');
+      resetBtn.addEventListener('click', function() { messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; });
       function addMessageEl(role, content) { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--' + (role === 'user' ? 'user' : 'bot'); div.textContent = content; messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; return div; }
       function addTypingIndicator() { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--bot'; div.id = 'chat-typing'; var dots = document.createElement('div'); dots.className = 'chat-typing'; dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); div.appendChild(dots); messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; }
       function removeTypingIndicator() { var el = document.getElementById('chat-typing'); if (el) el.remove(); }
