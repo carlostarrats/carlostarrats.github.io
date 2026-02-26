@@ -2286,8 +2286,7 @@ html[data-theme="lavender"] .chat-trigger {
 .chat-welcome {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  flex: 1;
+  padding-top: 50%;
   padding-bottom: 8px;
 }
 
@@ -2339,9 +2338,34 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-input-area {
+  position: relative;
+  z-index: 6;
   padding: 12px 20px 28px;
   border-top: none;
   flex-shrink: 0;
+  background: rgba(26, 26, 26, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.chat-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.chat-action {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.chat-action:hover {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .chat-input-wrap {
