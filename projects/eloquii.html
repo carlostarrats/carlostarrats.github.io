@@ -36,7 +36,6 @@
 </head>
 <body>
   <div class="top-bar">
-    <div class="top-bar__clock" id="top-bar-clock"></div>
     <div class="top-bar__colors">
       <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
       <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
@@ -48,16 +47,6 @@
   </div>
   <script>
     (function() {
-      var clockEl = document.getElementById('top-bar-clock');
-      function updateClock() {
-        var now = new Date();
-        var time = now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-        var day = now.toLocaleString('en-US', { weekday: 'long' });
-        clockEl.textContent = time + ', ' + day;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-
       var swatches = document.querySelectorAll('.top-bar__swatch');
       var saved = sessionStorage.getItem('siteTheme') || 'default';
       swatches.forEach(function(s) {
