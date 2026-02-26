@@ -2230,14 +2230,14 @@ html[data-theme="lavender"] .chat-trigger {
   border-radius: 32px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: clip;
   z-index: 1;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 32px 20px 20px;
+  padding: 32px 20px 100px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2310,6 +2310,16 @@ html[data-theme="lavender"] .chat-trigger {
   display: inline;
 }
 
+.chat-welcome__hint {
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'Baskervville', serif;
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  margin: 4px 0 14px;
+}
+
 .chat-starters {
   display: flex;
   flex-direction: column;
@@ -2338,14 +2348,17 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-input-area {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 6;
-  padding: 12px 20px 28px;
-  border-top: none;
-  flex-shrink: 0;
-  background: rgba(26, 26, 26, 0.7);
+  padding: 30px 20px 28px;
+  background: linear-gradient(to bottom, transparent, rgba(26, 26, 26, 0.6) 40%, rgba(26, 26, 26, 0.9));
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 40%);
+  mask-image: linear-gradient(to bottom, transparent, black 40%);
 }
 
 .chat-actions {

@@ -285,7 +285,8 @@
       var isLoading = false;
       var pageContext = (function() { var parts = []; var t = document.querySelector('.project-header__title'); if (t) parts.push(t.textContent.trim()); document.querySelectorAll('.project-header__description p').forEach(function(p) { parts.push(p.textContent.trim()); }); document.querySelectorAll('.project-text__section').forEach(function(s) { parts.push(s.textContent.trim()); }); return parts.join('\n\n'); })();
       function openChat() { overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; input.focus(); }
-      function closeChat() { overlay.classList.remove('is-open'); document.body.style.overflow = ''; }
+      var welcomeHTML = messagesEl.innerHTML;
+      function closeChat() { overlay.classList.remove('is-open'); document.body.style.overflow = ''; messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; }
       trigger.addEventListener('click', openChat);
       closeBtn.addEventListener('click', closeChat);
       overlay.addEventListener('click', function(e) { if (e.target === overlay) closeChat(); });
