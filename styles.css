@@ -2276,9 +2276,11 @@ html[data-theme="lavender"] .chat-trigger {
 
 .chat-msg--bot {
   align-self: flex-start;
-  background: rgba(255, 255, 255, 0.015);
+  background: none;
   color: rgba(255, 255, 255, 0.7);
-  border-bottom-left-radius: 4px;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .chat-welcome {
