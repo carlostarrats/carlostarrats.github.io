@@ -62,7 +62,7 @@
       <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
       <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
     </div>
-    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar">Carlos LLM: Ask me things</button>
+    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
   </div>
   <script>
     (function() {
@@ -654,31 +654,34 @@
   </script>
 
   <!-- Chat Panel -->
-  <div class="chat-overlay" id="chat-overlay"></div>
-  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos">
-    <div class="chat-header">
-      <span class="chat-header__title">Ask Carlos</span>
-      <button class="chat-header__close" id="chat-close" aria-label="Close chat">
+  <div class="chat-overlay" id="chat-overlay">
+    <div class="chat-phone-wrap">
+      <button class="chat-close" id="chat-close" aria-label="Close chat">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-    </div>
-    <div class="chat-messages" id="chat-messages">
-      <div class="chat-welcome" id="chat-welcome">
-        <p class="chat-welcome__text">Hey, ask away.</p>
-        <div class="chat-starters" id="chat-starters">
-          <button class="chat-starter">What kind of work are you looking for?</button>
-          <button class="chat-starter">Tell me about your time at DDS</button>
-          <button class="chat-starter">What's your design philosophy?</button>
-          <button class="chat-starter">What are you building right now?</button>
+      <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
+      </svg>
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-welcome" id="chat-welcome">
+            <p class="chat-welcome__text"><img src="images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
+            <div class="chat-starters" id="chat-starters">
+              <button class="chat-starter">What kind of work are you looking for?</button>
+              <button class="chat-starter">Tell me about your time at DDS</button>
+              <button class="chat-starter">What's your design philosophy?</button>
+              <button class="chat-starter">What are you building right now?</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <div class="chat-input-wrap">
-        <input type="text" class="chat-input" id="chat-input" placeholder="Ask about Carlos..." maxlength="500" autocomplete="off">
-        <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-        </button>
+        <div class="chat-input-area">
+          <div class="chat-input-wrap">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" maxlength="500" autocomplete="off">
+            <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -701,24 +704,24 @@
       var isLoading = false;
 
       function openChat() {
-        panel.classList.add('is-open');
         overlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
         input.focus();
       }
 
       function closeChat() {
-        panel.classList.remove('is-open');
         overlay.classList.remove('is-open');
         document.body.style.overflow = '';
       }
 
       trigger.addEventListener('click', openChat);
       closeBtn.addEventListener('click', closeChat);
-      overlay.addEventListener('click', closeChat);
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeChat();
+      });
 
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && panel.classList.contains('is-open')) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
           closeChat();
         }
       });
