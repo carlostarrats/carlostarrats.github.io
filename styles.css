@@ -2257,7 +2257,7 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-msg {
-  max-width: 80%;
+  max-width: 90%;
   font-family: 'Baskervville', serif;
   font-weight: 200;
   font-size: 14px;
