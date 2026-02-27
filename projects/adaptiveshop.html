@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
-  <title>AdaptiveShop — Carlos Tarrats</title>
-  <meta name="description" content="AdaptiveShop: A modern ecommerce platform with built-in AI and modular features to fit your business">
+  <title>AdaptiveShop: AI-Powered Ecommerce Platform — Carlos Tarrats</title>
+  <meta name="description" content="AdaptiveShop is a modern ecommerce platform with built-in AI and modular features for first-time sellers. Start simple, adapt as you grow. By Carlos Tarrats.">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://carlostarrats.github.io/projects/adaptiveshop.html">
@@ -15,16 +15,16 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AdaptiveShop — Carlos Tarrats">
-  <meta property="og:description" content="AdaptiveShop: A modern ecommerce platform with built-in AI and modular features to fit your business">
+  <meta property="og:title" content="AdaptiveShop: AI-Powered Ecommerce Platform — Carlos Tarrats">
+  <meta property="og:description" content="AdaptiveShop is a modern ecommerce platform with built-in AI and modular features for first-time sellers. Start simple, adapt as you grow. By Carlos Tarrats.">
   <meta property="og:url" content="https://carlostarrats.github.io/projects/adaptiveshop.html">
-  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AdaptiveShop — Carlos Tarrats">
-  <meta name="twitter:description" content="AdaptiveShop: A modern ecommerce platform with built-in AI and modular features to fit your business">
-  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta name="twitter:title" content="AdaptiveShop: AI-Powered Ecommerce Platform — Carlos Tarrats">
+  <meta name="twitter:description" content="AdaptiveShop is a modern ecommerce platform with built-in AI and modular features for first-time sellers. Start simple, adapt as you grow. By Carlos Tarrats.">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -33,6 +33,22 @@
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
   <link rel="stylesheet" href="../styles.css?v=20260225b">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "AdaptiveShop",
+    "description": "A modern ecommerce platform with built-in AI and modular features for first-time sellers.",
+    "author": {
+      "@type": "Person",
+      "name": "Carlos Tarrats",
+      "url": "https://carlostarrats.github.io"
+    },
+    "url": "https://carlostarrats.github.io/projects/adaptiveshop.html"
+  }
+  </script>
 </head>
 <body>
   <header class="top-bar">
@@ -129,9 +145,9 @@
 
     <article id="main-content" class="content-card">
       <header class="project-header">
-        <div class="project-header__title">
+        <h1 class="project-header__title">
           <span class="project-header__title-name project-header__title-name--adaptiveshop">AdaptiveShop </span><span class="project-header__title-dash">—</span> A modern ecommerce platform with built-in AI and modular features to fit your business
-        </div>
+        </h1>
 
         <div class="project-header__description">
           <p>I looked at what was available for first-time sellers and people without technical backgrounds and saw a gap. Most platforms are either too complex or too limited. I wanted to build something that just works. A nice-looking shop out of the box, no designer or dev experience needed.</p>
@@ -228,19 +244,19 @@
 
       <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
-          <h3 class="project-text__heading">Problem</h3>
+          <h2 class="project-text__heading">Problem</h2>
           <p class="project-text__body">Most e-commerce platforms are either too complex or too limited for the people actually using them: first-time sellers, side hustlers, and people without technical backgrounds who don't know where to start with things like SEO or store design. They need something powerful enough to grow with but simple enough to start with. A shop that looks good out of the box without needing a designer or developer. Most existing tools that offer AI-driven features like contextual product selection or auto-generated descriptions tend to gate them behind enterprise pricing, and there's no easy way for a merchant to share a single link that adapts its content based on who clicks it.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Process</h3>
+          <h2 class="project-text__heading">Process</h2>
           <p class="project-text__body">Built over 4 months using Claude Code. Development started with core infrastructure (passwordless authentication, Stripe Connect onboarding, and buyer checkout) then layered features iteratively. The design followed an Everlane-style minimal aesthetic with two-column product layouts, dropdown variant selectors, and accordion sections. A tiered subscription model ($7.99–$24.99/mo) was designed so merchants could start with basics and add capabilities like dynamic links, POD integrations, custom domains, and AI analytics as they grew. Security hardening and accessibility (WCAG 2.2 AA) were built in from the start.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Solution</h3>
+          <h2 class="project-text__heading">Solution</h2>
           <p class="project-text__body">An AI-driven e-commerce platform with three tiers. All merchants get a customizable shop with product pages, AI-generated descriptions, analytics, BNPL support, and in-person sales mode. Growth and Pro tiers unlock shareable dynamic links, a single URL where AI selects which products to show and rewrites content based on visitor context. Pro tier adds print-on-demand integration across four providers (Printful, Gelato, Fourthwall, Prodigi), product categories with filtering, Google Shopping and Pinterest catalog feeds, cart recovery, team members, and GA4 integration. Built with Next.js, Supabase, Stripe, and Google Gemini.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Outcome</h3>
+          <h2 class="project-text__heading">Outcome</h2>
           <p class="project-text__body">Live in production with all core features, pro tier features, and security hardening complete. The platform includes a full order management system with shipping tracking, returns and refunds, a complete legal policy suite (12 pages), a self-serve help guide, MFA support, and an admin dashboard with merchant moderation. 264+ end-to-end tests cover auth, product management, checkout, and dynamic links across browsers. Marketing site deployed at adaptiveshop.ai with demo shops in browse-only mode. Infrastructure runs at 98% gross margin at scale with fixed costs under $30/month, profitable from the second or third paying customer.</p>
         </div>
       </section>

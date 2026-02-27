@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
-  <title>Control — Carlos Tarrats</title>
-  <meta name="description" content="Control: A text-only open-source on-device LLM app for iOS">
+  <title>Control: On-Device LLM App for iOS — Carlos Tarrats</title>
+  <meta name="description" content="Control is a free, open-source iOS app that runs LLMs entirely on your device. No accounts, no data collection, no network dependency. By Carlos Tarrats.">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://carlostarrats.github.io/projects/control.html">
@@ -15,16 +15,16 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Control — Carlos Tarrats">
-  <meta property="og:description" content="Control: A text-only open-source on-device LLM app for iOS">
+  <meta property="og:title" content="Control: On-Device LLM App for iOS — Carlos Tarrats">
+  <meta property="og:description" content="Control is a free, open-source iOS app that runs LLMs entirely on your device. No accounts, no data collection, no network dependency. By Carlos Tarrats.">
   <meta property="og:url" content="https://carlostarrats.github.io/projects/control.html">
-  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Control — Carlos Tarrats">
-  <meta name="twitter:description" content="Control: A text-only open-source on-device LLM app for iOS">
-  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta name="twitter:title" content="Control: On-Device LLM App for iOS — Carlos Tarrats">
+  <meta name="twitter:description" content="Control is a free, open-source iOS app that runs LLMs entirely on your device. No accounts, no data collection, no network dependency. By Carlos Tarrats.">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -33,6 +33,22 @@
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
   <link rel="stylesheet" href="../styles.css?v=20260225b">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Control",
+    "description": "A free, open-source iOS app that runs LLMs entirely on your device with no accounts, no data collection, and no network dependency.",
+    "author": {
+      "@type": "Person",
+      "name": "Carlos Tarrats",
+      "url": "https://carlostarrats.github.io"
+    },
+    "url": "https://carlostarrats.github.io/projects/control.html"
+  }
+  </script>
 </head>
 <body>
   <header class="top-bar">
@@ -129,9 +145,9 @@
 
     <article id="main-content" class="content-card">
       <header class="project-header">
-        <div class="project-header__title">
+        <h1 class="project-header__title">
           <span class="project-header__title-name project-header__title-name--control">Control </span><span class="project-header__title-dash">—</span> A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3)
-        </div>
+        </h1>
 
         <div class="project-header__description">
           <p>I wanted an AI tool that kept everything local. Control runs open-source language models entirely on your device with no accounts, no data collection, and no network dependency. Your conversations stay on your phone and disappear each day.</p>
@@ -177,19 +193,19 @@
 
       <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
-          <h3 class="project-text__heading">Problem</h3>
+          <h2 class="project-text__heading">Problem</h2>
           <p class="project-text__body">I wanted to build an on-device AI app using open-source models, partly for privacy and partly to learn firsthand what small local models can and can't do. Most AI apps required accounts, sent data to servers, and offered no transparency about what happened with your conversations. There was no simple, free option that ran entirely on your phone with zero network dependency, no data collection, and no accounts. I also wanted to understand what building with these models actually felt like: what works, what breaks, and where the ceiling is when everything runs locally.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Process</h3>
+          <h2 class="project-text__heading">Process</h2>
           <p class="project-text__body">Started with much bigger ambitions: speech input, reactive avatar animations that responded to voice, and full PDF comprehension. Hitting the limitations of on-device models forced repeated pivots. Speech-to-text was too unreliable at small model sizes. PDF processing had to become a summary-based extraction using Vision and PDFKit rather than full document understanding, which sacrificed accuracy. The animated avatars required more processing overhead than the device could spare while running inference. The core inference layer itself needed an Objective-C++ bridge to llama.cpp with streaming token generation and manual memory management. Over 234 commits, the scope narrowed from an ambitious multimodal assistant into something focused and honest about what these models can actually do on a phone.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Solution</h3>
+          <h2 class="project-text__heading">Solution</h2>
           <p class="project-text__body">A text-only iOS app that runs open-source LLMs entirely on-device using llama.cpp. Supports models from Google (Gemma 3), Meta (Llama 3.2), Hugging Face (SmolLM2), Alibaba (Qwen3), and Microsoft (Phi-3), all downloaded directly from Hugging Face and stored locally. The app is 8.9MB before model downloads. Conversations stay on your phone, reset within 24 hours, and are never transmitted anywhere. Features include PDF upload for on-device summaries, customizable colors and avatars, Metal shader visual effects, iOS Shortcuts integration for automation workflows, and support for English, French, and Spanish. Runs on iPhone and iPad. Built natively in Swift with IBM Plex Mono throughout and a dark-only minimal interface. Free with no subscriptions, open-sourced under Apache 2.0.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Outcome</h3>
+          <h2 class="project-text__heading">Outcome</h2>
           <p class="project-text__body">Live on the App Store at version 1.3. The project gave me a grounded understanding of what small on-device models are capable of and where they fall short. Gemma 3 and Qwen3 handle conversational tasks well, but anything requiring deep reasoning or long context breaks down fast. The constraints shaped the product into something deliberately minimal: no server costs, no user data to protect, and a genuine privacy story that's verifiable because the full source code is public. Open-sourced on GitHub with 234 commits across the full build.</p>
         </div>
       </section>

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
-  <title>Eloquii — Carlos Tarrats</title>
-  <meta name="description" content="Eloquii: Platform redesign improving the online shopping experience for plus-size fashion customers">
+  <title>Eloquii: Plus-Size Fashion Redesign — Carlos Tarrats</title>
+  <meta name="description" content="Eloquii e-commerce platform redesign led by Carlos Tarrats. A modular, scalable design system improving the online shopping experience for plus-size fashion.">
 
   <!-- Canonical -->
   <link rel="canonical" href="https://carlostarrats.github.io/projects/eloquii.html">
@@ -15,16 +15,16 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Eloquii — Carlos Tarrats">
-  <meta property="og:description" content="Eloquii: Platform redesign improving the online shopping experience for plus-size fashion customers">
+  <meta property="og:title" content="Eloquii: Plus-Size Fashion Redesign — Carlos Tarrats">
+  <meta property="og:description" content="Eloquii e-commerce platform redesign led by Carlos Tarrats. A modular, scalable design system improving the online shopping experience for plus-size fashion.">
   <meta property="og:url" content="https://carlostarrats.github.io/projects/eloquii.html">
-  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Eloquii — Carlos Tarrats">
-  <meta name="twitter:description" content="Eloquii: Platform redesign improving the online shopping experience for plus-size fashion customers">
-  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=3">
+  <meta name="twitter:title" content="Eloquii: Plus-Size Fashion Redesign — Carlos Tarrats">
+  <meta name="twitter:description" content="Eloquii e-commerce platform redesign led by Carlos Tarrats. A modular, scalable design system improving the online shopping experience for plus-size fashion.">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -33,6 +33,22 @@
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
   <link rel="stylesheet" href="../styles.css?v=20260225b">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Eloquii",
+    "description": "Platform redesign improving the online shopping experience for plus-size fashion customers.",
+    "author": {
+      "@type": "Person",
+      "name": "Carlos Tarrats",
+      "url": "https://carlostarrats.github.io"
+    },
+    "url": "https://carlostarrats.github.io/projects/eloquii.html"
+  }
+  </script>
 </head>
 <body>
   <header class="top-bar">
@@ -121,9 +137,9 @@
 
     <article id="main-content" class="content-card">
       <header class="project-header">
-        <div class="project-header__title">
+        <h1 class="project-header__title">
           <span class="project-header__title-name project-header__title-name--eloquii">Eloquii</span><span class="project-header__title-dash"> —</span> Platform redesign improving the online shopping experience for plus-size fashion customers
-        </div>
+        </h1>
 
         <div class="project-header__description">
           <p>Eloquii's legacy e-commerce platform was slow, inconsistent, and frustrated internal teams trying to keep up with fast-moving campaigns.</p>
@@ -193,19 +209,19 @@
 
       <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
-          <h3 class="project-text__heading">Problem</h3>
+          <h2 class="project-text__heading">Problem</h2>
           <p class="project-text__body">Eloquii's legacy e-commerce platform struggled to capture the brand's core message: that fashion is transformative. User data showed shoppers often scrolled past the homepage slider but rarely engaged further, with significant drop-off past the first image. Beyond the engagement issues, the site was leaving conversion opportunities on the table. The rigid structure made it difficult to surface the right products, respond to shopping behavior, or run the kind of targeted campaigns that drive purchases. Visual hierarchy and content flexibility were limited, and internal teams relied heavily on design and engineering to make even small updates. The result was a slow, inconsistent experience that underrepresented the brand, frustrated internal teams, and wasn't converting the way it should have been.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Process</h3>
+          <h2 class="project-text__heading">Process</h2>
           <p class="project-text__body">I was given full ownership of the redesign with one directive: make it better. Discovery started with in-person customer interviews and observing how people browsed and shopped firsthand. I interviewed internal teams to figure out what the current site wasn't giving them and what they needed to do their jobs better. From there I built prototypes and ran usability testing to validate direction before committing to anything. I handled feature selection, presented to senior leadership, and got alignment across teams with competing priorities. The focus was on reusable components, mobile parity, and empowering internal teams to experiment safely within consistent boundaries.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Solution</h3>
+          <h2 class="project-text__heading">Solution</h2>
           <p class="project-text__body">I designed a modular, scalable system that gave Eloquii creative and business flexibility while maintaining visual coherence. The modularity let the business team run tests and respond to sales performance in real time. The homepage architecture used configurable slots where each could host a single horizontal hero image or up to three stacked vertical cards, giving the business flexibility to maximize photo assets and differentiate for campaign days. Messaging and promo slots could change layout and imagery without new code. A sticky promo bar persisted across the site to highlight urgency messaging like free shipping or limited-time offers, with teams selecting 1 to 3 boxes per promo area and mobile automatically defaulting to a single rotating message. Flexible image slots were added to a new dropdown desktop navigation to better illustrate categories and put featured product out front. Responsive defaults meant mobile experiences automatically simplified complex layouts. Typography, grid, and spacing were harmonized across every page template including category pages, PDPs, account pages, and an iOS app. CMS flexibility enabled marketing to swap creative and messaging without involving engineering. What's shown here is a portion of the work. The broader effort included conversion-focused UX optimization across the site, email campaigns, weekly sales flows, and brand marketing touchpoints.</p>
         </div>
         <div class="project-text__section">
-          <h3 class="project-text__heading">Outcome</h3>
+          <h2 class="project-text__heading">Outcome</h2>
           <p class="project-text__body">The redesign empowered Eloquii's internal teams to iterate faster and more independently. Campaigns launched quicker, visual identity stayed consistent, and the shopping experience became simpler and more cohesive. The work reduced dependency on developers for daily updates, improved homepage engagement and campaign turnaround time, and strengthened alignment between product, marketing, and design teams. The project re-established Eloquii's site as a living reflection of its brand rather than a static storefront.</p>
         </div>
       </section>
