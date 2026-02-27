@@ -35,17 +35,17 @@
   <link rel="stylesheet" href="../styles.css?v=20260225b">
 </head>
 <body>
-  <div class="top-bar">
-    <div class="top-bar__colors">
-      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
-      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
-      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
-      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
-      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
-      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+  <header class="top-bar">
+    <div class="top-bar__colors" role="group" aria-label="Theme colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme" aria-pressed="true"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
     </div>
     <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
-  </div>
+  </header>
   <script>
     (function() {
       var swatches = document.querySelectorAll('.top-bar__swatch');
@@ -53,13 +53,16 @@
       swatches.forEach(function(s) {
         if (s.getAttribute('data-theme') === saved) {
           s.classList.add('active');
+          s.setAttribute('aria-pressed', 'true');
         } else {
           s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
         }
         s.addEventListener('click', function() {
           var theme = this.getAttribute('data-theme');
-          swatches.forEach(function(el) { el.classList.remove('active'); });
+          swatches.forEach(function(el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); });
           this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
           if (theme === 'default') {
             document.documentElement.removeAttribute('data-theme');
             sessionStorage.removeItem('siteTheme');
@@ -73,7 +76,7 @@
   </script>
 
   <!-- Preloader -->
-  <div class="preloader" id="preloader">
+  <div class="preloader" id="preloader" role="status" aria-label="Loading">
     <div class="preloader__spinner"></div>
   </div>
   <script>
@@ -129,11 +132,11 @@
       </header>
 
       <div class="view-toggle" role="tablist" aria-label="View mode">
-        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
-        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+        <button class="view-toggle__btn active" data-view="visual" role="tab" id="tab-visual" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" id="tab-text" aria-selected="false" aria-controls="project-text">Text</button>
       </div>
 
-      <section class="project-images" id="project-visual" role="tabpanel">
+      <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
         <!-- 1 - single image -->
         <img class="project-images__item" src="../images/eloquii/eloquii-1.jpg" alt="ELOQUII homepage design">
 
@@ -188,7 +191,7 @@
         </div>
       </section>
 
-      <section class="project-text" id="project-text" role="tabpanel">
+      <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
           <h3 class="project-text__heading">Problem</h3>
           <p class="project-text__body">Eloquii's legacy e-commerce platform struggled to capture the brand's core message: that fashion is transformative. User data showed shoppers often scrolled past the homepage slider but rarely engaged further, with significant drop-off past the first image. Beyond the engagement issues, the site was leaving conversion opportunities on the table. The rigid structure made it difficult to surface the right products, respond to shopping behavior, or run the kind of targeted campaigns that drive purchases. Visual hierarchy and content flexibility were limited, and internal teams relied heavily on design and engineering to make even small updates. The result was a slow, inconsistent experience that underrepresented the brand, frustrated internal teams, and wasn't converting the way it should have been.</p>
@@ -288,11 +291,11 @@
       <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
       </svg>
-      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos">
-        <div class="chat-messages" id="chat-messages">
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
           <div class="chat-welcome" id="chat-welcome">
             <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
-            <p class="chat-welcome__hint">Ask me anything or try one of these:</p>
+            <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
             <div class="chat-starters" id="chat-starters">
               <button class="chat-starter">What did you redesign at Eloquii?</button>
               <button class="chat-starter">How did you approach the component system?</button>
@@ -308,7 +311,7 @@
             </button>
           </div>
           <div class="chat-input-wrap">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" maxlength="500" autocomplete="off">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
             <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
             </button>
@@ -337,7 +340,7 @@
       trigger.addEventListener('click', openChat);
       closeBtn.addEventListener('click', closeChat);
       overlay.addEventListener('click', function(e) { if (e.target === overlay) closeChat(); });
-      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeChat(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeChat(); trigger.focus(); return; } if (e.key === 'Tab' && overlay.classList.contains('is-open')) { var focusable = document.getElementById('chat-panel').querySelectorAll('button:not([disabled]), input:not([disabled])'); var first = focusable[0]; var last = focusable[focusable.length - 1]; if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } } else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } } } });
       input.addEventListener('input', function() { sendBtn.disabled = !input.value.trim() || isLoading; });
       input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !sendBtn.disabled) sendMessage(input.value.trim()); });
       sendBtn.addEventListener('click', function() { if (!sendBtn.disabled) sendMessage(input.value.trim()); });

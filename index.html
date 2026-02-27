@@ -53,17 +53,17 @@
   </script>
 </head>
 <body>
-  <div class="top-bar">
-    <div class="top-bar__colors">
-      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
-      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
-      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
-      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
-      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
-      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+  <header class="top-bar">
+    <div class="top-bar__colors" role="group" aria-label="Theme colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme" aria-pressed="true"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
     </div>
     <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
-  </div>
+  </header>
   <script>
     (function() {
       var swatches = document.querySelectorAll('.top-bar__swatch');
@@ -71,13 +71,16 @@
       swatches.forEach(function(s) {
         if (s.getAttribute('data-theme') === saved) {
           s.classList.add('active');
+          s.setAttribute('aria-pressed', 'true');
         } else {
           s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
         }
         s.addEventListener('click', function() {
           var theme = this.getAttribute('data-theme');
-          swatches.forEach(function(el) { el.classList.remove('active'); });
+          swatches.forEach(function(el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); });
           this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
           if (theme === 'default') {
             document.documentElement.removeAttribute('data-theme');
             sessionStorage.removeItem('siteTheme');
@@ -91,8 +94,8 @@
   </script>
 
   <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader__label">Thinking</div>
+  <div class="preloader" id="preloader" role="status" aria-label="Loading">
+    <div class="preloader__label" aria-hidden="true">Thinking</div>
     <div class="preloader__stack">
       <div class="preloader__card"></div>
       <div class="preloader__card"></div>
@@ -193,7 +196,7 @@
     <!-- Hero Section -->
     <div class="hero">
       <h1>Hi, I'm Carlos, a Product & Systems Designer</h1>
-      <p class="portfolio-line"><a href="#" class="label italic contact-link" id="contact-link">Contact</a> <a href="https://www.linkedin.com/in/carlos-t-b869016" class="linkedin-link" aria-label="LinkedIn profile" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> <span class="selected-projects-text">Currently in Los Angeles, CA</span></p>
+      <p class="portfolio-line"><a href="mailto:" class="label italic contact-link" id="contact-link">Contact</a> <a href="https://www.linkedin.com/in/carlos-t-b869016" class="linkedin-link" aria-label="LinkedIn profile" target="_blank" rel="noopener"><svg width="24" height="24" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> <span class="selected-projects-text">Currently in Los Angeles, CA</span></p>
 
     </div>
 
@@ -201,7 +204,7 @@
     <p class="body" style="margin-bottom: 20px;">Most recently, I spent three years with the Department of Defense's Chief Digital and AI Office (Defense Digital Service), where I led design for modernization initiatives in high-security environments. I use AI tools to prototype and build, balancing user empathy, system complexity, and visual clarity. Earlier, I worked across startups and large corporations, driven by projects that combine technical challenge with purposeful impact.</p>
     <p class="body">Previous: Amazon, American Apparel, Droga5, Eloquii (Walmart), LoCA, RankBee, Sourceability</p>
 
-    <p class="location-line">Selected Projects:</p>
+    <h2 class="location-line">Selected Projects:</h2>
 
     <!-- AdaptiveShop Project -->
     <div class="project-row">
@@ -255,12 +258,12 @@
           </svg>
         </span>
       </a>
-      <h2><span class="italic color--adaptiveshop">AdaptiveShop </span>— A modern ecommerce platform with built-in AI and modular features to fit your business <a href="projects/adaptiveshop.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+      <h2><span class="italic color--adaptiveshop">AdaptiveShop </span>— A modern ecommerce platform with built-in AI and modular features to fit your business <a href="projects/adaptiveshop.html" class="see-more-tag" aria-label="See more about AdaptiveShop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
     </div>
 
     <!-- Control Project -->
     <div class="project-stack">
-      <h2><span class="italic color--control">Control</span>— A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3) <a href="projects/control.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+      <h2><span class="italic color--control">Control</span>— A text-only open-source on-device LLM app for iOS (Gemma3, Llama3.2, SmolLM2, Qwen3) <a href="projects/control.html" class="see-more-tag" aria-label="See more about Control"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
       <a href="projects/control.html" class="card card--control" aria-label="View Control project">
         <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
         </video>
@@ -388,7 +391,7 @@
     <!-- DDS + Eloquii Section -->
     <div class="project-pair">
       <div class="project-pair__item project-pair__item--dds">
-        <h2><span class="italic color--dds">Defense Digital Service </span>— Digital transformation of the Defense Department, integrating AI, data, cyber, and IT <a href="projects/dds.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+        <h2><span class="italic color--dds">Defense Digital Service </span>— Digital transformation of the Defense Department, integrating AI, data, cyber, and IT <a href="projects/dds.html" class="see-more-tag" aria-label="See more about Defense Digital Service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
         <a href="projects/dds.html" class="card card--dds" aria-label="View Defense Digital Service project">
           <img data-src="images/dds/dds-hero.jpg" alt="Defense Digital Service project" class="deferred">
           <span class="cool-button" aria-hidden="true">
@@ -440,7 +443,7 @@
         </a>
       </div>
       <div class="project-pair__item project-pair__item--eloquii">
-        <h2><span class="italic color--eloquii">Eloquii </span>— Platform redesign improving the online shopping experience for plus-size fashion customers <a href="projects/eloquii.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+        <h2><span class="italic color--eloquii">Eloquii </span>— Platform redesign improving the online shopping experience for plus-size fashion customers <a href="projects/eloquii.html" class="see-more-tag" aria-label="See more about Eloquii"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
         <a href="projects/eloquii.html" class="card card--eloquii" aria-label="View Eloquii project">
           <img data-src="images/eloquii/eloquii-hero.jpg" alt="Eloquii fashion project" class="deferred">
           <span class="cool-button" aria-hidden="true">
@@ -495,7 +498,7 @@
 
     <!-- Thayer Model of Mood Project -->
     <div class="project-stack">
-      <h2><span class="italic color--thayer">Thayer Model of Mood </span>— Mapping my Apple Music to Thayer's mood model alongside global Top 25 playlists <a href="mood-atlas/" class="see-more-tag" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+      <h2><span class="italic color--thayer">Thayer Model of Mood </span>— Mapping my Apple Music to Thayer's mood model alongside global Top 25 playlists <a href="mood-atlas/" class="see-more-tag" aria-label="See more about Mood Atlas" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
       <a href="mood-atlas/" class="card card--thayer" target="_blank" rel="noopener" aria-label="View Thayer Model of Mood project">
         <img data-src="images/thayer/thayer-hero.jpg" alt="Thayer Model of Mood visualization" class="deferred">
         <span class="cool-button" aria-hidden="true">
@@ -598,15 +601,14 @@
           </svg>
         </span>
       </a>
-      <h2><span class="italic color--kikoff">Kikoff </span>— Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences <a href="projects/kikoff.html" class="see-more-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+      <h2><span class="italic color--kikoff">Kikoff </span>— Reimagining a credit-building marketplace to drive engagement through interactive, modular learning experiences <a href="projects/kikoff.html" class="see-more-tag" aria-label="See more about Kikoff"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
     </div>
     end Kikoff Project -->
   </main>
 
-  <div class="page">
-    <!-- Copyright -->
+  <footer class="page">
     <p class="body center">© 2026</p>
-  </div>
+  </footer>
 
   <script>
     // Obfuscated email to prevent bot scraping
@@ -662,11 +664,11 @@
       <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
       </svg>
-      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos">
-        <div class="chat-messages" id="chat-messages">
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
           <div class="chat-welcome" id="chat-welcome">
             <p class="chat-welcome__text"><img src="images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
-            <p class="chat-welcome__hint">Ask me anything or try one of these:</p>
+            <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
             <div class="chat-starters" id="chat-starters">
               <button class="chat-starter">What kind of work are you looking for?</button>
               <button class="chat-starter">Tell me about your time at DDS</button>
@@ -690,7 +692,7 @@
             </button>
           </div>
           <div class="chat-input-wrap">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" maxlength="500" autocomplete="off">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
             <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
             </button>
@@ -751,6 +753,15 @@
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
           closeChat();
+          trigger.focus();
+          return;
+        }
+        if (e.key === 'Tab' && overlay.classList.contains('is-open')) {
+          var focusable = panel.querySelectorAll('button:not([disabled]), input:not([disabled])');
+          var first = focusable[0];
+          var last = focusable[focusable.length - 1];
+          if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+          else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } }
         }
       });
 

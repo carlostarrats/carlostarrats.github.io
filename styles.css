@@ -2311,7 +2311,7 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-welcome__hint {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.5);
   font-family: 'Baskervville', serif;
   font-size: 14px;
   font-weight: 200;
@@ -2329,7 +2329,7 @@ html[data-theme="lavender"] .chat-trigger {
 .chat-starter {
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.7);
   font-family: 'Baskervville', serif;
   font-weight: 200;
   font-size: 14px;
@@ -2403,6 +2403,12 @@ html[data-theme="lavender"] .chat-trigger {
   letter-spacing: 0.5px;
   outline: none;
   padding: 8px 0;
+}
+
+.chat-input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .chat-input::placeholder {
@@ -2481,12 +2487,15 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 @media (max-width: 800px) {
-  .chat-trigger,
+  .chat-trigger {
+    font-size: 10px;
+    line-height: 12px;
+  }
   .chat-starter,
   .chat-input,
   .chat-msg {
-    font-size: 10px;
-    line-height: 12px;
+    font-size: 12px;
+    line-height: 16px;
   }
   .chat-welcome__text {
     font-size: 28px;
@@ -2504,4 +2513,35 @@ html[data-theme="lavender"] .chat-trigger {
     top: -40px;
     right: 0;
   }
+}
+
+/* ============================================
+   FOCUS-VISIBLE STYLES
+   ============================================ */
+
+.chat-trigger:focus-visible,
+.chat-close:focus-visible,
+.chat-starter:focus-visible,
+.chat-send:focus-visible,
+.chat-action:focus-visible,
+.top-bar__swatch:focus-visible,
+.contact-link:focus-visible,
+.linkedin-link:focus-visible,
+.see-more-tag:focus-visible,
+.back-link:focus-visible,
+.external-link:focus-visible,
+.card:focus-visible,
+.view-toggle__btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.top-bar__swatch:focus-visible {
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+.card:focus-visible {
+  outline-offset: 4px;
+  border-radius: 16px;
 }

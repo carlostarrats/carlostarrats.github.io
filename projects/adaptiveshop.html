@@ -35,17 +35,17 @@
   <link rel="stylesheet" href="../styles.css?v=20260225b">
 </head>
 <body>
-  <div class="top-bar">
-    <div class="top-bar__colors">
-      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme"></button>
-      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme"></button>
-      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme"></button>
-      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme"></button>
-      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme"></button>
-      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme"></button>
+  <header class="top-bar">
+    <div class="top-bar__colors" role="group" aria-label="Theme colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme" aria-pressed="true"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
     </div>
     <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
-  </div>
+  </header>
   <script>
     (function() {
       var swatches = document.querySelectorAll('.top-bar__swatch');
@@ -53,13 +53,16 @@
       swatches.forEach(function(s) {
         if (s.getAttribute('data-theme') === saved) {
           s.classList.add('active');
+          s.setAttribute('aria-pressed', 'true');
         } else {
           s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
         }
         s.addEventListener('click', function() {
           var theme = this.getAttribute('data-theme');
-          swatches.forEach(function(el) { el.classList.remove('active'); });
+          swatches.forEach(function(el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); });
           this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
           if (theme === 'default') {
             document.documentElement.removeAttribute('data-theme');
             sessionStorage.removeItem('siteTheme');
@@ -73,7 +76,7 @@
   </script>
 
   <!-- Preloader -->
-  <div class="preloader" id="preloader">
+  <div class="preloader" id="preloader" role="status" aria-label="Loading">
     <div class="preloader__spinner"></div>
   </div>
   <script>
@@ -137,17 +140,17 @@
       </header>
 
       <div class="view-toggle" role="tablist" aria-label="View mode">
-        <button class="view-toggle__btn active" data-view="visual" role="tab" aria-selected="true" aria-controls="project-visual">Visual</button>
-        <button class="view-toggle__btn" data-view="text" role="tab" aria-selected="false" aria-controls="project-text">Text</button>
+        <button class="view-toggle__btn active" data-view="visual" role="tab" id="tab-visual" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" id="tab-text" aria-selected="false" aria-controls="project-text">Text</button>
       </div>
 
-      <section class="project-images" id="project-visual" role="tabpanel">
+      <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
         <!-- 1 - single image -->
-        <img src="../images/adaptiveshop/AdaptiveShop-1.jpg" alt="AdaptiveShop interface" class="project-images__item">
+        <img src="../images/adaptiveshop/AdaptiveShop-1.jpg" alt="AdaptiveShop homepage hero" class="project-images__item">
 
         <!-- 2 and 3 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/AdaptiveShop-2.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/AdaptiveShop-2.jpg" alt="AdaptiveShop product catalog" class="project-images__item">
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/adaptiveshop/adaptiveshop-3.mp4" type="video/mp4">
@@ -156,7 +159,7 @@
         </div>
 
         <!-- 4 - single image -->
-        <img src="../images/adaptiveshop/adaptiveshop-4.jpg" alt="AdaptiveShop interface" class="project-images__item">
+        <img src="../images/adaptiveshop/adaptiveshop-4.jpg" alt="AdaptiveShop product detail page" class="project-images__item">
 
         <!-- 5 and 6 on a row -->
         <div class="project-images__grid">
@@ -165,12 +168,12 @@
               <source src="../images/adaptiveshop/adaptiveshop-5.mp4" type="video/mp4">
             </video>
           </div>
-          <img src="../images/adaptiveshop/adaptiveshop-6.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-6.jpg" alt="AdaptiveShop AI features" class="project-images__item">
         </div>
 
         <!-- 7 and 8 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/adaptiveshop-7.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-7.jpg" alt="AdaptiveShop store customization" class="project-images__item">
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/adaptiveshop/adaptiveshop-8.mp4" type="video/mp4">
@@ -179,7 +182,7 @@
         </div>
 
         <!-- 9 - single image -->
-        <img src="../images/adaptiveshop/adaptiveshop-9.jpg" alt="AdaptiveShop interface" class="project-images__item">
+        <img src="../images/adaptiveshop/adaptiveshop-9.jpg" alt="AdaptiveShop checkout flow" class="project-images__item">
 
         <!-- 10 and 11 on a row -->
         <div class="project-images__grid">
@@ -196,34 +199,34 @@
         </div>
 
         <!-- 12 - single image -->
-        <img src="../images/adaptiveshop/adaptiveshop-12.jpg" alt="AdaptiveShop interface" class="project-images__item">
+        <img src="../images/adaptiveshop/adaptiveshop-12.jpg" alt="AdaptiveShop dashboard" class="project-images__item">
 
         <!-- 13 and 14 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/adaptiveshop-13.jpg" alt="AdaptiveShop interface" class="project-images__item">
-          <img src="../images/adaptiveshop/adaptiveshop-14.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-13.jpg" alt="AdaptiveShop analytics view" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-14.jpg" alt="AdaptiveShop order management" class="project-images__item">
         </div>
 
         <!-- 15 and 16 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/adaptiveshop-15.jpg" alt="AdaptiveShop interface" class="project-images__item">
-          <img src="../images/adaptiveshop/adaptiveshop-16.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-15.jpg" alt="AdaptiveShop mobile storefront" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-16.jpg" alt="AdaptiveShop link sharing" class="project-images__item">
         </div>
 
         <!-- 17 and 18 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/adaptiveshop-17.jpg" alt="AdaptiveShop interface" class="project-images__item">
-          <img src="../images/adaptiveshop/adaptiveshop-18.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-17.jpg" alt="AdaptiveShop component library" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-18.jpg" alt="AdaptiveShop design system" class="project-images__item">
         </div>
 
         <!-- 19 and 20 on a row -->
         <div class="project-images__grid">
-          <img src="../images/adaptiveshop/adaptiveshop-19.jpg" alt="AdaptiveShop interface" class="project-images__item">
-          <img src="../images/adaptiveshop/adaptiveshop-20.jpg" alt="AdaptiveShop interface" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-19.jpg" alt="AdaptiveShop SEO tools" class="project-images__item">
+          <img src="../images/adaptiveshop/adaptiveshop-20.jpg" alt="AdaptiveShop settings" class="project-images__item">
         </div>
       </section>
 
-      <section class="project-text" id="project-text" role="tabpanel">
+      <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
           <h3 class="project-text__heading">Problem</h3>
           <p class="project-text__body">Most e-commerce platforms are either too complex or too limited for the people actually using them: first-time sellers, side hustlers, and people without technical backgrounds who don't know where to start with things like SEO or store design. They need something powerful enough to grow with but simple enough to start with. A shop that looks good out of the box without needing a designer or developer. Most existing tools that offer AI-driven features like contextual product selection or auto-generated descriptions tend to gate them behind enterprise pricing, and there's no easy way for a merchant to share a single link that adapts its content based on who clicks it.</p>
@@ -323,11 +326,11 @@
       <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
       </svg>
-      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos">
-        <div class="chat-messages" id="chat-messages">
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
           <div class="chat-welcome" id="chat-welcome">
             <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
-            <p class="chat-welcome__hint">Ask me anything or try one of these:</p>
+            <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
             <div class="chat-starters" id="chat-starters">
               <button class="chat-starter">What problem does AdaptiveShop solve?</button>
               <button class="chat-starter">How does the AI work in AdaptiveShop?</button>
@@ -343,7 +346,7 @@
             </button>
           </div>
           <div class="chat-input-wrap">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" maxlength="500" autocomplete="off">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
             <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
             </button>
@@ -372,7 +375,7 @@
       trigger.addEventListener('click', openChat);
       closeBtn.addEventListener('click', closeChat);
       overlay.addEventListener('click', function(e) { if (e.target === overlay) closeChat(); });
-      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeChat(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeChat(); trigger.focus(); return; } if (e.key === 'Tab' && overlay.classList.contains('is-open')) { var focusable = document.getElementById('chat-panel').querySelectorAll('button:not([disabled]), input:not([disabled])'); var first = focusable[0]; var last = focusable[focusable.length - 1]; if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } } else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } } } });
       input.addEventListener('input', function() { sendBtn.disabled = !input.value.trim() || isLoading; });
       input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !sendBtn.disabled) sendMessage(input.value.trim()); });
       sendBtn.addEventListener('click', function() { if (!sendBtn.disabled) sendMessage(input.value.trim()); });
