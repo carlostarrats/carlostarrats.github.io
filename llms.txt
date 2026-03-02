@@ -1,4 +1,4 @@
-# Carlos Tarrats - Software & Visual Designer
+# Carlos Tarrats - Product & Systems Designer
 
 ## About
 Carlos Tarrats is a Software & Visual Designer based in Los Angeles, CA. He specializes in simplifying complex systems, 0-1 product development, and enterprise systems design.
@@ -26,10 +26,15 @@ URL: https://carlostarrats.github.io/projects/control.html
 
 ### Defense Digital Service
 Digital transformation of the Defense Department, integrating AI, data, cyber, and IT. Work details at https://defensedigitalservice-org.github.io/dds-mil/
+URL: https://carlostarrats.github.io/projects/dds.html
 
 ### Eloquii
 Platform redesign improving the online shopping experience for plus-size fashion customers. Led design of a modular, scalable system with reusable components and mobile parity.
 URL: https://carlostarrats.github.io/projects/eloquii.html
+
+### Mood Atlas (Thayer Model of Mood)
+Interactive 3D music visualization using the Thayer Model of Mood. Maps Apple Music library and global Top 25 chart songs by emotional energy and valence, color-coded by mood quadrant (Happy, Sad, Frantic, Calm).
+URL: https://carlostarrats.github.io/mood-atlas/
 
 ## Contact
 - LinkedIn: https://www.linkedin.com/in/carlos-t-b869016
