@@ -34,7 +34,7 @@ URL: https://carlostarrats.github.io/projects/eloquii.html
 
 ### Mood Atlas (Thayer Model of Mood)
 Interactive 3D music visualization using the Thayer Model of Mood. Maps Apple Music library and global Top 25 chart songs by emotional energy and valence, color-coded by mood quadrant (Happy, Sad, Frantic, Calm).
-URL: https://carlostarrats.github.io/mood-atlas/
+URL: https://mood-atlas.tarrats.xyz
 
 ## Contact
 - LinkedIn: https://www.linkedin.com/in/carlos-t-b869016
