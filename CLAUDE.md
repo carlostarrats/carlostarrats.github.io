@@ -312,12 +312,29 @@ npm run build
 Data is pre-fetched and bundled (no runtime API calls needed).
 
 ### Build & Deploy
+Mood Atlas has TWO deployment targets:
+
+#### 1. Vercel (PRIMARY — live site)
+- **URL:** https://mood-atlas.tarrats.xyz/
+- **How:** Vercel deploys from `mood-atlas-src/` source directly
+- **vite base:** Must be `'/'` for Vercel
+- **Command:** `cd mood-atlas-src && npx vercel --prod`
+- **Config:** `.vercel/project.json` in `mood-atlas-src/`
+
+#### 2. GitHub Pages (secondary — bundled copy)
+- **URL:** https://tarrats.xyz/mood-atlas/
+- **How:** Pre-built files copied to `mood-atlas/` folder, committed, pushed to main
+- **vite base:** Must be `'/mood-atlas/'` for GitHub Pages (change before building for GH Pages)
+- **Command:**
 ```bash
 cd mood-atlas-src
-npm install          # First time only
-npm run build        # Outputs to ../mood-atlas/
+npm run build        # Outputs to dist/
+# Copy to tracked folder:
+rm -rf ../mood-atlas/assets && cp -r dist/* ../mood-atlas/
 ```
 Then commit the `mood-atlas/` folder changes.
+
+**IMPORTANT:** When deploying Mood Atlas changes, always deploy to Vercel first (`npx vercel --prod`). The vite `base` should normally stay as `'/'` for Vercel. Only change to `'/mood-atlas/'` when specifically building for GitHub Pages.
 
 ## Recent Commits
 - `fbc4230e` - Add loading spinner while 3D scene initializes
