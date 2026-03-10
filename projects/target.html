@@ -94,6 +94,34 @@
       height: 16px;
     }
 
+    /* ---- RESET BUTTON ---- */
+    .pres-reset {
+      position: fixed;
+      bottom: 20px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      background: #252525;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 100;
+    }
+    .pres-reset:hover {
+      border-color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.9);
+      background: #252525;
+    }
+    .pres-reset svg {
+      width: 16px;
+      height: 16px;
+    }
+
     /* ---- PROGRESS BAR ---- */
     .pres-progress {
       position: fixed;
@@ -412,8 +440,9 @@
     /* ---- MOBILE ---- */
     @media (max-width: 768px) {
       .pres-nav { padding: 0 16px; }
-      .slide { padding: 64px 20px 32px; }
-      .slide--image { padding: 64px 16px 32px; }
+      .pres-nav__back-text { display: none; }
+      .slide { padding: 64px 20px 32px; justify-content: flex-start; }
+      .slide--image { padding: 64px 16px 32px; justify-content: flex-start; }
       .slide__stat { font-size: 56px; }
       .slide__image-container {
         width: 100% !important;
@@ -425,9 +454,9 @@
 
   <!-- Navigation -->
   <nav class="pres-nav">
-    <span class="pres-nav__back">Target — Emerging Experience Team</span>
+    <span class="pres-nav__back"><svg width="20" height="20" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="11" fill="#CC0100"/><circle cx="12" cy="12" r="7.5" fill="#252525"/><circle cx="12" cy="12" r="4" fill="#CC0100"/></svg><span class="pres-nav__back-text">Emerging Experiences</span></span>
     <div class="pres-nav__controls">
-      <span class="pres-nav__counter" id="counter">1 / 12</span>
+      <span class="pres-nav__counter" id="counter">1 / 11</span>
       <button class="pres-nav__btn" id="prev" aria-label="Previous slide" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
@@ -477,7 +506,7 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#cbfff7">Exploration</p>
-          <p class="slide__caption-text">Explored the full landscape of possible formats: Video, Quiz, Chat, Tools & Services. To understand where engagement could live within the credit-building model.</p>
+          <p class="slide__caption-text">Explored the full landscape of possible formats: Video, Quiz, Chat, Tools & Services to understand where engagement could live.</p>
         </div>
       </div>
     </div>
@@ -493,29 +522,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#ffcbcc">Chatbot Direction</p>
-          <p class="slide__caption-text">Explored five conversational models, from singular topics to tracked programs, guidance flows, advisory solutions, and Q&A, to find the right balance of personalization and structure.</p>
+          <p class="slide__caption-text">Explored five conversational models, from singular topics to tracked programs, guidance flows, advisory solutions, and Q&A.</p>
         </div>
       </div>
     </div>
 
-    <!-- 5: USER FLOW -->
+    <!-- 5: ASK JANE PROTOTYPE -->
     <div class="slide slide--image" data-slide="4">
-      <div class="slide__inner">
-        <div class="slide__image-wrap">
-          <div class="slide__image-container">
-            <img src="../images/kikoff/detail-kikoff-3.jpg" alt="End-to-end wireframe flow from onboarding through chat to action items">
-            <button class="slide__expand" aria-label="Expand image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
-          </div>
-        </div>
-        <div class="slide__caption">
-          <p class="slide__caption-label" style="color:#f5ffcb">User Journey</p>
-          <p class="slide__caption-text">Wireframing the user journey from onboarding to action.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6: ASK JANE PROTOTYPE -->
-    <div class="slide slide--image" data-slide="5">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -525,13 +538,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#cdcbff">Prototype</p>
-          <p class="slide__caption-text">"Ask Jane," a conversational prototype that guided users through financial topics like homebuying, surfacing relevant questions, videos, and actionable next steps within the chat flow.</p>
+          <p class="slide__caption-text">"Ask Jane," a conversational prototype that guided users through financial topics like homebuying, surfacing relevant questions.</p>
         </div>
       </div>
     </div>
 
-    <!-- 7: USER TESTING -->
-    <div class="slide slide--image" data-slide="6">
+    <!-- 6: USER TESTING -->
+    <div class="slide slide--image" data-slide="5">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -541,13 +554,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#ffcbd4">User Testing</p>
-          <p class="slide__caption-text">Feedback from 11 format interviews across four concepts. Users valued the chatbot's personal feel and directness, but flagged speed, off-script limitations, and a desire for more interactive formats.</p>
+          <p class="slide__caption-text">Users valued the chatbot's personal feel and directness, but flagged speed, off-script limitations, and a desire for more interactive formats.</p>
         </div>
       </div>
     </div>
 
-    <!-- 8: QUIZ DIRECTION -->
-    <div class="slide slide--image" data-slide="7">
+    <!-- 7: QUIZ DIRECTION -->
+    <div class="slide slide--image" data-slide="6">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -557,13 +570,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#cbe8ff">Quiz-Based Engagement</p>
-          <p class="slide__caption-text">High-fidelity exploration of modular content with chapters, video, quizzes, and interactive calculators. Combining the best of educational structure with the engagement of active learning.</p>
+          <p class="slide__caption-text">High-fidelity exploration of modular content with chapters, video, quizzes, and interactive calculators.</p>
         </div>
       </div>
     </div>
 
-    <!-- 9: CONTENT STRATEGY -->
-    <div class="slide slide--image" data-slide="8">
+    <!-- 8: CONTENT STRATEGY -->
+    <div class="slide slide--image" data-slide="7">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -573,13 +586,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#cbfff7">Content Strategy</p>
-          <p class="slide__caption-text">Synthesized research into product concepts: Academy (structured courses), Gym (guided personal programs), Advisors (1:1 coaching). Each framing financial education through a different mental model.</p>
+          <p class="slide__caption-text">Synthesized research into product concepts: Academy (structured courses), Gym (guided programs), Advisors (1:1 coaching).</p>
         </div>
       </div>
     </div>
 
-    <!-- 10: THREE DIRECTIONS -->
-    <div class="slide slide--image" data-slide="9">
+    <!-- 9: THREE DIRECTIONS -->
+    <div class="slide slide--image" data-slide="8">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -589,13 +602,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#ffcbcc">Three Directions</p>
-          <p class="slide__caption-text">Prototyped each concept.</p>
+          <p class="slide__caption-text">Prototyped each of the mental models defined to find the right balance of structure and personalization.</p>
         </div>
       </div>
     </div>
 
-    <!-- 11: FINAL DESIGNS -->
-    <div class="slide slide--image" data-slide="10">
+    <!-- 10: FINAL DESIGNS -->
+    <div class="slide slide--image" data-slide="9">
       <div class="slide__inner">
         <div class="slide__image-wrap">
           <div class="slide__image-container">
@@ -605,13 +618,13 @@
         </div>
         <div class="slide__caption">
           <p class="slide__caption-label" style="color:#f5ffcb">Opportunity</p>
-          <p class="slide__caption-text">Users valued specificity, which opened the door to domain-specific expert bots, each priced individually. A new potential revenue stream offering real value beyond basic ebooks at higher price points.</p>
+          <p class="slide__caption-text">Users valued specificity, which opened the door to domain-specific expert bots, each priced individually as a new revenue stream.</p>
         </div>
       </div>
     </div>
 
-    <!-- 12: OUTCOME -->
-    <div class="slide slide--text" data-slide="11">
+    <!-- 11: OUTCOME -->
+    <div class="slide slide--text" data-slide="10">
       <div class="slide__inner">
         <span class="slide__label" style="color:#cdcbff">Outcome</span>
         <h2 class="slide__heading">Paused before shipping, but the work shaped what came next</h2>
@@ -626,6 +639,11 @@
     </div>
 
   </div>
+
+  <!-- Reset -->
+  <button class="pres-reset" id="reset" aria-label="Reset to first slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+  </button>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
@@ -685,6 +703,7 @@
 
       prevBtn.addEventListener('click', function() { go(current - 1); });
       nextBtn.addEventListener('click', function() { go(current + 1); });
+      document.getElementById('reset').addEventListener('click', function() { go(0); });
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); go(current + 1); }
