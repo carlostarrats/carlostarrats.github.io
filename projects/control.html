@@ -161,32 +161,40 @@
       </div>
 
       <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
-        <img src="../images/control/control-hero.jpg" alt="Control app screenshots showing the logo, model selection, chat interface, and customization options" class="project-images__item">
+        <div class="project-images__img-wrap">
+          <img src="../images/control/control-hero.jpg" alt="Control app screenshots showing the logo, model selection, chat interface, and customization options" class="project-images__item">
+          <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        </div>
         <div class="project-images__video">
           <video autoplay muted loop playsinline>
             <source src="../images/control/control-1.mp4" type="video/mp4">
           </video>
+          <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
         </div>
         <div class="project-images__grid">
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/control/control-2.mp4" type="video/mp4">
             </video>
+            <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/control/control-3.mp4" type="video/mp4">
             </video>
+            <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/control/control-4.mp4" type="video/mp4">
             </video>
+            <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
             <video autoplay muted loop playsinline>
               <source src="../images/control/control-5.mp4" type="video/mp4">
             </video>
+            <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
         </div>
       </section>
@@ -361,6 +369,61 @@
         .catch(function(err) { removeTypingIndicator(); var errDiv = document.createElement('div'); errDiv.className = 'chat-error'; errDiv.textContent = err.message; messagesEl.appendChild(errDiv); messagesEl.scrollTop = messagesEl.scrollHeight; })
         .finally(function() { isLoading = false; sendBtn.disabled = !input.value.trim(); });
       }
+    })();
+  </script>
+  <!-- Lightbox -->
+  <div class="project-lightbox" id="project-lightbox">
+    <div class="project-lightbox__content">
+      <button class="project-lightbox__close" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img id="project-lightbox-img" src="" alt="">
+      <video id="project-lightbox-video" autoplay loop muted playsinline></video>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var lightbox = document.getElementById('project-lightbox');
+      var lightboxImg = document.getElementById('project-lightbox-img');
+      var lightboxVideo = document.getElementById('project-lightbox-video');
+      var isOpen = false;
+      document.querySelectorAll('.project-images__expand').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var wrap = this.parentElement;
+          var video = wrap.querySelector('video');
+          var img = wrap.querySelector('img');
+          if (video) {
+            var source = video.querySelector('source');
+            lightboxVideo.src = source ? source.src : video.src;
+            lightboxVideo.load();
+            lightboxVideo.style.display = 'block';
+            lightboxImg.style.display = 'none';
+            lightboxVideo.play().catch(function(){});
+          } else if (img) {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightboxImg.style.display = '';
+            lightboxVideo.style.display = 'none';
+          }
+          lightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          isOpen = true;
+        });
+      });
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+        lightboxVideo.pause();
+        lightboxVideo.style.display = 'none';
+        lightboxImg.style.display = '';
+        isOpen = false;
+      }
+      lightbox.addEventListener('click', closeLightbox);
+      document.querySelector('.project-lightbox__close').addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isOpen) { closeLightbox(); }
+      });
     })();
   </script>
 </body>
