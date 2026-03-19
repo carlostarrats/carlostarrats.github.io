@@ -1522,6 +1522,10 @@ h1.section-brand {
   background: #FF9800;
 }
 
+.archive__dot--in-progress {
+  background: #448AFF;
+}
+
 @media (max-width: 768px) {
   .archive {
     padding-top: 40px;
