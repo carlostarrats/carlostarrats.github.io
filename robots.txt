@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://carlostarrats.github.io/sitemap.xml
+Disallow: /

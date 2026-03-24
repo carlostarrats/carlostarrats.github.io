@@ -13,6 +13,33 @@
   font-display: swap;
 }
 
+/* Geist Pixel Triangle */
+@font-face {
+  font-family: 'Geist Pixel Triangle';
+  src: url('fonts/GeistPixel-Triangle.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Pixel Line */
+@font-face {
+  font-family: 'Geist Pixel Line';
+  src: url('fonts/GeistPixel-Line.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Pixel Circle */
+@font-face {
+  font-family: 'Geist Pixel Circle';
+  src: url('fonts/GeistPixel-Circle.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ============================================
    PRELOADER
    ============================================ */
@@ -427,7 +454,13 @@ h2 {
 .hero h1 {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+}
+
+.hero h2 {
+  font-style: italic;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-flicker {
