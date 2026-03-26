@@ -370,6 +370,9 @@
   </script>
   <!-- Lightbox -->
   <div class="project-lightbox" id="project-lightbox">
+    <button class="project-lightbox__nav project-lightbox__nav--prev" id="lightbox-prev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
     <div class="project-lightbox__content">
       <button class="project-lightbox__close" aria-label="Close">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -377,37 +380,53 @@
       <img id="project-lightbox-img" src="" alt="">
       <video id="project-lightbox-video" autoplay loop muted playsinline></video>
     </div>
+    <button class="project-lightbox__nav project-lightbox__nav--next" id="lightbox-next" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
   </div>
   <script>
     (function() {
       var lightbox = document.getElementById('project-lightbox');
       var lightboxImg = document.getElementById('project-lightbox-img');
       var lightboxVideo = document.getElementById('project-lightbox-video');
+      var prevBtn = document.getElementById('lightbox-prev');
+      var nextBtn = document.getElementById('lightbox-next');
+      var expandBtns = Array.from(document.querySelectorAll('.project-images__expand'));
+      var currentIndex = -1;
       var isOpen = false;
-      document.querySelectorAll('.project-images__expand').forEach(function(btn) {
+
+      function showItem(index) {
+        if (index < 0 || index >= expandBtns.length) return;
+        currentIndex = index;
+        var wrap = expandBtns[index].parentElement;
+        var video = wrap.querySelector('video');
+        var img = wrap.querySelector('img');
+        lightboxVideo.pause();
+        if (video) {
+          var source = video.querySelector('source');
+          lightboxVideo.src = source ? source.src : video.src;
+          lightboxVideo.load();
+          lightboxVideo.style.display = 'block';
+          lightboxImg.style.display = 'none';
+          lightboxVideo.play().catch(function(){});
+        } else if (img) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxImg.style.display = '';
+          lightboxVideo.style.display = 'none';
+        }
+      }
+
+      expandBtns.forEach(function(btn, i) {
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
-          var wrap = this.parentElement;
-          var video = wrap.querySelector('video');
-          var img = wrap.querySelector('img');
-          if (video) {
-            var source = video.querySelector('source');
-            lightboxVideo.src = source ? source.src : video.src;
-            lightboxVideo.load();
-            lightboxVideo.style.display = 'block';
-            lightboxImg.style.display = 'none';
-            lightboxVideo.play().catch(function(){});
-          } else if (img) {
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.alt;
-            lightboxImg.style.display = '';
-            lightboxVideo.style.display = 'none';
-          }
+          showItem(i);
           lightbox.classList.add('is-open');
           document.body.style.overflow = 'hidden';
           isOpen = true;
         });
       });
+
       function closeLightbox() {
         lightbox.classList.remove('is-open');
         document.body.style.overflow = '';
@@ -415,11 +434,24 @@
         lightboxVideo.style.display = 'none';
         lightboxImg.style.display = '';
         isOpen = false;
+        currentIndex = -1;
       }
-      lightbox.addEventListener('click', closeLightbox);
+
+      function goPrev() { if (currentIndex > 0) showItem(currentIndex - 1); }
+      function goNext() { if (currentIndex < expandBtns.length - 1) showItem(currentIndex + 1); }
+
+      prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+      nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
       document.querySelector('.project-lightbox__close').addEventListener('click', closeLightbox);
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && isOpen) { closeLightbox(); }
+        if (!isOpen) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') goPrev();
+        if (e.key === 'ArrowRight') goNext();
       });
     })();
   </script>
