@@ -168,7 +168,7 @@
   border-radius: 50% 50% 30% 30%;
 }
 
-/* Card 4 & 9 - warm ochre */
+/* Card 4 & 9 - warm ochre — horizon bands */
 .preloader__card:nth-child(4),
 .preloader__card:nth-child(9) {
   background: linear-gradient(135deg, #e8d080 0%, #d8b860 30%, #c0a048 60%, #a88838 100%);
@@ -178,17 +178,17 @@
 .preloader__card:nth-child(9) { z-index: 9; animation: preloader-card9 12s ease-in-out infinite; }
 .preloader__card:nth-child(4)::before,
 .preloader__card:nth-child(9)::before {
-  width: 50px; height: 55px;
-  top: 18px; left: 20px;
-  background: rgba(40, 25, 8, 0.5);
-  border-radius: 8px;
+  width: 200px; height: 35px;
+  bottom: 10px; left: -10px;
+  background: rgba(40, 25, 8, 0.4);
+  border-radius: 40% 60% 0 0;
 }
 .preloader__card:nth-child(4)::after,
 .preloader__card:nth-child(9)::after {
-  width: 55px; height: 50px;
-  top: 22px; right: 25px;
-  background: rgba(50, 30, 10, 0.4);
-  border-radius: 6px;
+  width: 200px; height: 20px;
+  top: 0; left: -10px;
+  background: rgba(255, 230, 160, 0.35);
+  border-radius: 0 0 50% 50%;
 }
 
 /* Card 5 & 10 - soft mauve */
