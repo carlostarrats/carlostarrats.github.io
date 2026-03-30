@@ -1081,6 +1081,26 @@ h1.section-brand {
   flex-shrink: 0;
 }
 
+.external-link .arrow-icon {
+  margin-right: -4px;
+}
+
+.external-link--control {
+  color: #cbfff7;
+}
+
+.external-link--adaptiveshop {
+  color: #ffcbcc;
+}
+
+.external-link--eloquii {
+  color: #cdcbff;
+}
+
+.external-link--dds {
+  color: #f5ffcb;
+}
+
 .content-card {
   max-width: 100%;
 }
@@ -1848,6 +1868,10 @@ h1.section-brand {
   .external-link svg {
     width: 16px;
     height: 16px;
+  }
+
+  .external-link .arrow-icon {
+    margin-right: -2px;
   }
 
   .content-card {
