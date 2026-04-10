@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <title>RankBee: AI Visibility Platform — Carlos Tarrats</title>
+  <meta name="description" content="RankBee is an AI visibility platform helping brands get recommended by ChatGPT, Claude, and Google AI Overviews. Strategic product design by Carlos Tarrats.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://carlostarrats.github.io/projects/rankbee.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RankBee: AI Visibility Platform — Carlos Tarrats">
+  <meta property="og:description" content="RankBee is an AI visibility platform helping brands get recommended by ChatGPT, Claude, and Google AI Overviews. Strategic product design by Carlos Tarrats.">
+  <meta property="og:url" content="https://carlostarrats.github.io/projects/rankbee.html">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RankBee: AI Visibility Platform — Carlos Tarrats">
+  <meta name="twitter:description" content="RankBee is an AI visibility platform helping brands get recommended by ChatGPT, Claude, and Google AI Overviews. Strategic product design by Carlos Tarrats.">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <script>
+    (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+  <link rel="stylesheet" href="../styles.css?v=20260225b">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "RankBee",
+    "description": "An AI visibility platform helping brands get recommended by ChatGPT, Claude, and Google AI Overviews.",
+    "author": {
+      "@type": "Person",
+      "name": "Carlos Tarrats",
+      "url": "https://carlostarrats.github.io"
+    },
+    "url": "https://carlostarrats.github.io/projects/rankbee.html"
+  }
+  </script>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="top-bar__colors" role="group" aria-label="Theme colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme" aria-pressed="true"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
+    </div>
+    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
+  </header>
+  <script>
+    (function() {
+      var swatches = document.querySelectorAll('.top-bar__swatch');
+      var saved = sessionStorage.getItem('siteTheme') || 'default';
+      swatches.forEach(function(s) {
+        if (s.getAttribute('data-theme') === saved) {
+          s.classList.add('active');
+          s.setAttribute('aria-pressed', 'true');
+        } else {
+          s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
+        }
+        s.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          swatches.forEach(function(el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); });
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+          if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+            sessionStorage.removeItem('siteTheme');
+          } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            sessionStorage.setItem('siteTheme', theme);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" role="status" aria-label="Loading">
+    <div class="preloader__spinner"></div>
+  </div>
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (sessionStorage.getItem('fontsLoaded')) {
+        preloader.style.display = 'none';
+      } else {
+        var fontsReady = false;
+        var minTimeReady = false;
+        var loaded = false;
+        function tryHide() {
+          if (loaded || !fontsReady || !minTimeReady) return;
+          loaded = true;
+          sessionStorage.setItem('fontsLoaded', 'true');
+          preloader.classList.add('is-hidden');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHide();
+        }, 2000);
+        function onFontsReady() {
+          fontsReady = true;
+          tryHide();
+        }
+        document.fonts.ready.then(onFontsReady);
+        setTimeout(onFontsReady, 4000);
+      }
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="detail-page detail-page--rankbee">
+    <nav class="detail-nav">
+      <a href="../index.html" class="back-link" aria-label="Back to homepage">Back</a>
+    </nav>
+
+    <article id="main-content" class="content-card">
+      <header class="project-header">
+        <h1 class="project-header__title">
+          <span class="project-header__title-name project-header__title-name--rankbee">RankBee </span><span class="project-header__title-dash">—</span> AI visibility platform helping brands get recommended by ChatGPT, Claude, and Google AI Overviews
+        </h1>
+
+        <div class="project-header__description">
+          <p>Working directly with the founder on strategic product design for RankBee, an AI visibility platform that helps brands track and optimize how they show up in AI-generated answers across ChatGPT, Claude, and Google AI Overviews. The work spans the full product surface — dashboards, attribute analysis, prompt tracking, competitor monitoring, and content optimization. A mix of big strategic bets and fast iteration as the team finds product-market fit in a category that barely existed a year ago.</p>
+        </div>
+      </header>
+
+      <section class="project-images" id="project-visual">
+        <!-- 1 + 2: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-1.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-2.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 3: full-width large -->
+        <div class="project-images__img-wrap">
+          <img src="../images/rankbee/RankBee-3.jpg" alt="RankBee attribute analysis view" class="project-images__item">
+          <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        </div>
+
+        <!-- 4 + 5: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-4.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-5.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 6 + 7: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-6.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-7.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 8: full-width large -->
+        <div class="project-images__img-wrap">
+          <img src="../images/rankbee/RankBee-8.jpg" alt="RankBee prompt deep dive view" class="project-images__item">
+          <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        </div>
+
+        <!-- 9 + 10: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-9.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-10.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 11 + 12: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-11.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/rankbee/RankBee-12.jpg" alt="RankBee platform interface" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <footer class="detail-footer">
+      <p class="body">&copy; 2026</p>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle image loading
+      document.querySelectorAll('.project-images__item').forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('is-loaded');
+          });
+        }
+      });
+    });
+  </script>
+  <!-- Chat Panel -->
+  <div class="chat-overlay" id="chat-overlay">
+    <div class="chat-phone-wrap">
+      <button class="chat-close" id="chat-close" aria-label="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
+      </svg>
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
+          <div class="chat-welcome" id="chat-welcome">
+            <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
+            <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
+            <div class="chat-starters" id="chat-starters">
+              <button class="chat-starter">What is RankBee?</button>
+              <button class="chat-starter">What was your role at RankBee?</button>
+              <button class="chat-starter">How does AI visibility work?</button>
+              <button class="chat-starter">What design challenges did you face?</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-actions">
+            <button class="chat-action" id="chat-reset" aria-label="Reset chat">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </button>
+          </div>
+          <div class="chat-input-wrap">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
+            <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var PROXY_URL = 'https://carlos-chat-proxy.vercel.app/api/chat';
+      var trigger = document.getElementById('chat-trigger');
+      var overlay = document.getElementById('chat-overlay');
+      var closeBtn = document.getElementById('chat-close');
+      var messagesEl = document.getElementById('chat-messages');
+      var welcomeEl = document.getElementById('chat-welcome');
+      var startersEl = document.getElementById('chat-starters');
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      var messages = [];
+      var isLoading = false;
+      var pageContext = (function() { var parts = []; var t = document.querySelector('.project-header__title'); if (t) parts.push(t.textContent.trim()); document.querySelectorAll('.project-header__description p').forEach(function(p) { parts.push(p.textContent.trim()); }); return parts.join('\n\n'); })();
+      function openChat() { overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; input.focus(); }
+      var welcomeHTML = messagesEl.innerHTML;
+      function closeChat() { overlay.classList.remove('is-open'); document.body.style.overflow = ''; messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; }
+      trigger.addEventListener('click', openChat);
+      closeBtn.addEventListener('click', closeChat);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeChat(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeChat(); trigger.focus(); return; } if (e.key === 'Tab' && overlay.classList.contains('is-open')) { var focusable = document.getElementById('chat-panel').querySelectorAll('button:not([disabled]), input:not([disabled])'); var first = focusable[0]; var last = focusable[focusable.length - 1]; if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } } else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } } } });
+      input.addEventListener('input', function() { sendBtn.disabled = !input.value.trim() || isLoading; });
+      input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !sendBtn.disabled) sendMessage(input.value.trim()); });
+      sendBtn.addEventListener('click', function() { if (!sendBtn.disabled) sendMessage(input.value.trim()); });
+      startersEl.addEventListener('click', function(e) { var btn = e.target.closest('.chat-starter'); if (btn) sendMessage(btn.textContent); });
+      var resetBtn = document.getElementById('chat-reset');
+      resetBtn.addEventListener('click', function() { messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; });
+      function addMessageEl(role, content) { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--' + (role === 'user' ? 'user' : 'bot'); div.textContent = content; messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; return div; }
+      function addTypingIndicator() { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--bot'; div.id = 'chat-typing'; var dots = document.createElement('div'); dots.className = 'chat-typing'; dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); div.appendChild(dots); messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; }
+      function removeTypingIndicator() { var el = document.getElementById('chat-typing'); if (el) el.remove(); }
+      function sendMessage(text) {
+        if (!text || isLoading) return;
+        if (welcomeEl) { welcomeEl.remove(); welcomeEl = null; }
+        messages.push({ role: 'user', content: text }); addMessageEl('user', text);
+        input.value = ''; sendBtn.disabled = true; isLoading = true; addTypingIndicator();
+        fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'omit', body: JSON.stringify({ messages: messages, pageContext: pageContext }) })
+        .then(function(res) { if (!res.ok) { if (res.status === 429) throw new Error('Slow down a bit, try again in a minute.'); throw new Error('Something went wrong. Try again.'); } return res.json(); })
+        .then(function(data) { removeTypingIndicator(); var reply = data.response || "Hmm, don't have an answer for that right now. Try asking me something else."; messages.push({ role: 'assistant', content: reply }); addMessageEl('bot', reply); })
+        .catch(function(err) { removeTypingIndicator(); var errDiv = document.createElement('div'); errDiv.className = 'chat-error'; errDiv.textContent = err.message; messagesEl.appendChild(errDiv); messagesEl.scrollTop = messagesEl.scrollHeight; })
+        .finally(function() { isLoading = false; sendBtn.disabled = !input.value.trim(); });
+      }
+    })();
+  </script>
+  <!-- Lightbox -->
+  <div class="project-lightbox" id="project-lightbox">
+    <button class="project-lightbox__nav project-lightbox__nav--prev" id="lightbox-prev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="project-lightbox__content">
+      <button class="project-lightbox__close" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img id="project-lightbox-img" src="" alt="">
+      <video id="project-lightbox-video" autoplay loop muted playsinline></video>
+    </div>
+    <button class="project-lightbox__nav project-lightbox__nav--next" id="lightbox-next" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var lightbox = document.getElementById('project-lightbox');
+      var lightboxImg = document.getElementById('project-lightbox-img');
+      var lightboxVideo = document.getElementById('project-lightbox-video');
+      var prevBtn = document.getElementById('lightbox-prev');
+      var nextBtn = document.getElementById('lightbox-next');
+      var expandBtns = Array.from(document.querySelectorAll('.project-images__expand'));
+      var currentIndex = -1;
+      var isOpen = false;
+
+      function showItem(index) {
+        if (index < 0 || index >= expandBtns.length) return;
+        currentIndex = index;
+        var wrap = expandBtns[index].parentElement;
+        var video = wrap.querySelector('video');
+        var img = wrap.querySelector('img');
+        lightboxVideo.pause();
+        if (video) {
+          var source = video.querySelector('source');
+          lightboxVideo.src = source ? source.src : video.src;
+          lightboxVideo.load();
+          lightboxVideo.style.display = 'block';
+          lightboxImg.style.display = 'none';
+          lightboxVideo.play().catch(function(){});
+        } else if (img) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxImg.style.display = '';
+          lightboxVideo.style.display = 'none';
+        }
+      }
+
+      expandBtns.forEach(function(btn, i) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          showItem(i);
+          lightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          isOpen = true;
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+        lightboxVideo.pause();
+        lightboxVideo.style.display = 'none';
+        lightboxImg.style.display = '';
+        isOpen = false;
+        currentIndex = -1;
+      }
+
+      function goPrev() { if (currentIndex > 0) showItem(currentIndex - 1); }
+      function goNext() { if (currentIndex < expandBtns.length - 1) showItem(currentIndex + 1); }
+
+      prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+      nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.querySelector('.project-lightbox__close').addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function(e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') goPrev();
+        if (e.key === 'ArrowRight') goNext();
+      });
+    })();
+  </script>
+</body>
+</html>
