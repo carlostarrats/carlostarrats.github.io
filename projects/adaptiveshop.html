@@ -395,14 +395,15 @@
   </script>
   <!-- Chat Panel -->
   <div class="chat-overlay" id="chat-overlay">
-    <div class="chat-phone-wrap">
-      <button class="chat-close" id="chat-close" aria-label="Close chat">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <svg class="chat-phone-frame" viewBox="0 0 1049 2147" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M1039.38 339.499H1037.36V127.359C1037.36 57.02 980.335 0 909.997 0H138.014C67.6755 0 10.6555 57.02 10.6555 127.359V339.499H8.6335C-0.550498 339.499 0.00651861 346.943 0.00651861 356.126V502.871C0.00651861 512.055 -0.550498 519.498 8.6335 519.498H10.6555V554.498H8.6335C-0.550498 554.498 0.00651861 561.942 0.00651861 571.125V717.87C0.00651861 727.054 -0.550498 734.497 8.6335 734.497H10.6555V2019.64C10.6555 2089.98 67.6765 2147 138.014 2147H909.996C980.335 2147 1037.35 2089.98 1037.35 2019.64V609.499H1039.38C1048.56 609.499 1048 602.055 1048 592.872V356.126C1048 346.943 1048.56 339.499 1039.38 339.499Z" fill="#333343"/>
-      </svg>
       <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <button class="chat-close" id="chat-close" aria-label="Close chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="chat-actions">
+          <button class="chat-action" id="chat-reset" aria-label="Reset chat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
         <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
           <div class="chat-welcome" id="chat-welcome">
             <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
@@ -416,11 +417,6 @@
           </div>
         </div>
         <div class="chat-input-area">
-          <div class="chat-actions">
-            <button class="chat-action" id="chat-reset" aria-label="Reset chat">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            </button>
-          </div>
           <div class="chat-input-wrap">
             <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
             <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
@@ -429,7 +425,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
   <script>
     (function() {
@@ -464,7 +459,8 @@
       function sendMessage(text) {
         if (!text || isLoading) return;
         if (welcomeEl) { welcomeEl.remove(); welcomeEl = null; }
-        messages.push({ role: 'user', content: text }); addMessageEl('user', text);
+        messagesEl.innerHTML = '';
+        messages.push({ role: 'user', content: text });
         input.value = ''; sendBtn.disabled = true; isLoading = true; addTypingIndicator();
         fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'omit', body: JSON.stringify({ messages: messages, pageContext: pageContext }) })
         .then(function(res) { if (!res.ok) { if (res.status === 429) throw new Error('Slow down a bit, try again in a minute.'); throw new Error('Something went wrong. Try again.'); } return res.json(); })
