@@ -13,6 +13,32 @@
   font-display: swap;
 }
 
+/* Baskervville */
+@font-face {
+  font-family: 'Baskervville';
+  src: url('fonts/Baskervville-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Instrument Serif */
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Geist Pixel Triangle */
 @font-face {
   font-family: 'Geist Pixel Triangle';
@@ -1660,6 +1686,10 @@ h1.section-brand {
   .archive__status {
     font-size: 16px;
   }
+
+  .archive__link .see-more-tag {
+    margin-left: auto;
+  }
 }
 
 .detail-footer {
@@ -2740,7 +2770,7 @@ html[data-theme="lavender"] .chat-trigger {
 .chat-starter {
   background: none;
   border: 1px dashed rgba(0, 0, 0, 0.3);
-  color: rgba(0, 0, 0, 0.7);
+  color: #000;
   font-family: 'Baskervville', serif;
   font-weight: 200;
   font-size: 14px;

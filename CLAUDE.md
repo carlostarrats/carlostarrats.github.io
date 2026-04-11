@@ -61,18 +61,26 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 - GitHub Pages hosting
 - No build process (vanilla)
 
-### Fonts
-- **Nyght Serif Light** - h1 headings (local: `fonts/NyghtSerif-Light.woff2`)
-- **Instrument Serif** - h2 headings, labels, project titles
-- **Roboto Serif** - Body text (weight 200)
-- **Cabinet Grotesk** - Base/fallback font
+### Fonts (all self-hosted in `fonts/`)
+- **Nyght Serif Light** - h1 headings (`NyghtSerif-Light.woff2`)
+- **Instrument Serif** - h2 headings, labels, project titles (`InstrumentSerif-Regular.woff2`, `InstrumentSerif-Italic.woff2`)
+- **Baskervville** - Chat panel, see-more tags (`Baskervville-Regular.woff2`)
+- **Geist Pixel** - Preloader animation (`GeistPixel-Triangle.woff2`, `GeistPixel-Line.woff2`, `GeistPixel-Circle.woff2`)
+- All fonts are preloaded via `<link rel="preload">` on every page
+- No external font dependencies (Google Fonts removed)
 
-## Current Projects
-1. **Control** - Open-source on-device LLM app for iOS
-2. **AdaptiveShop** - Modern ecommerce platform with AI features
+## Current Projects (Homepage)
+1. **AdaptiveShop** - Modern ecommerce platform with AI features
+2. **Control** - Open-source on-device LLM app for iOS
 3. **Defense Digital Service** - DoD digital transformation
-4. **Eloquii** - Plus-size fashion e-commerce redesign
-5. **Mood Atlas** - 3D music visualization using Thayer Model of Mood
+4. **RankBee** - AI visibility platform for brand recommendations
+5. **Eloquii** - Plus-size fashion e-commerce redesign
+
+## Ideas Section (Homepage)
+1. **Mood Atlas** - 3D music visualization using Thayer Model of Mood
+2. **Muse** - Visual media file manager
+3. **AA Gallery** - American Apparel work collection
+4. **Spirit Ivory** - Data visualization project
 
 ## Repository Structure
 ```
@@ -82,17 +90,20 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 ├── sitemap.xml      # SEO sitemap
 ├── robots.txt       # Crawler instructions
 ├── .nojekyll        # Disables Jekyll for GitHub Pages
-├── fonts/           # Custom fonts (Nyght Serif)
+├── fonts/           # All self-hosted fonts (Nyght Serif, Baskervville, Instrument Serif, Geist Pixel)
 ├── images/          # All image assets
 ├── mood-atlas/      # Mood Atlas built app (compiled)
 │   ├── index.html
 │   └── assets/      # JS/CSS bundles
 ├── mood-atlas-src/  # Mood Atlas source (gitignored, local only)
 └── projects/        # Project detail pages
-    ├── control.html
     ├── adaptiveshop.html
+    ├── control.html
     ├── dds.html
-    └── eloquii.html
+    ├── eloquii.html
+    ├── kikoff.html
+    ├── loca.html
+    └── rankbee.html
 ```
 
 ## SEO & Accessibility
@@ -336,12 +347,22 @@ Then commit the `mood-atlas/` folder changes.
 
 **IMPORTANT:** When deploying Mood Atlas changes, always deploy to Vercel first (`npx vercel --prod`). The vite `base` should normally stay as `'/'` for Vercel. Only change to `'/mood-atlas/'` when specifically building for GitHub Pages.
 
+## Carlos LLM Chat
+- Side tray chat panel powered by proxy at `carlos-chat-proxy.vercel.app`
+- Proxy only works from live domain (not localhost)
+- Starter question buttons for common topics
+- Supports multi-turn conversation history
+- Chat panel cannot be tested locally — test on live site after deploy
+
+## Preloader
+- "Thinking" screen with animated card stack
+- Currently disabled (`if (true || ...)` bypass in index.html)
+- Can be re-enabled by removing `true || ` from the preloader script
+- Waits for fonts + 4s minimum display time when enabled
+
 ## Recent Commits
-- `fbc4230e` - Add loading spinner while 3D scene initializes
-- `4606ad7f` - Add linear zoom controls to Mood Atlas 3D scene
-- `87cba3ae` - Fix preview error showing when playback succeeds
-- `a310ac24` - Rebuild Mood Atlas with multi-source enrichment pipeline
-- `2e80eade` - Add all 8 Thayer emotions to Discover mode
-- `00f4b201` - Rebuild Mood Atlas bundle and disable unused LFS filter
-- `24e92f4d` - Update CLAUDE.md and rebuild Mood Atlas bundle
-- `d32f2cf` - Add Mood Atlas music visualization project
+- `7e868a39` - Add text tab to RankBee page and fix lightbox overlay bug
+- `a89350b9` - Redesign Carlos LLM chat from phone frame to side tray
+- `278eef3f` - Update RankBee-11 image
+- `6e77783b` - Add RankBee project page and replace Kikoff on homepage
+- `887b03f3` - Add AA Gallery to Ideas section
