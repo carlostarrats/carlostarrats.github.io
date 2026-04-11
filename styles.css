@@ -2931,8 +2931,7 @@ html[data-theme="lavender"] .chat-trigger {
 @media (max-width: 1000px) and (min-width: 801px) {
   .chat-trigger,
   .chat-starter,
-  .chat-input,
-  .chat-msg {
+  .chat-input {
     font-size: 12px;
     line-height: 16px;
   }
@@ -2949,8 +2948,7 @@ html[data-theme="lavender"] .chat-trigger {
     line-height: 12px;
   }
   .chat-starter,
-  .chat-input,
-  .chat-msg {
+  .chat-input {
     font-size: 12px;
     line-height: 16px;
   }
