@@ -2659,7 +2659,7 @@ html[data-theme="lavender"] .chat-trigger {
   right: 16px;
   bottom: 16px;
   width: calc(33.33vw - 32px);
-  background: #d0d0d0;
+  background: rgb(240, 240, 240);
   border-radius: 24px;
   display: flex;
   flex-direction: column;
@@ -2718,7 +2718,7 @@ html[data-theme="lavender"] .chat-trigger {
 .chat-msg--bot {
   align-self: flex-start;
   background: none;
-  color: rgba(0, 0, 0, 0.7);
+  color: #000;
   border-radius: 0;
   padding-left: 0;
   padding-right: 0;
