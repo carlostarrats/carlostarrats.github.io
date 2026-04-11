@@ -2663,8 +2663,9 @@ html[data-theme="lavender"] .chat-trigger {
   border-radius: 24px;
   display: flex;
   flex-direction: column;
-  overflow: clip;
+  overflow: hidden;
   z-index: 10001;
+  box-shadow: 0 0 0 1px rgb(240, 240, 240);
   transform: translateX(calc(100% + 16px));
   opacity: 0;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
@@ -2785,7 +2786,7 @@ html[data-theme="lavender"] .chat-trigger {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 6px;
+  right: 0;
   z-index: 6;
   padding: 30px 20px 28px;
   background: linear-gradient(to bottom, transparent, rgba(208, 208, 208, 0.6) 40%, rgba(208, 208, 208, 0.95));
