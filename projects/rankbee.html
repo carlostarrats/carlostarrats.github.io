@@ -145,7 +145,12 @@
         </div>
       </header>
 
-      <section class="project-images" id="project-visual">
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" id="tab-visual" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" id="tab-text" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
         <!-- 1 + 2: small grid row -->
         <div class="project-images__grid">
           <div class="project-images__img-wrap">
@@ -218,6 +223,27 @@
           </div>
         </div>
       </section>
+
+      <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
+        <div class="project-text__section">
+          <h2 class="project-text__heading">The Category</h2>
+          <p class="project-text__body">AI visibility is the idea that when someone asks ChatGPT or Google's AI Overview for a recommendation, the answer your brand gets matters as much as your search ranking used to. It's a new surface for brand performance — and it behaves nothing like traditional SEO. The models have their own opinions, they change unpredictably, and there's no clear playbook for influencing them. RankBee exists because brands realized they needed to understand what AI was saying about them before they could do anything about it.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">The Company</h2>
+          <p class="project-text__body">Founded in 2024 out of London. Angel-backed with a team of 8-9 people. Reached $990K in revenue by October 2025 — less than a year after launch.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">How We Worked</h2>
+          <p class="project-text__body">The founder is deep in the AI visibility space and brought strong opinions about what the product needed. My job was to take that domain expertise and turn it into product decisions — what to show, how to structure it, what interactions make sense. A constant back-and-forth figuring out what would differentiate the product in an increasingly crowded space.</p>
+          <p class="project-text__body">Some of what we designed went straight to engineers. Some served as directional reference — the team would build their own version using our explorations as a starting point. And some of it got thrown out entirely when the market shifted or a strategic bet didn't pan out. That pace was the whole point. The goal was always to find the angles that set RankBee apart.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">The Hard Part</h2>
+          <p class="project-text__body">The core design challenge was presenting data that most marketers had never seen before. Brand sentiment across six different AI models. Prompt-level performance. Competitive positioning in a space where "ranking" doesn't mean what it used to. The data is multi-dimensional and constantly changing — how do you make that immediately useful to someone who's encountering it for the first time?</p>
+          <p class="project-text__body">A lot of the work was in charts and data architecture — figuring out the right level of abstraction. Too much detail and it's overwhelming. Too little and it's not actionable.</p>
+        </div>
+      </section>
     </article>
 
     <footer class="detail-footer">
@@ -235,6 +261,44 @@
             img.classList.add('is-loaded');
           });
         }
+      });
+
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
       });
     });
   </script>
@@ -401,6 +465,7 @@
         if (e.key === 'ArrowRight') goNext();
       });
     })();
+
   </script>
 </body>
 </html>

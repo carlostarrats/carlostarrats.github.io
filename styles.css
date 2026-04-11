@@ -1442,13 +1442,15 @@ h1.section-brand {
   align-items: center;
   justify-content: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   cursor: pointer;
 }
 
 .project-lightbox.is-open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -2720,7 +2722,7 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-welcome__hint {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.7);
   font-family: 'Baskervville', serif;
   font-size: 14px;
   font-weight: 200;
@@ -2737,7 +2739,7 @@ html[data-theme="lavender"] .chat-trigger {
 
 .chat-starter {
   background: none;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px dashed rgba(0, 0, 0, 0.3);
   color: rgba(0, 0, 0, 0.7);
   font-family: 'Baskervville', serif;
   font-weight: 200;
@@ -2802,8 +2804,8 @@ html[data-theme="lavender"] .chat-trigger {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   padding: 4px 4px 4px 18px;
 }
