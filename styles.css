@@ -2678,6 +2678,7 @@ html[data-theme="lavender"] .chat-trigger {
 .chat-messages {
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: none;
   padding: 96px 20px 100px;
   display: flex;
   flex-direction: column;
@@ -2685,16 +2686,7 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-messages::-webkit-scrollbar {
-  width: 2px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
+  display: none;
 }
 
 .chat-msg {
