@@ -2923,10 +2923,13 @@ html[data-theme="lavender"] .chat-trigger {
 
 @media (max-width: 1000px) and (min-width: 801px) {
   .chat-trigger,
-  .chat-starter,
-  .chat-input {
+  .chat-starter {
     font-size: 12px;
     line-height: 16px;
+  }
+  .chat-input {
+    font-size: 16px;
+    line-height: 20px;
   }
   .chat-welcome__text {
     font-size: 30px;
@@ -2940,10 +2943,13 @@ html[data-theme="lavender"] .chat-trigger {
     font-size: 10px;
     line-height: 12px;
   }
-  .chat-starter,
-  .chat-input {
+  .chat-starter {
     font-size: 12px;
     line-height: 16px;
+  }
+  .chat-input {
+    font-size: 16px;
+    line-height: 20px;
   }
   .chat-welcome__text {
     font-size: 28px;
