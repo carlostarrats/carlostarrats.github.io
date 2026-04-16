@@ -64,7 +64,7 @@
       <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
       <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
     </div>
-    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
+    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.png" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
   </header>
   <script>
     (function() {
@@ -316,7 +316,7 @@
         </div>
         <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
           <div class="chat-welcome" id="chat-welcome">
-            <p class="chat-welcome__text"><img src="../images/carlos-avatar.jpeg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
+            <p class="chat-welcome__text"><img src="../images/carlos-avatar.png" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
             <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
             <div class="chat-starters" id="chat-starters">
               <button class="chat-starter">Why did you build Control?</button>
@@ -466,6 +466,11 @@
         if (e.key === 'ArrowRight') goNext();
       });
     })();
+  </script>
+  <script src="../silk-shader.js"></script>
+  <script>
+    SilkShader.attach('.project-images__img-wrap');
+    SilkShader.attach('.project-images__video');
   </script>
 </body>
 </html>
