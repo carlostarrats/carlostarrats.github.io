@@ -2750,7 +2750,7 @@ html[data-theme="pink"] .library__label,
 html[data-theme="mint"] .library__label,
 html[data-theme="yellow"] .library__label,
 html[data-theme="lavender"] .library__label {
-  color: rgba(0, 0, 0, 0.35);
+  color: #000000;
 }
 
 html[data-theme="peach"] .library__book-title,
@@ -2791,7 +2791,7 @@ html[data-theme="pink"] .contact-section__note,
 html[data-theme="mint"] .contact-section__note,
 html[data-theme="yellow"] .contact-section__note,
 html[data-theme="lavender"] .contact-section__note {
-  color: rgba(0, 0, 0, 0.3);
+  color: #000000;
 }
 
 /* Photos → dark */
