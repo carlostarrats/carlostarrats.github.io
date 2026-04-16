@@ -1865,6 +1865,123 @@ h1.section-brand {
 }
 
 /* ============================================
+   VINYL SECTION
+   ============================================ */
+
+.vinyl {
+  padding-top: 120px;
+}
+
+.vinyl__title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 50px;
+  line-height: 58px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 24px;
+}
+
+.vinyl__scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.vinyl__scroll:active {
+  cursor: grabbing;
+}
+
+.vinyl__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.vinyl__label {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.4);
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.vinyl__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.vinyl__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 240px;
+}
+
+.vinyl__cover {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.vinyl__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.vinyl__album {
+  font-family: 'Instrument Serif', serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.85);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vinyl__artist {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .vinyl {
+    padding-top: 80px;
+  }
+
+  .vinyl__title {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  .vinyl__item {
+    min-width: 200px;
+  }
+}
+
+/* ============================================
    PHOTOS SECTION
    ============================================ */
 
@@ -2792,6 +2909,39 @@ html[data-theme="mint"] .contact-section__note,
 html[data-theme="yellow"] .contact-section__note,
 html[data-theme="lavender"] .contact-section__note {
   color: #000000;
+}
+
+/* Vinyl → dark */
+html[data-theme="peach"] .vinyl__label,
+html[data-theme="pink"] .vinyl__label,
+html[data-theme="mint"] .vinyl__label,
+html[data-theme="yellow"] .vinyl__label,
+html[data-theme="lavender"] .vinyl__label {
+  color: #000000;
+}
+
+html[data-theme="peach"] .vinyl__title,
+html[data-theme="pink"] .vinyl__title,
+html[data-theme="mint"] .vinyl__title,
+html[data-theme="yellow"] .vinyl__title,
+html[data-theme="lavender"] .vinyl__title {
+  color: #000000;
+}
+
+html[data-theme="peach"] .vinyl__album,
+html[data-theme="pink"] .vinyl__album,
+html[data-theme="mint"] .vinyl__album,
+html[data-theme="yellow"] .vinyl__album,
+html[data-theme="lavender"] .vinyl__album {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+html[data-theme="peach"] .vinyl__artist,
+html[data-theme="pink"] .vinyl__artist,
+html[data-theme="mint"] .vinyl__artist,
+html[data-theme="yellow"] .vinyl__artist,
+html[data-theme="lavender"] .vinyl__artist {
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Photos → dark */
