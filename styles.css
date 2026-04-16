@@ -1035,6 +1035,7 @@ h1.section-brand {
   display: flex;
   align-items: flex-end;
   gap: 28px;
+  padding-left: 4px;
 }
 
 .contact-section__links .linkedin-link {
@@ -1694,7 +1695,7 @@ h1.section-brand {
 
 @media (max-width: 768px) {
   .archive {
-    padding-top: 40px;
+    padding-top: 20px;
   }
 
   .archive__title {
@@ -1838,7 +1839,7 @@ h1.section-brand {
 
 @media (max-width: 768px) {
   .library {
-    padding-top: 40px;
+    padding-top: 80px;
   }
 
   .library__title {
