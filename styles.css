@@ -1176,6 +1176,10 @@ h1.section-brand {
   color: #f5ffcb;
 }
 
+.external-link--frank {
+  color: #ffcbd4;
+}
+
 .content-card {
   max-width: 100%;
 }
@@ -1347,6 +1351,41 @@ h1.section-brand {
   line-height: 28px;
   letter-spacing: 0.6px;
   color: #ffffff;
+}
+
+.project-text__body + .project-text__body,
+.project-text__body + .project-text__list,
+.project-text__list + .project-text__body {
+  margin-top: 20px;
+}
+
+.project-text__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Baskervville', serif;
+  font-weight: 200;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+}
+
+.project-text__list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.project-text__list li:last-child {
+  margin-bottom: 0;
+}
+
+.project-text__list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 /* Skeleton loading animation */
@@ -2437,6 +2476,17 @@ h1.section-brand {
     line-height: 24px;
   }
 
+  .project-text__list {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .project-text__body + .project-text__body,
+  .project-text__body + .project-text__list,
+  .project-text__list + .project-text__body {
+    margin-top: 16px;
+  }
+
   .project-text__section {
     margin-bottom: 36px;
   }
@@ -3012,7 +3062,12 @@ html[data-theme="peach"] .project-text__body,
 html[data-theme="pink"] .project-text__body,
 html[data-theme="mint"] .project-text__body,
 html[data-theme="yellow"] .project-text__body,
-html[data-theme="lavender"] .project-text__body {
+html[data-theme="lavender"] .project-text__body,
+html[data-theme="peach"] .project-text__list,
+html[data-theme="pink"] .project-text__list,
+html[data-theme="mint"] .project-text__list,
+html[data-theme="yellow"] .project-text__list,
+html[data-theme="lavender"] .project-text__list {
   color: #000000;
 }
 

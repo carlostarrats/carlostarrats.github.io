@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <title>Frank: Local-First Feedback Tool — Carlos Tarrats</title>
+  <meta name="description" content="Frank is a local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff. Built by Carlos Tarrats.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://carlostarrats.github.io/projects/frank.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Frank: Local-First Feedback Tool — Carlos Tarrats">
+  <meta property="og:description" content="Frank is a local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff. Built by Carlos Tarrats.">
+  <meta property="og:url" content="https://carlostarrats.github.io/projects/frank.html">
+  <meta property="og:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Frank: Local-First Feedback Tool — Carlos Tarrats">
+  <meta name="twitter:description" content="Frank is a local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff. Built by Carlos Tarrats.">
+  <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
+
+  <!-- Fonts - all self-hosted -->
+  <link rel="preload" href="../fonts/NyghtSerif-Light.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script>
+    (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+  <link rel="stylesheet" href="../styles.css?v=20260421">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "Frank",
+    "description": "A local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff.",
+    "author": {
+      "@type": "Person",
+      "name": "Carlos Tarrats",
+      "url": "https://carlostarrats.github.io"
+    },
+    "url": "https://carlostarrats.github.io/projects/frank.html"
+  }
+  </script>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="top-bar__colors" role="group" aria-label="Theme colors">
+      <button class="top-bar__swatch top-bar__swatch--default active" data-theme="default" aria-label="Default dark theme" aria-pressed="true"></button>
+      <button class="top-bar__swatch" data-theme="peach" aria-label="Peach theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="pink" aria-label="Pink theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="mint" aria-label="Mint theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="yellow" aria-label="Yellow theme" aria-pressed="false"></button>
+      <button class="top-bar__swatch" data-theme="lavender" aria-label="Lavender theme" aria-pressed="false"></button>
+    </div>
+    <button class="chat-trigger" id="chat-trigger" aria-label="Open chat with Carlos"><img src="../images/carlos-avatar.png" alt="" class="chat-trigger__avatar"><span>Carlos LLM<span class="chat-trigger__suffix">: Ask me things</span></span></button>
+  </header>
+  <script>
+    (function() {
+      var swatches = document.querySelectorAll('.top-bar__swatch');
+      var saved = sessionStorage.getItem('siteTheme') || 'default';
+      swatches.forEach(function(s) {
+        if (s.getAttribute('data-theme') === saved) {
+          s.classList.add('active');
+          s.setAttribute('aria-pressed', 'true');
+        } else {
+          s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
+        }
+        s.addEventListener('click', function() {
+          var theme = this.getAttribute('data-theme');
+          swatches.forEach(function(el) { el.classList.remove('active'); el.setAttribute('aria-pressed', 'false'); });
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+          if (theme === 'default') {
+            document.documentElement.removeAttribute('data-theme');
+            sessionStorage.removeItem('siteTheme');
+          } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            sessionStorage.setItem('siteTheme', theme);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" role="status" aria-label="Loading">
+    <div class="preloader__spinner"></div>
+  </div>
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (sessionStorage.getItem('fontsLoaded')) {
+        preloader.style.display = 'none';
+      } else {
+        var fontsReady = false;
+        var minTimeReady = false;
+        var loaded = false;
+        function tryHide() {
+          if (loaded || !fontsReady || !minTimeReady) return;
+          loaded = true;
+          sessionStorage.setItem('fontsLoaded', 'true');
+          preloader.classList.add('is-hidden');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+        setTimeout(function() {
+          minTimeReady = true;
+          tryHide();
+        }, 2000);
+        function onFontsReady() {
+          fontsReady = true;
+          tryHide();
+        }
+        document.fonts.ready.then(onFontsReady);
+        setTimeout(onFontsReady, 4000);
+      }
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div class="detail-page detail-page--frank">
+    <nav class="detail-nav">
+      <a href="../index.html" class="back-link" aria-label="Back to homepage">Back</a>
+      <a href="https://github.com/carlostarrats/frank" class="external-link external-link--frank" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        GitHub
+      </a>
+    </nav>
+
+    <article id="main-content" class="content-card">
+      <header class="project-header">
+        <h1 class="project-header__title">
+          <span class="project-header__title-name color--thayer">Frank </span><span class="project-header__title-dash">—</span> Local-first collaboration layer for things that aren't on the internet yet
+        </h1>
+
+        <div class="project-header__description">
+          <p>Frank runs on your machine. Point it at a URL, drop in a file, or start a blank canvas — then comment on what you see, curate the feedback, and route it to the AI tools you already use. Every decision is captured. Nothing leaves your computer unless you explicitly share. A local collaboration layer for things that aren't on the internet yet.</p>
+        </div>
+      </header>
+
+      <div class="view-toggle" role="tablist" aria-label="View mode">
+        <button class="view-toggle__btn active" data-view="visual" role="tab" id="tab-visual" aria-selected="true" aria-controls="project-visual">Visual</button>
+        <button class="view-toggle__btn" data-view="text" role="tab" id="tab-text" aria-selected="false" aria-controls="project-text">Text</button>
+      </div>
+
+      <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
+        <!-- Hero: full-width large -->
+        <div class="project-images__img-wrap">
+          <img src="../images/frank/frank-hero.jpg" alt="Frank home view" class="project-images__item">
+          <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        </div>
+
+        <!-- 1 + 2: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-1.jpg" alt="Frank commenting overlay on a wrapped URL" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-2.jpg" alt="Frank feedback curation panel" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 3 + 4: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-3.jpg" alt="Frank canvas with shapes and connectors" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-4.jpg" alt="Frank PDF viewer with anchored comments" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 5: full-width large -->
+        <div class="project-images__img-wrap">
+          <img src="../images/frank/frank-5.jpg" alt="Frank canvas view with a template in progress" class="project-images__item">
+          <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+        </div>
+
+        <!-- 6 + 7: small grid row -->
+        <div class="project-images__grid">
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-6.jpg" alt="Frank AI routing and export controls" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+          <div class="project-images__img-wrap">
+            <img src="../images/frank/frank-7.jpg" alt="Frank share and settings panel" class="project-images__item">
+            <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
+        <div class="project-text__section">
+          <h2 class="project-text__heading">Why I Built It</h2>
+          <p class="project-text__body">The idea started as a terminal helper for basic wireframing — a quick CLI for throwing rough frames on screen. That slowly turned into something bigger. Sharing those frames locally became the interesting problem.</p>
+          <p class="project-text__body">What I wanted was something local and easy for getting feedback on unfinished projects. Built for small builders — people like me who don't want or need to live inside big SaaS tools. I saw a use case that wasn't being served and figured I could try it.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">What It Does</h2>
+          <p class="project-text__body">Four entry points, one feedback loop. Frank is a terminal tool — you start it from the command line and it opens a browser-based UI at localhost:42068.</p>
+          <ul class="project-text__list">
+            <li><em>Wrap any URL.</em> Point Frank at localhost, a Vercel preview, or production. Click any element on the page to anchor a comment. A triple-anchor (CSS selector + DOM path + visual coordinates) keeps comments attached through refactors. Frank detects navigation inside the iframe and automatically proxies sites that block embedding.</li>
+            <li><em>Drop a file.</em> PDF or image (PNG, JPG, GIF, WEBP, SVG, up to 50MB). Frank opens it in a viewer and anchors comments to coordinates. Images support wheel-zoom.</li>
+            <li><em>Start a canvas.</em> An infinite Konva-backed canvas with a full shape library — rectangle, circle, ellipse, triangle, diamond, hexagon, star, cloud, speech, document, cylinder — plus text, sticky notes, freehand pen, arrows, and elbow connectors that follow their source and target as you drag. One-click Kanban / Mindmap / Flowchart / Calendar templates. Drag-and-drop image placement. Shape-anchored comment pins that move with their shape.</li>
+            <li><em>Curate and route.</em> Approve, dismiss, or remix each comment. Set a project brief so Frank tells the AI what you're actually trying to build — not just a list of notes stripped of context.</li>
+          </ul>
+          <p class="project-text__body">From there, three paths to hand feedback to AI:</p>
+          <ul class="project-text__list">
+            <li><em>MCP server.</em> Frank exposes 15 tools to Claude, Cursor, or any MCP client.</li>
+            <li><em>Copy as prompt.</em> A structured prompt lands on your clipboard. Paste it anywhere.</li>
+            <li><em>Export.</em> JSON, Markdown, or PDF — comments, curations, bookmarks, and the full AI decision trail.</li>
+          </ul>
+          <p class="project-text__body">Sharing is optional. Async links work for any project type, and a live canvas share streams every shape edit to open viewers in near real time over SSE. You host the backend. A one-click Vercel reference implementation is included; any host implementing the seven-endpoint Cloud API contract works.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">How It Works</h2>
+          <p class="project-text__body">Two packages. One local, one cloud.</p>
+          <p class="project-text__body">The local daemon is Node.js + TypeScript and serves an HTTP + WebSocket server, an MCP stdio bridge, a content proxy, a content-addressed asset store, canvas state I/O, and a bundle / report builder. Everything is written to ~/.frank/ on your machine.</p>
+          <p class="project-text__body">The browser UI is plain JS ES modules with no build step — Konva loads via a script tag. jsPDF and svg2pdf are loaded from CDN on first export.</p>
+          <p class="project-text__body">The optional cloud package is a small Vercel serverless project with Vercel Blob for payloads and Upstash Redis for live-share presence. Canvas exports go through Konva → SVG → svg2pdf for vector PDF; project reports go through pdfmake.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">Local-First</h2>
+          <p class="project-text__body">Local by default. Project data, canvas state, uploaded files, image assets, and the full curation log stay in ~/.frank/ on your machine.</p>
+          <p class="project-text__body">No telemetry, no analytics, no accounts. Frank makes no AI calls of its own — routing to AI happens over MCP, clipboard, or export, which means you pick the model and the terms.</p>
+          <p class="project-text__body">API keys live in ~/.frank/config.json with 0600 permissions and never land in logs. Sharing is opt-in: when you share, a snapshot goes to your Blob storage and live-share state goes to your Redis. Frank's infrastructure is not in the loop.</p>
+          <p class="project-text__body">The daemon warns before sharing if it detects emails, API keys, or passwords in the page.</p>
+        </div>
+      </section>
+    </article>
+
+    <footer class="detail-footer">
+      <p class="body">&copy; 2026</p>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle image loading
+      document.querySelectorAll('.project-images__item').forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('is-loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('is-loaded');
+          });
+        }
+      });
+
+      // View toggle with crossfade
+      var toggleBtns = document.querySelectorAll('.view-toggle__btn');
+      var detailPage = document.querySelector('.detail-page');
+      var images = document.querySelector('.project-images');
+      var textSection = document.querySelector('.project-text');
+      var isAnimating = false;
+      toggleBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (this.classList.contains('active') || isAnimating) return;
+          isAnimating = true;
+          var goingToText = this.getAttribute('data-view') === 'text';
+          var outgoing = goingToText ? images : textSection;
+          var incoming = goingToText ? textSection : images;
+          toggleBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-selected', 'true');
+          outgoing.style.opacity = '0';
+          setTimeout(function() {
+            if (goingToText) {
+              detailPage.classList.add('is-text-mode');
+            } else {
+              detailPage.classList.remove('is-text-mode');
+            }
+            incoming.style.opacity = '0';
+            void incoming.offsetHeight;
+            incoming.style.opacity = '1';
+            setTimeout(function() {
+              outgoing.style.opacity = '';
+              incoming.style.opacity = '';
+              isAnimating = false;
+            }, 200);
+          }, 100);
+        });
+      });
+    });
+  </script>
+  <!-- Chat Panel -->
+  <div class="chat-overlay" id="chat-overlay">
+      <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Carlos" aria-modal="true" aria-describedby="chat-welcome-hint">
+        <button class="chat-close" id="chat-close" aria-label="Close chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="chat-actions">
+          <button class="chat-action" id="chat-reset" aria-label="Reset chat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
+          <div class="chat-welcome" id="chat-welcome">
+            <p class="chat-welcome__text"><img src="../images/carlos-avatar.png" alt="" class="chat-welcome__avatar">Hey, ask away.</p>
+            <p class="chat-welcome__hint" id="chat-welcome-hint">Ask me anything or try one of these:</p>
+            <div class="chat-starters" id="chat-starters">
+              <button class="chat-starter">What is Frank?</button>
+              <button class="chat-starter">Why did you build Frank?</button>
+              <button class="chat-starter">How does Frank work with AI?</button>
+              <button class="chat-starter">What makes Frank local-first?</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-input-wrap">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Carlos LLM" aria-label="Type a message" maxlength="500" autocomplete="off">
+            <button class="chat-send" id="chat-send" aria-label="Send message" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <script>
+    (function() {
+      var PROXY_URL = 'https://carlos-chat-proxy.vercel.app/api/chat';
+      var trigger = document.getElementById('chat-trigger');
+      var overlay = document.getElementById('chat-overlay');
+      var closeBtn = document.getElementById('chat-close');
+      var messagesEl = document.getElementById('chat-messages');
+      var welcomeEl = document.getElementById('chat-welcome');
+      var startersEl = document.getElementById('chat-starters');
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      var messages = [];
+      var isLoading = false;
+      var pageContext = (function() { var parts = []; var t = document.querySelector('.project-header__title'); if (t) parts.push(t.textContent.trim()); document.querySelectorAll('.project-header__description p').forEach(function(p) { parts.push(p.textContent.trim()); }); return parts.join('\n\n'); })();
+      function openChat() { overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; input.focus(); }
+      var welcomeHTML = messagesEl.innerHTML;
+      function closeChat() { overlay.classList.remove('is-open'); document.body.style.overflow = ''; messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; }
+      trigger.addEventListener('click', openChat);
+      closeBtn.addEventListener('click', closeChat);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeChat(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeChat(); trigger.focus(); return; } if (e.key === 'Tab' && overlay.classList.contains('is-open')) { var focusable = document.getElementById('chat-panel').querySelectorAll('button:not([disabled]), input:not([disabled])'); var first = focusable[0]; var last = focusable[focusable.length - 1]; if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } } else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } } } });
+      input.addEventListener('input', function() { sendBtn.disabled = !input.value.trim() || isLoading; });
+      input.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !sendBtn.disabled) sendMessage(input.value.trim()); });
+      sendBtn.addEventListener('click', function() { if (!sendBtn.disabled) sendMessage(input.value.trim()); });
+      startersEl.addEventListener('click', function(e) { var btn = e.target.closest('.chat-starter'); if (btn) sendMessage(btn.textContent); });
+      var resetBtn = document.getElementById('chat-reset');
+      resetBtn.addEventListener('click', function() { messages = []; isLoading = false; messagesEl.innerHTML = welcomeHTML; welcomeEl = document.getElementById('chat-welcome'); startersEl = document.getElementById('chat-starters'); if (startersEl) { startersEl.querySelectorAll('.chat-starter').forEach(function(btn) { btn.addEventListener('click', function() { sendMessage(btn.textContent); }); }); } input.value = ''; sendBtn.disabled = true; });
+      function addMessageEl(role, content) { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--' + (role === 'user' ? 'user' : 'bot'); div.textContent = content; messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; return div; }
+      function addTypingIndicator() { var div = document.createElement('div'); div.className = 'chat-msg chat-msg--bot'; div.id = 'chat-typing'; var dots = document.createElement('div'); dots.className = 'chat-typing'; dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); dots.appendChild(document.createElement('span')); div.appendChild(dots); messagesEl.appendChild(div); messagesEl.scrollTop = messagesEl.scrollHeight; }
+      function removeTypingIndicator() { var el = document.getElementById('chat-typing'); if (el) el.remove(); }
+      function sendMessage(text) {
+        if (!text || isLoading) return;
+        if (welcomeEl) { welcomeEl.remove(); welcomeEl = null; }
+        messagesEl.innerHTML = '';
+        messages.push({ role: 'user', content: text });
+        input.value = ''; sendBtn.disabled = true; isLoading = true; addTypingIndicator();
+        fetch(PROXY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'omit', body: JSON.stringify({ messages: messages, pageContext: pageContext }) })
+        .then(function(res) { if (!res.ok) { if (res.status === 429) throw new Error('Slow down a bit, try again in a minute.'); throw new Error('Something went wrong. Try again.'); } return res.json(); })
+        .then(function(data) { removeTypingIndicator(); var reply = data.response || "Hmm, don't have an answer for that right now. Try asking me something else."; messages.push({ role: 'assistant', content: reply }); addMessageEl('bot', reply); })
+        .catch(function(err) { removeTypingIndicator(); var errDiv = document.createElement('div'); errDiv.className = 'chat-error'; errDiv.textContent = err.message; messagesEl.appendChild(errDiv); messagesEl.scrollTop = messagesEl.scrollHeight; })
+        .finally(function() { isLoading = false; sendBtn.disabled = !input.value.trim(); });
+      }
+    })();
+  </script>
+  <!-- Lightbox -->
+  <div class="project-lightbox" id="project-lightbox">
+    <button class="project-lightbox__nav project-lightbox__nav--prev" id="lightbox-prev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="project-lightbox__content">
+      <button class="project-lightbox__close" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <img id="project-lightbox-img" src="" alt="">
+      <video id="project-lightbox-video" autoplay loop muted playsinline></video>
+    </div>
+    <button class="project-lightbox__nav project-lightbox__nav--next" id="lightbox-next" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+  <script>
+    (function() {
+      var lightbox = document.getElementById('project-lightbox');
+      var lightboxImg = document.getElementById('project-lightbox-img');
+      var lightboxVideo = document.getElementById('project-lightbox-video');
+      var prevBtn = document.getElementById('lightbox-prev');
+      var nextBtn = document.getElementById('lightbox-next');
+      var expandBtns = Array.from(document.querySelectorAll('.project-images__expand'));
+      var currentIndex = -1;
+      var isOpen = false;
+
+      function showItem(index) {
+        if (index < 0 || index >= expandBtns.length) return;
+        currentIndex = index;
+        var wrap = expandBtns[index].parentElement;
+        var video = wrap.querySelector('video');
+        var img = wrap.querySelector('img');
+        lightboxVideo.pause();
+        if (video) {
+          var source = video.querySelector('source');
+          lightboxVideo.src = source ? source.src : video.src;
+          lightboxVideo.load();
+          lightboxVideo.style.display = 'block';
+          lightboxImg.style.display = 'none';
+          lightboxVideo.play().catch(function(){});
+        } else if (img) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxImg.style.display = '';
+          lightboxVideo.style.display = 'none';
+        }
+      }
+
+      expandBtns.forEach(function(btn, i) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          showItem(i);
+          lightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          isOpen = true;
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+        lightboxVideo.pause();
+        lightboxVideo.style.display = 'none';
+        lightboxImg.style.display = '';
+        isOpen = false;
+        currentIndex = -1;
+      }
+
+      function goPrev() { if (currentIndex > 0) showItem(currentIndex - 1); }
+      function goNext() { if (currentIndex < expandBtns.length - 1) showItem(currentIndex + 1); }
+
+      prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goPrev(); });
+      nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goNext(); });
+
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.querySelector('.project-lightbox__close').addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function(e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') goPrev();
+        if (e.key === 'ArrowRight') goNext();
+      });
+    })();
+
+  </script>
+  <script src="../silk-shader.js"></script>
+  <script>
+    SilkShader.attach('.project-images__img-wrap');
+    SilkShader.attach('.project-images__video');
+  </script>
+</body>
+</html>

@@ -3,3 +3,4 @@ mood-atlas-src/
 .playwright-mcp/
 mood-atlas-src/scripts/.lastfm-cache.json
 mood-atlas-src/.env
+.vercel
