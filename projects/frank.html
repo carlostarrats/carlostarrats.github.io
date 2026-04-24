@@ -159,7 +159,7 @@
         </h1>
 
         <div class="project-header__description">
-          <p>Frank runs on your machine. Point it at a URL, drop in a file, or start a blank canvas — then comment on what you see, curate the feedback, and route it to the AI tools you already use. Every decision is captured. Nothing leaves your computer unless you explicitly share. A local collaboration layer for things that aren't on the internet yet.</p>
+          <p>Share unfinished work without deploying it. Frank runs on your machine. Point it at a URL, drop in a file, or start a blank canvas — then comment, curate the feedback, and route it to the AI tools you already use. A local collaboration layer for things that aren't on the internet yet. Every decision captured. Nothing leaves your computer unless you share.</p>
         </div>
       </header>
 
@@ -230,7 +230,7 @@
           <ul class="project-text__list">
             <li><em>Wrap any URL.</em> Point Frank at localhost, a Vercel preview, or production. Click any element on the page to anchor a comment. A triple-anchor (CSS selector + DOM path + visual coordinates) keeps comments attached through refactors. Frank detects navigation inside the iframe and automatically proxies sites that block embedding.</li>
             <li><em>Drop a file.</em> PDF or image (PNG, JPG, GIF, WEBP, SVG, up to 50MB). Frank opens it in a viewer and anchors comments to coordinates. Images support wheel-zoom.</li>
-            <li><em>Start a canvas.</em> An infinite Konva-backed canvas with a full shape library — rectangle, circle, ellipse, triangle, diamond, hexagon, star, cloud, speech, document, cylinder — plus text, sticky notes, freehand pen, arrows, and elbow connectors that follow their source and target as you drag. One-click Kanban / Mindmap / Flowchart / Calendar templates. Drag-and-drop image placement. Shape-anchored comment pins that move with their shape.</li>
+            <li><em>Start a canvas.</em> An infinite Konva-backed canvas with a full shape library — rectangle, circle, ellipse, triangle, diamond, hexagon, star, cloud, speech, document, cylinder, parallelogram — plus text, sticky notes, freehand pen, arrows, and elbow connectors that follow their source and target as you drag. One-click Kanban / Mindmap / Flowchart / Calendar templates. Drag-and-drop image placement. Shape-anchored comment pins that move with their shape.</li>
             <li><em>Curate and route.</em> Approve or dismiss each comment. Set a project brief so Frank tells the AI what you're actually trying to build — not just a list of notes stripped of context.</li>
           </ul>
           <p class="project-text__body">From there, three paths to hand feedback to AI:</p>
@@ -239,12 +239,14 @@
             <li><em>Copy as prompt.</em> A structured prompt lands on your clipboard. Paste it anywhere.</li>
             <li><em>Export.</em> JSON, Markdown, or PDF — comments, curations, and the full AI decision trail.</li>
           </ul>
-          <p class="project-text__body">Sharing is optional. Async links work for any project type, and a live canvas share streams every shape edit to open viewers in near real time over SSE. You host the backend. A one-click Vercel reference implementation is included; any host implementing the seven-endpoint Cloud API contract works.</p>
+          <p class="project-text__body">Sharing is optional. Async links work for any project type. A live canvas share streams every shape edit to open viewers in near real time over SSE.</p>
+          <p class="project-text__body">For URL projects, Frank can auto-deploy a local project directory — Next.js, Vite, SvelteKit, Astro, Remix, or plain static HTML — to a preview on your own Vercel account. It runs an envelope check, a pre-flight build, a 30-second smoke test, and generates safe-dummy env values for Supabase, Clerk, Stripe, Sentry, Auth0, and PostHog. A same-origin comment overlay is injected at build time. Reviewers open the preview and interact with the real running app, not a screenshot. Revoke any time from the active-shares list.</p>
+          <p class="project-text__body">You host the backend. A one-click Vercel reference implementation is included; any host implementing the seven-endpoint Cloud API contract works.</p>
         </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">How It Works</h2>
           <p class="project-text__body">Two packages. One local, one cloud.</p>
-          <p class="project-text__body">The local daemon is Node.js + TypeScript and serves an HTTP + WebSocket server, an MCP stdio bridge, a content proxy, a content-addressed asset store, canvas state I/O, and a bundle / report builder. Everything is written to ~/.frank/ on your machine.</p>
+          <p class="project-text__body">The local daemon is Node.js + TypeScript and serves an HTTP + WebSocket server, an MCP stdio bridge, a content proxy, a content-addressed asset store, canvas state I/O, a bundle / report builder, and the URL share auto-deploy pipeline (envelope detection, allowlist bundler, pre-flight build, per-SDK env encoders, Vercel Deployments API client). Everything is written to ~/.frank/ on your machine.</p>
           <p class="project-text__body">The browser UI is plain JS ES modules with no build step — Konva loads via a script tag. jsPDF and svg2pdf are loaded from CDN on first export.</p>
           <p class="project-text__body">The optional cloud package is a small Vercel serverless project with Vercel Blob for payloads and Upstash Redis for live-share presence. Canvas exports go through Konva → SVG → svg2pdf for vector PDF; project reports go through pdfmake.</p>
         </div>
