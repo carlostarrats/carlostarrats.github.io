@@ -1688,6 +1688,17 @@ h1.section-brand {
   opacity: 0.7;
 }
 
+.see-more-tag--disabled {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.see-more-tag--disabled:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
 .archive__company {
   font-family: 'Instrument Serif', serif;
   font-style: italic;
