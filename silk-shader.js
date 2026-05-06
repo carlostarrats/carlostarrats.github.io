@@ -3,6 +3,12 @@
 // https://www.shadertoy.com/view/X3yXRd
 
 (function() {
+  var settings = {
+    color: [0.4549, 0.4392, 0.4902],
+    speed: 2.6,
+    monochrome: 1.0
+  };
+
   var vertSrc =
     'attribute vec2 a_position;' +
     'void main(){gl_Position=vec4(a_position,0.0,1.0);}';
@@ -11,6 +17,9 @@
     'precision mediump float;' +
     'uniform float u_time;' +
     'uniform vec2 u_resolution;' +
+    'uniform float u_speed;' +
+    'uniform vec3 u_color;' +
+    'uniform float u_monochrome;' +
 
     'float noise(vec2 p){' +
     '  return smoothstep(-0.5,0.9,sin((p.x-p.y)*555.0)*sin(p.y*1444.0))-0.4;' +
@@ -41,7 +50,7 @@
     'void main(){' +
     '  float mr=min(u_resolution.x,u_resolution.y);' +
     '  vec2 uv=gl_FragCoord.xy/mr;' +
-    '  float t=u_time*1.7;' +
+    '  float t=u_time*u_speed;' +
     '  uv.x+=0.05*t;' +
     '  uv.y+=0.03*sin(8.0*uv.x-t);' +
     '  float s=sqrt(silk(uv,t));' +
@@ -51,12 +60,11 @@
     '  c*=1.0-max(0.0,0.8*d);' +
     '  c=pow(c,0.3/vec3(0.52,0.5,0.4));' +
     '  c=1.0-c;' +
-    '  c=c*0.15;' +
-    '  c=pow(c,vec3(0.9));' +
-    '  c.r+=0.25*0.04;' +
-    '  c.g+=0.25*0.01;' +
-    '  c.b-=0.25*0.04;' +
-    '  gl_FragColor=vec4(c,1.0);' +
+    '  float wave=pow(clamp(c.r*0.2+c.g*0.5+c.b*0.3,0.0,1.0),0.86);' +
+    '  vec3 mono=vec3(0.078)+wave*vec3(0.23);' +
+    '  vec3 tinted=vec3(0.072)+u_color*wave*0.48;' +
+    '  vec3 outColor=mix(tinted,mono,u_monochrome);' +
+    '  gl_FragColor=vec4(outColor,1.0);' +
     '}';
 
   var instances = [];
@@ -92,7 +100,10 @@
     return {
       gl: gl,
       uTime: gl.getUniformLocation(prog, 'u_time'),
-      uRes: gl.getUniformLocation(prog, 'u_resolution')
+      uRes: gl.getUniformLocation(prog, 'u_resolution'),
+      uSpeed: gl.getUniformLocation(prog, 'u_speed'),
+      uColor: gl.getUniformLocation(prog, 'u_color'),
+      uMonochrome: gl.getUniformLocation(prog, 'u_monochrome')
     };
   }
 
@@ -162,6 +173,9 @@
       var gl = ctx.gl;
       gl.uniform1f(ctx.uTime, t);
       gl.uniform2f(ctx.uRes, instances[i].canvas.width, instances[i].canvas.height);
+      gl.uniform1f(ctx.uSpeed, settings.speed);
+      gl.uniform3f(ctx.uColor, settings.color[0], settings.color[1], settings.color[2]);
+      gl.uniform1f(ctx.uMonochrome, settings.monochrome);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
     if (instances.length > 0) {

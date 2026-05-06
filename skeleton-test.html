@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton Test</title>
+  <style>
+    @font-face {
+      font-family: 'Nyght Serif';
+      src: url('fonts/NyghtSerif-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Instrument Serif';
+      src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --page-bg: #252525;
+      --text: rgba(255, 255, 255, 0.9);
+      --muted: rgba(255, 255, 255, 0.52);
+      --panel: rgba(19, 19, 19, 0.88);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --speed: 2.6;
+      --accent: #74707d;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: 'Instrument Serif', Georgia, serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 54px 0 80px;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: 'Nyght Serif', Georgia, serif;
+      font-size: clamp(52px, 8vw, 112px);
+      font-weight: 300;
+      line-height: 0.92;
+    }
+
+    .meta {
+      margin: 10px 0 0;
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .controls {
+      width: 310px;
+      padding: 16px;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    .control {
+      display: grid;
+      grid-template-columns: 94px minmax(0, 1fr) 52px;
+      align-items: center;
+      gap: 12px;
+      min-height: 36px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 16px;
+    }
+
+    .control + .control {
+      margin-top: 8px;
+    }
+
+    .control__value {
+      color: rgba(255, 255, 255, 0.52);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    input[type="color"] {
+      width: 100%;
+      height: 32px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .toggle {
+      justify-self: start;
+      position: relative;
+      display: inline-flex;
+      width: 46px;
+      height: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+    }
+
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      cursor: pointer;
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.86);
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .toggle:has(input:checked)::after {
+      transform: translateX(20px);
+      background: var(--accent);
+    }
+
+    .output {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .output code {
+      min-width: 0;
+      overflow: hidden;
+      color: rgba(255, 255, 255, 0.62);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      line-height: 1.35;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .copy {
+      width: 34px;
+      height: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.72);
+      cursor: pointer;
+    }
+
+    .copy:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .stage {
+      display: grid;
+      gap: 34px;
+    }
+
+    .skeleton {
+      position: relative;
+      overflow: hidden;
+      background: #1a1a1a;
+      isolation: isolate;
+    }
+
+    .skeleton canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-skeleton {
+      width: min(700px, 100%);
+      aspect-ratio: 700 / 394;
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.88fr) minmax(0, 1.12fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .card-skeleton {
+      aspect-ratio: 1.5;
+    }
+
+    .project-title {
+      margin: -5px 0 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(30px, 4.2vw, 54px);
+      line-height: 1.02;
+    }
+
+    .project-title em {
+      color: rgba(255, 255, 255, 0.94);
+      font-style: italic;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    .detail-skeleton {
+      aspect-ratio: 16 / 9;
+    }
+
+    .wide-skeleton {
+      aspect-ratio: 16 / 9;
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        width: min(100% - 28px, 620px);
+        padding-top: 28px;
+      }
+
+      .header,
+      .project-row,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <h1>Skeleton Test</h1>
+        <p class="meta">Portfolio loading states with live shader controls.</p>
+      </div>
+
+      <section class="controls" aria-label="Skeleton controls">
+        <label class="control" for="color">
+          <span>Color</span>
+          <input id="color" type="color" value="#74707d">
+          <span class="control__value" id="color-value">#74707d</span>
+        </label>
+
+        <label class="control" for="speed">
+          <span>Speed</span>
+          <input id="speed" type="range" min="0.3" max="4" step="0.05" value="2.6">
+          <span class="control__value" id="speed-value">2.60</span>
+        </label>
+
+        <label class="control" for="mono">
+          <span>Mono</span>
+          <span class="toggle"><input id="mono" type="checkbox" checked></span>
+          <span class="control__value" id="mono-value">on</span>
+        </label>
+
+        <div class="output">
+          <code id="settings">color #74707d | speed 2.60 | mono on</code>
+          <button class="copy" id="copy" type="button" aria-label="Copy settings">⧉</button>
+        </div>
+      </section>
+    </header>
+
+    <section class="stage" aria-label="Skeleton previews">
+      <div class="skeleton hero-skeleton" data-skeleton></div>
+
+      <div class="project-row">
+        <div class="skeleton card-skeleton" data-skeleton></div>
+        <h2 class="project-title"><em>AdaptiveShop</em> - A loading card next to project copy.</h2>
+      </div>
+
+      <div class="project-row">
+        <h2 class="project-title"><em>Control</em> - Paired project card rhythm.</h2>
+        <div class="skeleton card-skeleton" data-skeleton></div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="skeleton detail-skeleton" data-skeleton></div>
+        <div class="skeleton detail-skeleton" data-skeleton></div>
+      </div>
+
+      <div class="skeleton wide-skeleton" data-skeleton></div>
+    </section>
+  </main>
+
+  <script>
+    (function() {
+      var vertSrc =
+        'attribute vec2 a_position;' +
+        'void main(){gl_Position=vec4(a_position,0.0,1.0);}';
+
+      var fragSrc =
+        'precision mediump float;' +
+        'uniform float u_time;' +
+        'uniform vec2 u_resolution;' +
+        'uniform float u_speed;' +
+        'uniform vec3 u_color;' +
+        'uniform float u_monochrome;' +
+
+        'float noise(vec2 p){' +
+        '  return smoothstep(-0.5,0.9,sin((p.x-p.y)*555.0)*sin(p.y*1444.0))-0.4;' +
+        '}' +
+
+        'float fabric(vec2 p){' +
+        '  mat2 m=mat2(1.6,1.2,-1.2,1.6);' +
+        '  float f=0.4*noise(p);' +
+        '  f+=0.3*noise(p=m*p);' +
+        '  f+=0.2*noise(p=m*p);' +
+        '  return f+0.1*noise(m*p);' +
+        '}' +
+
+        'float silk(vec2 uv,float t){' +
+        '  float s=sin(5.0*(uv.x+uv.y+cos(2.0*uv.x+5.0*uv.y))+sin(12.0*(uv.x+uv.y))-t);' +
+        '  s=0.7+0.3*(s*s*0.5+s);' +
+        '  s*=0.9+0.6*fabric(uv*min(u_resolution.x,u_resolution.y)*0.0006);' +
+        '  return s*0.9+0.1;' +
+        '}' +
+
+        'float silkd(vec2 uv,float t){' +
+        '  float xy=uv.x+uv.y;' +
+        '  float d=(5.0*(1.0-2.0*sin(2.0*uv.x+5.0*uv.y))+12.0*cos(12.0*xy))' +
+        '    *cos(5.0*(cos(2.0*uv.x+5.0*uv.y)+xy)+sin(12.0*xy)-t);' +
+        '  return 0.005*d*(sign(d)+3.0);' +
+        '}' +
+
+        'void main(){' +
+        '  float mr=min(u_resolution.x,u_resolution.y);' +
+        '  vec2 uv=gl_FragCoord.xy/mr;' +
+        '  float t=u_time*u_speed;' +
+        '  uv.x+=0.05*t;' +
+        '  uv.y+=0.03*sin(8.0*uv.x-t);' +
+        '  float s=sqrt(silk(uv,t));' +
+        '  float d=silkd(uv,t);' +
+        '  vec3 c=vec3(s);' +
+        '  c+=0.7*vec3(0.4,0.35,0.5)*d;' +
+        '  c*=1.0-max(0.0,0.8*d);' +
+        '  c=pow(c,0.3/vec3(0.52,0.5,0.4));' +
+        '  c=1.0-c;' +
+        '  float wave=pow(clamp(c.r*0.2+c.g*0.5+c.b*0.3,0.0,1.0),0.86);' +
+        '  vec3 mono=vec3(0.078)+wave*vec3(0.23);' +
+        '  vec3 tinted=vec3(0.072)+u_color*wave*0.48;' +
+        '  vec3 outColor=mix(tinted,mono,u_monochrome);' +
+        '  gl_FragColor=vec4(outColor,1.0);' +
+        '}';
+
+      var state = {
+        color: '#74707d',
+        speed: 2.6,
+        monochrome: 1
+      };
+
+      var els = {
+        color: document.getElementById('color'),
+        colorValue: document.getElementById('color-value'),
+        speed: document.getElementById('speed'),
+        speedValue: document.getElementById('speed-value'),
+        mono: document.getElementById('mono'),
+        monoValue: document.getElementById('mono-value'),
+        settings: document.getElementById('settings'),
+        copy: document.getElementById('copy')
+      };
+
+      var instances = [];
+      var startTime = performance.now();
+
+      function hexToRgb(hex) {
+        var clean = hex.replace('#', '');
+        var value = parseInt(clean, 16);
+        return [
+          ((value >> 16) & 255) / 255,
+          ((value >> 8) & 255) / 255,
+          (value & 255) / 255
+        ];
+      }
+
+      function compile(gl, type, source) {
+        var shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          throw new Error(gl.getShaderInfoLog(shader));
+        }
+        return shader;
+      }
+
+      function createInstance(el) {
+        var canvas = document.createElement('canvas');
+        el.appendChild(canvas);
+
+        var gl = canvas.getContext('webgl', { antialias: false, alpha: false });
+        if (!gl) return;
+
+        var prog = gl.createProgram();
+        gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, vertSrc));
+        gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, fragSrc));
+        gl.linkProgram(prog);
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+          throw new Error(gl.getProgramInfoLog(prog));
+        }
+        gl.useProgram(prog);
+
+        var buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+        var pos = gl.getAttribLocation(prog, 'a_position');
+        gl.enableVertexAttribArray(pos);
+        gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+        var inst = {
+          el: el,
+          canvas: canvas,
+          gl: gl,
+          uniforms: {
+            time: gl.getUniformLocation(prog, 'u_time'),
+            resolution: gl.getUniformLocation(prog, 'u_resolution'),
+            speed: gl.getUniformLocation(prog, 'u_speed'),
+            color: gl.getUniformLocation(prog, 'u_color'),
+            monochrome: gl.getUniformLocation(prog, 'u_monochrome')
+          }
+        };
+        resize(inst);
+        instances.push(inst);
+      }
+
+      function resize(inst) {
+        var rect = inst.el.getBoundingClientRect();
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var width = Math.max(1, Math.round(rect.width * dpr));
+        var height = Math.max(1, Math.round(rect.height * dpr));
+        if (inst.canvas.width !== width || inst.canvas.height !== height) {
+          inst.canvas.width = width;
+          inst.canvas.height = height;
+          inst.gl.viewport(0, 0, width, height);
+        }
+      }
+
+      function render() {
+        var time = (performance.now() - startTime) / 1000;
+        var rgb = hexToRgb(state.color);
+
+        instances.forEach(function(inst) {
+          resize(inst);
+          inst.gl.uniform1f(inst.uniforms.time, time);
+          inst.gl.uniform2f(inst.uniforms.resolution, inst.canvas.width, inst.canvas.height);
+          inst.gl.uniform1f(inst.uniforms.speed, state.speed);
+          inst.gl.uniform3f(inst.uniforms.color, rgb[0], rgb[1], rgb[2]);
+          inst.gl.uniform1f(inst.uniforms.monochrome, state.monochrome);
+          inst.gl.drawArrays(inst.gl.TRIANGLE_STRIP, 0, 4);
+        });
+
+        requestAnimationFrame(render);
+      }
+
+      function updateControls() {
+        var monoText = state.monochrome ? 'on' : 'off';
+        els.colorValue.textContent = state.color;
+        els.speedValue.textContent = state.speed.toFixed(2);
+        els.monoValue.textContent = monoText;
+        els.settings.textContent = 'color ' + state.color + ' | speed ' + state.speed.toFixed(2) + ' | mono ' + monoText;
+        document.documentElement.style.setProperty('--accent', state.color);
+      }
+
+      els.color.addEventListener('input', function() {
+        state.color = els.color.value;
+        updateControls();
+      });
+
+      els.speed.addEventListener('input', function() {
+        state.speed = Number(els.speed.value);
+        updateControls();
+      });
+
+      els.mono.addEventListener('change', function() {
+        state.monochrome = els.mono.checked ? 1 : 0;
+        updateControls();
+      });
+
+      els.copy.addEventListener('click', function() {
+        var text = els.settings.textContent;
+        navigator.clipboard.writeText(text).catch(function() {});
+      });
+
+      document.querySelectorAll('[data-skeleton]').forEach(createInstance);
+      updateControls();
+      render();
+    })();
+  </script>
+</body>
+</html>
