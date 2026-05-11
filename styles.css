@@ -3,20 +3,11 @@
    Clean Type Scale
    ============================================ */
 
-/* Nyght Serif Font */
-@font-face {
-  font-family: 'Nyght Serif';
-  src: url('fonts/NyghtSerif-Light.woff2') format('woff2'),
-       url('fonts/NyghtSerif-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Baskervville */
 @font-face {
   font-family: 'Baskervville';
-  src: url('fonts/Baskervville-Regular.woff2') format('woff2');
+  src: url('fonts/Baskervville-Regular.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/baskervville/v20/YA9Br0yU4l_XOrogbkun3kQ6vLFYXmpq8sRsYuDrugM.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,7 +16,8 @@
 /* Instrument Serif */
 @font-face {
   font-family: 'Instrument Serif';
-  src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
+  src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -33,7 +25,8 @@
 
 @font-face {
   font-family: 'Instrument Serif';
-  src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2'),
+       url('https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -378,8 +371,8 @@ a {
    ============================================ */
 
 h1 {
-  font-family: 'Nyght Serif', serif;
-  font-weight: 300;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
   font-size: 90px;
   line-height: 88px;
   letter-spacing: -1px;
@@ -676,7 +669,7 @@ h2 {
 }
 
 /* ============================================
-   PROJECT PAIR - DDS + Eloquii side by side
+   PROJECT PAIR - Control + RankBee side by side
    ============================================ */
 
 .project-pair {
@@ -688,17 +681,17 @@ h2 {
   margin-bottom: 60px;
 }
 
-.project-pair__item--dds {
+.project-pair__item--control {
   grid-column: 1;
   display: contents;
 }
 
-.project-pair__item--dds > h2 {
+.project-pair__item--control > h2 {
   grid-column: 1;
   grid-row: 1;
 }
 
-.project-pair__item--dds > .card {
+.project-pair__item--control > .card {
   grid-column: 1;
   grid-row: 2;
 }
@@ -2447,24 +2440,24 @@ h1.section-brand {
     width: 100%;
   }
 
-  /* DDS + Eloquii stack on mobile */
+  /* Control + RankBee stack on mobile */
   .project-pair {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  .project-pair__item--dds,
+  .project-pair__item--control,
   .project-pair__item--rankbee {
     display: flex;
     flex-direction: column;
   }
 
-  .project-pair__item--dds {
+  .project-pair__item--control {
     margin-bottom: 60px;
   }
 
-  .project-pair__item--dds > h2,
+  .project-pair__item--control > h2,
   .project-pair__item--rankbee > h2 {
     margin-bottom: 30px;
   }
