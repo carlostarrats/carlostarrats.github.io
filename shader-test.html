@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shader Skeleton Test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #252525;
+      color: #fff;
+      font-family: -apple-system, sans-serif;
+      padding: 40px;
+    }
+    h1 { font-size: 14px; font-weight: 400; opacity: 0.5; margin-bottom: 30px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 900px;
+    }
+    .card {
+      aspect-ratio: 1.5;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Hero flicker mock */
+    .hero {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 2.5;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 30px;
+    }
+    .hero canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Project page mock */
+    .project-image {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 1.6;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 30px;
+    }
+    .project-image canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 12px;
+      z-index: 100;
+      width: 240px;
+    }
+    .controls label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .controls input[type="range"] {
+      width: 110px;
+    }
+    .controls span.val {
+      width: 36px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Silk Shader Skeleton Test</h1>
+
+  <div class="hero" data-shader></div>
+
+  <div class="grid">
+    <div class="card" data-shader></div>
+    <div class="card" data-shader></div>
+    <div class="card" data-shader></div>
+    <div class="card" data-shader></div>
+  </div>
+
+  <div class="project-image" data-shader></div>
+
+  <div class="controls">
+    <label>Speed <input type="range" id="speed" min="0.1" max="3" step="0.01" value="1.70"> <span class="val">1.70</span></label>
+    <label>Drift <input type="range" id="drift" min="0" max="0.15" step="0.005" value="0.05"> <span class="val">0.050</span></label>
+    <label>Brightness <input type="range" id="brightness" min="0" max="1" step="0.01" value="0.15"> <span class="val">0.15</span></label>
+    <label>Contrast <input type="range" id="contrast" min="0.1" max="3" step="0.01" value="0.90"> <span class="val">0.90</span></label>
+    <label>Hue <input type="range" id="hue" min="-1" max="1" step="0.01" value="0.25"> <span class="val">0.25</span></label>
+    <button id="copyBtn" style="width:100%;margin-top:8px;padding:6px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(255,255,255,0.05);color:#fff;font-size:11px;cursor:pointer;">Copy Settings</button>
+  </div>
+
+  <script>
+    // --- Silk Shader (adapted from Giorgi Azmaipharashvili, MIT License) ---
+    // Original: https://www.shadertoy.com/view/X3yXRd
+    // Adapted: dark palette, directional drift, vanilla WebGL
+
+    var vertSrc = [
+      'attribute vec2 a_position;',
+      'void main() {',
+      '  gl_Position = vec4(a_position, 0.0, 1.0);',
+      '}'
+    ].join('\n');
+
+    var fragSrc = [
+      'precision mediump float;',
+      '',
+      'uniform float u_time;',
+      'uniform vec2 u_resolution;',
+      'uniform float u_speed;',
+      'uniform float u_drift;',
+      'uniform float u_brightness;',
+      'uniform float u_contrast;',
+      'uniform float u_hue;',
+      '',
+      'float noise(vec2 p) {',
+      '  return smoothstep(-0.5, 0.9, sin((p.x - p.y) * 555.0) * sin(p.y * 1444.0)) - 0.4;',
+      '}',
+      '',
+      'float fabric(vec2 p) {',
+      '  mat2 m = mat2(1.6, 1.2, -1.2, 1.6);',
+      '  float f = 0.4 * noise(p);',
+      '  f += 0.3 * noise(p = m * p);',
+      '  f += 0.2 * noise(p = m * p);',
+      '  return f + 0.1 * noise(m * p);',
+      '}',
+      '',
+      'float silk(vec2 uv, float t) {',
+      '  float s = sin(5.0 * (uv.x + uv.y + cos(2.0 * uv.x + 5.0 * uv.y)) + sin(12.0 * (uv.x + uv.y)) - t);',
+      '  s = 0.7 + 0.3 * (s * s * 0.5 + s);',
+      '  s *= 0.9 + 0.6 * fabric(uv * min(u_resolution.x, u_resolution.y) * 0.0006);',
+      '  return s * 0.9 + 0.1;',
+      '}',
+      '',
+      'float silkd(vec2 uv, float t) {',
+      '  float xy = uv.x + uv.y;',
+      '  float d = (5.0 * (1.0 - 2.0 * sin(2.0 * uv.x + 5.0 * uv.y)) + 12.0 * cos(12.0 * xy))',
+      '    * cos(5.0 * (cos(2.0 * uv.x + 5.0 * uv.y) + xy) + sin(12.0 * xy) - t);',
+      '  return 0.005 * d * (sign(d) + 3.0);',
+      '}',
+      '',
+      'void main() {',
+      '  float mr = min(u_resolution.x, u_resolution.y);',
+      '  vec2 uv = gl_FragCoord.xy / mr;',
+      '',
+      '  float t = u_time * u_speed;',
+      '',
+      '  // Directional drift — silk moves across',
+      '  uv.x += u_drift * t;',
+      '  uv.y += 0.03 * sin(8.0 * uv.x - t);',
+      '',
+      '  float s = sqrt(silk(uv, t));',
+      '  float d = silkd(uv, t);',
+      '',
+      '  // Dark silk — invert and tint with palette colors',
+      '  vec3 c = vec3(s);',
+      '  c += 0.7 * vec3(0.4, 0.35, 0.5) * d;',
+      '  c *= 1.0 - max(0.0, 0.8 * d);',
+      '',
+      '  // Invert to dark',
+      '  c = pow(c, 0.3 / vec3(0.52, 0.5, 0.4));',
+      '  c = 1.0 - c;',
+      '',
+      '  // Map to dark palette range',
+      '  // Colors: #000000 -> #14151C -> #1E1B24 -> #55535E -> #1D1D26 -> #111117 -> #0A0A0D -> #000000',
+      '  // Brightest is #55535E = rgb(0.333, 0.325, 0.369)',
+      '  c = c * u_brightness;',
+      '  c = pow(c, vec3(u_contrast));',
+      '',
+      '  // Hue shift: negative = warm (more red/amber), positive = cool (more blue/purple)',
+      '  c.r += u_hue * 0.04;',
+      '  c.g += u_hue * 0.01;',
+      '  c.b -= u_hue * 0.04;',
+      '',
+      '  gl_FragColor = vec4(c, 1.0);',
+      '}'
+    ].join('\n');
+
+    // --- Params ---
+    var params = {
+      speed: 1.70,
+      drift: 0.05,
+      brightness: 0.15,
+      contrast: 0.90,
+      hue: 0.25
+    };
+
+    var instances = [];
+
+    function createShader(container) {
+      var canvas = document.createElement('canvas');
+      container.appendChild(canvas);
+
+      var gl = canvas.getContext('webgl', { antialias: false, alpha: false });
+      if (!gl) return null;
+
+      function compile(type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(s));
+          return null;
+        }
+        return s;
+      }
+
+      var vs = compile(gl.VERTEX_SHADER, vertSrc);
+      var fs = compile(gl.FRAGMENT_SHADER, fragSrc);
+      var prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      gl.useProgram(prog);
+
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+      var posLoc = gl.getAttribLocation(prog, 'a_position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      var uniforms = {};
+      ['u_time','u_resolution','u_speed','u_drift','u_brightness','u_contrast','u_hue'].forEach(function(name) {
+        uniforms[name] = gl.getUniformLocation(prog, name);
+      });
+
+      return { canvas: canvas, gl: gl, uniforms: uniforms, container: container };
+    }
+
+    function resize(inst) {
+      var rect = inst.container.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      inst.canvas.width = rect.width * dpr;
+      inst.canvas.height = rect.height * dpr;
+      inst.gl.viewport(0, 0, inst.canvas.width, inst.canvas.height);
+    }
+
+    // Init all shader elements
+    document.querySelectorAll('[data-shader]').forEach(function(el) {
+      var inst = createShader(el);
+      if (inst) {
+        instances.push(inst);
+        resize(inst);
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      instances.forEach(resize);
+    });
+
+    // Render loop
+    var startTime = performance.now();
+    function render() {
+      var t = (performance.now() - startTime) / 1000;
+      instances.forEach(function(inst) {
+        var gl = inst.gl;
+        var u = inst.uniforms;
+        gl.uniform1f(u.u_time, t);
+        gl.uniform2f(u.u_resolution, inst.canvas.width, inst.canvas.height);
+        gl.uniform1f(u.u_speed, params.speed);
+        gl.uniform1f(u.u_drift, params.drift);
+        gl.uniform1f(u.u_brightness, params.brightness);
+        gl.uniform1f(u.u_contrast, params.contrast);
+        gl.uniform1f(u.u_hue, params.hue);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      });
+      requestAnimationFrame(render);
+    }
+    render();
+
+    // Copy button
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      var str = Object.keys(params).map(function(k) { return k + ': ' + params[k]; }).join(', ');
+      navigator.clipboard.writeText(str).then(function() {
+        var btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = 'Copy Settings'; }, 1500);
+      });
+    });
+
+    // Controls
+    document.querySelectorAll('.controls input').forEach(function(input) {
+      var valSpan = input.parentElement.querySelector('.val');
+      input.addEventListener('input', function() {
+        var v = parseFloat(input.value);
+        params[input.id] = v;
+        var dec = input.step.includes('.') ? input.step.split('.')[1].length : 0;
+        valSpan.textContent = v.toFixed(dec);
+      });
+    });
+  </script>
+</body>
+</html>

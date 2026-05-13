@@ -1,0 +1,3 @@
+[submodule "carlos-chat-proxy"]
+	path = carlos-chat-proxy
+	url = https://github.com/carlostarrats/carlos-chat-proxy.git

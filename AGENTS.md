@@ -1,0 +1,368 @@
+# Carlos Tarrats Portfolio
+
+## Rules
+- **Never commit unless explicitly told to do so**
+- **NEVER revert files unless explicitly told to do so** - Do not use git checkout, git restore, or any command that reverts changes. Comparing to git is NOT the same as reverting.
+- **For all UI/frontend work, follow SKILL.md** - Contains design principles, visual hierarchy, accessibility requirements, and component patterns
+- **NEVER guess** - Do not assume, estimate, or calculate values. Use exact values from Figma MCP or ask for clarification.
+- **NEVER summarize** - Do not paraphrase or summarize instructions. Follow them exactly as given.
+- **Look at pixels and placement in detail** - Pay close attention to exact pixel values, spacing, and positioning. Do not approximate.
+
+## Browser Testing Tools
+Three browser automation options available. Use in this order of preference:
+
+### 1. Agent Browser (PREFERRED)
+Vercel's agent-browser CLI at `/opt/homebrew/bin/agent-browser`. Fast, headless browser automation.
+```bash
+agent-browser open <url>           # Navigate to URL
+agent-browser snapshot             # Get page structure (for AI)
+agent-browser snapshot -i          # Interactive elements only
+agent-browser click "text=Button"  # Click by text
+agent-browser find text Discover click  # Find and click
+agent-browser wait 2000            # Wait ms
+agent-browser screenshot           # Take screenshot
+agent-browser close                # Close browser
+```
+GitHub: https://github.com/vercel-labs/agent-browser
+
+### 2. Codex in Chrome
+MCP tools (`mcp__claude-in-chrome__*`) for direct browser control. Requires Chrome extension.
+
+### 3. Playwright
+For automated testing scripts.
+
+## About
+Personal design portfolio for Carlos Tarrats, a Product Designer focused on simplifying complex systems. Site is hosted on GitHub Pages at https://carlostarrats.github.io
+
+## Owner
+- **Name:** Carlos Tarrats
+- **Role:** Product Designer
+- **Focus:** 0-1 product development, enterprise systems, complex system simplification
+- **LinkedIn:** https://www.linkedin.com/in/carlos-t-b869016
+
+## Archive Reference
+The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference it for:
+- Project content and descriptions
+- Image assets (in `images/` folder)
+- Previous design approach and styling
+
+### Projects from v1:
+1. **DDS (Defense Digital Service)** - DoD product & service design (CUI/Secret)
+2. **LoCA** - 0-1 art marketplace with QR-based purchasing
+3. **Kikoff** - Financial education marketplace discovery
+4. **Sourceability** - RFQ platform for electronics sourcing
+5. **ELOQUII (Walmart)** - Plus-size fashion e-commerce
+6. **Control** - Open source LLM interface (personal project)
+7. **RankBee AI** - 0-1 SaaS for AI SEO
+8. **Experiments** - Web experiments including Mood Atlas
+
+## Tech Stack (v2 - Current)
+- Static HTML/CSS/JS
+- GitHub Pages hosting
+- No build process (vanilla)
+
+### Fonts (all self-hosted in `fonts/`)
+- **Nyght Serif Light** - h1 headings (`NyghtSerif-Light.woff2`)
+- **Instrument Serif** - h2 headings, labels, project titles (`InstrumentSerif-Regular.woff2`, `InstrumentSerif-Italic.woff2`)
+- **Baskervville** - Chat panel, see-more tags (`Baskervville-Regular.woff2`)
+- **Geist Pixel** - Preloader animation (`GeistPixel-Triangle.woff2`, `GeistPixel-Line.woff2`, `GeistPixel-Circle.woff2`)
+- All fonts are preloaded via `<link rel="preload">` on every page
+- No external font dependencies (Google Fonts removed)
+
+## Current Projects (Homepage)
+1. **AdaptiveShop** - Modern ecommerce platform with AI features
+2. **Control** - Open-source on-device LLM app for iOS
+3. **Defense Digital Service** - DoD digital transformation
+4. **RankBee** - AI visibility platform for brand recommendations
+5. **Eloquii** - Plus-size fashion e-commerce redesign
+
+## Ideas Section (Homepage)
+1. **Mood Atlas** - 3D music visualization using Thayer Model of Mood
+2. **Muse** - Visual media file manager
+3. **AA Gallery** - American Apparel work collection
+4. **Spirit Ivory** - Data visualization project
+
+## Repository Structure
+```
+/                    # Root - main site files
+├── index.html       # Homepage
+├── styles.css       # Main stylesheet
+├── sitemap.xml      # SEO sitemap
+├── robots.txt       # Crawler instructions
+├── .nojekyll        # Disables Jekyll for GitHub Pages
+├── fonts/           # All self-hosted fonts (Nyght Serif, Baskervville, Instrument Serif, Geist Pixel)
+├── images/          # All image assets
+├── mood-atlas/      # Mood Atlas built app (compiled)
+│   ├── index.html
+│   └── assets/      # JS/CSS bundles
+├── mood-atlas-src/  # Mood Atlas source (gitignored, local only)
+└── projects/        # Project detail pages
+    ├── adaptiveshop.html
+    ├── control.html
+    ├── dds.html
+    ├── eloquii.html
+    ├── kikoff.html
+    ├── loca.html
+    └── rankbee.html
+```
+
+## SEO & Accessibility
+All pages include:
+- Meta descriptions
+- Canonical URLs
+- Open Graph tags (og:type, og:title, og:description, og:url)
+- Twitter card tags
+- Skip navigation link for keyboard users
+- Aria labels on interactive elements
+- Alt text on images
+
+Homepage also has:
+- JSON-LD structured data (Person schema)
+- Favicon (favicon.svg)
+- Share image (og:image, twitter:image)
+
+## Brand Carousel (REMOVED)
+**Removed:** 2026-02-05
+**Recovery:**
+- HTML: `git show HEAD~1:index.html`
+- CSS: `git show HEAD~1:styles.css` (or uncomment in current file)
+
+Previously included:
+- 3D rotating carousel with perspective effect
+- Infinite scroll animation (120s loop)
+- JavaScript-based hover detection for reliable interaction on 3D elements
+- Hover lifts item 70px, rotates flat, scales 1.1x
+- Bounce easing on return animation
+- Images in `images/brand/`
+- CSS commented out in styles.css (not deleted)
+
+## Deployment
+- Push to `main` branch auto-deploys to GitHub Pages
+- No build step required for static files
+- `.nojekyll` file must remain for proper asset loading
+
+## Commands
+```bash
+# View archived v1 files
+git show archive/v1:<filename>
+
+# Example: view old index.html
+git show archive/v1:index.html
+
+# List all files in archive
+git ls-tree --name-only archive/v1
+```
+
+## Hero Flicker
+- Cycles through images behind the hero text
+- 1.5 second interval between images
+- Crossfade transition with opacity
+- Images stored in `images/hero-flicker/`
+
+## Image Optimization
+Images must be resized before adding to the site:
+
+### Hero Flicker (`images/hero-flicker/`)
+- **Target size:** 700×394px (retina-ready for 350px display)
+- **Format:** JPG
+- **Command:** `sips -z 394 700 <image.jpg>`
+
+### Brand Carousel (`images/brand/`) - REMOVED
+(Section removed 2026-02-05, images still exist in `images/brand/`)
+- **Target size:** 700×400px (retina-ready for 200px display height)
+- **Format:** JPG
+- **Command:** `sips -z 400 700 <image.jpg>`
+
+## Video Assets
+MP4 videos used in project cards and detail pages.
+
+### Guidelines
+- **Target size:** Under 600KB per video
+- **Format:** MP4 (H.264)
+- **Attributes:** `autoplay loop muted playsinline`
+- Hero videos should be ~500KB or less
+
+### Locations
+- `images/adaptiveshop/` - AdaptiveShop project videos
+- `images/control/` - Control project videos
+- `images/eloquii/` - Eloquii project videos
+
+## Skeleton Loading
+Loading states shown before images/videos are ready:
+- Gradient pulse animation (`skeleton-pulse`)
+- Applied via `.is-loaded` class toggle
+- JavaScript detects `img.complete` or `video.readyState >= 3`
+- Skeleton removed once asset is ready
+
+## Vimeo Embeds (REMOVED with Brand Carousel)
+Previously in brand carousel:
+- **367486985** - LoCA video
+- **367487760** - American Apparel video
+- Embedded with `?background=1&muted=1&autoplay=1&loop=1&autopause=0`
+
+## Design Notes (v2)
+- Dark background (#252525)
+- Mobile responsive with media queries
+- Smooth transitions and animations
+
+## Mood Atlas
+Interactive 3D music visualization using the Thayer Model of Mood. Live at https://tarrats.xyz/mood-atlas/
+
+### Tech Stack
+- React + TypeScript + Vite
+- Three.js / React Three Fiber for 3D
+- Tailwind CSS
+- Deezer API for chart data
+
+### Features
+- **Personal Mode** - Visualize your Apple Music library by emotion
+- **Discover Mode** - Explore global music charts by country (21 regions)
+- **Examine Mode** - Deep dive into emotion clusters
+- 3D positioning based on energy (Y-axis) and valence (X-axis)
+- Color-coded by Thayer quadrants (Happy=Yellow, Sad=Blue, Frantic=Red, Calm=Cyan)
+
+### Source Code (gitignored - local only)
+Location: `mood-atlas-src/`
+```
+mood-atlas-src/
+├── src/
+│   ├── components/     # React components
+│   ├── data/           # Static data files
+│   │   ├── discoverCharts.json  # Pre-fetched Deezer data
+│   │   ├── appleMusicSongs.json # Personal mode data
+│   │   └── cityChartData.ts     # Type definitions
+│   └── utils/
+│       ├── deezerCharts.ts      # Loads static chart data
+│       └── emotionAnalysis.ts   # Thayer model logic (9 emotions)
+├── scripts/
+│   ├── lastfmUtils.js           # Shared Last.fm API client & tag mapping
+│   ├── fetchDeezerCharts.js     # Discover mode data refresh
+│   ├── processAppleData.js      # Personal mode from CSV (requires Apple Music CSV)
+│   ├── enrich.js                # Multi-source enrichment (Last.fm + iTunes + Deezer)
+│   └── blend.js                 # Configurable energy/valence/emotion computation
+├── .env                         # API keys (gitignored)
+└── package.json
+```
+
+### Mood Atlas Emotion Analysis
+**Two-phase pipeline: `enrich.js` (fetch) → `blend.js` (compute)**
+
+Source data is stored permanently in `song.sources.*` and NEVER overwritten by blending. Computed fields (energy, valence, primaryEmotion, emotionScores) are derived from sources and can be recomputed instantly.
+
+#### Phase 1: enrich.js — Multi-source data fetching
+Fetches raw data from 3 sources and saves to `song.sources.*`. Idempotent — skips already-enriched songs unless forced.
+
+**Sources stored per song:**
+- `sources.lastfm` — `{energy, valence, quality: 'track'|'artist'}` from Last.fm tag mapping
+- `sources.itunesGenre` — iTunes per-track genre string (e.g. "Alternative", "Punk")
+- `sources.deezer` — `{bpm, gain}` from Deezer track data
+
+**Force flags:** `--force-lastfm`, `--force-itunes`, `--force-deezer`
+
+**Caches (gitignored):** `.lastfm-cache.json`, `.itunes-cache.json`, `.deezer-cache.json`
+
+#### Phase 2: blend.js — Configurable computation
+Pure computation from `song.sources.*`. No API calls. Runs in <1 second. Re-run freely with different config.
+
+**Priority chain:**
+1. Last.fm track-level tags (song-specific mood data)
+2. Last.fm artist-level tags (specific genres like "punk", "grunge")
+3. iTunes genre (broad: "Alternative", "Rock") mapped via GENRE_THAYER table
+4. Fallback: `{0.5, 0.5}`
+
+**Blending approach (stretch + offset):**
+- Base energy/valence from priority source above
+- Stretch values away from 0.5 center to reduce clustering: `energy = 0.5 + (energy - 0.5) * stretchFactor`
+- Deezer BPM/gain applied as additive offsets (not weighted averages) for per-track variation
+- All config at top of `blend.js` (stretch factors, BPM/gain weights, clamp range)
+
+**9 Emotion Categories** (from `emotionAnalysis.ts`):
+| Emotion | Energy | Valence |
+|---------|--------|---------|
+| Happy | > 0.7 | > 0.7 |
+| Energetic | > 0.7 | 0.4–0.7 |
+| Angry | > 0.7 | ≤ 0.4 |
+| Excited | 0.4–0.7 | > 0.7 |
+| Romantic | 0.4–0.7 | 0.4–0.7 |
+| Melancholic | 0.3–0.7 | ≤ 0.4 |
+| Peaceful | ≤ 0.4 | > 0.5 |
+| Calm | ≤ 0.4 | 0.3–0.5 |
+| Sad | ≤ 0.3 | ≤ 0.3 |
+
+**API keys:** Required in `mood-atlas-src/.env`:
+- `LASTFM_API_KEY` — Free at https://www.last.fm/api/account/create
+- iTunes and Deezer APIs are free, no key required
+
+### Updating Discover Charts
+Run monthly to refresh global chart data (requires `LASTFM_API_KEY` in `.env`):
+```bash
+cd mood-atlas-src
+node scripts/fetchDeezerCharts.js
+npm run build
+```
+
+### Updating Personal Mode Data
+If you have the Apple Music CSV (initial import):
+```bash
+cd mood-atlas-src
+node scripts/processAppleData.js
+```
+To enrich with multi-source data (Last.fm + iTunes + Deezer):
+```bash
+cd mood-atlas-src
+node scripts/enrich.js          # Fetches missing source data (~70 min first run, instant after)
+node scripts/blend.js           # Computes energy/valence/emotion (<1 sec, re-run freely)
+npm run build
+```
+To re-blend with different config (no API calls, edit CONFIG in blend.js):
+```bash
+cd mood-atlas-src
+node scripts/blend.js
+npm run build
+```
+Data is pre-fetched and bundled (no runtime API calls needed).
+
+### Build & Deploy
+Mood Atlas has TWO deployment targets:
+
+#### 1. Vercel (PRIMARY — live site)
+- **URL:** https://mood-atlas.tarrats.xyz/
+- **How:** Vercel deploys from `mood-atlas-src/` source directly
+- **vite base:** Must be `'/'` for Vercel
+- **Command:** `cd mood-atlas-src && npx vercel --prod`
+- **Config:** `.vercel/project.json` in `mood-atlas-src/`
+
+#### 2. GitHub Pages (secondary — bundled copy)
+- **URL:** https://tarrats.xyz/mood-atlas/
+- **How:** Pre-built files copied to `mood-atlas/` folder, committed, pushed to main
+- **vite base:** Must be `'/mood-atlas/'` for GitHub Pages (change before building for GH Pages)
+- **Command:**
+```bash
+cd mood-atlas-src
+npm run build        # Outputs to dist/
+# Copy to tracked folder:
+rm -rf ../mood-atlas/assets && cp -r dist/* ../mood-atlas/
+```
+Then commit the `mood-atlas/` folder changes.
+
+**IMPORTANT:** When deploying Mood Atlas changes, always deploy to Vercel first (`npx vercel --prod`). The vite `base` should normally stay as `'/'` for Vercel. Only change to `'/mood-atlas/'` when specifically building for GitHub Pages.
+
+## Carlos LLM Chat
+- Side tray chat panel powered by proxy at `carlos-chat-proxy.vercel.app`
+- Proxy only works from live domain (not localhost)
+- Starter question buttons for common topics
+- Supports multi-turn conversation history
+- Chat panel cannot be tested locally — test on live site after deploy
+
+## Preloader
+- "Thinking" screen with animated card stack
+- Currently disabled (`if (true || ...)` bypass in index.html)
+- Can be re-enabled by removing `true || ` from the preloader script
+- Waits for fonts + 4s minimum display time when enabled
+
+## Recent Commits
+- `7e868a39` - Add text tab to RankBee page and fix lightbox overlay bug
+- `a89350b9` - Redesign Carlos LLM chat from phone frame to side tray
+- `278eef3f` - Update RankBee-11 image
+- `6e77783b` - Add RankBee project page and replace Kikoff on homepage
+- `887b03f3` - Add AA Gallery to Ideas section
