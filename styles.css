@@ -615,6 +615,43 @@ h2 {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.project-kind-tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Baskervville', serif;
+  font-style: normal;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  color: var(--project-accent, rgba(255, 255, 255, 0.72));
+  background: color-mix(in srgb, var(--project-accent, #fff) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--project-accent, #fff) 58%, transparent);
+  border-radius: 100px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.project-row--adaptiveshop {
+  --project-accent: #ffcbcc;
+}
+
+.project-row--dds {
+  --project-accent: #f5ffcb;
+}
+
+.project-row--control {
+  --project-accent: #cbe8ff;
+}
+
+.project-row--rankbee {
+  --project-accent: #cdcbff;
+}
+
+.project-row--frank {
+  --project-accent: #ffcbd4;
+}
+
 .tagline {
   text-align: right;
   font-family: 'Instrument Serif', serif;
@@ -669,7 +706,20 @@ h2 {
   width: calc(50% - 15px);
 }
 
+.project-row > .project-row__copy {
+  float: right;
+  width: calc(50% - 15px);
+}
+
+.project-row__copy > h2 {
+  margin-top: 10px;
+}
+
 .project-row--reverse > h2 {
+  float: left;
+}
+
+.project-row--reverse > .project-row__copy {
   float: left;
 }
 
@@ -1734,7 +1784,7 @@ h1.section-brand {
 .archive__link {
   position: relative;
   display: grid;
-  grid-template-columns: 160px 1fr 110px auto;
+  grid-template-columns: 160px 86px 1fr 110px auto;
   align-items: center;
   gap: 32px;
   padding: 18px 0;
@@ -1797,6 +1847,17 @@ h1.section-brand {
   color: rgba(255,255,255,0.5);
 }
 
+.archive__kind {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.32);
+  white-space: nowrap;
+}
+
 .archive__status {
   font-family: 'Roboto Serif', serif;
   font-weight: 300;
@@ -1847,6 +1908,12 @@ h1.section-brand {
   .archive__company {
     width: 100%;
     font-size: 18px;
+  }
+
+  .archive__kind {
+    font-size: 11px;
+    line-height: 14px;
+    letter-spacing: 0.7px;
   }
 
   .archive__purpose {
@@ -2312,6 +2379,12 @@ h1.section-brand {
     padding: 5px 12px;
     gap: 4px;
   }
+
+  .project-kind-tag {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 3px 9px;
+  }
 }
 
 /* ============================================
@@ -2548,11 +2621,16 @@ h1.section-brand {
     flex-direction: column;
   }
 
-  .project-row > h2 {
+  .project-row > h2,
+  .project-row > .project-row__copy {
     order: 1;
     float: none;
     width: 100%;
     margin-bottom: 30px;
+  }
+
+  .project-row__copy > h2 {
+    margin-top: 8px;
   }
 
   .project-row > .card {
@@ -2621,6 +2699,12 @@ h1.section-brand {
     line-height: 12px;
     padding: 3px 8px;
     gap: 3px;
+  }
+
+  .project-kind-tag {
+    font-size: 10px;
+    line-height: 12px;
+    padding: 2px 7px;
   }
 }
 
