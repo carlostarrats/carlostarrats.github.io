@@ -481,9 +481,17 @@ h2 {
   }
 
   .intro .hero,
-  .intro__body {
+  .intro__copy {
     margin-bottom: 0;
   }
+}
+
+.intro__body {
+  margin-bottom: 20px;
+}
+
+.intro__body:last-child {
+  margin-bottom: 0;
 }
 
 .hero {
