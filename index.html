@@ -796,8 +796,11 @@
       var tooltip = document.getElementById('library-tooltip');
       if (!library || !tooltip) return;
       var books = Array.from(library.querySelectorAll('.library__book'));
+      var canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
       var activeBook = null;
       var isDragging = false;
+      var lastPointerType = '';
+      var suppressScrollHideUntil = 0;
 
       function hideTooltip() {
         activeBook = null;
@@ -829,19 +832,42 @@
       }
 
       books.forEach(function(book) {
+        book.addEventListener('pointerdown', function(e) {
+          lastPointerType = e.pointerType || '';
+        });
         book.addEventListener('mouseenter', function(e) {
+          if (!canHover.matches) return;
           showTooltip(book, e.clientX, e.clientY);
         });
         book.addEventListener('mousemove', function(e) {
-          if (activeBook !== book || isDragging) return;
+          if (!canHover.matches || activeBook !== book || isDragging) return;
           positionTooltip(e.clientX, e.clientY);
         });
-        book.addEventListener('mouseleave', hideTooltip);
+        book.addEventListener('mouseleave', function() {
+          if (!canHover.matches) return;
+          hideTooltip();
+        });
         book.addEventListener('focus', function() {
+          if (!canHover.matches) return;
           var rect = book.getBoundingClientRect();
           showTooltip(book, rect.left + rect.width / 2, rect.top + 16);
         });
-        book.addEventListener('blur', hideTooltip);
+        book.addEventListener('blur', function() {
+          if (!canHover.matches) return;
+          hideTooltip();
+        });
+        book.addEventListener('click', function(e) {
+          var isTouchLike = lastPointerType && lastPointerType !== 'mouse';
+          if (canHover.matches && !isTouchLike) return;
+          e.preventDefault();
+          e.stopPropagation();
+          if (activeBook === book && tooltip.classList.contains('is-visible')) {
+            hideTooltip();
+            return;
+          }
+          suppressScrollHideUntil = Date.now() + 350;
+          showTooltip(book, e.clientX, e.clientY);
+        });
       });
 
       library.addEventListener('mousedown', function() {
@@ -858,7 +884,14 @@
         isDragging = false;
         hideTooltip();
       });
-      library.addEventListener('scroll', hideTooltip, { passive: true });
+      library.addEventListener('scroll', function() {
+        if (Date.now() < suppressScrollHideUntil) return;
+        hideTooltip();
+      }, { passive: true });
+      document.addEventListener('click', function(e) {
+        if (canHover.matches || library.contains(e.target)) return;
+        hideTooltip();
+      });
       window.addEventListener('resize', hideTooltip);
     })();
   </script>
