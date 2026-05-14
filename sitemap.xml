@@ -2,32 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://carlostarrats.github.io/</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://carlostarrats.github.io/projects/rankbee.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://carlostarrats.github.io/projects/frank.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://carlostarrats.github.io/projects/control.html</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://carlostarrats.github.io/projects/adaptiveshop.html</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://carlostarrats.github.io/projects/dds.html</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://carlostarrats.github.io/projects/eloquii.html</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://carlostarrats.github.io/projects/kikoff.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://carlostarrats.github.io/projects/loca.html</loc>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://mood-atlas.tarrats.xyz</loc>
-    <lastmod>2026-02-26</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>
