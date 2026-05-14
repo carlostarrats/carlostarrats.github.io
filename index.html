@@ -306,6 +306,7 @@
             <span class="archive__company">Muse</span>
             <span class="archive__purpose">Visual-first media library exploration</span>
             <span class="archive__status"><span class="archive__dot archive__dot--in-progress"></span>Ongoing</span>
+            <img src="images/extra/muse-1.png" alt="" class="archive__preview" aria-hidden="true">
             <span class="see-more-tag see-more-tag--disabled" aria-label="See more about Muse (disabled)" aria-disabled="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</span>
           </div>
         </div>
@@ -323,6 +324,7 @@
             <span class="archive__company">Spirit Ivory</span>
             <span class="archive__purpose">Atmospheric exploration game</span>
             <span class="archive__status"><span class="archive__dot archive__dot--in-progress"></span>Ongoing</span>
+            <img src="images/extra/spirit-1.png" alt="" class="archive__preview" aria-hidden="true">
             <span class="see-more-tag see-more-tag--disabled" aria-label="See more about Spirit Ivory (disabled)" aria-disabled="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</span>
           </div>
         </div>
@@ -755,7 +757,7 @@
   <script>
     (function() {
       var canHover = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)');
-      var links = document.querySelectorAll('.archive__link[href] .archive__preview');
+      var links = document.querySelectorAll('.archive__link .archive__preview');
       function positionPreview(link, x, y) {
         var preview = link.querySelector('.archive__preview');
         if (!preview) return;

@@ -1533,15 +1533,30 @@ h1.section-brand {
   margin-bottom: 0;
 }
 
+.project-images__section-intro {
+  display: table;
+  width: 100%;
+  margin: 60px 0 45px;
+}
+
 .project-images__section-title {
+  display: table-cell;
+  width: 45%;
+  vertical-align: top;
   font-family: 'Instrument Serif', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
   color: rgba(255,255,255,0.4);
   letter-spacing: -0.5px;
-  text-align: center;
-  margin: 60px 0 30px;
+  text-align: left;
+  margin: 0;
+}
+
+.project-images__section-copy {
+  display: table-cell;
+  vertical-align: top;
+  padding-left: 60px;
 }
 
 /* Expand button on project images */
@@ -2229,6 +2244,12 @@ h1.section-brand {
     letter-spacing: 0px;
   }
 
+  .project-images__section-title {
+    font-size: 35px;
+    line-height: 40px;
+    letter-spacing: 0px;
+  }
+
   .detail-footer__copyright {
     font-size: 20px;
     line-height: 28px;
@@ -2415,6 +2436,26 @@ h1.section-brand {
     padding-left: 0;
     font-size: 16px;
     line-height: 24px;
+  }
+
+  .project-images__section-intro {
+    display: block;
+    margin: 40px 0 30px;
+  }
+
+  .project-images__section-title {
+    display: block;
+    width: 100%;
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+  }
+
+  .project-images__section-copy {
+    display: block;
+    width: 100%;
+    padding-left: 0;
   }
 
   .detail-footer__copyright {
