@@ -424,7 +424,7 @@ h2 {
 
 /* Colors */
 .color--control {
-  color: #cbfff7;
+  color: #cbe8ff;
 }
 
 .color--adaptiveshop {
@@ -1188,7 +1188,7 @@ h1.section-brand {
 }
 
 .external-link--control {
-  color: #cbfff7;
+  color: #cbe8ff;
 }
 
 .external-link--adaptiveshop {
@@ -1196,6 +1196,10 @@ h1.section-brand {
 }
 
 .external-link--eloquii {
+  color: #cdcbff;
+}
+
+.external-link--rankbee {
   color: #cdcbff;
 }
 
@@ -1233,7 +1237,7 @@ h1.section-brand {
 }
 
 .project-header__title-name--control {
-  color: #cbfff7;
+  color: #cbe8ff;
 }
 
 .project-header__title-name--adaptiveshop {
@@ -1527,6 +1531,17 @@ h1.section-brand {
 
 .project-images__grid .project-images__img-wrap {
   margin-bottom: 0;
+}
+
+.project-images__section-title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 50px;
+  line-height: 58px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin: 60px 0 30px;
 }
 
 /* Expand button on project images */
@@ -2928,7 +2943,12 @@ html[data-theme="peach"] .archive__title,
 html[data-theme="pink"] .archive__title,
 html[data-theme="mint"] .archive__title,
 html[data-theme="yellow"] .archive__title,
-html[data-theme="lavender"] .archive__title {
+html[data-theme="lavender"] .archive__title,
+html[data-theme="peach"] .project-images__section-title,
+html[data-theme="pink"] .project-images__section-title,
+html[data-theme="mint"] .project-images__section-title,
+html[data-theme="yellow"] .project-images__section-title,
+html[data-theme="lavender"] .project-images__section-title {
   color: #000000;
 }
 
