@@ -71,16 +71,20 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 
 ## Current Projects (Homepage)
 1. **AdaptiveShop** - Modern ecommerce platform with AI features
-2. **Control** - Open-source on-device LLM app for iOS
-3. **Defense Digital Service** - DoD digital transformation
-4. **RankBee** - AI visibility platform for brand recommendations
-5. **Eloquii** - Plus-size fashion e-commerce redesign
+2. **Defense Digital Service** - DoD digital transformation and high-security government systems
+3. **Control** - Local-first on-device LLM app for iPhone
+4. **RankBee** - AI visibility tooling for ChatGPT, Gemini, content quality, and generative search
+5. **Frank** - Local-first collaboration layer for feedback on URLs, files, or canvases
 
-## Ideas Section (Homepage)
-1. **Mood Atlas** - 3D music visualization using Thayer Model of Mood
-2. **Muse** - Visual media file manager
-3. **AA Gallery** - American Apparel work collection
-4. **Spirit Ivory** - Data visualization project
+## More Section (Homepage)
+1. **LoCA** - Discovering local art through physical spaces
+2. **Eloquii** - Flexible commerce systems for fashion retail
+3. **Photography** - Exhibited film photography
+4. **Flip** - Visual diff tooling for Git commits
+5. **Mood Atlas** - Apple Music visualization through Thayer's mood model
+6. **Muse** - Visual-first media library exploration (disabled link)
+7. **AA Gallery** - Creative and brand work for American Apparel
+8. **Spirit Ivory** - Atmospheric exploration game (disabled link)
 
 ## Repository Structure
 ```
@@ -89,7 +93,9 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
 ├── styles.css       # Main stylesheet
 ├── sitemap.xml      # SEO sitemap
 ├── robots.txt       # Crawler instructions
+├── llms.txt         # LLM-readable site summary
 ├── .nojekyll        # Disables Jekyll for GitHub Pages
+├── carlos-chat-proxy/ # Vercel serverless proxy for chat API
 ├── fonts/           # All self-hosted fonts (Nyght Serif, Baskervville, Instrument Serif, Geist Pixel)
 ├── images/          # All image assets
 ├── mood-atlas/      # Mood Atlas built app (compiled)
@@ -101,6 +107,7 @@ The previous portfolio (v1) is preserved in the `archive/v1` branch. Reference i
     ├── control.html
     ├── dds.html
     ├── eloquii.html
+    ├── frank.html
     ├── kikoff.html
     ├── loca.html
     └── rankbee.html
@@ -177,15 +184,24 @@ Images must be resized before adding to the site:
 MP4 videos used in project cards and detail pages.
 
 ### Guidelines
-- **Target size:** Under 600KB per video
+- **Target size:** Under 600KB per video where possible
 - **Format:** MP4 (H.264)
-- **Attributes:** `autoplay loop muted playsinline`
+- **Fast start:** Run `ffmpeg -i input.mp4 -c copy -movflags +faststart output.mp4` before committing new MP4s. This moves the MP4 `moov` atom to the front without re-encoding or changing quality.
+- **Homepage card attributes:** `loop muted playsinline class="deferred-video" data-src="..."`
+- **Project inline video attributes:** `muted loop playsinline preload="metadata"`; do not add `autoplay`
 - Hero videos should be ~500KB or less
 
 ### Locations
 - `images/adaptiveshop/` - AdaptiveShop project videos
 - `images/control/` - Control project videos
 - `images/eloquii/` - Eloquii project videos
+- `images/frank/` - Frank project videos
+
+### Loading Behavior
+- Homepage videos are deferred with `data-src`; JavaScript attaches the `<source>` only when the card is near the viewport.
+- Project page videos are managed with `IntersectionObserver`; they play near the viewport and pause when offscreen.
+- Manual/controlled videos, such as the DDS video, keep `controls preload="metadata"` and are not autoplay-managed.
+- Lightbox videos still autoplay after the user opens the lightbox.
 
 ## Skeleton Loading
 Loading states shown before images/videos are ready:
@@ -361,8 +377,8 @@ Then commit the `mood-atlas/` folder changes.
 - Waits for fonts + 4s minimum display time when enabled
 
 ## Recent Commits
+- `3d942395` - Fix homepage theme tag styling
 - `7e868a39` - Add text tab to RankBee page and fix lightbox overlay bug
 - `a89350b9` - Redesign Carlos LLM chat from phone frame to side tray
 - `278eef3f` - Update RankBee-11 image
 - `6e77783b` - Add RankBee project page and replace Kikoff on homepage
-- `887b03f3` - Add AA Gallery to Ideas section
