@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://carlostarrats.github.io/sitemap.xml
+LLMs: https://carlostarrats.github.io/llms.txt

@@ -186,7 +186,7 @@
             <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="metadata">
               <source src="../images/adaptiveshop/adaptiveshop-3.mp4" type="video/mp4">
             </video>
             <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
@@ -202,7 +202,7 @@
         <!-- 5 and 6 on a row -->
         <div class="project-images__grid">
           <div class="project-images__video">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="metadata">
               <source src="../images/adaptiveshop/adaptiveshop-5.mp4" type="video/mp4">
             </video>
             <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
@@ -220,7 +220,7 @@
             <button class="project-images__expand" aria-label="Enlarge image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="metadata">
               <source src="../images/adaptiveshop/adaptiveshop-8.mp4" type="video/mp4">
             </video>
             <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
@@ -236,13 +236,13 @@
         <!-- 10 and 11 on a row -->
         <div class="project-images__grid">
           <div class="project-images__video">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="metadata">
               <source src="../images/adaptiveshop/adaptiveshop-10.mp4" type="video/mp4">
             </video>
             <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
           </div>
           <div class="project-images__video">
-            <video autoplay muted loop playsinline>
+            <video muted loop playsinline preload="metadata">
               <source src="../images/adaptiveshop/adaptiveshop-11.mp4" type="video/mp4">
             </video>
             <button class="project-images__expand" aria-label="Enlarge video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
@@ -380,10 +380,16 @@
       });
 
       // Handle video loading
+      function playProjectVideo(video) {
+        var playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function() {});
+        }
+      }
+
       document.querySelectorAll('.project-images__video').forEach(function(container) {
         var video = container.querySelector('video');
         if (video) {
-          video.play().catch(function() {});
           if (video.readyState >= 3) {
             container.classList.add('is-loaded');
           } else {
@@ -391,6 +397,21 @@
               container.classList.add('is-loaded');
             });
           }
+          if (video.hasAttribute('controls')) return;
+          if (!('IntersectionObserver' in window)) {
+            playProjectVideo(video);
+            return;
+          }
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                playProjectVideo(video);
+              } else {
+                video.pause();
+              }
+            });
+          }, { rootMargin: '400px 0px', threshold: 0.01 });
+          observer.observe(container);
         }
       });
     });
@@ -559,6 +580,7 @@
       });
     })();
   </script>
+  <script src="../back-to-top.js"></script>
   <script src="../silk-shader.js"></script>
   <script>
     SilkShader.attach('.project-images__img-wrap');

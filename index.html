@@ -114,6 +114,40 @@
       var preloader = document.getElementById('preloader');
 
       function loadDeferredAssets() {
+        function startDeferredVideo(video) {
+          if (video.dataset.src && !video.querySelector('source')) {
+            var source = document.createElement('source');
+            source.src = video.dataset.src;
+            source.type = 'video/mp4';
+            video.preload = 'metadata';
+            video.appendChild(source);
+            video.load();
+          }
+          var playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function() {
+              // Autoplay blocked - video will show first frame
+            });
+          }
+        }
+
+        function observeDeferredVideo(video) {
+          if (!('IntersectionObserver' in window)) {
+            startDeferredVideo(video);
+            return;
+          }
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                startDeferredVideo(video);
+              } else if (video.querySelector('source')) {
+                video.pause();
+              }
+            });
+          }, { rootMargin: '400px 0px', threshold: 0.01 });
+          observer.observe(video);
+        }
+
         // Load deferred images
         document.querySelectorAll('img.deferred').forEach(function(img) {
           if (img.dataset.src) {
@@ -123,18 +157,7 @@
         // Load deferred videos
         document.querySelectorAll('.deferred-video').forEach(function(video) {
           if (video.dataset.src) {
-            var source = document.createElement('source');
-            source.src = video.dataset.src;
-            source.type = 'video/mp4';
-            video.appendChild(source);
-            video.load();
-            // Handle play() rejection on mobile (autoplay may be blocked)
-            var playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(function() {
-                // Autoplay blocked - video will show first frame
-              });
-            }
+            observeDeferredVideo(video);
           }
         });
         // Load deferred iframes
@@ -932,6 +955,7 @@
   </script>
 
   <!-- Silk shader skeleton -->
+  <script src="back-to-top.js"></script>
   <script src="silk-shader.js"></script>
   <script>
     SilkShader.attach('.hero-flicker');
