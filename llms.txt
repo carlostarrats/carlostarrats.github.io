@@ -32,6 +32,10 @@ URL: https://carlostarrats.github.io/projects/dds.html
 Platform redesign improving the online shopping experience for plus-size fashion customers. Led design of a modular, scalable system with reusable components and mobile parity.
 URL: https://carlostarrats.github.io/projects/eloquii.html
 
+### Print Media
+Printed marketing collateral spanning art direction, design, vendor collaboration, proofing, press checks, and print-run approvals.
+URL: https://carlostarrats.github.io/projects/print-media.html
+
 ### Mood Atlas (Thayer Model of Mood)
 Interactive 3D music visualization using the Thayer Model of Mood. Maps Apple Music library and global Top 25 chart songs by emotional energy and valence, color-coded by mood quadrant (Happy, Sad, Frantic, Calm).
 URL: https://mood-atlas.tarrats.xyz

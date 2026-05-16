@@ -1328,6 +1328,10 @@ h1.section-brand {
   color: #cbe8ff;
 }
 
+.project-header__title-name--print-media {
+  color: #f5ffcb;
+}
+
 .project-header__title-dash {
   font-style: italic;
 }
@@ -2892,6 +2896,7 @@ html[data-theme="peach"] .project-header__title-name--rankbee,
 html[data-theme="peach"] .project-header__title-name--dds,
 html[data-theme="peach"] .project-header__title-name--kikoff,
 html[data-theme="peach"] .project-header__title-name--loca,
+html[data-theme="peach"] .project-header__title-name--print-media,
 html[data-theme="pink"] .portfolio-line,
 html[data-theme="pink"] .tagline,
 html[data-theme="pink"] .location-line,
@@ -2912,6 +2917,7 @@ html[data-theme="pink"] .project-header__title-name--rankbee,
 html[data-theme="pink"] .project-header__title-name--dds,
 html[data-theme="pink"] .project-header__title-name--kikoff,
 html[data-theme="pink"] .project-header__title-name--loca,
+html[data-theme="pink"] .project-header__title-name--print-media,
 html[data-theme="mint"] .portfolio-line,
 html[data-theme="mint"] .tagline,
 html[data-theme="mint"] .location-line,
@@ -2932,6 +2938,7 @@ html[data-theme="mint"] .project-header__title-name--rankbee,
 html[data-theme="mint"] .project-header__title-name--dds,
 html[data-theme="mint"] .project-header__title-name--kikoff,
 html[data-theme="mint"] .project-header__title-name--loca,
+html[data-theme="mint"] .project-header__title-name--print-media,
 html[data-theme="yellow"] .portfolio-line,
 html[data-theme="yellow"] .tagline,
 html[data-theme="yellow"] .location-line,
@@ -2952,6 +2959,7 @@ html[data-theme="yellow"] .project-header__title-name--rankbee,
 html[data-theme="yellow"] .project-header__title-name--dds,
 html[data-theme="yellow"] .project-header__title-name--kikoff,
 html[data-theme="yellow"] .project-header__title-name--loca,
+html[data-theme="yellow"] .project-header__title-name--print-media,
 html[data-theme="lavender"] .portfolio-line,
 html[data-theme="lavender"] .tagline,
 html[data-theme="lavender"] .location-line,
@@ -2971,7 +2979,8 @@ html[data-theme="lavender"] .project-header__title-name--eloquii,
 html[data-theme="lavender"] .project-header__title-name--rankbee,
 html[data-theme="lavender"] .project-header__title-name--dds,
 html[data-theme="lavender"] .project-header__title-name--kikoff,
-html[data-theme="lavender"] .project-header__title-name--loca {
+html[data-theme="lavender"] .project-header__title-name--loca,
+html[data-theme="lavender"] .project-header__title-name--print-media {
   color: #1a1a1a !important;
 }
 
