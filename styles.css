@@ -1869,7 +1869,7 @@ h1.section-brand {
   left: var(--archive-preview-x, 50vw);
   top: var(--archive-preview-y, 50vh);
   z-index: 20;
-  width: min(400px, 36vw);
+  width: min(500px, 42vw);
   aspect-ratio: 2624 / 2122;
   object-fit: cover;
   border-radius: 6px;
@@ -3460,7 +3460,12 @@ html[data-theme="peach"] .project-text__heading,
 html[data-theme="pink"] .project-text__heading,
 html[data-theme="mint"] .project-text__heading,
 html[data-theme="yellow"] .project-text__heading,
-html[data-theme="lavender"] .project-text__heading {
+html[data-theme="lavender"] .project-text__heading,
+html[data-theme="peach"] .print-media-production__title,
+html[data-theme="pink"] .print-media-production__title,
+html[data-theme="mint"] .print-media-production__title,
+html[data-theme="yellow"] .print-media-production__title,
+html[data-theme="lavender"] .print-media-production__title {
   color: #1a1a1a;
 }
 
