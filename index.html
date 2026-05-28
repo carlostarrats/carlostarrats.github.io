@@ -27,15 +27,15 @@
   <meta name="twitter:description" content="Carlos Tarrats is a Product Designer simplifying complex systems. Explore projects in 0-1 product development, enterprise systems, and digital transformation.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <!-- Fonts - local primary with web fallbacks -->
-  <link rel="preload" href="fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Fonts - self-hosted critical faces -->
+  <link rel="preload" href="fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preload" href="fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preload" href="fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260514c">
+  <link rel="stylesheet" href="styles.css?v=20260528a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -176,41 +176,18 @@
         }
       }
 
-      // Preloader disabled — fonts are self-hosted and preloaded
-      if (true || sessionStorage.getItem('fontsLoaded')) {
-        preloader.style.display = 'none';
-        // Wait for DOM so skeleton handlers are attached
-        onReady(loadDeferredAssets);
+      // Keep first paint visible, but give critical font preloads a short quiet window
+      // before deferred images/videos start competing for the mobile connection.
+      preloader.style.display = 'none';
+      if (document.fonts && document.fonts.ready) {
+        Promise.race([
+          document.fonts.ready,
+          new Promise(function(resolve) { setTimeout(resolve, 1200); })
+        ]).then(function() {
+          onReady(loadDeferredAssets);
+        });
       } else {
-        var fontsReady = false;
-        var minTimeReady = false;
-        var loaded = false;
-        function tryHideAndLoad() {
-          if (loaded || !fontsReady || !minTimeReady) return;
-          loaded = true;
-          sessionStorage.setItem('fontsLoaded', 'true');
-          // Wait for DOM so skeleton handlers are attached
-          onReady(function() {
-            loadDeferredAssets();
-            preloader.classList.add('is-hidden');
-            setTimeout(function() {
-              preloader.style.display = 'none';
-            }, 400);
-          });
-        }
-        // Minimum 4s display time
-        setTimeout(function() {
-          minTimeReady = true;
-          tryHideAndLoad();
-        }, 4000);
-        // Load when fonts ready AND min time elapsed
-        function onFontsReady() {
-          fontsReady = true;
-          tryHideAndLoad();
-        }
-        document.fonts.ready.then(onFontsReady);
-        // Failsafe: treat fonts as ready after 4s
-        setTimeout(onFontsReady, 4000);
+        onReady(loadDeferredAssets);
       }
     })();
   </script>
