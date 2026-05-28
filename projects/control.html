@@ -27,15 +27,15 @@
   <meta name="twitter:description" content="Control is a local-first AI app for iPhone that runs entirely on-device. By Carlos Tarrats.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <!-- Fonts - local primary with web fallbacks -->
-  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Fonts - self-hosted critical faces -->
+  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260416">
+  <link rel="stylesheet" href="../styles.css?v=20260528a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -101,34 +101,7 @@
   <script>
     (function() {
       var preloader = document.getElementById('preloader');
-      if (sessionStorage.getItem('fontsLoaded')) {
-        preloader.style.display = 'none';
-      } else {
-        var fontsReady = false;
-        var minTimeReady = false;
-        var loaded = false;
-        function tryHide() {
-          if (loaded || !fontsReady || !minTimeReady) return;
-          loaded = true;
-          sessionStorage.setItem('fontsLoaded', 'true');
-          preloader.classList.add('is-hidden');
-          setTimeout(function() {
-            preloader.style.display = 'none';
-          }, 400);
-        }
-        // Minimum 2s display time
-        setTimeout(function() {
-          minTimeReady = true;
-          tryHide();
-        }, 2000);
-        // Hide when fonts ready AND min time elapsed
-        function onFontsReady() {
-          fontsReady = true;
-          tryHide();
-        }
-        document.fonts.ready.then(onFontsReady);
-        setTimeout(onFontsReady, 4000);
-      }
+      if (preloader) preloader.style.display = 'none';
     })();
   </script>
 

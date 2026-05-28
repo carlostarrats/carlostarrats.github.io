@@ -6,30 +6,33 @@
 /* Baskervville */
 @font-face {
   font-family: 'Baskervville';
-  src: url('fonts/Baskervville-Regular.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/baskervville/v20/YA9Br0yU4l_XOrogbkun3kQ6vLFYXmpq8sRsYuDrugM.ttf') format('truetype');
+  src: local('Baskervville Regular'),
+       local('Baskervville-Regular'),
+       url('fonts/Baskervville-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* Instrument Serif */
 @font-face {
   font-family: 'Instrument Serif';
-  src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf') format('truetype');
+  src: local('Instrument Serif Regular'),
+       local('InstrumentSerif-Regular'),
+       url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @font-face {
   font-family: 'Instrument Serif';
-  src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2'),
-       url('https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zATiw.ttf') format('truetype');
+  src: local('Instrument Serif Italic'),
+       local('InstrumentSerif-Italic'),
+       url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* Geist Pixel Triangle */
@@ -38,7 +41,7 @@
   src: url('fonts/GeistPixel-Triangle.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* Geist Pixel Line */
@@ -47,7 +50,7 @@
   src: url('fonts/GeistPixel-Line.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* Geist Pixel Circle */
@@ -56,7 +59,7 @@
   src: url('fonts/GeistPixel-Circle.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* ============================================
@@ -371,7 +374,7 @@ a {
    ============================================ */
 
 h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-weight: 400;
   font-size: 90px;
   line-height: 88px;
@@ -380,7 +383,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-weight: 400;
   font-size: 50px;
   line-height: 58px;
@@ -388,7 +391,7 @@ h2 {
 }
 
 .body {
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
@@ -396,7 +399,7 @@ h2 {
 }
 
 .label {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-size: 32px;
   line-height: 38px;
   letter-spacing: 0px;
@@ -506,7 +509,7 @@ h2 {
 }
 
 .hero h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-size: 32px;
   line-height: 36px;
   font-style: italic;
@@ -549,7 +552,7 @@ h2 {
 }
 
 .portfolio-line {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 32px;
   line-height: 38px;
@@ -597,7 +600,7 @@ h2 {
   gap: 5px;
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-style: normal;
   font-size: 14px;
   font-weight: 200;
@@ -632,7 +635,7 @@ h2 {
 .project-kind-tag {
   display: inline-flex;
   align-items: center;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-style: normal;
   font-weight: 200;
   font-size: 14px;
@@ -668,7 +671,7 @@ h2 {
 
 .tagline {
   text-align: right;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 32px;
   line-height: 38px;
@@ -678,7 +681,7 @@ h2 {
 
 .location-line {
   text-align: left;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 32px;
   line-height: 38px;
@@ -1113,7 +1116,7 @@ h1.section-brand {
 }
 
 .contact-section__title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -1134,7 +1137,7 @@ h1.section-brand {
 }
 
 .contact-section__note {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 20px;
   color: rgba(255, 255, 255, 0.3);
@@ -1200,7 +1203,7 @@ h1.section-brand {
 .back-link {
   display: block;
   width: fit-content;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 32px;
   line-height: 38px;
@@ -1223,7 +1226,7 @@ h1.section-brand {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 32px;
   line-height: 38px;
@@ -1289,7 +1292,7 @@ h1.section-brand {
   display: table-cell;
   width: 45%;
   vertical-align: top;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-weight: 400;
   font-size: 50px;
   line-height: 58px;
@@ -1340,7 +1343,7 @@ h1.section-brand {
   display: table-cell;
   vertical-align: top;
   padding-left: 60px;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
@@ -1372,7 +1375,7 @@ h1.section-brand {
 }
 
 .view-toggle__btn {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 20px;
   line-height: 28px;
@@ -1433,7 +1436,7 @@ h1.section-brand {
 }
 
 .project-text__heading {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-weight: 400;
   font-size: 32px;
@@ -1444,7 +1447,7 @@ h1.section-brand {
 }
 
 .project-text__body {
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
@@ -1462,7 +1465,7 @@ h1.section-brand {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 20px;
   line-height: 28px;
@@ -1611,7 +1614,7 @@ h1.section-brand {
   display: table-cell;
   width: 45%;
   vertical-align: top;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -1641,7 +1644,7 @@ h1.section-brand {
   display: table-cell;
   width: 45%;
   vertical-align: top;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-weight: 400;
   font-size: 50px;
@@ -1828,7 +1831,7 @@ h1.section-brand {
 }
 
 .archive__title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -1898,21 +1901,21 @@ h1.section-brand {
 }
 
 .archive__company {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 22px;
   color: rgba(255,255,255,0.85);
 }
 
 .archive__purpose {
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 20px;
   color: rgba(255,255,255,0.5);
 }
 
 .archive__kind {
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 300;
   font-size: 13px;
   line-height: 16px;
@@ -1923,7 +1926,7 @@ h1.section-brand {
 }
 
 .archive__status {
-  font-family: 'Roboto Serif', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 300;
   font-size: 20px;
   color: rgba(255,255,255,0.25);
@@ -2007,7 +2010,7 @@ h1.section-brand {
 }
 
 .library__title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -2048,7 +2051,7 @@ h1.section-brand {
 }
 
 .library__label {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 13px;
   letter-spacing: 0.04em;
@@ -2088,7 +2091,7 @@ h1.section-brand {
   background: rgba(18, 18, 18, 0.94);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.36);
   color: rgba(255, 255, 255, 0.82);
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-size: 14px;
   font-weight: 200;
   line-height: 19px;
@@ -2113,7 +2116,7 @@ h1.section-brand {
 }
 
 .library__book-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.3;
@@ -2126,7 +2129,7 @@ h1.section-brand {
 }
 
 .library__book-author {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
@@ -2137,7 +2140,7 @@ h1.section-brand {
 }
 
 .library__more {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 20px;
   color: rgba(255, 255, 255, 0.3);
@@ -2185,7 +2188,7 @@ h1.section-brand {
 }
 
 .vinyl__title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -2213,7 +2216,7 @@ h1.section-brand {
 }
 
 .vinyl__label {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 13px;
   letter-spacing: 0.04em;
@@ -2258,7 +2261,7 @@ h1.section-brand {
 }
 
 .vinyl__album {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.3;
@@ -2269,7 +2272,7 @@ h1.section-brand {
 }
 
 .vinyl__artist {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
@@ -2302,7 +2305,7 @@ h1.section-brand {
 }
 
 .photos__title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-style: italic;
   font-size: 50px;
   line-height: 58px;
@@ -3565,7 +3568,7 @@ html[data-theme="lavender"] .back-to-top:hover {
   background: none;
   border: none;
   color: #ffffff;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-style: normal;
   font-size: 14px;
   font-weight: 200;
@@ -3686,7 +3689,7 @@ html[data-theme="lavender"] .chat-trigger {
 
 .chat-msg {
   max-width: 90%;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 18px;
   line-height: 26px;
@@ -3729,7 +3732,7 @@ html[data-theme="lavender"] .chat-trigger {
 }
 
 .chat-welcome__text {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   font-size: 32px;
   line-height: 38px;
   letter-spacing: 0px;
@@ -3740,7 +3743,7 @@ html[data-theme="lavender"] .chat-trigger {
 
 .chat-welcome__hint {
   color: rgba(0, 0, 0, 0.7);
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-size: 14px;
   font-weight: 200;
   line-height: 18px;
@@ -3758,7 +3761,7 @@ html[data-theme="lavender"] .chat-trigger {
   background: none;
   border: 1px dashed rgba(0, 0, 0, 0.3);
   color: #000;
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 14px;
   line-height: 18px;
@@ -3832,7 +3835,7 @@ html[data-theme="lavender"] .chat-trigger {
   background: none;
   border: none;
   color: rgba(0, 0, 0, 0.85);
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 14px;
   line-height: 18px;
@@ -3908,7 +3911,7 @@ html[data-theme="lavender"] .chat-trigger {
 
 .chat-error {
   color: rgba(200, 50, 50, 0.8);
-  font-family: 'Baskervville', serif;
+  font-family: 'Baskervville', Baskerville, 'Baskerville Old Face', Georgia, serif;
   font-weight: 200;
   font-size: 18px;
   line-height: 26px;
