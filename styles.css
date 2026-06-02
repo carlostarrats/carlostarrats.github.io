@@ -686,6 +686,10 @@ html[data-theme="lavender"] .project-header__title-name--lineform {
   --project-accent: #ffcbd4;
 }
 
+.project-row--lineform {
+  --project-accent: #ffcbd4;
+}
+
 .tagline {
   text-align: right;
   font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
