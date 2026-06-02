@@ -434,6 +434,10 @@ h2 {
   color: #ffcbcc;
 }
 
+.color--lineform {
+  color: #ff8a98;
+}
+
 .color--dds {
   color: #f5ffcb;
 }
@@ -452,6 +456,19 @@ h2 {
 
 .color--kikoff {
   color: #cdcbff;
+}
+
+html[data-theme="peach"] .color--lineform,
+html[data-theme="peach"] .project-header__title-name--lineform,
+html[data-theme="pink"] .color--lineform,
+html[data-theme="pink"] .project-header__title-name--lineform,
+html[data-theme="mint"] .color--lineform,
+html[data-theme="mint"] .project-header__title-name--lineform,
+html[data-theme="yellow"] .color--lineform,
+html[data-theme="yellow"] .project-header__title-name--lineform,
+html[data-theme="lavender"] .color--lineform,
+html[data-theme="lavender"] .project-header__title-name--lineform {
+  color: #1a1a1a !important;
 }
 
 /* ============================================
@@ -839,6 +856,17 @@ h2 {
 }
 
 .card--adaptiveshop.is-loaded {
+  background: #444444;
+}
+
+.card--lineform {
+  aspect-ratio: 1.5;
+  background: #1a1a1a;
+  overflow: hidden;
+  position: relative;
+}
+
+.card--lineform.is-loaded {
   background: #444444;
 }
 
@@ -1262,6 +1290,10 @@ h1.section-brand {
   color: #ffcbcc;
 }
 
+.external-link--lineform {
+  color: #ff8a98;
+}
+
 .external-link--eloquii {
   color: #cdcbff;
 }
@@ -1309,6 +1341,10 @@ h1.section-brand {
 
 .project-header__title-name--adaptiveshop {
   color: #ffcbcc;
+}
+
+.project-header__title-name--lineform {
+  color: #ff8a98;
 }
 
 .project-header__title-name--eloquii {
@@ -3163,6 +3199,14 @@ html[data-theme="lavender"] .project-images__placeholder {
   background: rgba(0,0,0,0.06);
 }
 
+html[data-theme="peach"] .card--lineform,
+html[data-theme="pink"] .card--lineform,
+html[data-theme="mint"] .card--lineform,
+html[data-theme="yellow"] .card--lineform,
+html[data-theme="lavender"] .card--lineform {
+  background: rgba(0,0,0,0.06);
+}
+
 /* Card loaded bg → lighter */
 html[data-theme="peach"] .card--control.is-loaded,
 html[data-theme="peach"] .card--adaptiveshop.is-loaded,
@@ -3194,6 +3238,14 @@ html[data-theme="lavender"] .card--dds.is-loaded,
 html[data-theme="lavender"] .card--eloquii.is-loaded,
 html[data-theme="lavender"] .card--thayer.is-loaded,
 html[data-theme="lavender"] .card--rankbee.is-loaded {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="peach"] .card--lineform.is-loaded,
+html[data-theme="pink"] .card--lineform.is-loaded,
+html[data-theme="mint"] .card--lineform.is-loaded,
+html[data-theme="yellow"] .card--lineform.is-loaded,
+html[data-theme="lavender"] .card--lineform.is-loaded {
   background: rgba(0, 0, 0, 0.08);
 }
 

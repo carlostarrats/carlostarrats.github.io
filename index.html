@@ -222,6 +222,18 @@
       </div>
     </div>
 
+    <!-- Lineform Project -->
+    <div class="project-row project-row--reverse project-row--lineform">
+      <div class="project-row__copy">
+        <span class="project-kind-tag">Personal</span>
+        <h2><span class="italic color--lineform">Lineform </span>— A calm, local-first Markdown editor for macOS <a href="projects/lineform.html" class="see-more-tag" aria-label="See more about Lineform"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>See More</a></h2>
+      </div>
+      <a href="projects/lineform.html" class="card card--lineform" aria-label="View Lineform project">
+        <video loop muted playsinline class="deferred-video" data-src="images/lineform/lineform-2.mp4">
+        </video>
+      </a>
+    </div>
+
     <!-- Defense Digital Service Project -->
     <div class="project-row project-row--reverse project-row--dds">
       <div class="project-row__copy">
@@ -539,7 +551,7 @@
 
     // Skeleton loading handlers (deferred images use data-src, load event fires after fonts)
     (function() {
-      // Handle card videos (control, adaptiveshop)
+      // Handle card videos
       document.querySelectorAll('.card video').forEach(function(video) {
         var card = video.closest('.card');
         video.addEventListener('canplay', function() {
@@ -958,6 +970,7 @@
     SilkShader.attach('.hero-flicker');
     SilkShader.attach('.card--control');
     SilkShader.attach('.card--adaptiveshop');
+    SilkShader.attach('.card--lineform');
     SilkShader.attach('.card--dds');
     SilkShader.attach('.card--eloquii');
     SilkShader.attach('.card--thayer');
