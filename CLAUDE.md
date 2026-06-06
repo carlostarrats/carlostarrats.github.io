@@ -4,7 +4,7 @@
 - **Never commit unless explicitly told to do so**
 - **NEVER revert files unless explicitly told to do so** - Do not use git checkout, git restore, or any command that reverts changes. Comparing to git is NOT the same as reverting.
 - **For all UI/frontend work, follow SKILL.md** - Contains design principles, visual hierarchy, accessibility requirements, and component patterns
-- **NEVER guess** - Do not assume, estimate, or calculate values. Use exact values from Figma MCP or ask for clarification.
+- **NEVER guess** - Do not assume, estimate, or calculate values. Use exact values from the design source, or ask for clarification. (The Figma MCP plugin is currently disabled — if a design needs Figma values, ask the user to re-enable it.)
 - **NEVER summarize** - Do not paraphrase or summarize instructions. Follow them exactly as given.
 - **Look at pixels and placement in detail** - Pay close attention to exact pixel values, spacing, and positioning. Do not approximate.
 
@@ -128,20 +128,9 @@ Homepage also has:
 - Favicon (favicon.svg)
 - Share image (og:image, twitter:image)
 
-## Brand Carousel (REMOVED)
-**Removed:** 2026-02-05
-**Recovery:**
-- HTML: `git show HEAD~1:index.html`
-- CSS: `git show HEAD~1:styles.css` (or uncomment in current file)
-
-Previously included:
-- 3D rotating carousel with perspective effect
-- Infinite scroll animation (120s loop)
-- JavaScript-based hover detection for reliable interaction on 3D elements
-- Hover lifts item 70px, rotates flat, scales 1.1x
-- Bounce easing on return animation
-- Images in `images/brand/`
-- CSS commented out in styles.css (not deleted)
+## Removed Features
+- **Brand Carousel** (removed 2026-02-05): 3D rotating carousel with infinite scroll. CSS still commented out in `styles.css`; images in `images/brand/`. Full history in git.
+- **Vimeo Embeds** (removed with Brand Carousel): IDs `367486985` (LoCA), `367487760` (American Apparel).
 
 ## Deployment
 - Push to `main` branch auto-deploys to GitHub Pages
@@ -174,12 +163,6 @@ Images must be resized before adding to the site:
 - **Format:** JPG
 - **Command:** `sips -z 394 700 <image.jpg>`
 
-### Brand Carousel (`images/brand/`) - REMOVED
-(Section removed 2026-02-05, images still exist in `images/brand/`)
-- **Target size:** 700×400px (retina-ready for 200px display height)
-- **Format:** JPG
-- **Command:** `sips -z 400 700 <image.jpg>`
-
 ## Video Assets
 MP4 videos used in project cards and detail pages.
 
@@ -210,158 +193,15 @@ Loading states shown before images/videos are ready:
 - JavaScript detects `img.complete` or `video.readyState >= 3`
 - Skeleton removed once asset is ready
 
-## Vimeo Embeds (REMOVED with Brand Carousel)
-Previously in brand carousel:
-- **367486985** - LoCA video
-- **367487760** - American Apparel video
-- Embedded with `?background=1&muted=1&autoplay=1&loop=1&autopause=0`
-
 ## Design Notes (v2)
 - Dark background (#252525)
 - Mobile responsive with media queries
 - Smooth transitions and animations
 
 ## Mood Atlas
-Interactive 3D music visualization using the Thayer Model of Mood. Live at https://tarrats.xyz/mood-atlas/
+Interactive 3D music visualization (React + Three.js + Vite). Live at https://tarrats.xyz/mood-atlas/ and https://mood-atlas.tarrats.xyz/
 
-### Tech Stack
-- React + TypeScript + Vite
-- Three.js / React Three Fiber for 3D
-- Tailwind CSS
-- Deezer API for chart data
-
-### Features
-- **Personal Mode** - Visualize your Apple Music library by emotion
-- **Discover Mode** - Explore global music charts by country (21 regions)
-- **Examine Mode** - Deep dive into emotion clusters
-- 3D positioning based on energy (Y-axis) and valence (X-axis)
-- Color-coded by Thayer quadrants (Happy=Yellow, Sad=Blue, Frantic=Red, Calm=Cyan)
-
-### Source Code (gitignored - local only)
-Location: `mood-atlas-src/`
-```
-mood-atlas-src/
-├── src/
-│   ├── components/     # React components
-│   ├── data/           # Static data files
-│   │   ├── discoverCharts.json  # Pre-fetched Deezer data
-│   │   ├── appleMusicSongs.json # Personal mode data
-│   │   └── cityChartData.ts     # Type definitions
-│   └── utils/
-│       ├── deezerCharts.ts      # Loads static chart data
-│       └── emotionAnalysis.ts   # Thayer model logic (9 emotions)
-├── scripts/
-│   ├── lastfmUtils.js           # Shared Last.fm API client & tag mapping
-│   ├── fetchDeezerCharts.js     # Discover mode data refresh
-│   ├── processAppleData.js      # Personal mode from CSV (requires Apple Music CSV)
-│   ├── enrich.js                # Multi-source enrichment (Last.fm + iTunes + Deezer)
-│   └── blend.js                 # Configurable energy/valence/emotion computation
-├── .env                         # API keys (gitignored)
-└── package.json
-```
-
-### Mood Atlas Emotion Analysis
-**Two-phase pipeline: `enrich.js` (fetch) → `blend.js` (compute)**
-
-Source data is stored permanently in `song.sources.*` and NEVER overwritten by blending. Computed fields (energy, valence, primaryEmotion, emotionScores) are derived from sources and can be recomputed instantly.
-
-#### Phase 1: enrich.js — Multi-source data fetching
-Fetches raw data from 3 sources and saves to `song.sources.*`. Idempotent — skips already-enriched songs unless forced.
-
-**Sources stored per song:**
-- `sources.lastfm` — `{energy, valence, quality: 'track'|'artist'}` from Last.fm tag mapping
-- `sources.itunesGenre` — iTunes per-track genre string (e.g. "Alternative", "Punk")
-- `sources.deezer` — `{bpm, gain}` from Deezer track data
-
-**Force flags:** `--force-lastfm`, `--force-itunes`, `--force-deezer`
-
-**Caches (gitignored):** `.lastfm-cache.json`, `.itunes-cache.json`, `.deezer-cache.json`
-
-#### Phase 2: blend.js — Configurable computation
-Pure computation from `song.sources.*`. No API calls. Runs in <1 second. Re-run freely with different config.
-
-**Priority chain:**
-1. Last.fm track-level tags (song-specific mood data)
-2. Last.fm artist-level tags (specific genres like "punk", "grunge")
-3. iTunes genre (broad: "Alternative", "Rock") mapped via GENRE_THAYER table
-4. Fallback: `{0.5, 0.5}`
-
-**Blending approach (stretch + offset):**
-- Base energy/valence from priority source above
-- Stretch values away from 0.5 center to reduce clustering: `energy = 0.5 + (energy - 0.5) * stretchFactor`
-- Deezer BPM/gain applied as additive offsets (not weighted averages) for per-track variation
-- All config at top of `blend.js` (stretch factors, BPM/gain weights, clamp range)
-
-**9 Emotion Categories** (from `emotionAnalysis.ts`):
-| Emotion | Energy | Valence |
-|---------|--------|---------|
-| Happy | > 0.7 | > 0.7 |
-| Energetic | > 0.7 | 0.4–0.7 |
-| Angry | > 0.7 | ≤ 0.4 |
-| Excited | 0.4–0.7 | > 0.7 |
-| Romantic | 0.4–0.7 | 0.4–0.7 |
-| Melancholic | 0.3–0.7 | ≤ 0.4 |
-| Peaceful | ≤ 0.4 | > 0.5 |
-| Calm | ≤ 0.4 | 0.3–0.5 |
-| Sad | ≤ 0.3 | ≤ 0.3 |
-
-**API keys:** Required in `mood-atlas-src/.env`:
-- `LASTFM_API_KEY` — Free at https://www.last.fm/api/account/create
-- iTunes and Deezer APIs are free, no key required
-
-### Updating Discover Charts
-Run monthly to refresh global chart data (requires `LASTFM_API_KEY` in `.env`):
-```bash
-cd mood-atlas-src
-node scripts/fetchDeezerCharts.js
-npm run build
-```
-
-### Updating Personal Mode Data
-If you have the Apple Music CSV (initial import):
-```bash
-cd mood-atlas-src
-node scripts/processAppleData.js
-```
-To enrich with multi-source data (Last.fm + iTunes + Deezer):
-```bash
-cd mood-atlas-src
-node scripts/enrich.js          # Fetches missing source data (~70 min first run, instant after)
-node scripts/blend.js           # Computes energy/valence/emotion (<1 sec, re-run freely)
-npm run build
-```
-To re-blend with different config (no API calls, edit CONFIG in blend.js):
-```bash
-cd mood-atlas-src
-node scripts/blend.js
-npm run build
-```
-Data is pre-fetched and bundled (no runtime API calls needed).
-
-### Build & Deploy
-Mood Atlas has TWO deployment targets:
-
-#### 1. Vercel (PRIMARY — live site)
-- **URL:** https://mood-atlas.tarrats.xyz/
-- **How:** Vercel deploys from `mood-atlas-src/` source directly
-- **vite base:** Must be `'/'` for Vercel
-- **Command:** `cd mood-atlas-src && npx vercel --prod`
-- **Config:** `.vercel/project.json` in `mood-atlas-src/`
-
-#### 2. GitHub Pages (secondary — bundled copy)
-- **URL:** https://tarrats.xyz/mood-atlas/
-- **How:** Pre-built files copied to `mood-atlas/` folder, committed, pushed to main
-- **vite base:** Must be `'/mood-atlas/'` for GitHub Pages (change before building for GH Pages)
-- **Command:**
-```bash
-cd mood-atlas-src
-npm run build        # Outputs to dist/
-# Copy to tracked folder:
-rm -rf ../mood-atlas/assets && cp -r dist/* ../mood-atlas/
-```
-Then commit the `mood-atlas/` folder changes.
-
-**IMPORTANT:** When deploying Mood Atlas changes, always deploy to Vercel first (`npx vercel --prod`). The vite `base` should normally stay as `'/'` for Vercel. Only change to `'/mood-atlas/'` when specifically building for GitHub Pages.
+**Detailed docs live in `mood-atlas-src/CLAUDE.md`** (gitignored, local-only) — covering the emotion-analysis pipeline (`enrich.js` → `blend.js`), data refresh, and the two-target build/deploy (Vercel primary + GitHub Pages bundled copy). Read that file before working on Mood Atlas.
 
 ## Carlos LLM Chat
 - Side tray chat panel powered by proxy at `carlos-chat-proxy.vercel.app`
@@ -375,10 +215,3 @@ Then commit the `mood-atlas/` folder changes.
 - Currently disabled (`if (true || ...)` bypass in index.html)
 - Can be re-enabled by removing `true || ` from the preloader script
 - Waits for fonts + 4s minimum display time when enabled
-
-## Recent Commits
-- `3d942395` - Fix homepage theme tag styling
-- `7e868a39` - Add text tab to RankBee page and fix lightbox overlay bug
-- `a89350b9` - Redesign Carlos LLM chat from phone frame to side tray
-- `278eef3f` - Update RankBee-11 image
-- `6e77783b` - Add RankBee project page and replace Kikoff on homepage
