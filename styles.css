@@ -1891,7 +1891,7 @@ h1.section-brand {
 .archive__link {
   position: relative;
   display: grid;
-  grid-template-columns: 160px 86px 1fr 110px auto;
+  grid-template-columns: 160px 100px 1fr 110px auto;
   align-items: center;
   gap: 32px;
   padding: 18px 0;
@@ -1912,7 +1912,7 @@ h1.section-brand {
   left: var(--archive-preview-x, 50vw);
   top: var(--archive-preview-y, 50vh);
   z-index: 20;
-  width: min(500px, 42vw);
+  width: min(400px, 42vw);
   aspect-ratio: 2624 / 2122;
   object-fit: cover;
   border-radius: 6px;
