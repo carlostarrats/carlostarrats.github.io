@@ -4804,7 +4804,7 @@ h1 { font-size: clamp(36px, 3.25vw, 48px) !important; line-height: 1.14 !importa
   .portfolio-hero h1,
   .project-header__title,
   .editorial-content h1,
-  h1 { font-size: 36px !important; line-height: 1.12 !important; }
+  h1 { font-size: 28px !important; line-height: 1.12 !important; }
   .portfolio-hero .intro__copy p { font-size: 16px !important; }
   .work-grid { grid-template-columns: 1fr !important; gap: 42px !important; }
   .work-grid .project-row .card { border-radius: 10px !important; }
@@ -4839,6 +4839,19 @@ h5 *,
 h6,
 h6 * {
   font-weight: 400 !important;
+}
+
+/* Interface labels use the stronger 600 weight. */
+#selected-work,
+#selected-work *,
+.archive__status {
+  font-weight: 600 !important;
+}
+
+.site-name,
+.site-nav a,
+.archive__kind {
+  font-weight: 500 !important;
 }
 
 .work-grid .see-more-tag,
@@ -4934,7 +4947,8 @@ h2.library__title {
   background: #f4f4f4;
 }
 
-.contact-video video {
+.contact-video picture,
+.contact-video img {
   display: block;
   width: 100%;
   height: 100%;
@@ -4944,6 +4958,10 @@ h2.library__title {
 @media (max-width: 800px) {
   .editorial-content {
     padding: 92px 20px 72px !important;
+  }
+
+  .editorial-content .library {
+    margin-top: 90px !important;
   }
 }
 
@@ -4990,6 +5008,10 @@ h2.library__title {
   margin-left: 0.14em;
   display: inline-block;
   text-decoration: none;
+}
+
+.text-arrow {
+  font-variant-emoji: text;
 }
 
 /* The walkthrough header uses the same generous two-column measure as About. */

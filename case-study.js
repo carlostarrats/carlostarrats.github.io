@@ -11,7 +11,7 @@
     topBar.innerHTML = [
       '<a class="site-name" href="../index.html" aria-label="Carlos Tarrats — Work">Carlos Tarrats</a>',
       '<nav class="site-nav" aria-label="Primary navigation">',
-      '<a href="../index.html" aria-current="page">Work</a>',
+      '<a href="../index.html">Work</a>',
       '<a href="../about.html">About</a>',
       '<a href="../contact.html">Contact</a>',
       '</nav>'
@@ -55,9 +55,9 @@
       label.className = 'project-link__label';
       label.textContent = externalLabel;
       var arrow = document.createElement('span');
-      arrow.className = 'project-link__arrow';
+      arrow.className = 'project-link__arrow text-arrow';
       arrow.setAttribute('aria-hidden', 'true');
-      arrow.textContent = '↗';
+      arrow.textContent = '\u2197\uFE0E';
       externalLink.replaceChildren(label, arrow);
       var titleGroup = document.createElement('div');
       titleGroup.className = 'project-header__title-group';

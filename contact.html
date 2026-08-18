@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260818b">
 </head>
 <body class="editorial-page">
@@ -25,15 +25,16 @@
     <h1>Let’s make something clear, useful, and worth using.</h1>
     <div class="contact-grid">
       <div class="contact-links">
-        <a id="contact-email" href="#" aria-label="Email Carlos"><span data-email-text>Email Carlos</span> <span>↗</span></a>
-        <a href="https://www.linkedin.com/in/carlos-t-b869016" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
-        <a href="https://github.com/carlostarrats" target="_blank" rel="noopener">GitHub <span>↗</span></a>
-        <a href="https://x.com/apoge6" target="_blank" rel="noopener">X <span>↗</span></a>
+        <a id="contact-email" href="#" aria-label="Email Carlos"><span data-email-text>Email Carlos</span> <span class="text-arrow" aria-hidden="true">&#8599;&#65038;</span></a>
+        <a href="https://www.linkedin.com/in/carlos-t-b869016" target="_blank" rel="noopener">LinkedIn <span class="text-arrow" aria-hidden="true">&#8599;&#65038;</span></a>
+        <a href="https://github.com/carlostarrats" target="_blank" rel="noopener">GitHub <span class="text-arrow" aria-hidden="true">&#8599;&#65038;</span></a>
+        <a href="https://x.com/apoge6" target="_blank" rel="noopener">X <span class="text-arrow" aria-hidden="true">&#8599;&#65038;</span></a>
       </div>
       <div class="contact-video">
-        <video autoplay muted loop playsinline aria-label="Contact page video">
-          <source src="images/contact-video-seamless.mp4" type="video/mp4">
-        </video>
+        <picture>
+          <source media="(max-width: 800px)" srcset="images/contact/contact-portrait-768.webp?v=20260818e" type="image/webp">
+          <img src="images/contact/contact-portrait.webp?v=20260818e" width="1537" height="1023" alt="Carlos Tarrats writing on a sheet of paper" fetchpriority="high">
+        </picture>
       </div>
     </div>
   </main>
