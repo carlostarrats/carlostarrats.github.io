@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
   <title>Control: On-Device LLM App for iOS — Carlos Tarrats</title>
   <meta name="description" content="Control is a local-first AI app for iPhone that runs entirely on-device. By Carlos Tarrats.">
 
@@ -27,15 +27,14 @@
   <meta name="twitter:description" content="Control is a local-first AI app for iPhone that runs entirely on-device. By Carlos Tarrats.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <!-- Fonts - self-hosted critical faces -->
-  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500&display=swap" rel="stylesheet">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260528a">
+  <link rel="stylesheet" href="../styles.css?v=20260817a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -466,5 +465,6 @@
     SilkShader.attach('.project-images__img-wrap');
     SilkShader.attach('.project-images__video');
   </script>
+  <script src="../case-study.js?v=20260818a"></script>
 </body>
 </html>

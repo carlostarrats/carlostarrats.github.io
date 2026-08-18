@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
   <title>Lineform: Local-First Markdown Editor — Carlos Tarrats</title>
   <meta name="description" content="Lineform is a free, local-first Markdown editor for macOS, built for calm writing, readable long-form text, and real local files.">
 
@@ -27,15 +27,14 @@
   <meta name="twitter:description" content="Lineform is a free, local-first Markdown editor for macOS, built for calm writing, readable long-form text, and real local files.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <!-- Fonts - self-hosted critical faces -->
-  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500&display=swap" rel="stylesheet">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260528a">
+  <link rel="stylesheet" href="../styles.css?v=20260817a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -109,7 +108,7 @@
   <div class="detail-page detail-page--lineform">
     <nav class="detail-nav">
       <a href="../index.html" class="back-link" aria-label="Back to homepage">Back</a>
-      <a href="https://lineform-site.vercel.app" class="external-link external-link--lineform" target="_blank" rel="noopener noreferrer">
+      <a href="https://lineform.app/" class="external-link external-link--lineform" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
@@ -532,5 +531,6 @@
     SilkShader.attach('.project-images__img-wrap');
     SilkShader.attach('.project-images__video');
   </script>
+  <script src="../case-study.js?v=20260818a"></script>
 </body>
 </html>

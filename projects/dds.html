@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self' https://defensedigitalservice-org.github.io; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://defensescoop.com https://cyberscoop.com https://th.bing.com https://fedscoop.com; media-src 'self' https://defensedigitalservice-org.github.io; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
   <title>Defense Digital Service: DoD Design — Carlos Tarrats</title>
   <meta name="description" content="As a Product Design Lead at the Defense Digital Service, Carlos Tarrats brought modern product design practices into high-security government systems from 2022 to 2025.">
 
@@ -27,15 +27,14 @@
   <meta name="twitter:description" content="As a Product Design Lead at the Defense Digital Service, Carlos Tarrats brought modern product design practices into high-security government systems from 2022 to 2025.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <!-- Fonts - self-hosted critical faces -->
-  <link rel="preload" href="../fonts/Baskervville-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
-  <link rel="preload" href="../fonts/InstrumentSerif-Italic.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500&display=swap" rel="stylesheet">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260528a">
+  <link rel="stylesheet" href="../styles.css?v=20260817a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -151,15 +150,34 @@
             <source src="https://defensedigitalservice-org.github.io/dds-mil/Video/DDS.mp4#t=1" type="video/mp4">
           </video>
         </div>
+
+        <a class="case-study__resource case-study__resource--youtube" href="https://www.youtube.com/watch?v=zYw14zNtsw8" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/zYw14zNtsw8/maxresdefault.jpg?sqp=-oaymwEoCIAKENAF8quKqQMcGADwAQH4AbYIgAK4CIoCDAgAEAEYHCBlKCEwDw==&rs=AOn4CLAGvfuoFQmYLgaO_tgI4tl-qjHhoA" alt="AI's Defense Agenda video preview" loading="lazy" referrerpolicy="no-referrer">
+          <span class="case-study__resource-body"><span class="case-study__resource-source">YouTube</span><span class="case-study__resource-title">AI's Defense Agenda</span></span>
+        </a>
+
+        <a class="case-study__resource" href="https://defensescoop.com/2023/12/15/dod-bug-bounty-rapid-response/" target="_blank" rel="noopener noreferrer">
+          <img src="https://defensescoop.com/wp-content/uploads/sites/8/2023/09/GettyImages-1125274914-e1713555774558.jpg" alt="DefenseScoop article preview" loading="lazy" referrerpolicy="no-referrer">
+          <span class="case-study__resource-body"><span class="case-study__resource-source">DefenseScoop</span><span class="case-study__resource-title">New DDS bug bounty to include rapid response capability</span></span>
+        </a>
+
+        <a class="case-study__resource" href="https://cyberscoop.com/pentagon-hackers-secure-the-microgrid/" target="_blank" rel="noopener noreferrer">
+          <img src="https://cyberscoop.com/wp-content/uploads/sites/3/2022/08/GettyImages-1346770721.jpg" alt="CyberScoop article preview" loading="lazy" referrerpolicy="no-referrer">
+          <span class="case-study__resource-body"><span class="case-study__resource-source">CyberScoop</span><span class="case-study__resource-title">Pentagon put microgrid technology to the test at DEF CON</span></span>
+        </a>
+
+        <a class="case-study__resource" href="https://www.usar.army.mil/News/News-Display/Article/4014709/us-army-reserve-establishing-energy-microgrid-cyber-resilience-protocols/" target="_blank" rel="noopener noreferrer">
+          <img src="../images/dds/dds-hero.jpg" alt="Defense Digital Service mark" loading="lazy">
+          <span class="case-study__resource-body"><span class="case-study__resource-source">U.S. Army Reserve</span><span class="case-study__resource-title">Establishing energy microgrid cyber-resilience protocols</span></span>
+        </a>
+
+        <a class="case-study__resource case-study__resource--counter-drone" href="https://fedscoop.com/dds-to-transfer-counter-drone-capabilities-to-air-force/" target="_blank" rel="noopener noreferrer">
+          <img src="https://fedscoop.com/wp-content/uploads/sites/5/2021/09/GettyImages-561109239.jpg" alt="FedScoop article preview" loading="lazy" referrerpolicy="no-referrer">
+          <span class="case-study__resource-body"><span class="case-study__resource-source">FedScoop</span><span class="case-study__resource-title">DDS to transfer counter-drone capabilities to Air Force</span></span>
+        </a>
       </section>
 
       <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
-        <div class="project-text__section">
-          <p class="project-text__body">The Defense Digital Service operated within the Department of Defense's Chief Digital and Artificial Intelligence Office, serving as a SWAT team of technologists deployed to solve critical technology problems across the military. The unit recruited engineers, designers, data scientists, and product managers from the private sector for term-limited tours of duty, bringing Silicon Valley practices into one of the world's largest and most complex organizations.</p>
-        </div>
-        <div class="project-text__section">
-          <p class="project-text__body">From April 2022 to May 2025, I worked across multiple modernization initiatives in high-security environments. The work spanned CUI and classified settings, meaning the specifics of individual projects cannot be shared publicly. The scope ranged from reimagining how service members interact with critical digital systems to designing tools that supported operational decision-making at scale.</p>
-        </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">How We Worked</h2>
           <p class="project-text__body">DDS operated in product trios (a product manager, a user experience designer and researcher, and an engineer) aligned directly with user and mission needs. This model, embedded within a fully agile, human-centered process, empowered teams to move quickly while solving problems rather than just delivering features. The team was comprised mostly of civilians from the private sector serving two or four year limited terms, ensuring a constant influx of fresh ideas and a sense of urgency to maximize contributions to the DoD.</p>
@@ -325,5 +343,6 @@
     SilkShader.attach('.project-images__img-wrap');
     SilkShader.attach('.project-images__video');
   </script>
+  <script src="../case-study.js?v=20260818a"></script>
 </body>
 </html>
