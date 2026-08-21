@@ -192,26 +192,26 @@
       </a>
     </div>
 
-    <!-- Control Project -->
-    <div class="project-row project-row--control">
-      <a href="projects/control.html" class="card card--control" aria-label="View Control project">
-        <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
-        </video>
-      </a>
-      <div class="project-row__copy">
-        <span class="project-kind-tag">Personal</span>
-        <h2><span class="italic color--control">Control </span>— A local-first AI app for iPhone that runs entirely on-device</h2>
-      </div>
-    </div>
-
     <!-- RankBee Project -->
-    <div class="project-row project-row--reverse project-row--rankbee">
+    <div class="project-row project-row--rankbee">
+      <a href="projects/rankbee.html" class="card card--rankbee" aria-label="View RankBee project">
+        <img data-src="images/rankbee/RankBee-Hero.jpg" alt="RankBee — AI visibility platform for generative search optimization" class="deferred">
+      </a>
       <div class="project-row__copy">
         <span class="project-kind-tag">Professional</span>
         <h2><span class="italic color--rankbee">RankBee </span>— Visibility tooling for ChatGPT, Gemini, content quality, and generative search</h2>
       </div>
-      <a href="projects/rankbee.html" class="card card--rankbee" aria-label="View RankBee project">
-        <img data-src="images/rankbee/RankBee-Hero.jpg" alt="RankBee — AI visibility platform for generative search optimization" class="deferred">
+    </div>
+
+    <!-- Frank Project -->
+    <div class="project-row project-row--reverse project-row--frank">
+      <div class="project-row__copy">
+        <span class="project-kind-tag">Personal</span>
+        <h2><span class="italic color--thayer">Frank </span>— Local-first collaboration for unfinished work</h2>
+      </div>
+      <a href="projects/frank.html" class="card card--frank" aria-label="View Frank project">
+        <video loop muted playsinline class="deferred-video" data-src="images/frank/frank-hero.mp4">
+        </video>
       </a>
     </div>
 
@@ -226,14 +226,15 @@
         <h2><span class="italic color--lineform">Lineform </span>— A calm, local-first Markdown editor for macOS</h2>
       </div>
     </div>
-    <!-- Kikoff Project -->
-    <div class="project-row project-row--kikoff">
-      <a href="projects/kikoff.html" class="card card--kikoff" aria-label="View Kikoff project">
-        <img data-src="images/kikoff/kikoff-hero.jpg" alt="Kikoff marketplace discovery concepts for interactive credit-building learning" class="deferred">
+    <!-- Control Project -->
+    <div class="project-row project-row--control">
+      <a href="projects/control.html" class="card card--control" aria-label="View Control project">
+        <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
+        </video>
       </a>
       <div class="project-row__copy">
-        <span class="project-kind-tag">Professional</span>
-        <h2><span class="italic color--kikoff">Kikoff </span>— Reimagining marketplace discovery as interactive learning</h2>
+        <span class="project-kind-tag">Personal</span>
+        <h2><span class="italic color--control">Control </span>— A local-first AI app for iPhone that runs entirely on-device</h2>
       </div>
     </div>
     </section>
@@ -257,15 +258,6 @@
             <span class="archive__purpose">Flexible commerce systems for fashion retail</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published"></span>Online</span>
             <img src="images/extra/eloquii.png" alt="" class="archive__preview" aria-hidden="true">
-          </a>
-        </div>
-        <div class="archive__row">
-          <a href="projects/frank.html" class="archive__link">
-            <span class="archive__company">Frank</span>
-            <span class="archive__kind">Personal</span>
-            <span class="archive__purpose">Local-first collaboration for unfinished work</span>
-            <span class="archive__status"><span class="archive__dot archive__dot--published"></span>Online</span>
-            <img src="images/extra/frank-preview.png" alt="" class="archive__preview" aria-hidden="true">
           </a>
         </div>
         <div class="archive__row">
@@ -311,15 +303,6 @@
             <span class="archive__purpose">Visual-first media library exploration</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published"></span>Online</span>
             <img src="images/extra/muse-preview.png" alt="" class="archive__preview" aria-hidden="true">
-          </a>
-        </div>
-        <div class="archive__row archive__row--removed">
-          <a href="projects/kikoff.html" class="archive__link">
-            <span class="archive__company">Kikoff</span>
-            <span class="archive__kind">Professional</span>
-            <span class="archive__purpose">Interactive marketplace discovery for credit-building</span>
-            <span class="archive__status"><span class="archive__dot archive__dot--paused"></span>Paused</span>
-            <img src="images/kikoff/kikoff-hero.jpg" alt="" class="archive__preview" aria-hidden="true">
           </a>
         </div>
         <div class="archive__row archive__row--removed">
@@ -415,7 +398,7 @@
         });
       });
 
-      // Handle card images (dds, kikoff, thayer)
+      // Handle deferred card images
       document.querySelectorAll('.card img.deferred').forEach(function(img) {
         var card = img.closest('.card');
         img.addEventListener('load', function() {
@@ -830,6 +813,7 @@
     SilkShader.attach('.card--dds');
     SilkShader.attach('.card--eloquii');
     SilkShader.attach('.card--rankbee');
+    SilkShader.attach('.card--frank');
   </script>
 </body>
 </html>
