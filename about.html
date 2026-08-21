@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="About Carlos Tarrats, product designer for complex systems.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://carlos-chat-proxy.vercel.app https://github-contributions-api.jogruber.de;">
   <title>About — Carlos Tarrats</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,12 +175,25 @@
         <div class="library__more">and more...</div>
       </div>
     </section>
+    <section class="github-activity" aria-labelledby="github-activity-title">
+      <div class="github-activity__header">
+        <h2 id="github-activity-title" class="library__title">Github Commits</h2>
+      </div>
+      <p class="github-activity__summary" id="github-activity-summary" aria-live="polite">Loading recent contributions…</p>
+      <div class="github-activity__scroll">
+        <div class="github-activity__months" id="github-activity-months" aria-hidden="true"></div>
+        <div class="github-activity__grid" id="github-activity-grid" role="img" aria-label="GitHub contribution activity over the last year"></div>
+      </div>
+      <div class="github-activity__legend" aria-hidden="true"><span>Less</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span>More</span></div>
+      <div class="github-activity__tooltip" id="github-activity-tooltip" role="tooltip"></div>
+    </section>
 
   </main>
   <footer class="page">
     <p class="body center">© 2026</p>
   </footer>
   <script src="library.js"></script>
+  <script src="github-activity.js"></script>
   <script src="about-chat.js?v=20260817c"></script>
 </body>
 </html>
