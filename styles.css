@@ -5076,6 +5076,8 @@ h2.library__title {
 .contact-metamorphosis {
   position: relative;
   background: #fff;
+  isolation: isolate;
+  contain: paint;
 }
 
 .contact-metamorphosis picture {
