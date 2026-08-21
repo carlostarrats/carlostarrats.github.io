@@ -5076,17 +5076,6 @@ h2.library__title {
 .contact-metamorphosis {
   position: relative;
   background: #fff;
-  isolation: isolate;
-  contain: paint;
-}
-
-.contact-metamorphosis picture {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  opacity: 1;
 }
 
 .contact-metamorphosis__frame {
@@ -5096,8 +5085,7 @@ h2.library__title {
   width: 100%;
   height: 100%;
   border: 0;
-  background: transparent;
-  z-index: 1;
+  background: #fff;
 }
 
 @media (max-width: 800px) {

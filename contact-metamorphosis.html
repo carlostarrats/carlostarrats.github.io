@@ -6,7 +6,7 @@
 <title>Metamorphosis</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; }
   canvas { display: block; width: 100vw; height: 100vh; }
 </style>
 </head>
@@ -40,6 +40,7 @@
     'uniform float u_blobCount;',
     'uniform vec2 u_mouse;',
     'uniform float u_mouseStrength;',
+    'uniform sampler2D u_image;',
     '',
     '#define PI 3.14159265359',
     '#define TAU 6.28318530718',
@@ -302,7 +303,17 @@
     '',
     '  float mono = dot(col, vec3(0.2126, 0.7152, 0.0722));',
     '  col = vec3(1.0 - mono);',
-    '  gl_FragColor = vec4(col, hit ? 0.88 : 0.0);',
+    '  vec2 imageUv = gl_FragCoord.xy / u_res;',
+    '  float canvasAspect = u_res.x / u_res.y;',
+    '  float imageAspect = 1.50244;',
+    '  if (canvasAspect > imageAspect) {',
+    '    imageUv.y = (imageUv.y - 0.5) * (imageAspect / canvasAspect) + 0.5;',
+    '  } else {',
+    '    imageUv.x = (imageUv.x - 0.5) * (canvasAspect / imageAspect) + 0.5;',
+    '  }',
+    '  vec3 imageColor = texture2D(u_image, imageUv).rgb;',
+    '  if (hit) imageColor *= mix(vec3(1.0), col, 0.88);',
+    '  gl_FragColor = vec4(imageColor, 1.0);',
     '}'
   ].join('\n');
 
@@ -338,6 +349,25 @@
   var uBlobCount = gl.getUniformLocation(prog, 'u_blobCount');
   var uMouse = gl.getUniformLocation(prog, 'u_mouse');
   var uMouseStrength = gl.getUniformLocation(prog, 'u_mouseStrength');
+  var uImage = gl.getUniformLocation(prog, 'u_image');
+
+  var imageTexture = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+  gl.uniform1i(uImage, 0);
+  var portrait = new Image();
+  portrait.onload = function () {
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, portrait);
+  };
+  portrait.src = 'images/contact/contact-portrait.webp?v=20260818g';
 
   var morphSpeedVal = 0.5;
   var blobCountVal = 4.0;
