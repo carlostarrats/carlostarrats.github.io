@@ -10,7 +10,7 @@
     '</div>',
     '<div class="chat-messages" role="log" aria-live="polite">',
       '<div class="chat-welcome">',
-        '<p class="chat-welcome__text"><img src="images/carlos-avatar.png" alt="" class="chat-welcome__avatar">Hey, ask away.</p>',
+        '<p class="chat-welcome__text"><img src="images/carlos-avatar-about.jpg" alt="" class="chat-welcome__avatar">Hey, ask away.</p>',
         '<p class="chat-welcome__hint">Ask me anything or try one of these:</p>',
         '<div class="chat-starters">',
           '<button class="chat-starter" type="button">Tell me about your time at DDS</button>',
