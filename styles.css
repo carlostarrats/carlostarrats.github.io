@@ -4802,6 +4802,7 @@ h6 * {
 .portfolio-hero { max-width: 1080px !important; padding: 150px 0 170px !important; display: block !important; }
 .portfolio-hero h1 { max-width: 1080px !important; font-size: clamp(36px, 3.25vw, 48px) !important; line-height: 1.14 !important; }
 .portfolio-hero h1 .hero__muted { color: #8b8b8b !important; }
+.portfolio-hero__note { max-width: 620px !important; margin: 28px 0 0 !important; color: #747474 !important; font-size: 18px !important; line-height: 1.35 !important; letter-spacing: -0.02em !important; }
 .portfolio-hero .intro__copy { display: none !important; }
 .project-header__title,
 .editorial-content h1 { font-size: clamp(36px, 3.25vw, 48px) !important; line-height: 1.14 !important; }
@@ -4818,6 +4819,7 @@ h1 { font-size: clamp(36px, 3.25vw, 48px) !important; line-height: 1.14 !importa
   .editorial-content h1,
   h1 { font-size: 28px !important; line-height: 1.12 !important; }
   .portfolio-hero .intro__copy p { font-size: 16px !important; }
+  .portfolio-hero__note { margin-top: 24px !important; font-size: 16px !important; }
   .work-grid { grid-template-columns: 1fr !important; gap: 42px !important; }
   .work-grid .project-row .card { border-radius: 10px !important; }
   .work-grid .project-row__copy h2 { font-size: 22px !important; }
@@ -4929,6 +4931,85 @@ h2.library__title {
   margin-top: 44px !important;
   padding-top: 0 !important;
   border-top: 0 !important;
+}
+
+.editorial-content .work-history {
+  margin-top: 140px !important;
+}
+
+.work-history__list {
+  position: relative;
+  min-width: max-content;
+  min-height: 196px;
+  display: flex;
+  gap: 0;
+  padding: 34px 40px 0 0;
+}
+
+.work-history__viewport {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c8c8c8 transparent;
+}
+
+.work-history__viewport:focus-visible {
+  outline: 2px solid #151515;
+  outline-offset: 5px;
+}
+
+.work-history__rail {
+  position: absolute;
+  top: 67px;
+  left: 0;
+  right: 40px;
+  height: 1px;
+  border-top: 1px dashed #cfcfcf;
+}
+
+.work-history__item {
+  position: relative;
+  width: 210px;
+  flex: 0 0 210px;
+  padding-right: 24px;
+}
+
+.work-history__tick {
+  position: absolute;
+  z-index: 1;
+  top: 28px;
+  left: 0;
+  width: 1px;
+  height: 12px;
+  background: #aeb0b8;
+}
+
+.work-history__details h3 {
+  margin: 43px 0 6px;
+  color: #151515 !important;
+  font-size: 16px !important;
+  line-height: 1.14 !important;
+  letter-spacing: 0;
+}
+
+.work-history__item p {
+  margin: 0 !important;
+  color: #777 !important;
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+}
+
+.work-history__dates {
+  white-space: nowrap;
+  color: #151515 !important;
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+}
+
+.work-history__details p {
+  color: #8a8a8a !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.04em;
 }
 
 .editorial-content .library {
@@ -5097,6 +5178,29 @@ h2.library__title {
     margin-top: 90px !important;
   }
 
+  .editorial-content .work-history {
+    margin-top: 90px !important;
+  }
+
+  .work-history__list {
+    min-height: 184px;
+    padding-top: 28px;
+  }
+
+  .work-history__rail {
+    top: 61px;
+  }
+
+  .work-history__tick {
+    top: 27px;
+  }
+
+  .work-history__item {
+    width: 180px;
+    flex-basis: 180px;
+    padding-right: 20px;
+  }
+
   .github-activity {
     margin-top: 90px;
   }
@@ -5107,6 +5211,14 @@ h2.library__title {
 .editorial-content :is(p, li),
 .detail-page :is(p, li) {
   color: #151515 !important;
+}
+
+.editorial-content .work-history__details p {
+  color: #8a8a8a !important;
+}
+
+.editorial-content .work-history__dates {
+  color: #8a8a8a !important;
 }
 
 /* Walkthroughs use the same site navigation and place their project link under the title. */
