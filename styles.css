@@ -3,6 +3,30 @@
    Clean Type Scale
    ============================================ */
 
+@font-face {
+  font-family: 'TASA Orbiter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/TASAOrbiter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TASA Orbiter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/TASAOrbiter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TASA Orbiter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/TASAOrbiter-Semibold.ttf') format('truetype');
+}
+
 /* ============================================
    PRELOADER
    ============================================ */
@@ -5262,6 +5286,13 @@ h2.library__title {
 
 .text-arrow {
   font-variant-emoji: text;
+}
+
+/* Arrows stay at the regular weight even when their surrounding text is 500 or 600. */
+.back-link::before,
+.project-link__arrow,
+.text-arrow {
+  font-weight: 400 !important;
 }
 
 /* The walkthrough header uses the same generous two-column measure as About. */

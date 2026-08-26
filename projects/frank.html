@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, follow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://carlos-chat-proxy.vercel.app;">
   <title>Frank: Local-First Feedback Tool — Carlos Tarrats</title>
   <meta name="description" content="Frank is a local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff. Built by Carlos Tarrats.">
 
@@ -27,14 +27,11 @@
   <meta name="twitter:description" content="Frank is a local-first collaboration layer that wraps any URL, file, or canvas with a commenting overlay, feedback curation, and AI handoff. Built by Carlos Tarrats.">
   <meta name="twitter:image" content="https://carlostarrats.github.io/images/social.jpg?v=4">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260817a">
+  <link rel="stylesheet" href="../styles.css?v=20260826a">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -212,7 +209,7 @@
           <p class="project-text__body">Two packages. One local, one cloud.</p>
           <p class="project-text__body">The local daemon is Node.js + TypeScript and serves an HTTP + WebSocket server, an MCP stdio bridge, a content proxy, a content-addressed asset store, canvas state I/O, a bundle / report builder, and the URL share auto-deploy pipeline (envelope detection, allowlist bundler, pre-flight build, per-SDK env encoders, Vercel Deployments API client). Everything is written to ~/.frank/ on your machine.</p>
           <p class="project-text__body">The browser UI is plain JS ES modules with no build step — Konva loads via a script tag. jsPDF and svg2pdf are loaded from CDN on first export.</p>
-          <p class="project-text__body">The optional cloud package is a small Vercel serverless project with Vercel Blob for payloads and Upstash Redis for live-share presence. Canvas exports go through Konva → SVG → svg2pdf for vector PDF; project reports go through pdfmake.</p>
+          <p class="project-text__body">The optional cloud package is a small Vercel serverless project with Vercel Blob for payloads and Upstash Redis for live-share presence. Canvas exports go through Konva <span class="text-arrow" aria-hidden="true">→</span> SVG <span class="text-arrow" aria-hidden="true">→</span> svg2pdf for vector PDF; project reports go through pdfmake.</p>
         </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">Local-First</h2>
