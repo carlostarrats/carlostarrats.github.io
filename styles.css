@@ -1940,6 +1940,13 @@ h1.section-brand {
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
+.archive__preview--contain {
+  object-fit: contain;
+  box-sizing: border-box;
+  padding: 24px;
+  background: #fff;
+}
+
 .archive__link:hover .archive__preview,
 .archive__link:focus-visible .archive__preview {
   opacity: 1;
