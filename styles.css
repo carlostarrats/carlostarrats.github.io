@@ -5548,3 +5548,30 @@ h2.library__title {
   }
 
 }
+
+/* Supporting media captions match the Eloquii checkout case study. */
+.case-study__media > .case-study__figure {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.case-study__figure > .project-images__img-wrap,
+.case-study__figure > .project-images__video {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.case-study__figure figcaption {
+  padding: 15px 0 12px;
+  color: #626262;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.case-study__caption-title {
+  display: block;
+  margin-bottom: 5px;
+  color: #151515;
+  font-size: 16px;
+}

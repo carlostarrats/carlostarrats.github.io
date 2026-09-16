@@ -138,7 +138,27 @@
     if (visualItems.length) {
       var media = document.createElement('div');
       media.className = 'case-study__media';
-      visualItems.forEach(function (item) { media.appendChild(item); });
+      visualItems.forEach(function (item) {
+        var captionTitle = item.getAttribute('data-caption-title');
+        var captionBody = item.getAttribute('data-caption');
+        if (!captionTitle || !captionBody) {
+          media.appendChild(item);
+          return;
+        }
+
+        // Keep the original media wrapper and its lightbox handlers intact.
+        var figure = document.createElement('figure');
+        figure.className = 'case-study__figure';
+        var caption = document.createElement('figcaption');
+        var captionHeading = document.createElement('span');
+        captionHeading.className = 'case-study__caption-title';
+        captionHeading.textContent = captionTitle;
+        caption.appendChild(captionHeading);
+        caption.appendChild(document.createTextNode(captionBody));
+        figure.appendChild(item);
+        figure.appendChild(caption);
+        media.appendChild(figure);
+      });
       content.appendChild(media);
     }
 
