@@ -4780,7 +4780,21 @@ h6 * {
 .work-grid .project-row .card img,
 .work-grid .project-row .card video { width: 100% !important; height: 100% !important; display: block !important; object-fit: cover !important; opacity: 1 !important; transform: none !important; }
 .work-grid .project-row__copy { width: auto !important; order: 2 !important; margin: 0 !important; padding: 0 !important; }
-.work-grid .project-kind-tag { display: none !important; }
+.work-grid .project-kind-tag {
+  display: block !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #8e8e8e !important;
+  font-family: 'TASA Orbiter', Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
 .work-grid .project-row__copy h2 { max-width: 590px !important; margin: 0 !important; color: #151515 !important; font-size: clamp(20px, 1.6vw, 25px) !important; line-height: 1.14 !important; letter-spacing: -0.05em !important; }
 .work-grid .project-row__copy h2 span { color: #151515 !important; }
 .work-grid .see-more-tag { margin: 10px 0 0 !important; padding: 0 !important; display: block !important; color: #777 !important; font-size: 15px !important; background: transparent !important; border: 0 !important; }
@@ -5574,4 +5588,12 @@ h2.library__title {
   margin-bottom: 5px;
   color: #151515;
   font-size: 16px;
+}
+
+/* Homepage project types share the Publicly shareable label size. */
+.archive__row:not(.archive__row--removed) .archive__kind {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.04em !important;
+  white-space: normal;
 }
