@@ -31,7 +31,7 @@
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="../styles.css?v=20260826a">
+  <link rel="stylesheet" href="../styles.css?v=20261027-dds-video-play-blue">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -142,10 +142,13 @@
       </div>
 
       <section class="project-images" id="project-visual" role="tabpanel" aria-labelledby="tab-visual">
-        <div class="project-images__video">
-          <video controls preload="metadata">
+        <div class="project-images__video dds-video">
+          <video controls preload="metadata" tabindex="0">
             <source src="https://defensedigitalservice-org.github.io/dds-mil/Video/DDS.mp4#t=1" type="video/mp4">
           </video>
+          <button type="button" class="dds-video__play" aria-label="Play DDS video" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </button>
         </div>
 
         <a class="case-study__resource case-study__resource--spotify" href="https://open.spotify.com/episode/00GG71i0GqC1ipiEAa9zuf" target="_blank" rel="noopener noreferrer">
@@ -177,15 +180,28 @@
       <section class="project-text" id="project-text" role="tabpanel" aria-labelledby="tab-text">
         <div class="project-text__section">
           <h2 class="project-text__heading">My Role</h2>
-          <p class="project-text__body">I was one of several designers at the Defense Digital Service. I led design on my assigned projects, usually as the sole designer embedded with a product manager and engineer. On projects with a second designer, we shared the design work.</p>
+          <p class="project-text__body">Over four years as a Lead Designer at the Defense Digital Service, I led design on my projects, working closely with product managers and engineers to address user and mission needs in high-security environments.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">Design Guild Lead</h2>
+          <p class="project-text__body">I also served as design guild lead, representing the design team in discussions with other guild leads and the DDS director. We coordinated projects, shared concerns, and kept communication flowing between teams and leadership. During an organizational transition, I worked with a team and CDAO leadership to run workshops that addressed conflicting priorities and helped teams work together toward CDAO and DoD goals.</p>
         </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">How We Worked</h2>
-          <p class="project-text__body">DDS operated in product trios (a product manager, a user experience designer and researcher, and an engineer) aligned directly with user and mission needs. This model, embedded within a fully agile, human-centered process, empowered teams to move quickly while solving problems rather than just delivering features. The team was comprised mostly of civilians from the private sector serving two or four year limited terms, ensuring a constant influx of fresh ideas and a sense of urgency to maximize contributions to the DoD.</p>
+          <p class="project-text__body">DDS often worked in product trios: a product manager, a designer and researcher, and an engineer. We partnered with DoD organizations to understand their needs, investigate the underlying problems, and determine how best to help.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">Discovery and Recommendations</h2>
+          <p class="project-text__body">Discovery typically lasted two to four weeks, sometimes longer depending on the project. We went where the work happened, interviewing people in their own environments to understand their workflows and constraints. I traveled overseas to meet users on military bases, see how they worked firsthand, and hear about the challenges they faced.</p>
+          <p class="project-text__body">That research shaped our findings and recommendations, which we documented in reports typically 20 to 40 pages long, some of which I was the lead author on. We shared our findings with the leadership that brought us in and discussed whether there was an opportunity to move forward. When an engagement did not continue, the report could still give partners documented findings to support their case with senior leadership and members of Congress.</p>
+        </div>
+        <div class="project-text__section">
+          <h2 class="project-text__heading">Moving Forward</h2>
+          <p class="project-text__body">When we agreed on a path forward, we worked with partners on solutions shaped by what we learned. That could include building an MVP and helping the partner prepare to take ownership and maintain it.</p>
         </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">Types of Work</h2>
-          <p class="project-text__body">DDS work fell into three categories. Rapid capabilities were fast-response engagements where the team jumped in to solve urgent technical problems: supporting counter-unmanned aerial system efforts, running hackathons with Army units to improve force protection, and developing tools like Move.mil that saved the military thousands of hours annually. The team also ran experimental projects like Combee, a proof of concept that used large language models as a plain-language interface for controlling physical systems, demonstrating what was possible at the tactical edge. Cybersecurity efforts included Hack the Pentagon, the federal government's first bug bounty program, along with DNS security services and protection of critical infrastructure control systems. Technical assessments paired human-centered research with hands-on technical evaluation to help DoD organizations identify and solve the right problems.</p>
+          <p class="project-text__body">Most of the work we did cannot be shared publicly. Publicly documented examples represent only a portion of the broader portfolio, including background investigation systems, counter-drone capabilities, military relocation services, AI tooling, and cybersecurity.</p>
         </div>
         <div class="project-text__section">
           <h2 class="project-text__heading">AI Readiness</h2>
@@ -259,6 +275,23 @@
           }
         }
       });
+
+      var ddsVideo = document.querySelector('.dds-video video');
+      var ddsPlay = document.querySelector('.dds-video__play');
+      if (ddsVideo && ddsPlay) {
+        ddsPlay.hidden = !ddsVideo.paused;
+        ddsPlay.addEventListener('click', function() {
+          var playPromise = ddsVideo.play();
+          if (playPromise) playPromise.catch(function() {});
+        });
+        ddsVideo.addEventListener('play', function() {
+          if (document.activeElement === ddsPlay) ddsVideo.focus({ preventScroll: true });
+          ddsPlay.hidden = true;
+        });
+        ddsVideo.addEventListener('pause', function() {
+          ddsPlay.hidden = false;
+        });
+      }
     });
   </script>
   <!-- Chat Panel -->
