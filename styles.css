@@ -4771,7 +4771,7 @@ h6 * {
 .location-line { margin: 0 0 16px !important; color: #151515 !important; font-size: 12px !important; line-height: 1.2 !important; letter-spacing: 0.08em !important; text-transform: uppercase !important; }
 .location-line span { color: #8e8e8e !important; }
 
-.work-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 54px 24px !important; }
+.work-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 54px 24px !important; }
 .work-grid .project-row,
 .work-grid .project-row--reverse { display: flex !important; flex-direction: column !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important; }
 .work-grid .project-row .card { position: relative !important; width: 100% !important; height: auto !important; aspect-ratio: 1.43 / 1 !important; margin: 0 0 14px !important; display: block !important; overflow: hidden !important; background: #f2f2f2 !important; border: 1px solid #e8e8e8 !important; border-radius: 14px !important; }
@@ -5588,6 +5588,64 @@ h2.library__title {
   margin-bottom: 5px;
   color: #151515;
   font-size: 16px;
+}
+
+/* Personal labels sit beside project types or names. */
+.project-row__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.work-grid .project-row__meta .project-kind-tag {
+  margin: 0 !important;
+}
+
+.personal-tag {
+  display: inline-block;
+  font-family: 'TASA Orbiter', Arial, sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #767676;
+  border: 1px solid #767676;
+  border-radius: 100px;
+  padding: 2px 3px;
+  white-space: nowrap;
+}
+
+.work-grid .personal-tag {
+  color: #8e8e8e;
+  border-color: currentColor;
+}
+
+.archive__company {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 801px) {
+  .archive__list {
+    display: grid;
+    grid-template-columns: minmax(160px, max-content) 100px minmax(0, 1fr) 110px auto;
+    column-gap: 32px;
+  }
+
+  .archive__row,
+  .archive__link {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+
+  .archive__company {
+    white-space: nowrap;
+  }
 }
 
 /* Homepage project types share the Publicly shareable label size. */

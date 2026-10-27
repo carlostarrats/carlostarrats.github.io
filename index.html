@@ -30,7 +30,7 @@
   <script>
     (function(){var t=sessionStorage.getItem('siteTheme');if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);})();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260930-project-types">
+  <link rel="stylesheet" href="styles.css?v=20261026-three-column-work">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -166,6 +166,17 @@
     <h2 id="selected-work" class="location-line">Selected work <span>Publicly shareable</span></h2>
     <section class="work-grid" aria-labelledby="selected-work">
 
+    <!-- Defense Digital Service Project -->
+    <div class="project-row project-row--reverse project-row--dds">
+      <div class="project-row__copy">
+        <span class="project-kind-tag">Government systems</span>
+        <h2><span class="italic color--dds">DDS (DoD) </span>— Bringing modern product design practices into high-security government systems</h2>
+      </div>
+      <a href="projects/dds.html" class="card card--dds" aria-label="View Defense Digital Service project">
+        <img data-src="images/dds/dds-hero.jpg" alt="Defense Digital Service — DoD digital transformation integrating AI, data, cyber, and IT" class="deferred">
+      </a>
+    </div>
+
     <!-- AdaptiveShop Project -->
     <div class="project-row project-row--adaptiveshop">
       <a href="projects/adaptiveshop.html" class="card card--adaptiveshop" aria-label="View AdaptiveShop project">
@@ -173,19 +184,41 @@
         </video>
       </a>
       <div class="project-row__copy">
-        <span class="project-kind-tag">Commerce platform</span>
+        <div class="project-row__meta">
+          <span class="project-kind-tag">Commerce platform</span>
+          <span class="personal-tag">Personal</span>
+        </div>
         <h2><span class="italic color--adaptiveshop">AdaptiveShop </span>— A simpler way to start selling online</h2>
       </div>
     </div>
 
-    <!-- Defense Digital Service Project -->
-    <div class="project-row project-row--reverse project-row--dds">
+    <!-- Control Project -->
+    <div class="project-row project-row--control">
+      <a href="projects/control.html" class="card card--control" aria-label="View Control project">
+        <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
+        </video>
+      </a>
       <div class="project-row__copy">
-        <span class="project-kind-tag">Government systems</span>
-        <h2><span class="italic color--dds">Defense Digital Service </span>— Bringing modern product design practices into high-security government systems</h2>
+        <div class="project-row__meta">
+          <span class="project-kind-tag">iOS app</span>
+          <span class="personal-tag">Personal</span>
+        </div>
+        <h2><span class="italic color--control">Control </span>— A local-first AI app for iPhone that runs entirely on-device</h2>
       </div>
-      <a href="projects/dds.html" class="card card--dds" aria-label="View Defense Digital Service project">
-        <img data-src="images/dds/dds-hero.jpg" alt="Defense Digital Service — DoD digital transformation integrating AI, data, cyber, and IT" class="deferred">
+    </div>
+
+    <!-- Frank Project -->
+    <div class="project-row project-row--reverse project-row--frank">
+      <div class="project-row__copy">
+        <div class="project-row__meta">
+          <span class="project-kind-tag">Web app</span>
+          <span class="personal-tag">Personal</span>
+        </div>
+        <h2><span class="italic color--thayer">Frank </span>— Local-first collaboration for unfinished work</h2>
+      </div>
+      <a href="projects/frank.html" class="card card--frank" aria-label="View Frank project">
+        <video loop muted playsinline class="deferred-video" data-src="images/frank/frank-hero.mp4">
+        </video>
       </a>
     </div>
 
@@ -200,18 +233,6 @@
       </div>
     </div>
 
-    <!-- Frank Project -->
-    <div class="project-row project-row--reverse project-row--frank">
-      <div class="project-row__copy">
-        <span class="project-kind-tag">Web app</span>
-        <h2><span class="italic color--thayer">Frank </span>— Local-first collaboration for unfinished work</h2>
-      </div>
-      <a href="projects/frank.html" class="card card--frank" aria-label="View Frank project">
-        <video loop muted playsinline class="deferred-video" data-src="images/frank/frank-hero.mp4">
-        </video>
-      </a>
-    </div>
-
     <!-- Lineform Project -->
     <div class="project-row project-row--lineform">
       <a href="projects/lineform.html" class="card card--lineform" aria-label="View Lineform project">
@@ -219,19 +240,11 @@
         </video>
       </a>
       <div class="project-row__copy">
-        <span class="project-kind-tag">Mac app</span>
+        <div class="project-row__meta">
+          <span class="project-kind-tag">Mac app</span>
+          <span class="personal-tag">Personal</span>
+        </div>
         <h2><span class="italic color--lineform">Lineform </span>— A calm, local-first Markdown editor for macOS</h2>
-      </div>
-    </div>
-    <!-- Control Project -->
-    <div class="project-row project-row--control">
-      <a href="projects/control.html" class="card card--control" aria-label="View Control project">
-        <video loop muted playsinline class="deferred-video" data-src="images/control/control-hero.mp4">
-        </video>
-      </a>
-      <div class="project-row__copy">
-        <span class="project-kind-tag">iOS app</span>
-        <h2><span class="italic color--control">Control </span>— A local-first AI app for iPhone that runs entirely on-device</h2>
       </div>
     </div>
     </section>
@@ -241,7 +254,7 @@
       <div class="archive__list">
         <div class="archive__row">
           <a href="https://surfacecamera.app" class="archive__link" target="_blank" rel="noopener">
-            <span class="archive__company">Surface Camera</span>
+            <span class="archive__company">Surface Camera <span class="personal-tag">Personal</span></span>
             <span class="archive__kind">iOS app</span>
             <span class="archive__purpose">A film camera for iPhone</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published" aria-hidden="true"></span>Online</span>
@@ -250,7 +263,7 @@
         </div>
         <div class="archive__row">
           <a href="https://luz-photo.app" class="archive__link" target="_blank" rel="noopener">
-            <span class="archive__company">Luz Photo</span>
+            <span class="archive__company">Luz Photo <span class="personal-tag">Personal</span></span>
             <span class="archive__kind">Mac app</span>
             <span class="archive__purpose">A photo library and editor for macOS</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published" aria-hidden="true"></span>Online</span>
@@ -322,7 +335,7 @@
         </div>
         <div class="archive__row">
           <a href="https://mood-atlas.tarrats.xyz" class="archive__link" target="_blank" rel="noopener">
-            <span class="archive__company">Mood Atlas</span>
+            <span class="archive__company">Mood Atlas <span class="personal-tag">Personal</span></span>
             <span class="archive__kind">Web experiment</span>
             <span class="archive__purpose">Mapping Apple Music through Thayer's mood model</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published"></span>Online</span>
@@ -331,7 +344,7 @@
         </div>
         <div class="archive__row">
           <a href="https://art-gallery-publish.vercel.app/" class="archive__link" target="_blank" rel="noopener">
-            <span class="archive__company">Photography</span>
+            <span class="archive__company">Photography <span class="personal-tag">Personal</span></span>
             <span class="archive__kind">Film photography</span>
             <span class="archive__purpose">Exhibited film photography (non-digital)</span>
             <span class="archive__status"><span class="archive__dot archive__dot--published"></span>Online</span>
